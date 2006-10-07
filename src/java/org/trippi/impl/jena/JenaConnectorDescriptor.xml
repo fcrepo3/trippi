@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector-descriptor name="Kowari Connector">
+  <description>
+    This connector is written for Jena.  For more information on 
+    Jena, visit http://jena.sourceforge.net/
+  </description>
+  <parameter name="modelName" label="The name of the model to use."/>
+  <parameter name="dbType" label="The type of database.">
+    <description>
+      
+    </description>
+    <option value="McKoi"/>
+    <option value="MySQL"/>
+    <option value="Oracle"/>
+    <option value="PostgreSQL"/>
+  </parameter>
+ 
+ 
+dbType 
+  (McKoi, MySQL, Oracle, or PostgreSQL)
+jdbcURL
+  jdbc:mckoi://localhost:9167/
+  jdbc:mysql://localhost/test 
+  jdbc:oracle:thin:@localhost:1521:mysid 
+  jdbc:postgresql://localhost/test 
+driverClass
+  com.mckoi.JDBCDriver
+  com.mysql.jdbc.Driver
+  oracle.jdbc.driver.OracleDriver
+  org.postgresql.Driver
+user
+pass
+
+
+  <parameter name="poolInitialSize" 
+             label="The initial size of the session pool used for queries."/>
+  <parameter name="poolMaxGrowth"
+             label="Maximum number of additional sessions the pool may add.">
+    <description>
+      If specified as -1, no limit will be placed on pool growth.
+    </description>
+  </parameter>
+  <parameter name="poolSpareSessions"
+             label="The number of spare sessions to proactively make available."
+             optional="true">
+    <description>
+      If unspecified, this defaults to 0, which means that additional sessions
+      will only be created as needed.  Note that if poolMaxGrowth is 0, the 
+      value of this parameter is inconsequential.
+    </description>
+  </parameter>
+  <parameter name="readOnly" 
+             label="Whether to connect in read-only mode.">
+    <description>
+      Read-only mode will prevent accidental changes to the triplestore.
+    </description>
+    <option value="true"/>
+    <option value="false">
+      <parameter name="autoCreate"
+                 label="Whether to create the model if it doesn't already exist.">
+        <description>
+          At startup, the model will be automatically created.
+        </description>
+        <option value="true"/>
+        <option value="false"/>
+      </parameter>
+      <parameter name="memoryBuffer" 
+                 label="Whether to use a memory buffer or a database buffer for write operations.">
+        <description>
+          The buffer is where triples are stored before they're actually written.  
+          Normally, a memory buffer will be sufficient.  In certain server 
+          environments, a database buffer is the better option, offering 
+          higher capacity and persistence.
+        </description>
+        <option value="true"/>
+        <option value="false">
+          <parameter name="dbDriver"
+                     label="The JDBC driver class name.">
+            <description>
+              This must be in the classpath.  Examples: For MySQL the driver 
+              would be com.mysql.jdbc.Driver, for McKoi it would be 
+              com.mckoi.JDBCDriver, for Oracle it would be 
+              oracle.jdbc.driver.OracleDriver.
+            </description>
+          </parameter>
+          <parameter name="dbURL" 
+                     label="The JDBC URL for the database.">
+            <description>
+              Examples: For MySQL, jdbc:mysql://localhost/mydb would 
+              use the local database named mydb.  For McKoi, 
+              jdbc:mckoi://localhost:9157/ would use the local database at 
+              port 9157.  For oracle, jdbc:oracle:thin:@localhost:1521:mydb 
+              would use the thin driver to connect to the local database 
+              named mydb at port 1521.
+            </description>
+          </parameter>
+          <parameter name="dbUsername" label="The database username."/>
+          <parameter name="dbPassword" label="The password for the db user."/>
+          <parameter name="dbTableName"
+                     label="The table for buffered triple updates.">
+            <description>
+              This table must already exist with the following five
+              columns: num (a large numeric type), action (char(1)), subject, 
+              predicate, and object (all large varchar or text types).
+            </description>
+          </parameter>
+        </option>
+      </parameter>
+      <parameter name="autoFlushDormantSeconds"
+                 label="Seconds of buffer inactivity that will trigger an auto-flush.">
+        <description>
+          If this threshold is reached, flushing will occur in the background,
+          during which time the buffer is still available for writing.
+        </description>
+      </parameter>
+      <parameter name="autoFlushBufferSize" 
+                 label="The size at which the buffer should be auto-flushed.">
+        <description>
+          If this threshold is reached, flushing will occur in the background,
+          during which time the buffer is still available for writing.
+        </description>
+      </parameter>
+      <parameter name="bufferSafeCapacity"
+                 label="The maximum size the buffer can reach before being forcibly flushed.">
+        <description>
+          If this threshold is reached, flushing will occur in the foreground
+          and the buffer will be locked for writing until it is finished.
+          This should be larger than autoFlushBufferSize.
+        </description>
+      </parameter>
+      <parameter name="bufferFlushBatchSize"
+                 label="The number of updates to send to the triplestore at a time.">
+        <description>
+          This should be the same size as, or smaller than autoFlushBufferSize.
+        </description>
+      </parameter>
+    </option>
+  </parameter>
+</connector-descriptor>

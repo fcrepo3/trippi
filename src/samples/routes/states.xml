@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf     "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <!ENTITY xsd     "http://www.w3.org/2001/XMLSchema#">
+  <!ENTITY travel  "http://www.w3.org/2000/10/swap/pim/travelTerms#">
+  <!ENTITY place   "http://example.org/place/">
+  <!ENTITY flight  "http://jibbering.com/2002/8/flight/#">
+  <!ENTITY airport "http://www.daml.org/2001/10/html/airport-ont#">
+  <!ENTITY cyc     "http://opencyc.sourceforge.net/daml/cyc.daml#">
+  <!ENTITY star    "http://www.staralliance.com/">
+  <!ENTITY dc      "http://purl.org/dc/terms/">
+]>
+<rdf:RDF xmlns:rdf     = "&rdf;"
+         xmlns:xsd     = "&xsd;"
+         xmlns:travel  = "&travel;"
+         xmlns:place   = "&place;"
+         xmlns:flight  = "&flight;"
+         xmlns:airport = "&airport;"
+         xmlns:cyc     = "&cyc;"
+         xmlns:star    = "&star;"
+         xmlns:dc      = "&dc;">
+  <place:StateOrProvince rdf:about="&place;BR/PR">
+    <dc:title>PR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/SC">
+    <dc:title>SC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/WA">
+    <dc:title>WA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/GA">
+    <dc:title>GA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/ND">
+    <dc:title>ND</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/KS">
+    <dc:title>KS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/MO">
+    <dc:title>MO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/RO">
+    <dc:title>RO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NY">
+    <dc:title>NY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/TN">
+    <dc:title>TN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/HI">
+    <dc:title>HI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/CT">
+    <dc:title>CT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/NS">
+    <dc:title>NS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;GR/N.">
+    <dc:title>N.</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/RJ">
+    <dc:title>RJ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/MT">
+    <dc:title>MT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/IL">
+    <dc:title>IL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/SA">
+    <dc:title>SA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/PA">
+    <dc:title>PA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/MN">
+    <dc:title>MN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AU/QL">
+    <dc:title>QL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/PE">
+    <dc:title>PE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/ES">
+    <dc:title>ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AU/NS">
+    <dc:title>NS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/SP">
+    <dc:title>SP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/YT">
+    <dc:title>YT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/MA">
+    <dc:title>MA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/RI">
+    <dc:title>RI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/RS">
+    <dc:title>RS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AU/SA">
+    <dc:title>SA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/OK">
+    <dc:title>OK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NE">
+    <dc:title>NE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CN/NB,">
+    <dc:title>NB,</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/CE">
+    <dc:title>CE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/GO">
+    <dc:title>GO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/BC">
+    <dc:title>BC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/CA">
+    <dc:title>CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/UT">
+    <dc:title>UT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/PI">
+    <dc:title>PI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/SC">
+    <dc:title>SC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NC">
+    <dc:title>NC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/QU">
+    <dc:title>QU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/CO">
+    <dc:title>CO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/AC">
+    <dc:title>AC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/SD">
+    <dc:title>SD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/WV">
+    <dc:title>WV</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AU/WA">
+    <dc:title>WA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/AZ">
+    <dc:title>AZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/ID">
+    <dc:title>ID</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/IN">
+    <dc:title>IN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/SE">
+    <dc:title>SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/ME">
+    <dc:title>ME</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AR/MD">
+    <dc:title>MD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/PB">
+    <dc:title>PB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/AL">
+    <dc:title>AL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/MG">
+    <dc:title>MG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/MD">
+    <dc:title>MD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/IA">
+    <dc:title>IA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/AK">
+    <dc:title>AK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NH">
+    <dc:title>NH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/WY">
+    <dc:title>WY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/MT">
+    <dc:title>MT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/MA">
+    <dc:title>MA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/TX">
+    <dc:title>TX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/LA">
+    <dc:title>LA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/KY">
+    <dc:title>KY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/NF">
+    <dc:title>NF</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/AL">
+    <dc:title>AL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/DC">
+    <dc:title>DC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/VA">
+    <dc:title>VA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/MI">
+    <dc:title>MI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/PE">
+    <dc:title>PE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/AL">
+    <dc:title>AL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NM">
+    <dc:title>NM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/OR">
+    <dc:title>OR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/WI">
+    <dc:title>WI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AR/SF">
+    <dc:title>SF</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/RN">
+    <dc:title>RN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/MS">
+    <dc:title>MS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/FL">
+    <dc:title>FL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NJ">
+    <dc:title>NJ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/BA">
+    <dc:title>BA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/PA">
+    <dc:title>PA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;CA/OT">
+    <dc:title>OT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/AM">
+    <dc:title>AM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AU/VI">
+    <dc:title>VI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;GU/A.B.">
+    <dc:title>A.B.</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GU"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/VT">
+    <dc:title>VT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;BR/AP">
+    <dc:title>AP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;AR/CD">
+    <dc:title>CD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/MN">
+    <dc:title>MN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/NV">
+    <dc:title>NV</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+  <place:StateOrProvince rdf:about="&place;US/OH">
+    <dc:title>OH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </place:StateOrProvince>
+
+</rdf:RDF>

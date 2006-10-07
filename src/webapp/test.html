@@ -1,0 +1,47 @@
+<html>
+  <head><title>Trippi Web Interface</title></head>
+  <body><h2>Trippi Web Interface</h2>
+  <hr size="1"/>
+<form action="http://localhost:8080/trippi/query/ktest">
+Query Type:
+<select name="type">
+  <option name="tuples">tuples</option>
+  <option name="triples">triples</option>
+</select>
+
+Query Language:
+<select name="lang">
+  <option value="rdql">RDQL</option>
+  <option value="itql">ITQL</option>
+  <option value="spo">SPO</option>
+</select><br/>
+
+Template:<br/>
+<textarea name="template" cols="50" rows="5">
+</textarea><br/>
+
+Query:<br/>
+<textarea name="query" cols="50" rows="15">
+</textarea><br/>
+
+Max Results: <input type="text" cols="5" name="limit"/><br/>
+
+<input type="checkbox" name="distinct"/> Force Distinct<br/>
+
+Response Format:
+<select name="format">
+  <option value="CSV">CSV</option>
+  <option value="Dawg">Dawg</option>
+  <option value="Notation 3">Notation 3</option>
+  <option value="N-Triples">N-Triples</option>
+  <option value="RDF/XML">RDF/XML</option>
+  <option value="Simple">Simple</option>
+  <option value="TSV">TSV</option>
+  <option value="Turtle">Turtle</option>
+</select>
+
+<input type="hidden" name="dt" value="true"/>
+
+<input type="submit"/>
+</form>
+</html>

@@ -1,0 +1,3802 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf     "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <!ENTITY xsd     "http://www.w3.org/2001/XMLSchema#">
+  <!ENTITY travel  "http://www.w3.org/2000/10/swap/pim/travelTerms#">
+  <!ENTITY place   "http://example.org/place/">
+  <!ENTITY flight  "http://jibbering.com/2002/8/flight/#">
+  <!ENTITY airport "http://www.daml.org/2001/10/html/airport-ont#">
+  <!ENTITY cyc     "http://opencyc.sourceforge.net/daml/cyc.daml#">
+  <!ENTITY star    "http://www.staralliance.com/">
+  <!ENTITY dc      "http://purl.org/dc/terms/">
+]>
+<rdf:RDF xmlns:rdf     = "&rdf;"
+         xmlns:xsd     = "&xsd;"
+         xmlns:travel  = "&travel;"
+         xmlns:place   = "&place;"
+         xmlns:flight  = "&flight;"
+         xmlns:airport = "&airport;"
+         xmlns:cyc     = "&cyc;"
+         xmlns:star    = "&star;"
+         xmlns:dc      = "&dc;">
+  <airport:Airport rdf:about="&airport;FNC">
+    <dc:title>Funchal PT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DUS">
+    <dc:title>Dusseldorf DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IWJ">
+    <dc:title>Iwami JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NAS">
+    <dc:title>Nassau BS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KHH">
+    <dc:title>Kaohsiung TW</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TW"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BIL">
+    <dc:title>Billings MT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IWD">
+    <dc:title>Ironwood MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VVI">
+    <dc:title>Santa Cruz BO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SFO">
+    <dc:title>San Francisco CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZAG">
+    <dc:title>Zagreb Pleso HR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;HR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CNS">
+    <dc:title>Cairns QL AU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+    <cyc:locatedIn rdf:resource="&place;AU/QL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LPT">
+    <dc:title>Lampang TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ONJ">
+    <dc:title>Odate JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PMI">
+    <dc:title>Palma Mallorca ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UBJ">
+    <dc:title>Ube JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MYE">
+    <dc:title>Miyake JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OIM">
+    <dc:title>Oshima JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BNE">
+    <dc:title>Brisbane QL AU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+    <cyc:locatedIn rdf:resource="&place;AU/QL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AUS">
+    <dc:title>Austin-Bergstrom TX US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ACH">
+    <dc:title>Altenrhein CH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ICN">
+    <dc:title>Seoul Inchon KR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ORK">
+    <dc:title>Cork IE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MRY">
+    <dc:title>Carmel CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CNY">
+    <dc:title>Moab Canyonlands UT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/UT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GUC">
+    <dc:title>Gunnison CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EBJ">
+    <dc:title>Esbjerg DK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;THF">
+    <dc:title>Berlin Tempelhof DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BSB">
+    <dc:title>Brasilia BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NAN">
+    <dc:title>Nadi FJ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FJ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KZN">
+    <dc:title>Kazan RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;INN">
+    <dc:title>Innsbruck AT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BWN">
+    <dc:title>Bandar BN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CAI">
+    <dc:title>Cairo EG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOO">
+    <dc:title>Bodo NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SMX">
+    <dc:title>Santa Maria CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WRL">
+    <dc:title>Worland WY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PTP">
+    <dc:title>Pointe-a-Pitre GP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SAL">
+    <dc:title>San Salvador SV</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SV"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CGK">
+    <dc:title>Jakarta ID</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ID"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BFL">
+    <dc:title>Bakersfield CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DCA">
+    <dc:title>Washington Reagan DC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/DC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LLA">
+    <dc:title>Lulea SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SVX">
+    <dc:title>Ekaterinburg RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SWF">
+    <dc:title>Newburgh NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RHO">
+    <dc:title>Rhodes GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PSC">
+    <dc:title>Pasco WA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YLL">
+    <dc:title>Lloydminster AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FCO">
+    <dc:title>Rome (Fiumicino) IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HAC">
+    <dc:title>Hachijo JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DGO">
+    <dc:title>Durango MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MSQ">
+    <dc:title>Minsk BY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PIT">
+    <dc:title>Pittsburgh PA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ROC">
+    <dc:title>Rochester NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YXY">
+    <dc:title>Whitehorse YT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/YT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HGN">
+    <dc:title>Mae Hong Son TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MHT">
+    <dc:title>Manchester NH US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;URT">
+    <dc:title>Surat TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MRU">
+    <dc:title>Mauritius MU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CAK">
+    <dc:title>Akron OH US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BLL">
+    <dc:title>Billund DK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ISN">
+    <dc:title>Williston ND US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/ND"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JKG">
+    <dc:title>Jonkoping SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CGH">
+    <dc:title>Sao Paulo Congonhas SP BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/SP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ATW">
+    <dc:title>Appleton WI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CHS">
+    <dc:title>Charleston SC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/SC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MLE">
+    <dc:title>Male MV</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MV"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GOJ">
+    <dc:title>Nizhniy Novgorod RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IAH">
+    <dc:title>Houston Bush TX US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ALO">
+    <dc:title>Waterloo IA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DAM">
+    <dc:title>Damascus SY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MVD">
+    <dc:title>Montevideo UY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BKK">
+    <dc:title>Bangkok TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VXO">
+    <dc:title>Vaxjo SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FUK">
+    <dc:title>Fukuoka JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VRA">
+    <dc:title>Varadero CU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CHQ">
+    <dc:title>Chania GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CEC">
+    <dc:title>Crescent City CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PEN">
+    <dc:title>Penang MY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BIS">
+    <dc:title>Bismarck ND US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/ND"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PDX">
+    <dc:title>Portland OR US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AMM">
+    <dc:title>Amman JO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MAH">
+    <dc:title>Menorca ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ROA">
+    <dc:title>Roanoke VA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/VA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PMV">
+    <dc:title>Porlamar VE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;VE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GEG">
+    <dc:title>Spokane WA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OSH">
+    <dc:title>Oshkosh WI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PAD">
+    <dc:title>Paderborn DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CTA">
+    <dc:title>Catania Fontanarossa IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KCZ">
+    <dc:title>Kochi JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AGA">
+    <dc:title>Agadir MA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DTM">
+    <dc:title>Dortmund DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MCI">
+    <dc:title>Kansas City MO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LHR">
+    <dc:title>London Heathrow GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CHO">
+    <dc:title>Charlottesville VA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/VA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FRS">
+    <dc:title>Flores Santa Elena GT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KUF">
+    <dc:title>Samara RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GUM">
+    <dc:title>Guam A.B. GU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GU"/>
+    <cyc:locatedIn rdf:resource="&place;GU/A.B."/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NPL">
+    <dc:title>New Plymouth NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CNF">
+    <dc:title>Belo Horizonte MG BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/MG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CCU">
+    <dc:title>Calcutta IN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DLC">
+    <dc:title>Dalian CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CND">
+    <dc:title>Constanta Kogalniceanu RO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GJT">
+    <dc:title>Grand Junction CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CAE">
+    <dc:title>Columbia SC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/SC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MCZ">
+    <dc:title>Maceio AL BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RNB">
+    <dc:title>Ronneby SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MMB">
+    <dc:title>Memanbetsu JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HAM">
+    <dc:title>Hamburg DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EVN">
+    <dc:title>Yerevan AM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RAP">
+    <dc:title>Rapid City US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KMJ">
+    <dc:title>Kumamoto JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YXE">
+    <dc:title>Saskatoon SA CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/SA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OXR">
+    <dc:title>Oxnard CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CIC">
+    <dc:title>Chico CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DEN">
+    <dc:title>Denver CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YPE">
+    <dc:title>Peace Rvr AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YUM">
+    <dc:title>Yuma AZ US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ORB">
+    <dc:title>Orebro-Bofors SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MAD">
+    <dc:title>Madrid ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PER">
+    <dc:title>Perth WA AU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+    <cyc:locatedIn rdf:resource="&place;AU/WA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZRH">
+    <dc:title>Zurich CH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BIO">
+    <dc:title>Bilbao ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PXM">
+    <dc:title>Puerto MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UTH">
+    <dc:title>Udon TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NAW">
+    <dc:title>Narathiwat TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ORF">
+    <dc:title>Norfolk VA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/VA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DEL">
+    <dc:title>Delhi IN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YXC">
+    <dc:title>Cranbrook BC CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/BC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VIS">
+    <dc:title>Visalia CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NRK">
+    <dc:title>Norrkoping SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LGA">
+    <dc:title>New York (La Guardia) NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LUX">
+    <dc:title>Luxembourg LU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CTM">
+    <dc:title>Chetumal MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MCO">
+    <dc:title>Orlando FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YQL">
+    <dc:title>Lethbridge AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BNA">
+    <dc:title>Nashville TN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ORD">
+    <dc:title>Chicago O&apos;Hare IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TRG">
+    <dc:title>Tauranga NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZCL">
+    <dc:title>Zacatecas MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UIO">
+    <dc:title>Quito Mariscal Sucr EC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KUH">
+    <dc:title>Kushiro JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NPE">
+    <dc:title>Napier-Hastings NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YVR">
+    <dc:title>Vancouver BC CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/BC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MCT">
+    <dc:title>Muscat OM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;OM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MBS">
+    <dc:title>Bay City MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOM">
+    <dc:title>Bombay/Mumbai IN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AYT">
+    <dc:title>Antalya TR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LEI">
+    <dc:title>Almeria ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BTV">
+    <dc:title>Burlington VT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/VT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WSZ">
+    <dc:title>Westport NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SLC">
+    <dc:title>Salt Lake City UT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/UT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LRD">
+    <dc:title>Laredo Int&apos;l TX US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BGM">
+    <dc:title>Binghamton NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EVE">
+    <dc:title>Harstad-Narvik NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OER">
+    <dc:title>Ornskoldsvik SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SGU">
+    <dc:title>St George UT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/UT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YWG">
+    <dc:title>Winnipeg MN CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/MN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JAX">
+    <dc:title>Jacksonville FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HAV">
+    <dc:title>Havana CU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AMS">
+    <dc:title>Amsterdam NL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SJJ">
+    <dc:title>Sarajevo BA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MEM">
+    <dc:title>Memphis TN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KMQ">
+    <dc:title>Komatsu JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOI">
+    <dc:title>Boise ID US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/ID"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SDL">
+    <dc:title>Sundsvall/Harnosand SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SJD">
+    <dc:title>San Jose MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PSP">
+    <dc:title>Palm Spgs CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;COS">
+    <dc:title>Colorado Spgs CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LAS">
+    <dc:title>Las Vegas NV US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NV"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TST">
+    <dc:title>Trang TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CCS">
+    <dc:title>Caracas VE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;VE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OTP">
+    <dc:title>Bucharest RO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NUE">
+    <dc:title>Nuremberg, DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HER">
+    <dc:title>Heraklion N. GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+    <cyc:locatedIn rdf:resource="&place;GR/N."/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DSM">
+    <dc:title>Des Moines IA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MTT">
+    <dc:title>Minatitlan MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HUX">
+    <dc:title>Huatulco MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SEZ">
+    <dc:title>Mahe Is.Seychelles SC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KBV">
+    <dc:title>Krabi TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ABE">
+    <dc:title>Allentown PA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SAN">
+    <dc:title>San Diego CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZGC">
+    <dc:title>Lanzhou CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOG">
+    <dc:title>Bogota CO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RUH">
+    <dc:title>Riyadh SA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HRG">
+    <dc:title>Hurghada EG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ASU">
+    <dc:title>Asuncion PY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CMN">
+    <dc:title>Casablanca MA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BJX">
+    <dc:title>Leon MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TFS">
+    <dc:title>Tenerife ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VER">
+    <dc:title>Veracruz MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BFV">
+    <dc:title>Buri Ram TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TIA">
+    <dc:title>Tirana AL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MAA">
+    <dc:title>Chennai IN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KWI">
+    <dc:title>Kuwait KW</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KW"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WAG">
+    <dc:title>Wanganui NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FKS">
+    <dc:title>Fukushima JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AGP">
+    <dc:title>Malaga ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HKD">
+    <dc:title>Hakodate JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BLQ">
+    <dc:title>Bologna IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ADB">
+    <dc:title>Izmir TR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GCM">
+    <dc:title>Grand Cayman Is. KY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MOD">
+    <dc:title>Modesto CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TAM">
+    <dc:title>Tampico MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GVA">
+    <dc:title>Geneva CH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MSY">
+    <dc:title>New Orleans LA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/LA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SPU">
+    <dc:title>Split HR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;HR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WKJ">
+    <dc:title>Wakkanai JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BEL">
+    <dc:title>Belem PA BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CWA">
+    <dc:title>Wausau WI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PEK">
+    <dc:title>Beijing CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PHY">
+    <dc:title>Phetchabun TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RGN">
+    <dc:title>Yangon MM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HOQ">
+    <dc:title>Hof DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PRN">
+    <dc:title>Pristina YU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;YU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MSO">
+    <dc:title>Missoula MT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PVH">
+    <dc:title>Porto Velho RO BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/RO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OKJ">
+    <dc:title>Okayama JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BRU">
+    <dc:title>Brussels BE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UVF">
+    <dc:title>St Lucia LC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LIM">
+    <dc:title>Lima PE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VNO">
+    <dc:title>Vilnius LT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BHX">
+    <dc:title>Birmingham GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KSD">
+    <dc:title>Karlstad SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AKL">
+    <dc:title>Auckland NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KLU">
+    <dc:title>Klagenfurt AT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EDI">
+    <dc:title>Edinburgh GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YGJ">
+    <dc:title>Yonago JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TSR">
+    <dc:title>Timisoara RO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SHA">
+    <dc:title>Shanghai Hongqiao CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KOJ">
+    <dc:title>Kagoshima JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MCP">
+    <dc:title>Macapa AP BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TOY">
+    <dc:title>Toyama JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TUL">
+    <dc:title>Tulsa OK US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SNN">
+    <dc:title>Shannon IE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BGO">
+    <dc:title>Bergen NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MME">
+    <dc:title>Teesside GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CLE">
+    <dc:title>Cleveland OH US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SLW">
+    <dc:title>Saltillo MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOS">
+    <dc:title>Boston MA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BMI">
+    <dc:title>Bloomington-Normal IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JER">
+    <dc:title>Jersey States GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ADD">
+    <dc:title>Addis Ababa ET</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ET"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VSA">
+    <dc:title>Villahermosa MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GRR">
+    <dc:title>Grand Rapids MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KUL">
+    <dc:title>Kuala Lumpur MY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LBA">
+    <dc:title>Leeds/Bradford GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TAO">
+    <dc:title>Qingdao CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ERF">
+    <dc:title>Erfurt DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HMO">
+    <dc:title>Hermosillo MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RLG">
+    <dc:title>Rostock-Laage Laage DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LKL">
+    <dc:title>Lakselv NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SDJ">
+    <dc:title>Sendai JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PEE">
+    <dc:title>Perm RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YUL">
+    <dc:title>Montreal QU CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/QU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PNH">
+    <dc:title>Phnom Penh KH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ARN">
+    <dc:title>Stockholm SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PGA">
+    <dc:title>Page AZ US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TAK">
+    <dc:title>Takamatsu JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IPL">
+    <dc:title>El Centro CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KMG">
+    <dc:title>Kunming CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RIS">
+    <dc:title>Rishiri JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AAL">
+    <dc:title>Aalborg DK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MZT">
+    <dc:title>Mazatlan MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UIN">
+    <dc:title>Quincy IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YQT">
+    <dc:title>Thunder Bay OT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/OT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BHE">
+    <dc:title>Blenheim NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PPT">
+    <dc:title>Papeete PF</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PF"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AKJ">
+    <dc:title>Asahikawa JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BHM">
+    <dc:title>Birmingham AL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DUB">
+    <dc:title>Dublin IE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TIP">
+    <dc:title>Tripoli LY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;POP">
+    <dc:title>Puerto Plata DO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EGE">
+    <dc:title>Vail CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FLL">
+    <dc:title>Ft Lauderdale FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TSJ">
+    <dc:title>Tsushima JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IVC">
+    <dc:title>Invercargill NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MUC">
+    <dc:title>Munich DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SMF">
+    <dc:title>Sacramento CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YQR">
+    <dc:title>Regina SA CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/SA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SKG">
+    <dc:title>Thessaloniki GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OMA">
+    <dc:title>Omaha NE US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CMH">
+    <dc:title>Columbus OH US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SYO">
+    <dc:title>Shonai JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TLS">
+    <dc:title>Toulouse FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OSD">
+    <dc:title>Ostersund SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HSG">
+    <dc:title>Saga JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KBP">
+    <dc:title>Kiev UA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CMB">
+    <dc:title>Colombo LK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EUG">
+    <dc:title>Eugene OR US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YYB">
+    <dc:title>N Bay OT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/OT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CZM">
+    <dc:title>Cozumel MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TBS">
+    <dc:title>Tbilisi GE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TBU">
+    <dc:title>Nuku&apos;Alofa TO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FUJ">
+    <dc:title>Fukue JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CLY">
+    <dc:title>Calvi Ste Catherine FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CVG">
+    <dc:title>Cincinnati OH US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TUN">
+    <dc:title>Tunis TN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TMP">
+    <dc:title>Tampere-Pirkkala FI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GAJ">
+    <dc:title>Yamagata JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GLA">
+    <dc:title>Glasgow GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ALF">
+    <dc:title>Alta NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GSO">
+    <dc:title>Greensboro NC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ODS">
+    <dc:title>Odessa UA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SKP">
+    <dc:title>Skopje MK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TSN">
+    <dc:title>Tianjin CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YOW">
+    <dc:title>Ottawa OT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/OT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ANU">
+    <dc:title>Antigua AG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GRB">
+    <dc:title>Green Bay WI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BZN">
+    <dc:title>Bozeman MT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YYZ">
+    <dc:title>Toronto Pearson OT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/OT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BSL">
+    <dc:title>Basel CH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LPA">
+    <dc:title>Las Palmas ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YYT">
+    <dc:title>St Johns NF CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/NF"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ABQ">
+    <dc:title>Albuquerque NM US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LIS">
+    <dc:title>Lisbon PT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KTM">
+    <dc:title>Kathmandu NP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FAT">
+    <dc:title>Fresno CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PTY">
+    <dc:title>Panama City PA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ALB">
+    <dc:title>Albany NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OAK">
+    <dc:title>Oakland Oak CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LCY">
+    <dc:title>London City GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SHR">
+    <dc:title>Sheridan WY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DLM">
+    <dc:title>Dalaman TR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YYJ">
+    <dc:title>Victoria BC CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/BC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PBI">
+    <dc:title>W Palm Beach FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AXT">
+    <dc:title>Akita JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NAK">
+    <dc:title>Nakhon TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;STT">
+    <dc:title>St Thomas Is.VI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;Is.VI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YQB">
+    <dc:title>Quebec QU CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/QU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MEX">
+    <dc:title>Mexico City MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MBL">
+    <dc:title>Manistee MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EZE">
+    <dc:title>Buenos Aires AR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TXL">
+    <dc:title>Berlin Tegel DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ITM">
+    <dc:title>Osaka Itami JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MMX">
+    <dc:title>Malmo SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;XMN">
+    <dc:title>Xiamen CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PRG">
+    <dc:title>Prague CZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ANC">
+    <dc:title>Anchorage AK US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YEG">
+    <dc:title>Edmonton AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ALY">
+    <dc:title>Alexandria EG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DPS">
+    <dc:title>Denpasar ID</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ID"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ASB">
+    <dc:title>Ashgabat TM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EWR">
+    <dc:title>Newark NJ US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NJ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MNL">
+    <dc:title>Manila PH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MDW">
+    <dc:title>Chicago Midway IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OKD">
+    <dc:title>Sapporo JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UME">
+    <dc:title>Umea SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DBV">
+    <dc:title>Dubrovnik HR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;HR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;POZ">
+    <dc:title>Poznan PL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MAN">
+    <dc:title>Manchester GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SZG">
+    <dc:title>Salzburg AT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SVO">
+    <dc:title>Moscow RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MBJ">
+    <dc:title>Montego Bay JM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YZR">
+    <dc:title>Sarnia OT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/OT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HOG">
+    <dc:title>Holguin CU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AUA">
+    <dc:title>Aruba AW</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AW"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RNO">
+    <dc:title>Reno NV US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NV"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RDM">
+    <dc:title>Bend OR US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MMY">
+    <dc:title>Miyako JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KRK">
+    <dc:title>Krakow PL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NVT">
+    <dc:title>Navegantes SC BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/SC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DUR">
+    <dc:title>Durban ZA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ZA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AIA">
+    <dc:title>Alliance NE US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LXR">
+    <dc:title>Luxor EG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KHI">
+    <dc:title>Karachi PK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GCC">
+    <dc:title>Gillette WY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MKE">
+    <dc:title>Milwaukee WI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FAR">
+    <dc:title>Fargo ND US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/ND"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LGG">
+    <dc:title>Liege Bierset BE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IMT">
+    <dc:title>Iron Mtn MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TLL">
+    <dc:title>Tallinn EE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JPA">
+    <dc:title>Joao PB BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TGZ">
+    <dc:title>Tuxtla MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SDF">
+    <dc:title>Louisville KY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/KY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DAC">
+    <dc:title>Dhaka Zia BD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DAD">
+    <dc:title>Da Nang VN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;VN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;THE">
+    <dc:title>Teresina PI BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MKG">
+    <dc:title>Muskegon MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ROS">
+    <dc:title>Rosario SF AR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+    <cyc:locatedIn rdf:resource="&place;AR/SF"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LCA">
+    <dc:title>Larnaca CY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SYD">
+    <dc:title>Sydney NS AU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+    <cyc:locatedIn rdf:resource="&place;AU/NS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SHE">
+    <dc:title>Shenyang CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ROT">
+    <dc:title>Rotorua NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YYC">
+    <dc:title>Calgary AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WHK">
+    <dc:title>Whakatane NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ADL">
+    <dc:title>Adelaide SA AU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+    <cyc:locatedIn rdf:resource="&place;AU/SA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RMI">
+    <dc:title>Rimini IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HRK">
+    <dc:title>Kharkov UA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ELP">
+    <dc:title>El Paso Int&apos;l TX US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SJO">
+    <dc:title>San Jose CR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ISG">
+    <dc:title>Ishigaki JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PVR">
+    <dc:title>Puerto Vallarta MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CEI">
+    <dc:title>Chiang Rai TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NOU">
+    <dc:title>Noumea NC</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZQN">
+    <dc:title>Queenstown NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OFK">
+    <dc:title>Norfolk NE US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DUD">
+    <dc:title>Dunedin NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;REC">
+    <dc:title>Recife PE BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LEX">
+    <dc:title>Lexington KY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/KY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LEJ">
+    <dc:title>Leipzig DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AVI">
+    <dc:title>Ciego De Avila CU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MLM">
+    <dc:title>Morelia MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MBE">
+    <dc:title>Monbetsu JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;COR">
+    <dc:title>Cordoba CD AR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+    <cyc:locatedIn rdf:resource="&place;AR/CD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GOT">
+    <dc:title>Gothenburg SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DTW">
+    <dc:title>Detroit MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SEA">
+    <dc:title>Seattle/Tacoma WA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IGU">
+    <dc:title>Iguassu Falls PR BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AGH">
+    <dc:title>Helsingborg SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ACV">
+    <dc:title>Arcata CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BEY">
+    <dc:title>Beirut LB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ATH">
+    <dc:title>Athens GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KGS">
+    <dc:title>Kos GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SCL">
+    <dc:title>Santiago CL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SXB">
+    <dc:title>Strasbourg FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YQX">
+    <dc:title>Gander NF CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/NF"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MIR">
+    <dc:title>Monastir TN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TRN">
+    <dc:title>Turin IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SJU">
+    <dc:title>San Juan PR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LAX">
+    <dc:title>Los Angeles CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;POA">
+    <dc:title>Porto Alegre RS BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/RS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LIH">
+    <dc:title>Kauai Is. HI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/HI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HAN">
+    <dc:title>Hanoi VN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;VN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DFW">
+    <dc:title>Dallas/Ft Worth TX US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;STR">
+    <dc:title>Stuttgart DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GDL">
+    <dc:title>Guadalajara MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HND">
+    <dc:title>Tokyo Haneda JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GDN">
+    <dc:title>Gdansk PL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NLK">
+    <dc:title>Norfolk Is. NF</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NF"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FLN">
+    <dc:title>Florianopolis SC BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/SC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FWA">
+    <dc:title>Ft Wayne  IN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CZA">
+    <dc:title>Chichen Itza MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LHE">
+    <dc:title>Lahore PK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CNX">
+    <dc:title>Chiang Mai TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VIX">
+    <dc:title>Vitoria ES BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LTO">
+    <dc:title>Loreto MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BDL">
+    <dc:title>Hartford CT US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YQM">
+    <dc:title>Moncton, NB, CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+    <cyc:locatedIn rdf:resource="&place;CN/NB,"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NRT">
+    <dc:title>Tokyo Narita JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SGF">
+    <dc:title>Springfield MO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FRA">
+    <dc:title>Frankfurt DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FAO">
+    <dc:title>Faro PT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YYG">
+    <dc:title>Charlottetown PE CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/PE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OKA">
+    <dc:title>Okinawa JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SCN">
+    <dc:title>Saarbruecken DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BDA">
+    <dc:title>Bermuda BM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OLB">
+    <dc:title>Olbia IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BGI">
+    <dc:title>Bridgetown BB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JNB">
+    <dc:title>Johannesburg ZA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ZA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VTE">
+    <dc:title>Vientiane LA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TRD">
+    <dc:title>Trondheim NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LAN">
+    <dc:title>Lansing MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CPT">
+    <dc:title>Cape Town ZA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ZA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KMI">
+    <dc:title>Miyazaki JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SPI">
+    <dc:title>Springfield IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CID">
+    <dc:title>Cedar Rapids IA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NCL">
+    <dc:title>Newcastle GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HKK">
+    <dc:title>Hokitika NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GRO">
+    <dc:title>Gerona Costa Brava ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TTJ">
+    <dc:title>Tottori JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TYS">
+    <dc:title>Knoxville TN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NAP">
+    <dc:title>Naples IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ABZ">
+    <dc:title>Aberdeen GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TMT">
+    <dc:title>Trombetas PA BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TPA">
+    <dc:title>Tampa FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DXB">
+    <dc:title>Dubai AE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KAT">
+    <dc:title>Kaitaia NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CTS">
+    <dc:title>Sapporo JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GRZ">
+    <dc:title>Graz Thalerhof AT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AGB">
+    <dc:title>Augsburg DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GIG">
+    <dc:title>Rio De Janeiro Int&apos;l RJ BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/RJ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;STL">
+    <dc:title>St Louis MO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HPN">
+    <dc:title>Westchester NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OZH">
+    <dc:title>Zaporozhye UA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PVD">
+    <dc:title>Providence RI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/RI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BUR">
+    <dc:title>Burbank CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HDY">
+    <dc:title>Hat Yai TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OAX">
+    <dc:title>Oaxaca MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YOJ">
+    <dc:title>High Level AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BRE">
+    <dc:title>Bremen DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PHS">
+    <dc:title>Phitsanulok TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SJC">
+    <dc:title>San Jose CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NLD">
+    <dc:title>Nuevo Laredo MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SUF">
+    <dc:title>Lamezia-Terme IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IND">
+    <dc:title>Indianapolis IN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SFJ">
+    <dc:title>Kangerlussuaq GL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LOS">
+    <dc:title>Lagos NG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BWI">
+    <dc:title>Baltimore MD US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WRO">
+    <dc:title>Wroclaw PL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GWT">
+    <dc:title>Westerland DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OGG">
+    <dc:title>Kahului HI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/HI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOJ">
+    <dc:title>Bourgas BG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ASM">
+    <dc:title>Asmara ER</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ER"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MTJ">
+    <dc:title>Montrose CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TUS">
+    <dc:title>Tucson AZ US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TOS">
+    <dc:title>Tromso/Langnes NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HAJ">
+    <dc:title>Hanover DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CZS">
+    <dc:title>Cruzeiro AC BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JAC">
+    <dc:title>Jackson Hole WY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RDU">
+    <dc:title>Durham NC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AOJ">
+    <dc:title>Aomori JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CFU">
+    <dc:title>Kerkyra GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KID">
+    <dc:title>Kristianstad SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TKU">
+    <dc:title>Turku FI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IAD">
+    <dc:title>Washington Dulles DC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/DC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AJU">
+    <dc:title>Aracaju SE BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CDR">
+    <dc:title>Chadron NE US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NNT">
+    <dc:title>Nan TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MFR">
+    <dc:title>Medford OR US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MIA">
+    <dc:title>Miami FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CDG">
+    <dc:title>Paris (Ch.de Gaulle) FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SUB">
+    <dc:title>Surabaya ID</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ID"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LED">
+    <dc:title>St Petersburg RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MLI">
+    <dc:title>Moline IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OPO">
+    <dc:title>Porto PT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BUF">
+    <dc:title>Buffalo NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DMM">
+    <dc:title>Dammam SA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KIX">
+    <dc:title>Osaka Kansai JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JED">
+    <dc:title>Jeddah SA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CTU">
+    <dc:title>Chengdu CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SAV">
+    <dc:title>Savannah GA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/GA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NGO">
+    <dc:title>Nagoya JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MEL">
+    <dc:title>Melbourne VI AU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AU"/>
+    <cyc:locatedIn rdf:resource="&place;AU/VI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BUD">
+    <dc:title>Budapest HU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;HU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AAR">
+    <dc:title>Aarhus DK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HAU">
+    <dc:title>Haugesund NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BEG">
+    <dc:title>Belgrade YU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;YU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KIV">
+    <dc:title>Chisinau MD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IST">
+    <dc:title>Istanbul Ataturk TR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HLZ">
+    <dc:title>Hamilton NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DDC">
+    <dc:title>Dodge City KS US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/KS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CAN">
+    <dc:title>Guangzhou CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KOA">
+    <dc:title>Kona Keahole HI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/HI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FSD">
+    <dc:title>Sioux Falls SD US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/SD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NAT">
+    <dc:title>Natal RN BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/RN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KKN">
+    <dc:title>Kirkenes NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SNA">
+    <dc:title>Orange County/Santa Ana CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BFS">
+    <dc:title>Belfast GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KKC">
+    <dc:title>Khon Kaen TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VIE">
+    <dc:title>Vienna AT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CWB">
+    <dc:title>Curitiba PR BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KRT">
+    <dc:title>Khartoum SD</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MSN">
+    <dc:title>Madison WI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HDF">
+    <dc:title>Heringsdorf DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;XRY">
+    <dc:title>Jerez De La Frontera ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ICT">
+    <dc:title>Wichita KS US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/KS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MTY">
+    <dc:title>Monterrey MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VST">
+    <dc:title>Vasteras Hasslo SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BCN">
+    <dc:title>Barcelona ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BOD">
+    <dc:title>Bordeaux FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TIU">
+    <dc:title>Timaru NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KIJ">
+    <dc:title>Niigata JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KRN">
+    <dc:title>Kiruna SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SGN">
+    <dc:title>Ho Chi Minh VN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;VN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;POS">
+    <dc:title>Port Of Spain TT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PVG">
+    <dc:title>Shanghai Pu Dong CN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NGS">
+    <dc:title>Nagasaki JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AUH">
+    <dc:title>Abu Dhabi AE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MAO">
+    <dc:title>Manaus AM BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;REU">
+    <dc:title>Reus ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PMR">
+    <dc:title>Palmerston NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FAI">
+    <dc:title>Fairbanks AK US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SLZ">
+    <dc:title>Sao Luiz MA BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/MA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RSW">
+    <dc:title>Ft Myers FL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/FL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FMO">
+    <dc:title>Muenster DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HKG">
+    <dc:title>Hong Kong HK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;HK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SIN">
+    <dc:title>Singapore Changi SG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TPE">
+    <dc:title>Taipei TW</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TW"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KRR">
+    <dc:title>Krasnodar RU</dc:title>
+    <cyc:locatedIn rdf:resource="&place;RU"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KKE">
+    <dc:title>Kerikeri NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ONT">
+    <dc:title>Ontario CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MSP">
+    <dc:title>Minneapolis St Paul MN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BLR">
+    <dc:title>Bangalore IN</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IN"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IBZ">
+    <dc:title>Ibiza ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TIJ">
+    <dc:title>Tijuana MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SSA">
+    <dc:title>Salvador BA BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/BA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LYS">
+    <dc:title>Lyon FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZIH">
+    <dc:title>Ixtapa MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SNO">
+    <dc:title>Sakon TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RDD">
+    <dc:title>Redding CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZLO">
+    <dc:title>Manzanillo MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SPC">
+    <dc:title>Santa Cruz ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ASE">
+    <dc:title>Aspen CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PHL">
+    <dc:title>Philadelphia PA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HIJ">
+    <dc:title>Hiroshima JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RBJ">
+    <dc:title>Rebun JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;IYK">
+    <dc:title>Inyokern CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SHB">
+    <dc:title>Nakashibetsu JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YGK">
+    <dc:title>Kingston OT CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/OT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AZO">
+    <dc:title>Kalamazoo MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;COD">
+    <dc:title>Cody WY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CLD">
+    <dc:title>Carlsbad CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TKS">
+    <dc:title>Tokushima JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VCE">
+    <dc:title>Venice IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RIC">
+    <dc:title>Richmond VA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/VA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ACC">
+    <dc:title>Accra GH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YXH">
+    <dc:title>Medicine Hat AL CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/AL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BAK">
+    <dc:title>Baku AZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MHG">
+    <dc:title>Mannheim DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WAW">
+    <dc:title>Warsaw PL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CGR">
+    <dc:title>Campo Grande MS BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/MS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MDZ">
+    <dc:title>Mendoza MD AR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AR"/>
+    <cyc:locatedIn rdf:resource="&place;AR/MD"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DNK">
+    <dc:title>Dnepropetrovsk UA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GIS">
+    <dc:title>Gisborne NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PAP">
+    <dc:title>Port Au Prince HT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;HT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KSC">
+    <dc:title>Kosice SK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LNZ">
+    <dc:title>Linz AT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;AT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ACA">
+    <dc:title>Acapulco MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CUN">
+    <dc:title>Cancun MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SAT">
+    <dc:title>San Antonio TX US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/TX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;THR">
+    <dc:title>Tehran IR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;JFK">
+    <dc:title>New York (JFK) NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;STM">
+    <dc:title>Santarem PA BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KOP">
+    <dc:title>Nakhon TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FDF">
+    <dc:title>Ft De France MQ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MQ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PWM">
+    <dc:title>Portland ME US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/ME"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BNX">
+    <dc:title>Banja BA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HKT">
+    <dc:title>Phuket TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FOR">
+    <dc:title>Fortaleza CE BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/CE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YDQ">
+    <dc:title>Dawson Creek BC CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/BC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GRU">
+    <dc:title>Sao Paulo Guarulhos SP BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/SP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;YHZ">
+    <dc:title>Halifax NS CA</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CA"/>
+    <cyc:locatedIn rdf:resource="&place;CA/NS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SXF">
+    <dc:title>Berlin Schoenefeld DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BVB">
+    <dc:title>Boa Vista BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RBR">
+    <dc:title>Rio Branco AC BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TBT">
+    <dc:title>Tabatinga AM BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CGN">
+    <dc:title>Cologne/Bonn DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CGB">
+    <dc:title>Cuiaba MT BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/MT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SYR">
+    <dc:title>Syracuse NY US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LBL">
+    <dc:title>Liberal KS US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/KS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;UBP">
+    <dc:title>Ubon TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PUJ">
+    <dc:title>Punta DO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MRS">
+    <dc:title>Marseille FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TVC">
+    <dc:title>Traverse City MI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/MI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MLA">
+    <dc:title>Malta MT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NCE">
+    <dc:title>Nice FR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CHC">
+    <dc:title>Christchurch NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MDT">
+    <dc:title>Harrisburg PA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HEL">
+    <dc:title>Helsinki-Vantaa FI</dc:title>
+    <cyc:locatedIn rdf:resource="&place;FI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RIX">
+    <dc:title>Riga LV</dc:title>
+    <cyc:locatedIn rdf:resource="&place;LV"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MYJ">
+    <dc:title>Matsuyama JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VBY">
+    <dc:title>Visby SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TUO">
+    <dc:title>Taupo NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HNL">
+    <dc:title>Honolulu HI US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/HI"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SCE">
+    <dc:title>St College PA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MBA">
+    <dc:title>Mombasa Moi KE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SBA">
+    <dc:title>Santa Barbara CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ALA">
+    <dc:title>Almaty KZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FDH">
+    <dc:title>Friedrichshafen DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;AVP">
+    <dc:title>Scranton PA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/PA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LNK">
+    <dc:title>Lincoln NE US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;APW">
+    <dc:title>Apia Faleolo WS</dc:title>
+    <cyc:locatedIn rdf:resource="&place;WS"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ALC">
+    <dc:title>Alicante ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GSP">
+    <dc:title>Greenville SC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/SC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SSH">
+    <dc:title>Sharm EG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;EG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PDP">
+    <dc:title>Punta Del Este UY</dc:title>
+    <cyc:locatedIn rdf:resource="&place;UY"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GYN">
+    <dc:title>Goiania GO BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/GO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;BHD">
+    <dc:title>Belfast GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ATL">
+    <dc:title>Atlanta GA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/GA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DAY">
+    <dc:title>Dayton OH US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SOF">
+    <dc:title>Sofia BG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PUS">
+    <dc:title>Busan Gimhae KR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;KR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;VAR">
+    <dc:title>Varna BG</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BG"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LIN">
+    <dc:title>Milan (Linate) IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ACE">
+    <dc:title>Lanzarote ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ZTH">
+    <dc:title>Zakinthos Is GR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OIT">
+    <dc:title>Oita JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TLV">
+    <dc:title>Tel Aviv IL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FLR">
+    <dc:title>Florence (Peretola) IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CLT">
+    <dc:title>Charlotte NC US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NC"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;LPB">
+    <dc:title>La Paz BO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;TFF">
+    <dc:title>Tefe AM BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/AM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SVG">
+    <dc:title>Stavanger NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WLG">
+    <dc:title>Wellington NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DRS">
+    <dc:title>Dresden DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CRW">
+    <dc:title>Charleston WV US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/WV"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GUA">
+    <dc:title>Guatemala City GT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KEL">
+    <dc:title>Kiel DE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MID">
+    <dc:title>Merida MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;GRI">
+    <dc:title>Grand Is. NE US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/NE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CME">
+    <dc:title>Ciudad MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PHX">
+    <dc:title>Phoenix AZ US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/AZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KLR">
+    <dc:title>Kalmar SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;NSN">
+    <dc:title>Nelson NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;CPH">
+    <dc:title>Copenhagen DK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PRH">
+    <dc:title>Phrae TH</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TH"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;FUE">
+    <dc:title>Fuerteventura ES</dc:title>
+    <cyc:locatedIn rdf:resource="&place;ES"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;PIA">
+    <dc:title>Peoria IL US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;ESB">
+    <dc:title>Ankara TR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;TR"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;RAR">
+    <dc:title>Rarotonga CK</dc:title>
+    <cyc:locatedIn rdf:resource="&place;CK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;WRE">
+    <dc:title>Whangarei NZ</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NZ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SDQ">
+    <dc:title>Santo Domingo DO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;DO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OSL">
+    <dc:title>Oslo NO</dc:title>
+    <cyc:locatedIn rdf:resource="&place;NO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SFT">
+    <dc:title>Skelleftea SE</dc:title>
+    <cyc:locatedIn rdf:resource="&place;SE"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KIN">
+    <dc:title>Kingston JM</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JM"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;EMA">
+    <dc:title>Nottingham GB</dc:title>
+    <cyc:locatedIn rdf:resource="&place;GB"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;HDN">
+    <dc:title>Hayden CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MXP">
+    <dc:title>Milan (Malpensa) IT</dc:title>
+    <cyc:locatedIn rdf:resource="&place;IT"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SBP">
+    <dc:title>San Luis Obispo CA US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CA"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;MXL">
+    <dc:title>Mexicali MX</dc:title>
+    <cyc:locatedIn rdf:resource="&place;MX"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OKC">
+    <dc:title>Oklahoma City OK US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/OK"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;OIR">
+    <dc:title>Okushiri JP</dc:title>
+    <cyc:locatedIn rdf:resource="&place;JP"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;DRO">
+    <dc:title>Durango CO US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/CO"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SDU">
+    <dc:title>Rio De Janeiro Santos Dumont RJ BR</dc:title>
+    <cyc:locatedIn rdf:resource="&place;BR"/>
+    <cyc:locatedIn rdf:resource="&place;BR/RJ"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;KTW">
+    <dc:title>Katowice PL</dc:title>
+    <cyc:locatedIn rdf:resource="&place;PL"/>
+  </airport:Airport>
+
+  <airport:Airport rdf:about="&airport;SBN">
+    <dc:title>S Bend IN US</dc:title>
+    <cyc:locatedIn rdf:resource="&place;US"/>
+    <cyc:locatedIn rdf:resource="&place;US/IN"/>
+  </airport:Airport>
+
+</rdf:RDF>

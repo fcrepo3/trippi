@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+                      
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+    <title>Trippi Implementation Guide</title> 
+    <link rel="stylesheet" type="text/css" href="docstyle.css" />
+</head>
+
+<body>
+<div id="header">
+    <a href="" id="logo"></a>
+    <div id="title">
+        <h1>Trippi Implementation Guide</h1>
+    </div>
+</div>
+
+<div id="toc">
+    <h2>Table of Contents</h2>
+
+    <div id="tocbox">
+      <ol>
+        <li> <a href="#overview">Overview</a></li>
+        <li> <a href="#prerequisites">Prerequisites</a></li>
+        <li> <a href="#impl">What You Need to Implement</a></li>
+      </ol>
+    </div>
+
+</div>
+
+<div class="sect">
+  <h2><a name="overview">1. Overview</a></h2>
+  <p>
+     This guide describes how to write a <code><a href="api/org/trippi/TriplestoreConnector.html">TriplestoreConnector</a></code> implementation
+     for Trippi.  Once implemented, you can use your own triplestore as
+     the back-end for the <a href="user-guide.html#console">Trippi console</a>, 
+     the <a href="user-guide.html#service">Trippi Query Web Service</a>, and
+     <a href="http://tripletest.sourceforge.net/">other</a> <a href="http://www.fedora.info/download/2.0/userdocs/server/resourceIndex/index.html">applications</a>.
+  </p>
+</div>
+
+<div class="sect">
+  <h2><a name="prerequisites">2. Prerequisites</a></h2>
+  <p>
+     Before setting out, you should understand:
+     <ol>
+       <li> <a href="user-guide.html">How to use Trippi</a>.</li>
+       <li> How to add, delete, and perform queries in your native triplestore, 
+            using whatever means it provides.</li>
+       <li> Whether your underlying triplestore is thread-safe, and whether
+            it allows (or protects from) concurrent access, and how.</li>
+     </ol>
+  </p>
+</div>
+
+<div class="sect">
+  <h2><a name="impl">3. What You Need to Implement</a></h2>
+  <p>
+    It's easiest to explain this with a concrete example.
+  </p>
+  <p>
+    Let's assume you're writing a TriplestoreConnector for
+    a new triplestore called MyStore, which is accessed via JDBC and has
+    it's own SQL-style query language, called "MyQL", for doing RDF queries.
+    MyStore supports multiple concurrent connections.
+  </p>
+  <p>
+    First, you should:
+    <ol>
+      <li> Write and test a class that extends <code><a href="api/org/trippi/TripleIterator.html">org.trippi.TripleIterator</a></code></li>
+      <li> Write and test a class that extends <code><a href="api/org/trippi/TupleIterator.html">org.trippi.TupleIterator</a></code></li>
+      <li> Write and test a class that implements <code><a href="api/org/trippi/impl/base/TriplestoreSession.html">org.trippi.impl.base.TriplestoreSession</a></code></li>
+    </ol>
+    Then you should:
+    <ol>
+      <li> Write and test a class that implements <code><a href="api/org/trippi/impl/base/TriplestoreSessionFactory.html">org.trippi.impl.base.TriplestoreSessionFactory</a></code>,
+           which is a simple provider of your kinds of sessions.  It should use a single DBCP connection pool (
+           <a href="#impl.dbcp">see here for
+           sample code to construct a DBCP DataSource</a>)
+           to construct new MyTriplestoreSession instances.
+      </li>
+      <li> Write and test a class that extends <code><a href="api/org/trippi/TriplestoreConnector.html">org.trippi.TriplestoreConnector</a></code>.
+           This class is will be responsible for returning a single TriplestoreWriter instance whenenver
+           getReader or getWriter is called.  This instance should be an instance of 
+           <code><a href="api/org/trippi/impl/base/ConcurrentTriplestoreWriter.html">org.trippi.impl.base.ConcurrentTriplestoreWriter</a></code>.
+           At this point, you should be able to construct your own instances of all the classes necessary to 
+           construct one of these (see the constructor, and also the source code of org.trippi.impl.kowari.KowariConnector
+           to see what is needed and how it can be done).</li>
+      <li> Write your own Connector Descriptor XML file that describes how
+           your particular TriplestoreConnector can be configured.
+           Use the existing ones in the org/trippi/impl/sesame
+           and org/trippi/impl/kowari directories as a guide.  Name it the same
+           (and put it in the same package) as your TriplestoreConnector 
+           implementation, but use the suffix "Descriptor.xml".</li>
+    </ol>
+    Finally, you should package it all up in a jar, put it in
+    the lib directory, and use the <a href="user-guide.html#console">Trippi Console</a> 
+    application to test it!  Make sure you have included the <a href="http://jakarta.apache.org/commons/dbcp/">commons-dbcp</a> jar (and any jars
+    it requires) as well as any DB-specific JDBC drivers in the lib directory 
+    before attempting this.
+  </p>
+  <p> 
+    Partial implementations of the first several classes you need to write
+    follow.  If you're using this code as a template to
+    write a JDBC-backed implementation, pay particular attention to text
+    in <b>bold</b> -- it's what you'll need to change/implement in your
+    particular situation.
+  </p>
+  <div class="subsect">
+    <h3><a name="impl.mytripleiterator">MyTripleIterator.java</a></h3>
+    <p>
+      This class will be used to support your implementation of <a href="api/org/trippi/impl/base/TriplestoreSession.html#findTriples(org.jrdf.graph.SubjectNode,%20org.jrdf.graph.PredicateNode,%20org.jrdf.graph.ObjectNode)">TriplestoreSession.findTriples(SubjectNode, PredicateNode, ObjectNode)</a>.
+      Once written, you should be able to test this class by giving it
+      an actual JDBC ResultSet/Statement pair from a query to your underlying
+      triplestore that returns a subject, predicate, and object for each
+      result row.
+    </p>
+    <div class="code"><pre>
+package <b>org.example.mystore.trippi;</b>
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+// from jrdf jar
+import org.jrdf.graph.Triple;
+
+// from trippi jar
+import org.trippi.TripleIterator;
+import org.trippi.TrippiException;
+
+public class <b>MyTripleIterator</b> extends TripleIterator {
+
+    private ResultSet m_resultSet;
+    private Statement m_statement;
+    private Connection m_connection;
+
+    private Triple m_nextTriple;
+
+    private boolean m_closed;
+
+    public <b>MyTripleIterator</b>(ResultSet resultSet,
+                            Statement statement,
+                            Connection connection) throws TrippiException {
+
+        m_resultSet = resultSet;
+        m_statement = statement;
+        m_connection = connection;
+
+        m_nextTriple = getNextTriple();
+    }
+
+    private Triple getNextTriple() throws TrippiException {
+        try {
+            if (m_resultSet.next()) {
+                return getTripleFromCurrentRow();
+            } else {
+                return null;  // signals no more results
+            }
+        } catch (Throwable th) {
+            throw new TrippiException("Error moving to next "
+                    + "ResultSet row", th);
+        }
+    }
+
+    private Triple getTripleFromCurrentRow() throws TrippiException {
+        try {<b>
+            //
+            // TODO: Convert the subject, predicate, and object in the current
+            //       m_resultSet row into an org.jrdf.graph.Triple and return it
+            //
+            throw new Exception("Not implemented");</b>
+        } catch (Throwable th) {
+            throw new TrippiException("Error getting triple from current "
+                    + "ResultSet row", th);
+        }
+    }
+
+    public boolean hasNext() throws TrippiException {
+        return (m_nextTriple != null);
+    }
+
+    public Triple next() throws TrippiException {
+        if (m_nextTriple == null) {
+            return null;
+        } else {
+            Triple thisTriple = m_nextTriple;
+            m_nextTriple = getNextTriple();
+            return thisTriple;
+        }
+    }
+
+    public void close() throws TrippiException {
+        if (!m_closed) {
+            try {
+                m_resultSet.close();
+                m_statement.close();
+                m_connection.close();
+                m_closed = true;
+            } catch (Throwable th) {
+                throw new TrippiException("Error closing <b>MyTripleIterator</b>", th);
+            }
+        }
+    }
+}
+</pre></div>
+  </div>
+
+  <div class="subsect">
+    <h3><a name="impl.mytupleiterator">MyTupleIterator.java</a></h3>
+    <p>
+      This class will be used to support your implementation of <a href="api/org/trippi/impl/base/TriplestoreSession.html#query(java.lang.String,%20java.lang.String)">TriplestoreSession.query(String, String)</a>
+      It can be tested much like MyTripleIterator.java.  In this case, the
+      JDBC ResultSet is expected to contain an arbitrary number of bound 
+      variables.
+    </p>
+    <div class="code"><pre>
+package <b>org.example.mystore.trippi;</b>
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.util.Map;
+
+// from trippi jar
+import org.trippi.TrippiException;
+import org.trippi.TupleIterator;
+
+public class <b>MyTupleIterator</b> extends TupleIterator {
+
+    private ResultSet m_resultSet;
+    private Statement m_statement;
+    private Connection m_connection;
+
+    private String[] m_columnNames;
+
+    private Map m_nextTuple;
+
+    private boolean m_closed;
+
+    public <b>MyTupleIterator</b>(ResultSet resultSet,
+                           Statement statement,
+                           Connection connection) throws TrippiException {
+
+        m_resultSet = resultSet;
+        m_statement = statement;
+        m_connection = connection;
+
+        m_columnNames = getColumnNames();
+
+        m_nextTuple = getNextTuple();
+    }
+
+    private String[] getColumnNames() throws TrippiException {
+        try {
+            ResultSetMetaData md = m_resultSet.getMetaData();
+            String[] names = new String[md.getColumnCount()];
+            for (int i = 0; i &lt; names.length; i++) {
+                names[i] = md.getColumnName(i);
+            }
+            return names;
+        } catch (Throwable th) {
+            throw new TrippiException("Error getting ResultSet metadata", th);
+        }
+    }
+
+    public String[] names() {
+        return m_columnNames;
+    }
+
+    private Map getNextTuple() throws TrippiException {
+        try {
+            if (m_resultSet.next()) {
+                return getTupleFromCurrentRow();
+            } else {
+                return null;  // signals no more results
+            }
+        } catch (Throwable th) {
+            throw new TrippiException("Error moving to next ResultSet row", th);
+        }
+    }
+
+    private Map getTupleFromCurrentRow() throws TrippiException {
+        try {<b>
+            //
+            // TODO: Convert all named values in the current m_resultSet row
+            //       into JRDF Node objects, put these in a Map keyed by name,
+            //       and return it.
+            //
+            throw new Exception("Not implemented");</b>
+        } catch (Throwable th) {
+            throw new TrippiException("Error getting tuple from current "
+                    + "ResultSet row", th);
+        }
+    }
+
+    public boolean hasNext() throws TrippiException {
+        return (m_nextTuple != null);
+    }
+
+    public Map next() throws TrippiException {
+        if (m_nextTuple == null) {
+            return null;
+        } else {
+            Map thisTuple = m_nextTuple;
+            m_nextTuple = getNextTuple();
+            return thisTuple;
+        }
+    }
+
+    public void close() throws TrippiException {
+        if (!m_closed) {
+            try {
+                m_resultSet.close();
+                m_statement.close();
+                m_connection.close();
+                m_closed = true;
+            } catch (Throwable th) {
+                throw new TrippiException("Error closing <b>MyTupleIterator</b>", th);
+            }
+        }
+    }
+}
+</pre></div>
+  </div>
+
+  <div class="subsect">
+    <h3><a name="impl.mytriplestoresession">MyTriplestoreSession.java</a></h3>
+    <p>
+      This uses the above classes to help implement the TriplestoreSession interface.
+    </p>
+    <div class="code"><pre>
+package <b>org.example.mystore.trippi;</b>
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Iterator;
+import java.util.Set;
+
+// from commons-dbcp jar
+import org.apache.commons.dbcp.BasicDataSource;
+
+// from jrdf jar
+import org.jrdf.graph.ObjectNode;
+import org.jrdf.graph.PredicateNode;
+import org.jrdf.graph.SubjectNode;
+import org.jrdf.graph.Triple;
+
+// from trippi jar
+import org.trippi.TripleIterator;
+import org.trippi.TrippiException;
+import org.trippi.TupleIterator;
+import org.trippi.impl.base.TriplestoreSession;
+
+public class <b>MyTriplestoreSession</b> implements TriplestoreSession {
+
+    private static final String _SPO  = "spo";
+    private static final String <b>_MYQL = "myql";</b>
+
+    private static final String[] _TRIPLE_LANGS = new String[] { _SPO };
+    private static final String[] _TUPLE_LANGS  = new String[] { <b>_MYQL</b> };
+
+    private BasicDataSource m_dbPool;
+
+    public MyTriplestoreSession(BasicDataSource dbPool) {
+        m_dbPool = dbPool;
+    }
+
+    public String[] listTripleLanguages() { return _TRIPLE_LANGS; }
+           
+    public String[] listTupleLanguages()  { return _TUPLE_LANGS; }
+
+    // Find triples in a language other than SPO (SPO is parsed at a higher
+    // level, then passed to the other findTriples method)
+    public TripleIterator findTriples(String lang, 
+                                      String queryText) throws TrippiException {
+        throw new TrippiException("Unsupported triple query language: " + lang);
+    }
+
+    // This is used to support the required SPO query language
+    public TripleIterator findTriples(SubjectNode subject, 
+                                      PredicateNode predicate, 
+                                      ObjectNode object) throws TrippiException {
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rset = null;
+        try {
+            conn = m_dbPool.getConnection();
+            stmt = conn.createStatement();
+            rset = stmt.executeQuery(getTripleQuery(subject,
+                                                    predicate,
+                                                    object));
+            return new <b>MyTripleIterator</b>(rset, stmt, conn);
+        } catch (Throwable th) {
+            if (rset != null) {
+                try { rset.close(); } catch (Exception e) { }
+            }
+            if (stmt != null) {
+                try { stmt.close(); } catch (Exception e) { }
+            }
+            if (conn != null) {
+                try { conn.close(); } catch (Exception e) { }
+            }
+            throw new TrippiException("Error querying for triple pattern", th);
+        }
+    }
+
+    private String getTripleQuery(SubjectNode subject,
+                                  PredicateNode predicate,
+                                  ObjectNode object) {<b>
+        //
+        // TODO: Convert the given JRDF nodes to a database query that returns
+        //       three values per row.  Note that the values for this method
+        //       may be given as null, which means "any".
+        //
+        return "SELECT subject, predicate, object FROM ... etc, etc";</b>
+    }
+
+    public TupleIterator query(String query,
+                               String lang) throws TrippiException {
+
+        if (lang != <b>_MYQL</b>) {
+            throw new TrippiException("Unsupported tuple query language: " + lang);
+        }
+
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rset = null;
+        try {
+            conn = m_dbPool.getConnection();
+            stmt = conn.createStatement();
+            rset = stmt.executeQuery(<b>replaceAliasesInMYQLQuery(query)</b>);
+            return new MyTupleIterator(rset, stmt, conn);
+        } catch (Throwable th) {
+            if (rset != null) {
+                try { rset.close(); } catch (Exception e) { }
+            }
+            if (stmt != null) {
+                try { stmt.close(); } catch (Exception e) { }
+            }
+            if (conn != null) {
+                try { conn.close(); } catch (Exception e) { }
+            }
+            throw new TrippiException("Error querying for tuples", th);
+        }
+
+    }
+<b>
+    private String replaceAliasesInMYQLQuery(String myqlQuery) {
+        //
+        // TODO: Trippi supports the notion of persistent aliases that can
+        //       be used across multiple queries (as opposed temporal aliases
+        //       that are specified in each query).
+        //
+        //       If these are not supported by the underlying triplestore,
+        //       substitutions to the query text (or a special part of the query
+        //       that specifies per-query aliases) can be made here, before it 
+        //       is sent to the server.
+        //
+        //       If they are supported by the underlying triplestore, setting
+        //       them to be recognized by the server would be done at a higher 
+        //       level than this.  For instance, in the implementation of the 
+        //       TriplestoreReader's setAliasMap method.
+        //
+        return myqlQuery;
+    }</b>
+
+    public void add(Set triples) throws TrippiException {
+        doTriples(triples, false);
+    }
+
+    public void delete(Set triples) throws TrippiException {
+        doTriples(triples, true);
+    }
+
+    private void doTriples(Set triples, boolean delete) throws TrippiException {
+        Connection conn = null;
+        Statement stmt = null;
+        boolean startedTransaction = false;
+        boolean committedTransaction = false;
+        try {
+            conn = m_dbPool.getConnection();
+            conn.setAutoCommit(false);
+            startedTransaction = true;
+            stmt = conn.createStatement();
+
+            Iterator iter = triples.iterator();
+            while (iter.hasNext()) {
+                Triple triple = (Triple) iter.next();
+                String updateString;
+                if (delete) {
+                    updateString = getDeleteString(triple);
+                } else {
+                    updateString = getInsertString(triple);
+                }
+                stmt.executeUpdate(updateString);
+            }
+
+            conn.commit();
+            committedTransaction = true; 
+        } catch (Throwable th) {
+            if (startedTransaction) {
+                try { conn.rollback(); } catch (Exception e) { }
+            }
+            String action;
+            if (delete) {
+                action = "deleting";
+            } else {
+                action = "adding";
+            }
+            throw new TrippiException("Error " + action + " triples", th);
+        } finally {
+            if (startedTransaction) {
+                try { conn.setAutoCommit(true); } catch (Exception e) { }
+            }
+            if (stmt != null) {
+                try { stmt.close(); } catch (Exception e) { }
+            }
+            if (conn != null) {
+                try { conn.close(); } catch (Exception e) { }
+            }
+        }
+    }
+
+    private String getInsertString(Triple triple) {<b>
+        //
+        // TODO: Get the appropriate SQL for adding the given JRDF Triple
+        //
+        return "INSERT INTO xyz, etc, etc";</b>
+    }
+
+    private String getDeleteString(Triple triple) {<b>
+        //
+        // TODO: Get the appropriate SQL for deleting the given JRDF Triple
+        //
+        return "DELETE FROM xyz, etc, etc";</b>
+    }
+
+    public void close() throws TrippiException {
+        // Do nothing -- a higher level class needs to close the underlying db 
+        // pool because it may be used by multiple TriplestoreSession objects
+    }
+
+}
+</pre></div>
+  </div>
+
+  <div class="subsect">
+    <h3><a name="impl.dbcp">How to Construct a DBCP DataSource</a></h3>
+    <p>
+      Using the <a href="http://jakarta.apache.org/commons/dbcp">commons-dbcp</a> package from Apache, 
+      this code shows how to construct a <a href="http://jakarta.apache.org/commons/dbcp/apidocs/org/apache/commons/dbcp/BasicDataSource.html">BasicDataSource</a> that
+      can be used as a pool of database connections.
+    </p>
+    <div class="code"><pre>
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSourceFactory;
+
+...
+        String dbDriverClassName = "org.mystore.jdbc.Driver";
+
+        // dbProperties are used to configure the pool and contain things from
+        // http://jakarta.apache.org/commons/dbcp/configuration.html
+        Properties dbProperties = new Properties();
+
+        // connectionProperties are connection-specific properties
+        // and aren't required, but if they are needed, are defined by the
+        // underlying database vendor
+        Properties connectionProperties = new Properties();
+
+        BasicDataSource pool;
+        try {
+            Class.forName(dbDriverClassName);
+            pool = (BasicDataSource) 
+                 BasicDataSourceFactory
+                 .createDataSource(dbProperties);
+            pool.setDriverClassName(dbDriverClassName);
+            Enumeration e = connectionProperties.propertyNames();
+            while (e.hasMoreElements()) {
+                String name = (String) e.nextElement();
+                pool.addConnectionProperty(name, (String) connectionProperties.getProperty(name));
+            }
+        } catch (Exception e) {
+            throw new TrippiException("Unable to initialize DataSource", e);
+        }
+</pre></div>
+  </div>
+
+</div>
+
+
+
+<div id="footer">
+    <div id="lastModified">
+        Last Modified
+        <script type="text/javascript">
+            var cvsDate = "$Date: 2005/12/08 13:53:44 $";
+            var parts = cvsDate.split(" ");
+            var modifiedDate = parts[1];
+            document.write(modifiedDate);
+        </script>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY rdf     "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <!ENTITY xsd     "http://www.w3.org/2001/XMLSchema#">
+  <!ENTITY travel  "http://www.w3.org/2000/10/swap/pim/travelTerms#">
+  <!ENTITY place   "http://example.org/place/">
+  <!ENTITY flight  "http://jibbering.com/2002/8/flight/#">
+  <!ENTITY airport "http://www.daml.org/2001/10/html/airport-ont#">
+  <!ENTITY cyc     "http://opencyc.sourceforge.net/daml/cyc.daml#">
+  <!ENTITY star    "http://www.staralliance.com/">
+  <!ENTITY dc      "http://purl.org/dc/terms/">
+]>
+<rdf:RDF xmlns:rdf     = "&rdf;"
+         xmlns:xsd     = "&xsd;"
+         xmlns:travel  = "&travel;"
+         xmlns:place   = "&place;"
+         xmlns:flight  = "&flight;"
+         xmlns:airport = "&airport;"
+         xmlns:cyc     = "&cyc;"
+         xmlns:star    = "&star;"
+         xmlns:dc      = "&dc;">
+  <place:Country rdf:about="&place;WS">
+    <dc:title>WS</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;YU">
+    <dc:title>YU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CK">
+    <dc:title>CK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AR">
+    <dc:title>AR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BO">
+    <dc:title>BO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;JP">
+    <dc:title>JP</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BS">
+    <dc:title>BS</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SA">
+    <dc:title>SA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PL">
+    <dc:title>PL</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;IN">
+    <dc:title>IN</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LY">
+    <dc:title>LY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MY">
+    <dc:title>MY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;OM">
+    <dc:title>OM</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LB">
+    <dc:title>LB</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;IL">
+    <dc:title>IL</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;KW">
+    <dc:title>KW</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PA">
+    <dc:title>PA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CU">
+    <dc:title>CU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NL">
+    <dc:title>NL</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SE">
+    <dc:title>SE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;KY">
+    <dc:title>KY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;IE">
+    <dc:title>IE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;KZ">
+    <dc:title>KZ</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GP">
+    <dc:title>GP</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;IR">
+    <dc:title>IR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NC">
+    <dc:title>NC</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;EC">
+    <dc:title>EC</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SC">
+    <dc:title>SC</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MU">
+    <dc:title>MU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PE">
+    <dc:title>PE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SD">
+    <dc:title>SD</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GE">
+    <dc:title>GE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BR">
+    <dc:title>BR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BA">
+    <dc:title>BA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;RU">
+    <dc:title>RU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;ID">
+    <dc:title>ID</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CY">
+    <dc:title>CY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BY">
+    <dc:title>BY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;ER">
+    <dc:title>ER</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PT">
+    <dc:title>PT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TW">
+    <dc:title>TW</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;ES">
+    <dc:title>ES</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;JO">
+    <dc:title>JO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GL">
+    <dc:title>GL</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;DE">
+    <dc:title>DE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AE">
+    <dc:title>AE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;FJ">
+    <dc:title>FJ</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LC">
+    <dc:title>LC</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;ET">
+    <dc:title>ET</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;VE">
+    <dc:title>VE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CO">
+    <dc:title>CO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AG">
+    <dc:title>AG</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;UY">
+    <dc:title>UY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;FI">
+    <dc:title>FI</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BD">
+    <dc:title>BD</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;RO">
+    <dc:title>RO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MQ">
+    <dc:title>MQ</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BB">
+    <dc:title>BB</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BE">
+    <dc:title>BE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PY">
+    <dc:title>PY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CL">
+    <dc:title>CL</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;HR">
+    <dc:title>HR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MD">
+    <dc:title>MD</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CN">
+    <dc:title>CN</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;JM">
+    <dc:title>JM</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BG">
+    <dc:title>BG</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SK">
+    <dc:title>SK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CZ">
+    <dc:title>CZ</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NO">
+    <dc:title>NO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;EE">
+    <dc:title>EE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AW">
+    <dc:title>AW</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TM">
+    <dc:title>TM</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GU">
+    <dc:title>GU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CH">
+    <dc:title>CH</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MV">
+    <dc:title>MV</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LK">
+    <dc:title>LK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;IT">
+    <dc:title>IT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GR">
+    <dc:title>GR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GH">
+    <dc:title>GH</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PF">
+    <dc:title>PF</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MT">
+    <dc:title>MT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;VN">
+    <dc:title>VN</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;HU">
+    <dc:title>HU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GT">
+    <dc:title>GT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;KH">
+    <dc:title>KH</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AM">
+    <dc:title>AM</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TR">
+    <dc:title>TR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TT">
+    <dc:title>TT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NF">
+    <dc:title>NF</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TN">
+    <dc:title>TN</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CA">
+    <dc:title>CA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;Is.VI">
+    <dc:title>Is.VI</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AL">
+    <dc:title>AL</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;ZA">
+    <dc:title>ZA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LA">
+    <dc:title>LA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LT">
+    <dc:title>LT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;DK">
+    <dc:title>DK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MM">
+    <dc:title>MM</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;HK">
+    <dc:title>HK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SG">
+    <dc:title>SG</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;HT">
+    <dc:title>HT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;GB">
+    <dc:title>GB</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MK">
+    <dc:title>MK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MX">
+    <dc:title>MX</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;FR">
+    <dc:title>FR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NG">
+    <dc:title>NG</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;EG">
+    <dc:title>EG</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BN">
+    <dc:title>BN</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SV">
+    <dc:title>SV</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;US">
+    <dc:title>US</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NZ">
+    <dc:title>NZ</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;SY">
+    <dc:title>SY</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;BM">
+    <dc:title>BM</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;CR">
+    <dc:title>CR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;DO">
+    <dc:title>DO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AZ">
+    <dc:title>AZ</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;UA">
+    <dc:title>UA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;KE">
+    <dc:title>KE</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;KR">
+    <dc:title>KR</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LV">
+    <dc:title>LV</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PH">
+    <dc:title>PH</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;MA">
+    <dc:title>MA</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;LU">
+    <dc:title>LU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;NP">
+    <dc:title>NP</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AT">
+    <dc:title>AT</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TO">
+    <dc:title>TO</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PK">
+    <dc:title>PK</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;AU">
+    <dc:title>AU</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;TH">
+    <dc:title>TH</dc:title>
+  </place:Country>
+
+  <place:Country rdf:about="&place;PR">
+    <dc:title>PR</dc:title>
+  </place:Country>
+
+</rdf:RDF>

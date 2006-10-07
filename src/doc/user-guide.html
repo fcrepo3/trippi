@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+                      
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+    <title>Trippi User Guide</title> 
+    <link rel="stylesheet" type="text/css" href="docstyle.css" />
+</head>
+
+<body>
+<div id="header">
+    <a href="" id="logo"></a>
+    <div id="title">
+        <h1>Trippi User Guide</h1>
+    </div>
+</div>
+
+<div id="toc">
+    <h2>Table of Contents</h2>
+
+    <div id="tocbox">
+      <ol>
+        <li> <a href="#what">What is Trippi?</a></li>
+        <li> <a href="#console">Using the Console</a>
+          <ol>
+            <li> <a href="#console.creating">Creating a Model</a></li>
+            <li> <a href="#console.loading">Loading RDF into a Model</a></li>
+            <li> <a href="#console.dumping">Dumping RDF from a Model</a></li>
+            <li> <a href="#console.querying">Querying a Model</a></li>
+          </ol>
+        </li>
+        <li> <a href="#service">Using the Query Web Service</a></li>
+        <li> <a href="#programming">Using the Java API</a></li>
+        <li> <a href="#issues">Known Issues / Bugs</a>
+      </ol>
+    </div>
+
+</div>
+
+<div class="sect">
+  <h2><a name="what">1. What is Trippi?</a></h2>
+  <p>
+    Trippi 
+    (<a href="http://cougar.eb.com/sound/t/trippy01.wav">pronounced, <i>'tri-pE</i></a>) 
+    is a Java library providing a 
+    consistent, thread-safe access point for updating and querying a 
+    triplestore. It is similar in spirit to JDBC, but for RDF databases.
+  </p>
+  <p>
+    In addition to the API, the Trippi distribution comes with two 
+    higher-level applications for working with triplestores: A console 
+    and a web service.  These are described in the following sections.
+  </p>
+  <p>
+    Trippi connectors currently exist for 
+    <a href="http://openrdf.org/">Sesame</a>, 
+    <a href="http://www.sourceforge.net/projects/kowari">Kowari</a>, 
+    <a href="http://www.oracle.com/">Oracle Spatial</a>,
+    and <a href="http://mptstore.sourceforge.net/">MPTStore</a>.  
+    See the <a href="implementation-guide.html">Trippi Implementation Guide</a>
+    for details on how to write a Trippi adapter for your own triplestore software.
+  </p>
+</div>
+
+<div class="sect">
+  <h2><a name="console">2. Using the Console</a></h2>
+  <p>
+    The Trippi console is a text-oriented Java application for 
+    working with Trippi-enabled triplestores.
+  </p>
+  <div class="subsect">
+    <h3><a name="console.creating">Creating a Model</a></h3>
+    <p>
+      A <i>model</i> is an RDF graph in a triplestore.
+      To create a model using the Trippi console:
+      <ol>
+        <li> Go to the trippi distribution directory and start the console:
+             <code><b>trippi -c</b></code></li>
+        <li> Create a profile (connection settings for a specific triplestore)
+             using the create command: <code><b>create;</b></code></li>
+        <li> Respond to the prompts with appropriate values.  See the
+             <a href="example-profiles.html">Example Trippi Profiles</a> for
+             examples that work with Kowari and Sesame.</li>
+      </ol>
+    </p>
+    <p>Once a profile is created, you can access it within the console
+       using <code><b>use myprofile;</b></code>, where <i>myprofile</i>
+       is the name you gave it when you created it.  
+    </p>
+    <p>You can also specify a profile when you start the console.
+       Try this:
+       <ol>
+         <li> Exit the console: <code><b>exit;</b></code></li>
+         <li> Start it again, specifying your profile name: 
+              <code><b>trippi -c myprofile</b></code></li>
+       </ol>
+    </p>
+    <p>
+      The first time a profile is used in the console, the underlying
+      RDF model is automatically created.
+    </p>
+  </div>
+  <div class="subsect">
+    <h3><a name="console.loading">Loading RDF into a Model</a></h3>
+    <p>
+      When working with a model in the console you can use the <b>add</b> command to
+      add triples manually, or you can use the <b>load</b> command to load them from a file
+      in one of several formats. The following illustrates both
+      methods, and introduces the <b>count</b> and <b>tripleform</b> commands:
+      <div class="code"><pre>
+trippi/stest&gt; <b>add &lt;urn:example:Chris&gt; &lt;urn:example:firstName&gt; "Chris";</b>
+
+Adding 1 triples...OK
+
+trippi/stest&gt; <b>add &lt;urn:example:Chris> &lt;urn:example:lastName&gt; "Wilper"
+&gt; &lt;urn:example:Chris&gt; &lt;urn:example:favoriteColor&gt; "Orange";</b>
+
+Adding 2 triples...OK
+
+trippi/stest&gt; <b>count;</b>
+
+Total Triples  : 3
+Seconds Elapsed: 0.04
+
+trippi/stest&gt; <b>tripleform;</b>
+
+Current Triple Result Format: Turtle
+Formats Supported: N-Triples, Notation 3, RDF/XML, Turtle
+
+trippi/stest&gt; <b>tripleform RDF/XML;</b>
+
+New Triple Result Format: RDF/XML
+
+trippi/stest&gt; <b>load samples/routes/airports.xml;</b>
+
+Loading triples (in RDF/XML format) from samples/routes/airports.xml...OK
+
+trippi/stest&gt; <b>count;</b>
+
+Total Triples  : 2371
+Seconds Elapsed: 0.48
+
+trippi/stest&gt;
+</pre></div>
+      After running the above commands, try loading the other sample RDF/XML
+      files in the samples/routes directory of the distribution.  This
+      data will be used for queries in the next section.
+    </p>
+  </div>
+
+  <div class="subsect">
+    <h3><a name="console.dumping">Dumping RDF from a Model</a></h3>
+    <p>
+      You have already seen how the <b>tripleform</b> command can be used
+      to specify the triple format for loading RDF.  The same command
+      is used to set the serialization format for dumping triples from
+      a model.
+    </p>
+    <p>
+      The following example sets the format to Turtle, then uses the <b>dump</b>
+      command to serialize all triples to a file in the current directory:
+    </p>
+      <div class="code"><pre>
+trippi/stest&gt; tripleform turtle;
+
+New Triple Result Format: Turtle
+
+trippi/stest> dump all-triples.turtle;
+
+Dumping triples (in Turtle format) to all-triples.turtle...OK
+</pre></div>
+  </div>
+
+  <div class="subsect">
+    <h3><a name="console.querying">Querying a Model</a></h3>
+    <p>
+      Trippi supports two broad types of queries: triple queries
+      and tuple queries.  To make effective use of Trippi, it's important
+      to understand the difference.
+     </p>
+     <p>
+      A <i>triple query</i> is one that returns a series
+      of RDF triples: Each response row consists of a subject, predicate,
+      and an object.
+    </p>
+     <p>
+      A <i>tuple query</i>, on the other hand, returns responses that 
+      traditional database users will be more familiar with: Each response
+      row is a map of name-value pairs.
+    </p>
+    <div class="subsect">
+      <h4>SPO Queries</h4>
+      <p>
+        SPO (Subject, Predicate, Object) is a very simple triple query language.
+        It is also the only query language that is guaranteed to be supported
+        by every Trippi-enabled triplestore.
+      </p>
+      <p>
+        An SPO query consists of three tokens: an RDF subject, predicate,
+        and object.  Any (or all) of these tokens can be an asterisk,
+        a wildcard meaning "any".  The following example illustrates
+        several different SPO queries.
+      </p>
+      <div class="code"><pre>
+trippi/stest&gt; <b>tripleform N-Triples;</b>
+
+New Triple Result Format: N-Triples
+
+trippi/stest&gt; <b>triples spo &lt;urn:example:Chris&gt; &lt;urn:example:firstName&gt; *;</b>
+
+&lt;urn:example:Chris&gt; &lt;urn:example:firstName&gt; "Chris" .
+
+Total Triples  : 1
+Seconds Elapsed: 0.02
+
+trippi/stest&gt; <b>triples spo &lt;urn:example:Chris&gt; * *;</b>
+
+&lt;urn:example:Chris&gt; &lt;urn:example:firstName&gt; "Chris" .
+&lt;urn:example:Chris&gt; &lt;urn:example:favoriteColor&gt; "Orange" .
+&lt;urn:example:Chris&gt; &lt;urn:example:lastName&gt; "Wilper" .
+
+Total Triples  : 3
+Seconds Elapsed: 0.03
+
+trippi/stest&gt; <b>triples spo * &lt;urn:example:favoriteColor&gt; *;</b>
+
+&lt;urn:example:Chris&gt; &lt;urn:example:favoriteColor&gt; "Orange" .
+
+
+Total Triples  : 1
+Seconds Elapsed: 0.03
+</pre></div>
+      <p>
+        Note that the SPO query <b>* * *</b> can be used to list all triples in a model.
+        This is the actual query used internally by the console to support
+        the <b>dump</b> command.
+      </p>
+    </div>
+    <div class="subsect">
+      <h4>Tuple Queries</h4>
+      <p>
+        Triplestores support a variety of languages that return rows of named
+        values.  The queries below illustrate a request for the same data,
+        but from different triplestores (Kowari, then Sesame).  The <b>tupleform</b>
+        command is also introduced.  You'll notice that it is similar to the
+        <b>tripleform</b> command.
+      </p>
+      <div class="code"><pre>
+trippi&gt; <b>tupleform;</b>
+
+Current Tuple Result Format: TSV
+Formats Supported: CSV, Simple, Sparql, TSV
+
+trippi&gt; <b>tupleform simple;</b>
+
+New Tuple Result Format: Simple
+
+trippi&gt; <b>use ktest;</b>
+
+Connecting to Kowari Test...OK
+
+trippi/ktest&gt; <b>tuples</b>
+&gt; <b>itql</b>
+&gt; <b>select    $miles</b>
+&gt; <b>          $fromName</b>
+&gt; <b>          $toName</b>
+&gt; <b>from      &lt;#ktest&gt;</b>
+&gt; <b>where         $route &lt;travel:miles&gt;     $miles</b>
+&gt; <b>          and $miles &lt;tucana:lt&gt;        '36'      in &lt;#xsd&gt;</b>
+&gt; <b>          and $route &lt;cyc:fromLocation&gt; $from</b>
+&gt; <b>          and $route &lt;cyc:toLocation&gt;   $to</b>
+&gt; <b>          and $from  &lt;dc:title&gt;         $fromName</b>
+&gt; <b>          and $to    &lt;dc:title&gt;         $toName</b>
+&gt; <b>order by  $miles;</b>
+
+miles    : "15.0"^^xsd:double
+fromName : "Berlin Tegel DE"
+toName   : "Berlin Schoenefeld DE"
+
+miles    : "15.0"^^xsd:double
+fromName : "Berlin Schoenefeld DE"
+toName   : "Berlin Tegel DE"
+
+miles    : "31.0"^^xsd:double
+fromName : "Rishiri JP"
+toName   : "Wakkanai JP"
+
+miles    : "31.0"^^xsd:double
+fromName : "Wakkanai JP"
+toName   : "Rishiri JP"
+
+miles    : "35.0"^^xsd:double
+fromName : "Cozumel MX"
+toName   : "Cancun MX"
+
+miles    : "35.0"^^xsd:double
+fromName : "Cancun MX"
+toName   : "Cozumel MX"
+
+Total Tuples   : 6
+Seconds Elapsed: 0.311
+
+trippi/ktest&gt; <b>use stest;</b>
+
+Connecting to Sesame Test...OK
+
+trippi/stest&gt; <b>tuples serql select miles, fromName, toName</b>
+&gt; <b>from   {route}    travel:miles     {miles},</b>
+&gt; <b>       {route}    cyc:fromLocation {fromLoc},</b>
+&gt; <b>       {route}    cyc:toLocation   {toLoc},</b>
+&gt; <b>       {fromLoc}  dc:title         {fromName},</b>
+&gt; <b>       {toLoc}    dc:title         {toName}</b>
+&gt; <b>where  miles &lt; "36"^^xsd:double;</b>
+
+miles    : "15"^^xsd:double
+fromName : "Berlin Tegel DE"
+toName   : "Berlin Schoenefeld DE"
+
+miles    : "15"^^xsd:double
+fromName : "Berlin Schoenefeld DE"
+toName   : "Berlin Tegel DE"
+
+miles    : "35"^^xsd:double
+fromName : "Cancun MX"
+toName   : "Cozumel MX"
+
+miles    : "35"^^xsd:double
+fromName : "Cozumel MX"
+toName   : "Cancun MX"
+
+miles    : "31"^^xsd:double
+fromName : "Rishiri JP"
+toName   : "Wakkanai JP"
+
+miles    : "31"^^xsd:double
+fromName : "Wakkanai JP"
+toName   : "Rishiri JP"
+
+Total Tuples   : 6
+Seconds Elapsed: 1.051
+</pre></div>
+    </div>
+
+    <div class="subsect">
+      <h4>Triples From Tuples</h4>
+      <p>
+        Sometimes it is useful to derive triples from the results of a tuple
+        query.  One obvious example is extracting a subgraph.
+        Another example is to transform an RDF graph to another form.
+      </p>
+      <p>
+        The
+        <a href="http://cvs.sourceforge.net/viewcvs.py/trippi/trippi/src/samples/routes/README-sesame.txt?view=markup">README-sesame.txt</a>
+        and <a href="http://cvs.sourceforge.net/viewcvs.py/trippi/trippi/src/samples/routes/README-kowari.txt?view=markup">README-kowari.txt</a>
+        files in the samples/routes directory show how this can be done for each of these triplestores.  Notice that
+        Sesame includes a special <b>construct</b> command in the query language itself, whereas in
+        the Kowari example, a <b>tuples-to-triples</b> template is provided and Trippi internally takes
+        care of the conversion while iterating the results from the server.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="sect">
+  <h2><a name="service">3. Using the Query Web Service</a></h2>
+  <p>
+    The Trippi Web Service is a REST-oriented web service for providing
+    read-only access to Trippi-enabled triplestores.
+  </p>
+  <p>
+    <font color="#aa2222"><b>TODO: Explain installation/configuration of the Java webapp here</b></font>
+  </p>
+  <p>
+    <font color="#aa2222"><b>TODO: Explain the user / application interface here</b></font>
+  </p>
+  <p>
+    This guide will eventually explain how to use the service.
+    In the meantime, see the <a href="http://www.fedora.info/download/2.1b/userdocs/server/webservices/risearch/">Fedora Resource 
+    Index Search Service</a> for a Fedora-oriented guide to the service.
+  </p>
+</div>
+
+<div class="sect">
+  <h2><a name="programming">4. Using the Java API</a></h2>
+  <p>
+     The main interfaces you work with in the Trippi API 
+     are <code><a href="api/org/trippi/TriplestoreReader.html">TriplestoreReader</a></code>, 
+     <code><a href="api/org/trippi/TriplestoreWriter.html">TriplestoreWriter</a></code>,
+     <code><a href="api/org/trippi/TripleIterator.html">TripleIterator</a></code>, and 
+     <code><a href="api/org/trippi/TupleIterator.html">TupleIterator</a></code>.
+  </p>
+  <p>
+     When working with individual triples, the <a href="http://jrdf.sourceforge.net/">JRDF API</a> is used.
+     This is a triplestore-neutral API that Trippi uses to represent
+     Triples and RDF nodes.
+  </p>
+  <p>Here is an example illustrating how to do an SPO query
+     using Trippi with Sesame, and dumping the results to an RDF/XML file.
+  </p>
+      <div class="code"><pre>
+
+TriplestoreConnector sesame = null;
+try {
+    String sesameClassName = "org.trippi.impl.SesameConnector";
+    Map sesameConfig = new HashMap();
+    sesameConfig.put("storageType", "native");
+    sesameConfig.put("dir", "/tmp/stest");
+    sesameConfig.put("autoFlushDormantSeconds", "2");
+    sesameConfig.put("autoFlushBufferSize", "1000");
+    sesameConfig.put("bufferSafeCapacity", "2000");
+    sesameConfig.put("bufferFlushBatchSize", "1000");
+
+    TriplestoreConnector sesame = TriplestoreConnector.init(sesameClassName,
+                                                            sesameConfig);
+    TriplestoreReader sesameReader = sesame.getReader();
+
+    TripleIterator triples = sesameReader.findTriples("SPO", 
+                                                      "* * *",  // everything
+                                                      -1,       // no limit
+                                                      false);   // don't worry 
+                                                                // about duplicates
+
+    triples.toStream(new FileOutputStream(new File("all.xml")),
+                     RDFFormat.RDF_XML);
+
+} finally {
+    if (sesame != null) {
+        try { sesame.close(); } catch (Exception e) { }
+    }
+}
+</pre></div>
+  <p>
+    <font color="#aa2222"><b>TODO: More API examples here</b></font>
+  </p>
+</div>
+
+<div class="sect">
+  <h2><a name="issues">6. Known Issues / Bugs</a></h2>
+  <ul>
+    <li> Limited Transaction Support.<br/>
+         Transactions are typically used at a low level to implement 
+         the flushing of updates, but there is no exposure of the 
+         concept of a transaction at the public API level.
+         Support for external transaction demarcation would involve 
+         significant API changes.
+    </li>
+  </ul>
+</div>
+
+
+<div id="footer">
+    <div id="lastModified">
+        Last Modified
+        <script type="text/javascript">
+            var cvsDate = "$Date: 2006/10/07 07:16:45 $";
+            var parts = cvsDate.split(" ");
+            var modifiedDate = parts[1];
+            document.write(modifiedDate);
+        </script>
+    </div>
+</div>
+
+</body>
+</html>

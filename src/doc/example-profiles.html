@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+                      
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<head>
+    <title>Example Trippi Profiles</title> 
+    <link rel="stylesheet" type="text/css" href="docstyle.css" />
+</head>
+
+<body>
+<div id="header">
+    <a href="" id="logo"></a>
+    <div id="title">
+        <h1>Example Trippi Profiles</h1>
+    </div>
+</div>
+
+<div id="toc">
+    <h2>Table of Contents</h2>
+
+    <div id="tocbox">
+      <ol>
+        <li><a href="#kowari">Kowari Profile Example</a></li>
+        <li><a href="#sesame">Sesame Profile Example</a></li>
+      </ol>
+    </div>
+
+</div>
+
+      <div class="sect">
+        <h2><a name="kowari">Kowari Profile Example</a></h2>
+        <p>
+          The following responses <b>in bold</b> can be used to configure
+          a Kowari triplestore for use with the Trippi Console.
+        </p>
+        <div class="code"><pre>
+Enter the connector class name: <b>org.trippi.impl.kowari.KowariConnector</b>
+Enter a short id for the new profile: <b>ktest</b>
+Enter a label for the new profile: <b>Kowari Test</b>
+
+Connector   : Kowari Connector
+Class       : org.trippi.impl.kowari.KowariConnector
+Description : This connector is written for Kowari v1.1.0 from CVS on Sept
+              16th, patched with a memory leak fix. For more information on
+              Kowari, visit http://www.kowari.org/
+
+Parameter   : remote
+Description : Whether the triplestore is available via rmi.
+              This tells the connector to communicate with Kowari in remote or
+              local mode.
+
+Enter true or false: <b>false</b>
+
+Parameter   : path
+Description : The local path to the main triplestore directory.
+
+Enter a value: <b>/tmp/ktest</b>
+
+Parameter   : serverName
+Description : The server name for rmi binding.
+
+Enter a value: <b>server1</b>
+
+Parameter   : modelName
+Description : The name of the model to use.
+
+Enter a value: <b>ktest</b>
+
+Parameter   : poolInitialSize
+Description : The initial size of the session pool used for queries.
+              If one or greater, pooling will be used. If zero, all read/write
+              access will be synchronized and no buffering will be done.
+
+Enter a value: <b>3</b>
+
+Parameter   : poolMaxGrowth
+Description : Maximum number of additional sessions the pool may add.
+              If specified as -1, no limit will be placed on pool growth.
+
+Enter a value: <b>-1</b>
+
+Parameter   : poolSpareSessions
+Description : The number of spare sessions to proactively make available.
+              If unspecified, this defaults to 0, which means that additional
+              sessions will only be created as needed. Note that if
+              poolMaxGrowth is 0, the value of this parameter is
+              inconsequential.
+
+Enter a value (or [ENTER] for none): <b>0</b>
+
+Parameter   : readOnly
+Description : Whether to connect in read-only mode.
+              Read-only mode will prevent accidental changes to the
+              triplestore.
+
+Enter true or false: <b>false</b>
+
+Parameter   : autoCreate
+Description : Whether to create the model if it doesn't already exist.
+              At startup, the model will be automatically created. In addition,
+              an XML schema datatyped model named "xsd" will also be
+              automatically created.
+
+Enter true or false: <b>true</b>
+
+Parameter   : autoTextIndex
+Description : Whether to propogate adds/deletes to a fulltext model
+              automatically.
+              If true, the text model will be named modelName-fullText. Note
+              that if this is true and autoCreate is true, the text model will
+              also be created if it doesn't already exist.
+
+Enter true or false: <b>false</b>
+
+Parameter   : memoryBuffer
+Description : Whether to use a memory buffer or a database buffer for write
+              operations.
+              The buffer is where triples are stored before they're actually
+              written. Normally, a memory buffer will be sufficient. In certain
+              server environments, a database buffer is the better option,
+              offering higher capacity and persistence.
+
+Enter true or false: <b>true</b>
+
+Parameter   : autoFlushDormantSeconds
+Description : Seconds of buffer inactivity that will trigger an auto-flush.
+              If this threshold is reached, flushing will occur in the
+              background, during which time the buffer is still available for
+              writing.
+
+Enter a value: <b>2</b>
+
+Parameter   : autoFlushBufferSize
+Description : The size at which the buffer should be auto-flushed.
+              If this threshold is reached, flushing will occur in the
+              background, during which time the buffer is still available for
+              writing.
+
+Enter a value: <b>1000</b>
+
+Parameter   : bufferSafeCapacity
+Description : The maximum size the buffer can reach before being forcibly
+              flushed.
+              If this threshold is reached, flushing will occur in the
+              foreground and the buffer will be locked for writing until it is
+              finished. This should be larger than autoFlushBufferSize.
+
+Enter a value: <b>2000</b>
+
+Parameter   : bufferFlushBatchSize
+Description : The number of updates to send to the triplestore at a time.
+              This should be the same size as, or smaller than
+              autoFlushBufferSize.
+
+Enter a value: <b>1000</b>
+
+Profile created.  Type 'use ktest;' to use it.
+</pre></div>
+      </div>
+
+      <div class="sect">
+        <h2><a name="sesame">Sesame Profile Example</a></h2>
+        <p>
+          The following responses <b>in bold</b> can be used to configure
+          a Kowari triplestore for use with the Trippi Console.
+        </p>
+        <div class="code"><pre>
+Enter the connector class name: <b>org.trippi.impl.sesame.SesameConnector</b>
+Enter a short id for the new profile: <b>stest</b>
+Enter a label for the new profile: <b>Sesame Test</b>
+
+Connector   : Sesame Connector
+Class       : org.trippi.impl.sesame.SesameConnector
+Description : This connector is written for Sesame v1.2-RC2. For more
+              information on Sesame, visit http://openrdf.org/
+
+Parameter   : storageType
+Description : How the triples should be stored
+
+Enter native or rdbms: <b>native</b>
+
+Parameter   : dir
+Description : The directory for native storage
+
+Enter a value: <b>/tmp/stest</b>
+
+Parameter   : autoFlushDormantSeconds
+Description : Seconds of buffer inactivity that will trigger an auto-flush.
+              If this threshold is reached, flushing will occur in the
+              background, during which time the buffer is still available for
+              writing.
+
+Enter a value: <b>2</b>
+
+Parameter   : autoFlushBufferSize
+Description : The size at which the buffer should be auto-flushed.
+              If this threshold is reached, flushing will occur in the
+              background, during which time the buffer is still available for
+              writing.
+
+Enter a value: <b>1000</b>
+
+Parameter   : bufferSafeCapacity
+Description : The maximum size the buffer can reach before being forcibly
+              flushed.
+              If this threshold is reached, flushing will occur in the
+              foreground and the buffer will be locked for writing until it is
+              finished. This should be larger than autoFlushBufferSize.
+
+Enter a value: <b>2000</b>
+
+Parameter   : bufferFlushBatchSize
+Description : The number of updates to send to the triplestore at a time.
+              This should be the same size as, or smaller than
+              autoFlushBufferSize.
+
+Enter a value: <b>1000</b>
+
+Profile created.  Type 'use stest;' to use it.
+</pre></div>
+      </div>
+    </p>
+  </div>
+</div>
+
+<div id="footer">
+    <div id="lastModified">
+        Last Modified
+        <script type="text/javascript">
+            var cvsDate = "$Date: 2005/12/07 22:54:42 $";
+            var parts = cvsDate.split(" ");
+            var modifiedDate = parts[1];
+            document.write(modifiedDate);
+        </script>
+    </div>
+</div>
+
+</body>
+</html>

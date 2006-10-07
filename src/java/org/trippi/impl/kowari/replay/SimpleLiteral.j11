@@ -1,0 +1,20 @@
+package org.trippi.impl.kowari.replay;
+
+import java.net.*;
+
+import org.jrdf.graph.*;
+
+public class SimpleLiteral extends AbstractLiteral {
+
+    public SimpleLiteral(String lexicalForm) {
+        super(lexicalForm);
+    }
+
+    public SimpleLiteral(String lexicalForm, String language) {
+        super(lexicalForm, language);
+    }
+
+    public SimpleLiteral(String lexicalForm, URI datatypeURI) {
+        super(lexicalForm, datatypeURI);
+    }
+}

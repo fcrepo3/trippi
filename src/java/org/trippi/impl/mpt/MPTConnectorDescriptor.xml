@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector-descriptor name="MPT Connector">
+  <description>
+    A Connector for MPTStore.
+    For more information on MPTStore, see http://www.sf.net/projects/mptstore
+  </description>
+
+  <parameter name="ddlGenerator" label="Database adaptor class name">
+    <description>
+      Class name of an implementation of the org.nsdl.mptstore.core.DDLGenerator
+      interface.  This provides RDBMS-specific commands for creating and dropping
+      tables (and associated indexes, if any).
+
+      Known implementations:
+        org.nsdl.mptstore.impl.postgres.DerbyDDLGenerator
+        org.nsdl.mptstore.impl.postgres.H2DDLGenerator
+        org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator
+    </description>
+  </parameter>
+
+  <parameter name="jdbcDriver" label="The JDBC driver class name">
+    <description> 
+      The vendor-specific jar(s) must be in the classpath.
+      Examples: 
+        org.apache.derby.jdbc.EmbeddedDriver
+        org.h2.Driver
+        org.postgresql.Driver 
+    </description>
+  </parameter>
+  <parameter name="jdbcURL" label="The JDBC URL">
+    <description>
+      Examples: 
+        jdbc:derby:trippi;create=true
+        jdbc:h2:file:h2/trippi
+        jdbc:postgresql://localhost/trippi
+    </description>
+  </parameter>
+  <parameter name="username" label="The username for connecting to the database"/>
+  <parameter name="password" label="The password for connecting to the database"/>
+
+  <parameter name="poolInitialSize" label="The initial size of the session pool">
+    <description>This should be one or greater</description>
+  </parameter>
+  <parameter name="poolMaxSize" label="The maximum size of the session pool">
+    <description>The session pool will automatically grow up to this size.</description>
+  </parameter>
+
+  <parameter name="fetchSize" label="The JDBC fetch size for queries">
+    <description>
+        This tells the underlying database how many results the client
+        can accept in memory at a time.
+
+        Specifying 0 will leave the behavior up to the database,
+        which may result in client-side out of memory errors for large 
+        queries.
+
+        If the underlying database supports it, a larger value (like 1000)
+        should be used.
+    </description>
+  </parameter>
+
+  <parameter name="backslashIsEscape" label="Whether the backslash character is treated as an escape by the underlying database">
+    <description>
+      This tells MPTStore whether the underlying RDBMS treats a \ character
+      as an escape character in SQL strings.
+
+      For Postgres and MySQL, this should be specified as true.
+      Many other databases (Oracle, etc.), do not implement this type
+      of escaping, so this should given as false.
+    </description>
+  </parameter>
+
+  <parameter name="autoFlushDormantSeconds"
+             label="Seconds of buffer inactivity that will trigger an auto-flush.">
+    <description>
+      If this threshold is reached, flushing will occur in the background,
+      during which time the buffer is still available for writing.
+    </description>
+  </parameter>
+  <parameter name="autoFlushBufferSize" 
+             label="The size at which the buffer should be auto-flushed.">
+    <description>
+      If this threshold is reached, flushing will occur in the background,
+      during which time the buffer is still available for writing.
+    </description>
+  </parameter>
+  <parameter name="bufferSafeCapacity"
+             label="The maximum size the buffer can reach before being forcibly flushed.">
+    <description>
+      If this threshold is reached, flushing will occur in the foreground
+      and the buffer will be locked for writing until it is finished.
+      This should be larger than autoFlushBufferSize.
+    </description>
+  </parameter>
+  <parameter name="bufferFlushBatchSize"
+             label="The number of updates to send to the triplestore at a time.">
+    <description>
+      When flushing, this is the maximum number of triples to flush at once.
+    </description>
+  </parameter>
+</connector-descriptor>

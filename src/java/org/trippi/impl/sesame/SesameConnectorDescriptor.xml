@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector-descriptor name="Sesame Connector">
+  <description>
+    This connector is written for Sesame v1.2-RC2.  For more information on 
+    Sesame, visit http://openrdf.org/
+  </description>
+  <parameter name="storageType" label="How the triples should be stored">
+    <option value="native">
+      <parameter name="dir" label="The directory for native storage"/>
+    </option>
+    <option value="rdbms">
+      <parameter name="jdbcDriver" label="The JDBC driver (this must be in the classpath)">
+        <description> 
+          Examples: 
+            com.mysql.jdbc.Driver
+            oracle.jdbc.driver.OracleDriver
+            org.postgresql.Driver 
+        </description>
+      </parameter>
+      <parameter name="jdbcUrl" label="The JDBC URL">
+        <description>
+          Examples: 
+            jdbc:mysql://localhost/sesame
+            jdbc:oracle:thin:@localhost:1521:sesame
+            jdbc:postgresql://localhost:5432/testdb
+        </description>
+      </parameter>
+      <parameter name="user" label="The username for connecting to the database"/>
+      <parameter name="password" label="The password for connecting to the database"/>
+    </option>
+  </parameter>
+  <parameter name="autoFlushDormantSeconds"
+             label="Seconds of buffer inactivity that will trigger an auto-flush.">
+    <description>
+      If this threshold is reached, flushing will occur in the background,
+      during which time the buffer is still available for writing.
+    </description>
+  </parameter>
+  <parameter name="autoFlushBufferSize" 
+             label="The size at which the buffer should be auto-flushed.">
+    <description>
+      If this threshold is reached, flushing will occur in the background,
+      during which time the buffer is still available for writing.
+    </description>
+  </parameter>
+  <parameter name="bufferSafeCapacity"
+             label="The maximum size the buffer can reach before being forcibly flushed.">
+    <description>
+      If this threshold is reached, flushing will occur in the foreground
+      and the buffer will be locked for writing until it is finished.
+      This should be larger than autoFlushBufferSize.
+    </description>
+  </parameter>
+  <parameter name="bufferFlushBatchSize"
+             label="The number of updates to send to the triplestore at a time.">
+    <description>
+      This should be the same size as, or smaller than autoFlushBufferSize.
+    </description>
+  </parameter>
+</connector-descriptor>

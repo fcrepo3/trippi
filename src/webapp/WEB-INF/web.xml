@@ -1,0 +1,29 @@
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Trippi Webapp</display-name>
+
+  <servlet>
+    <servlet-name>Trippi</servlet-name>
+    <servlet-class>org.trippi.server.http.TrippiServlet</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>C:\work\trippi\dist\config\trippi.config</param-value>
+    </init-param>
+    <init-param><param-name>errorStylesheetLocation</param-name>
+               <param-value>/trippi/error.xsl</param-value></init-param>
+    <init-param><param-name>indexStylesheetLocation</param-name>
+               <param-value>/trippi/index.xsl</param-value></init-param>
+    <init-param><param-name>formStylesheetLocation</param-name>
+               <param-value>/trippi/form.xsl</param-value></init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Trippi</servlet-name>
+    <url-pattern>/query/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>
+
+

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$TRIPPI_HOME" = "" ]; then
+  TRIPPI_HOME=.
+fi
+if [ ! -f "$TRIPPI_HOME/trippi" ]; then
+  echo "ERROR: When running trippi from a directory other than where it was"
+  echo "       installed, you must define the TRIPPI_HOME environment variable"
+  echo "       to be the directory where it was installed."
+  exit 1
+fi
+(exec java -Xms64m -Xmx96m -Djava.endorsed.dirs="$TRIPPI_HOME/lib" -Dtrippi.home="$TRIPPI_HOME" org.trippi.ui.TrippiUI $1 $2 $3 $4 $5 $6 $7 $8 $9)
+exit 0
