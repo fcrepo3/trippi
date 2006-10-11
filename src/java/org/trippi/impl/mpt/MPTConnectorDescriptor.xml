@@ -12,8 +12,8 @@
       tables (and associated indexes, if any).
 
       Known implementations:
-        org.nsdl.mptstore.impl.postgres.DerbyDDLGenerator
-        org.nsdl.mptstore.impl.postgres.H2DDLGenerator
+        org.nsdl.mptstore.impl.derby.DerbyDDLGenerator
+        org.nsdl.mptstore.impl.h2.H2DDLGenerator
         org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator
     </description>
   </parameter>
