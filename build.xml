@@ -14,7 +14,7 @@
 
     <pathelement location="lib/postgresql-8.1-407.jdbc3.jar"/>
 
-    <pathelement location="lib/mptstore-0.9.jar"/>
+    <pathelement location="lib/mptstore-0.9.1.jar"/>
 
     <pathelement location="lib/ojdbc14.jar"/>
 

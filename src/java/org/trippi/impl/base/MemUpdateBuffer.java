@@ -7,11 +7,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
+
 import org.trippi.FlushErrorHandler;
+import org.trippi.RDFUtil;
 import org.trippi.TripleUpdate;
 import org.trippi.TrippiException;
 
@@ -21,6 +25,8 @@ import org.trippi.TrippiException;
  * @author cwilper@cs.cornell.edu
  */
 public class MemUpdateBuffer implements UpdateBuffer {
+
+    private static Logger logger = Logger.getLogger(MemUpdateBuffer.class.getName());
 
     private int m_safeCapacity;
     private int m_flushBatchSize;
@@ -36,19 +42,43 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     public void add(List triples) {
+        debugUpdate("Adding " + triples.size() + " triples to buffer", triples);
         m_buffer.addAll(TripleUpdate.get(TripleUpdate.ADD, triples));
     }
 
     public void add(Triple triple) {
+        debugUpdate("Adding 1 triple to buffer", triple);
         m_buffer.add(TripleUpdate.get(TripleUpdate.ADD, triple));
     }
 
     public void delete(List triples) {
+        debugUpdate("Deleting " + triples.size() + " triples from buffer", triples);
         m_buffer.addAll(TripleUpdate.get(TripleUpdate.DELETE, triples));
     }
 
     public void delete(Triple triple) {
+        debugUpdate("Deleting 1 triple from buffer", triple);
         m_buffer.add(TripleUpdate.get(TripleUpdate.DELETE, triple));
+    }
+
+    private static void debugUpdate(String msg, Triple triple) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(msg + "\n" + RDFUtil.toString(triple));
+        }
+    }
+
+    private static void debugUpdate(String msg, List triples) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(msg + "\n" + tripleListToString(triples));
+        }
+    }
+
+    private static String tripleListToString(List triples) {
+        StringBuffer out = new StringBuffer();
+        for (int i = 0; i < triples.size(); i++) {
+            out.append(RDFUtil.toString((Triple) triples.get(i)) + "\n");
+        }
+        return out.toString();
     }
 
     public int size() {
