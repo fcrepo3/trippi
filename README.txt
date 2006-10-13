@@ -1,4 +1,4 @@
-This is Trippi v1.1 from http://www.sourceforge.net/projects/trippi
+This is Trippi v1.1.1 from http://www.sourceforge.net/projects/trippi
 
 CONTRIBUTORS
 ------------
@@ -15,7 +15,7 @@ This version works with the following Triplestores:
   - Kowari 1.0.5 (patched) from http://sourceforge.net/projects/kowari
   - Sesame 1.2RC2          from http://openrdf.org/
   - Oracle 10g Spatial     from http://oracle.com/
-  - MPTStore 0.9           from http://mptstore.sourceforge.net/
+  - MPTStore 0.9.1         from http://mptstore.sourceforge.net/
 
 This version includes, and depends on JRDF v0.3.3.
 

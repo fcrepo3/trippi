@@ -7,19 +7,31 @@
   <loadproperties srcFile="build.properties" /> 
   <loadproperties srcFile="lib/lib.properties" />
 
-  <property name="all.build.dir" value="${build.dir}/classes/all"/>
-  <property name="core.build.dir" value="${build.dir}/classes/core"/>
-  <property name="kowari.build.dir" value="${build.dir}/classes/kowari"/>
-  <property name="mptstore.build.dir" value="${build.dir}/classes/mptstore"/>
-  <property name="oracle.build.dir" value="${build.dir}/classes/oracle"/>
-  <property name="sesame.build.dir" value="${build.dir}/classes/sesame"/>
+  <property name="classes.build.dir" value="${build.dir}/classes"/>
+
+  <property name="jar.build.dir" value="${build.dir}/jars"/>
+
+  <property name="all.build.dir" value="${classes.build.dir}/all"/>
+  <property name="core.build.dir" value="${classes.build.dir}/core"/>
+  <property name="kowari.build.dir" value="${classes.build.dir}/kowari"/>
+  <property name="mptstore.build.dir" value="${classes.build.dir}/mptstore"/>
+  <property name="oracle.build.dir" value="${classes.build.dir}/oracle"/>
+  <property name="sesame.build.dir" value="${classes.build.dir}/sesame"/>
+
+  <property name="top.packagepath" value="org/trippi"/>
+  <property name="impl.packagepath" value="${top.packagepath}/impl"/>
+  <property name="kowari.packagepath" value="${impl.packagepath}/kowari"/>
+  <property name="mptstore.packagepath" value="${impl.packagepath}/mpt"/>
+  <property name="oracle.packagepath" value="${impl.packagepath}/oracle"/>
+  <property name="sesame.packagepath" value="${impl.packagepath}/sesame"/>
 
   <property name="war.build.dir" value="${build.dir}/war"/>
 
-  <!-- load library paths, etc from build.properties -->
-
   <!-- load ${trippi.version} from properties -->
   <loadproperties srcFile="src/java/org/trippi/Trippi.properties" />
+
+  <property name="project.name" value="trippi"/>
+  <property name="project.version" value="${trippi.version}"/>
 
   <path id="classpath.dist">
     <pathelement path="${lib.activation}"/>
@@ -50,26 +62,53 @@
     <pathelement path="${lib.xpp3}"/>
   </path>
 
-  <path id="core.classpath">
+  <path id="common.classpath">
     <pathelement path="${lib.jrdf}"/>
     <pathelement path="${lib.log4j}"/>
+  </path>
+
+  <path id="core.common.classpath">
+    <path refid="common.classpath"/>
     <pathelement path="${lib.openrdf-model}"/>
     <pathelement path="${lib.openrdf-rio}"/>
-    <pathelement path="${lib.servlet-api}"/>
     <pathelement path="${lib.trove}"/>
     <pathelement path="${lib.xmlpull}"/>
     <pathelement path="${lib.xpp3}"/>
   </path>
 
-  <path id="kowari.classpath">
+  <path id="core.compile.classpath">
+    <path refid="core.common.classpath"/>
+    <pathelement path="${lib.servlet-api}"/>
+  </path>
+
+  <path id="core.runtime.classpath">
+    <path refid="core.common.classpath"/>
+  </path>
+
+  <pathconvert property="core.runtime.libs" 
+               refid="core.runtime.classpath"
+               dirsep="/" 
+               pathsep=",">
+    <map from="${basedir}/" to=""/>
+  </pathconvert>
+
+  <path id="kowari.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.jena}"/>
+    <pathelement path="${lib.kowari}"/>
+  </path>
+
+  <path id="kowari.compile.classpath">
+    <path refid="kowari.common.classpath"/>
     <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="kowari.runtime.classpath">
+    <path refid="kowari.common.classpath"/>
+    <!-- TODO: justify why trippi-1.1.1-core.jar isn't here -->
     <pathelement path="${lib.activation}"/>
     <pathelement path="${lib.castor}"/>
     <pathelement path="${lib.dateutils}"/>
-    <pathelement path="${lib.jena}"/>
-    <pathelement path="${lib.jrdf}"/>
-    <pathelement path="${lib.kowari}"/>
-    <pathelement path="${lib.log4j}"/>
     <pathelement path="${lib.lucene}"/>
     <pathelement path="${lib.mail}"/>
     <pathelement path="${lib.trove}"/>
@@ -77,31 +116,81 @@
     <pathelement path="${lib.xml-apis}"/>
   </path>
 
-  <path id="mptstore.classpath">
-    <pathelement path="${core.build.dir}"/>
+  <pathconvert property="kowari.runtime.libs" 
+               refid="kowari.runtime.classpath"
+               dirsep="/" 
+               pathsep=",">
+    <map from="${basedir}/" to=""/>
+  </pathconvert>
+
+  <path id="mptstore.common.classpath">
+    <path refid="common.classpath"/>
     <pathelement path="${lib.commons-dbcp}"/>
-    <pathelement path="${lib.commons-collections}"/>
-    <pathelement path="${lib.commons-pool}"/>
-    <pathelement path="${lib.jrdf}"/>
     <pathelement path="${lib.mptstore}"/>
   </path>
 
-  <path id="oracle.classpath">
+  <path id="mptstore.compile.classpath">
+    <path refid="mptstore.common.classpath"/>
     <pathelement path="${core.build.dir}"/>
-    <pathelement path="${lib.jrdf}"/>
-    <pathelement path="${lib.log4j}"/>
+  </path>
+
+  <path id="mptstore.runtime.classpath">
+    <path refid="mptstore.common.classpath"/>
+    <pathelement path="${lib.commons-collections}"/>
+    <pathelement path="${lib.commons-pool}"/>
+  </path>
+
+  <pathconvert property="mptstore.runtime.libs" 
+               refid="mptstore.runtime.classpath"
+               dirsep="/" 
+               pathsep=",">
+    <map from="${basedir}/" to=""/>
+  </pathconvert>
+
+  <path id="oracle.common.classpath">
+    <path refid="common.classpath"/>
     <pathelement path="${lib.oracle-jdbc}"/>
   </path>
 
-  <path id="sesame.classpath">
+  <path id="oracle.compile.classpath">
+    <path refid="oracle.common.classpath"/>
     <pathelement path="${core.build.dir}"/>
-    <pathelement path="${lib.jrdf}"/>
-    <pathelement path="${lib.log4j}"/>
+  </path>
+
+  <path id="oracle.runtime.classpath">
+    <path refid="oracle.common.classpath"/>
+  </path>
+
+  <pathconvert property="oracle.runtime.libs" 
+               refid="oracle.runtime.classpath"
+               dirsep="/" 
+               pathsep=",">
+    <map from="${basedir}/" to=""/>
+  </pathconvert>
+
+  <path id="sesame.common.classpath">
+    <path refid="common.classpath"/>
     <pathelement path="${lib.openrdf-model}"/>
     <pathelement path="${lib.sesame}"/>
   </path>
 
-  <macrodef name="compile-macro">
+  <path id="sesame.compile.classpath">
+    <path refid="sesame.common.classpath"/>
+    <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="sesame.runtime.classpath">
+    <path refid="sesame.common.classpath"/>
+  </path>
+
+  <pathconvert property="sesame.runtime.libs" 
+               refid="sesame.runtime.classpath"
+               dirsep="/" 
+               pathsep=",">
+    <map from="${basedir}/" to=""/>
+  </pathconvert>
+
+  <macrodef name="compile-java">
     <attribute name="classpathref"/>
     <attribute name="destdir"/>
     <attribute name="excludes" default=""/>
@@ -120,163 +209,156 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="copy-resources">
+    <attribute name="destdir"/>
+    <attribute name="packagepath"/>
+    <sequential>
+      <copy todir="@{destdir}">
+        <fileset dir="src/java">
+          <include name="@{packagepath}/*.xml"/>
+          <include name="@{packagepath}/*.properties"/>
+          <include name="@{packagepath}/resources/**"/>
+        </fileset>
+      </copy>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="build-connector">
+    <attribute name="classpathref"/>
+    <attribute name="destdir"/>
+    <attribute name="packagepath"/>
+    <sequential>
+      <compile-java classpathref="@{classpathref}"
+                    destdir="@{destdir}"
+                    includes="@{packagepath}/**"/>
+      <copy-resources packagepath="@{packagepath}" 
+                      destdir="@{destdir}"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="build-jar">
+    <attribute name="basedir"/>
+    <attribute name="component"/>
+    <attribute name="mainclass" default=""/>
+    <sequential>
+      <mkdir dir="${jar.build.dir}"/>
+      <jar basedir="@{basedir}"
+           destfile="${jar.build.dir}/${project.name}-${project.version}-@{component}.jar">
+        <manifest>
+          <attribute name="Main-Class" value="@{mainclass}"/>
+        </manifest>
+      </jar>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="copy-jar">
+    <attribute name="component"/>
+    <attribute name="todir"/>
+    <sequential>
+      <mkdir dir="@{todir}"/>
+      <copy file="${jar.build.dir}/${project.name}-${project.version}-@{component}.jar"
+            todir="@{todir}"/>
+    </sequential>
+  </macrodef>
+
   <target name="core" 
           description="build core classes">
-    <compile-macro classpathref="core.classpath"
+    <compile-java classpathref="core.compile.classpath"
                    destdir="${core.build.dir}"
-                   includes="org/trippi/*,
-                             org/trippi/config/**,
-                             org/trippi/nodegraph/**,
-                             org/trippi/io/**,
-                             org/trippi/impl/base/**,
-                             org/trippi/impl/multi/**,
-                             org/trippi/server/**,
-                             org/trippi/ui/**"/>
+                   includes="${top.packagepath}/*,
+                             ${top.packagepath}/config/**,
+                             ${top.packagepath}/nodegraph/**,
+                             ${top.packagepath}/io/**,
+                             ${impl.packagepath}/base/**,
+                             ${impl.packagepath}/multi/**,
+                             ${top.packagepath}/server/**,
+                             ${top.packagepath}/ui/**"/>
+    <copy-resources packagepath="${top.packagepath}" 
+                    destdir="${core.build.dir}"/>
   </target>
     
-  <target name="kowari" 
-          depends="core"
-          description="build kowari classes">
-    <compile-macro classpathref="kowari.classpath"
-                   destdir="${kowari.build.dir}"
-                   includes="org/trippi/impl/kowari/**"/>
+  <target name="kowari" depends="core">
+    <build-connector classpathref="kowari.compile.classpath"
+                     destdir="${kowari.build.dir}"
+                     packagepath="${kowari.packagepath}"/>
   </target>
 
-  <target name="mptstore" 
-          depends="core"
-          description="build mptstore classes">
-    <compile-macro classpathref="mptstore.classpath"
-                   destdir="${mptstore.build.dir}"
-                   includes="org/trippi/impl/mpt/**"/>
+  <target name="mptstore" depends="core">
+    <build-connector classpathref="mptstore.compile.classpath"
+                     destdir="${mptstore.build.dir}"
+                     packagepath="${mptstore.packagepath}"/>
   </target>
 
-  <target name="oracle" 
-          depends="core"
-          description="build oracle classes">
-    <compile-macro classpathref="oracle.classpath"
-                   destdir="${oracle.build.dir}"
-                   includes="org/trippi/impl/oracle/**"/>
+  <target name="oracle" depends="core">
+    <build-connector classpathref="oracle.compile.classpath"
+                     destdir="${oracle.build.dir}"
+                     packagepath="${oracle.packagepath}"/>
   </target>
 
-  <target name="sesame"
-          depends="core"
-          description="build sesame classes">
-    <compile-macro classpathref="sesame.classpath"
-                   destdir="${sesame.build.dir}"
-                   includes="org/trippi/impl/sesame/**"/>
+  <target name="sesame" depends="core">
+    <build-connector classpathref="sesame.compile.classpath"
+                     destdir="${sesame.build.dir}"
+                     packagepath="${sesame.packagepath}"/>
   </target>
 
-  <target name="classes"
-          depends="core,
-                   kowari,
+  <target name="core-jar"
+          depends="core"
+          description="build core jar">
+    <build-jar basedir="${core.build.dir}" 
+               component="core" 
+               mainclass="org.trippi.Trippi"/>
+  </target>
+
+  <target name="connector-jars"
+          depends="kowari,
                    mptstore,
                    oracle,
                    sesame"
-          description="build all classes">
-    <mkdir dir="${all.build.dir}"/>
-    <copy todir="${all.build.dir}">
-      <fileset dir="${core.build.dir}"/>
-      <fileset dir="${kowari.build.dir}"/>
-      <fileset dir="${mptstore.build.dir}"/>
-      <fileset dir="${oracle.build.dir}"/>
-      <fileset dir="${sesame.build.dir}"/>
+          description="build jars for all connectors">
+    <build-jar basedir="${kowari.build.dir}" component="kowari"/>
+    <build-jar basedir="${mptstore.build.dir}" component="mptstore"/>
+    <build-jar basedir="${oracle.build.dir}" component="oracle"/>
+    <build-jar basedir="${sesame.build.dir}" component="sesame"/>
+  </target>
+
+  <target name="core-dist"
+          depends="core-jar"
+          description="build core dist">
+    <copy-jar component="core" todir="${dist.dir}/lib"/>
+    <copy todir="${dist.dir}">
+      <fileset dir="." includes="${core.runtime.libs}"/>
+      <fileset dir="src" includes="config/"/>
+      <fileset dir="src" includes="samples/"/>
+      <fileset dir="src/sh" includes="trippi"/>
+      <fileset dir="src/bat" includes="trippi.bat"/>
     </copy>
   </target>
 
-    <target name="distwar" depends="dist" description="build the web application archive (war) file in dist/">
-        <mkdir dir="${war.build.dir}" />
-        <copy todir="${war.build.dir}">
-            <fileset dir="src/webapp" />
-        </copy>
-        <mkdir dir="${war.build.dir}/WEB-INF/lib" />
-        <copy todir="${war.build.dir}/WEB-INF/lib">
-            <fileset dir="dist/lib"/>
-        </copy>
-        <jar jarfile="dist/trippi.war" basedir="${war.build.dir}" />
-    </target>
-
-    <target name="dist" depends="classes" description="build the entire distribution in dist/">
-        <copy todir="${all.build.dir}">
-            <fileset dir="src/java">
-                <include name="**/*.xml" />
-                <include name="**/*.properties" />
-            </fileset>
-        </copy>
-        <mkdir dir="dist/lib" />
-        <jar jarfile="dist/lib/trippi.jar" basedir="${all.build.dir}">
-            <manifest>
-                <attribute name="Trippi-Version" value="${trippi.version}"/>
-                <attribute name="Main-Class" value="org.trippi.Trippi"/>
-            </manifest>
-        </jar>
-        <copy todir="dist/lib">
-            <fileset dir="lib">
-                <exclude name="javax.servlet-2.3.jar" />
-            </fileset>
-        </copy>
-        <copy todir="dist" file="src/bat/trippi.bat"/>
-        <copy todir="dist" file="src/sh/trippi"/>
-        <mkdir dir="dist/config" />
-        <copy todir="dist/config">
-            <fileset dir="src/config" />
-        </copy>
-        <mkdir dir="dist/samples" />
-        <copy todir="dist/samples">
-            <fileset dir="src/samples" />
-        </copy>
-    </target>
-    <target name="replay" depends="replayclasses" description="build the kreplay distribution in dist/replay">
-        <mkdir dir="dist/replay"/>
-        <copy todir="dist/replay" file="src/bat/kreplay.bat"/>
-        <copy todir="dist/replay" file="src/sh/kreplay"/>
-        <mkdir dir="dist/replay/lib"/>
-        <copy todir="dist/replay/lib" file="src/config/log4j-kreplay.xml"/>
-        <move file="dist/replay/lib/log4j-kreplay.xml" tofile="dist/replay/lib/log4j.xml"/>
-        <copy todir="dist/replay/lib">
-            <fileset dir="lib">
-                <exclude name="javax.servlet-2.3.jar" />
-            </fileset>
-        </copy>
-        <jar jarfile="dist/replay/kreplay.jar" basedir="${build.dir}/replay">
-            <manifest>
-                <attribute name="Main-Class" value="org.trippi.impl.kowari.replay.KReplay"/>
-            </manifest>
-        </jar>
-    </target>
-    <target name="replayclasses" depends="prep" description="build the kreplay classes">
-        <mkdir dir="${build.dir}/replay"/>
-        <javac srcdir="src/java" 
-               destdir="${build.dir}/replay" 
-               includes="org/trippi/impl/kowari/replay/**" 
-               classpathref="classpath.dist" 
-               optimize="${javac.optimize}" 
-               debug="${javac.debug}" />
-    </target>
-    <target name="doc" depends="prep" description="Build the documentation in dist">
-        <mkdir dir="dist/doc"/>
-        <copy todir="dist/doc">
-            <fileset dir="src/doc"/>
-        </copy>
-        <javadoc packagenames="org.trippi,org.trippi.nodegraph" 
-                 classpathref="classpath.dist" 
-                 sourcepath="src/java" 
-                 defaultexcludes="yes"
-                 destdir="dist/doc/api" 
-                 author="true" 
-                 version="true" 
-                 use="true" 
-                 windowtitle="Trippi Javadocs">
-            <doctitle><![CDATA[<h1>Trippi Javadocs</h1>]]></doctitle>
-<!--            <link href="http://java.sun.com/j2se/1.4.2/docs/api/" /> -->
-            <link href="http://jrdf.sourceforge.net/0.3/doc/javadoc/" />
-<!--            <link href="http://jena.sourceforge.net/javadoc/" /> -->
-<!--            <link href="http://www.kowari.org/api/" /> -->
-        </javadoc>
-    </target>
-  <target name="prep" description="prepare for a build">
-      <mkdir dir="${build.dir}" />
-      <mkdir dir="dist" />
+  <target name="dist"
+          depends="core-dist,
+                   connector-jars"
+          description="build dist with all connectors">
+    <copy-jar component="kowari" todir="${dist.dir}/lib"/>
+    <copy-jar component="mptstore" todir="${dist.dir}/lib"/>
+    <copy-jar component="oracle" todir="${dist.dir}/lib"/>
+    <copy-jar component="sesame" todir="${dist.dir}/lib"/>
+    <copy todir="${dist.dir}">
+      <fileset dir="." includes="${kowari.runtime.libs}"/>
+      <fileset dir="." includes="${mptstore.runtime.libs}"/>
+      <fileset dir="." includes="${oracle.runtime.libs}"/>
+      <fileset dir="." includes="${sesame.runtime.libs}"/>
+    </copy>
   </target>
+
+  <!-- TODO: target: doc
+             target: unit-test (separate, together, etc..?)
+             target: release (core-release, bin-release, src-release)
+             target: kreplay??
+             target: war??
+       TODO: figure out how to include all the lib / path sets from
+             another file?
+  -->
+               
   <target name="clean" description="remove all build-generated stuff">
       <delete dir="${build.dir}" />
       <delete dir="dist" />
