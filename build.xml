@@ -1,75 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="trippi" default="dist" basedir=".">
-  <property name="libname" value="trippi" />
-  <property name="optimize" value="off" />
-  <property name="debug" value="on" />
+
+  <!-- set global properties for this build -->
+  <property environment="env"/>
+
+  <loadproperties srcFile="build.properties" /> 
+  <loadproperties srcFile="lib/lib.properties" />
+
+  <property name="all.build.dir" value="${build.dir}/classes/all"/>
+  <property name="core.build.dir" value="${build.dir}/classes/core"/>
+  <property name="kowari.build.dir" value="${build.dir}/classes/kowari"/>
+  <property name="mptstore.build.dir" value="${build.dir}/classes/mptstore"/>
+  <property name="oracle.build.dir" value="${build.dir}/classes/oracle"/>
+  <property name="sesame.build.dir" value="${build.dir}/classes/sesame"/>
+
+  <property name="war.build.dir" value="${build.dir}/war"/>
 
   <!-- load library paths, etc from build.properties -->
-  <loadproperties srcFile="build.properties" />
 
   <!-- load ${trippi.version} from properties -->
   <loadproperties srcFile="src/java/org/trippi/Trippi.properties" />
-    
+
   <path id="classpath.dist">
-    <pathelement location="${lib.activation}"/>
-    <pathelement location="${lib.castor}"/>
-    <pathelement location="${lib.commons-dbcp}"/>
-    <pathelement location="${lib.commons-collections }"/>
-    <pathelement location="${lib.commons-dbcp}"/>
-    <pathelement location="${lib.commons-pool}"/>
-    <pathelement location="${lib.dateutils}"/>
-    <pathelement location="${lib.jakarta-regexp}"/>
-    <pathelement location="${lib.jena}"/>
-    <pathelement location="${lib.jrdf}"/>
-    <pathelement location="${lib.kowari}"/>
-    <pathelement location="${lib.log4j}"/>
-    <pathelement location="${lib.lucene}"/>
-    <pathelement location="${lib.mail}"/>
-    <pathelement location="${lib.mptstore}"/>
-    <pathelement location="${lib.openrdf-model}"/>
-    <pathelement location="${lib.openrdf-rio}"/>
-    <pathelement location="${lib.openrdf-util}"/>
-    <pathelement location="${lib.oracle-jdbc}"/>
-    <pathelement location="${lib.postgres-jdbc}"/>
-    <pathelement location="${lib.saxon}"/>
-    <pathelement location="${lib.servlet-api}"/>
-    <pathelement location="${lib.sesame}"/>
-    <pathelement location="${lib.trove}"/>
-    <pathelement location="${lib.xerces}"/>
-    <pathelement location="${lib.xml-apis}"/>
-    <pathelement location="${lib.xmlpull}"/>
-    <pathelement location="${lib.xpp3}"/>
+    <pathelement path="${lib.activation}"/>
+    <pathelement path="${lib.castor}"/>
+    <pathelement path="${lib.commons-dbcp}"/>
+    <pathelement path="${lib.commons-collections}"/>
+    <pathelement path="${lib.commons-pool}"/>
+    <pathelement path="${lib.dateutils}"/>
+    <pathelement path="${lib.jakarta-regexp}"/>
+    <pathelement path="${lib.jena}"/>
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.kowari}"/>
+    <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.lucene}"/>
+    <pathelement path="${lib.mail}"/>
+    <pathelement path="${lib.mptstore}"/>
+    <pathelement path="${lib.openrdf-model}"/>
+    <pathelement path="${lib.openrdf-rio}"/>
+    <pathelement path="${lib.openrdf-util}"/>
+    <pathelement path="${lib.oracle-jdbc}"/>
+    <pathelement path="${lib.saxon}"/>
+    <pathelement path="${lib.servlet-api}"/>
+    <pathelement path="${lib.sesame}"/>
+    <pathelement path="${lib.trove}"/>
+    <pathelement path="${lib.xerces}"/>
+    <pathelement path="${lib.xml-apis}"/>
+    <pathelement path="${lib.xmlpull}"/>
+    <pathelement path="${lib.xpp3}"/>
   </path>
+
+  <path id="core.classpath">
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.openrdf-model}"/>
+    <pathelement path="${lib.openrdf-rio}"/>
+    <pathelement path="${lib.servlet-api}"/>
+    <pathelement path="${lib.trove}"/>
+    <pathelement path="${lib.xmlpull}"/>
+    <pathelement path="${lib.xpp3}"/>
+  </path>
+
+  <path id="kowari.classpath">
+    <pathelement path="${core.build.dir}"/>
+    <pathelement path="${lib.activation}"/>
+    <pathelement path="${lib.castor}"/>
+    <pathelement path="${lib.dateutils}"/>
+    <pathelement path="${lib.jena}"/>
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.kowari}"/>
+    <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.lucene}"/>
+    <pathelement path="${lib.mail}"/>
+    <pathelement path="${lib.trove}"/>
+    <pathelement path="${lib.xerces}"/>
+    <pathelement path="${lib.xml-apis}"/>
+  </path>
+
+  <path id="mptstore.classpath">
+    <pathelement path="${core.build.dir}"/>
+    <pathelement path="${lib.commons-dbcp}"/>
+    <pathelement path="${lib.commons-collections}"/>
+    <pathelement path="${lib.commons-pool}"/>
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.mptstore}"/>
+  </path>
+
+  <path id="oracle.classpath">
+    <pathelement path="${core.build.dir}"/>
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.oracle-jdbc}"/>
+  </path>
+
+  <path id="sesame.classpath">
+    <pathelement path="${core.build.dir}"/>
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.openrdf-model}"/>
+    <pathelement path="${lib.sesame}"/>
+  </path>
+
+  <macrodef name="compile-macro">
+    <attribute name="classpathref"/>
+    <attribute name="destdir"/>
+    <attribute name="excludes" default=""/>
+    <attribute name="includes" default=""/>
+    <sequential>
+      <mkdir dir="@{destdir}"/>
+      <javac classpathref="@{classpathref}"
+             debug="${javac.debug}"
+             destdir="@{destdir}"
+             excludes="@{excludes}"
+             includes="@{includes}"
+             optimize="${javac.optimize}"
+             source="${javac.source}"
+             srcdir="src/java"
+             target="${javac.target}"/>
+    </sequential>
+  </macrodef>
+
+  <target name="core" 
+          description="build core classes">
+    <compile-macro classpathref="core.classpath"
+                   destdir="${core.build.dir}"
+                   includes="org/trippi/*,
+                             org/trippi/config/**,
+                             org/trippi/nodegraph/**,
+                             org/trippi/io/**,
+                             org/trippi/impl/base/**,
+                             org/trippi/impl/multi/**,
+                             org/trippi/server/**,
+                             org/trippi/ui/**"/>
+  </target>
     
-    <target name="classes" depends="prep" description="build all java classes into temp/">
-        <javac srcdir="src/java" 
-               destdir="temp" 
-               includes="**" 
-               classpathref="classpath.dist" 
-               optimize="${optimize}" 
-               debug="${debug}" />
-    </target>
+  <target name="kowari" 
+          depends="core"
+          description="build kowari classes">
+    <compile-macro classpathref="kowari.classpath"
+                   destdir="${kowari.build.dir}"
+                   includes="org/trippi/impl/kowari/**"/>
+  </target>
+
+  <target name="mptstore" 
+          depends="core"
+          description="build mptstore classes">
+    <compile-macro classpathref="mptstore.classpath"
+                   destdir="${mptstore.build.dir}"
+                   includes="org/trippi/impl/mpt/**"/>
+  </target>
+
+  <target name="oracle" 
+          depends="core"
+          description="build oracle classes">
+    <compile-macro classpathref="oracle.classpath"
+                   destdir="${oracle.build.dir}"
+                   includes="org/trippi/impl/oracle/**"/>
+  </target>
+
+  <target name="sesame"
+          depends="core"
+          description="build sesame classes">
+    <compile-macro classpathref="sesame.classpath"
+                   destdir="${sesame.build.dir}"
+                   includes="org/trippi/impl/sesame/**"/>
+  </target>
+
+  <target name="classes"
+          depends="core,
+                   kowari,
+                   mptstore,
+                   oracle,
+                   sesame"
+          description="build all classes">
+    <mkdir dir="${all.build.dir}"/>
+    <copy todir="${all.build.dir}">
+      <fileset dir="${core.build.dir}"/>
+      <fileset dir="${kowari.build.dir}"/>
+      <fileset dir="${mptstore.build.dir}"/>
+      <fileset dir="${oracle.build.dir}"/>
+      <fileset dir="${sesame.build.dir}"/>
+    </copy>
+  </target>
+
     <target name="distwar" depends="dist" description="build the web application archive (war) file in dist/">
-        <mkdir dir="temp/war" />
-        <copy todir="temp/war">
+        <mkdir dir="${war.build.dir}" />
+        <copy todir="${war.build.dir}">
             <fileset dir="src/webapp" />
         </copy>
-        <mkdir dir="temp/war/WEB-INF/lib" />
-        <copy todir="temp/war/WEB-INF/lib">
+        <mkdir dir="${war.build.dir}/WEB-INF/lib" />
+        <copy todir="${war.build.dir}/WEB-INF/lib">
             <fileset dir="dist/lib"/>
         </copy>
-        <jar jarfile="dist/${libname}.war" basedir="temp/war" />
-        <delete dir="temp/war" />
+        <jar jarfile="dist/trippi.war" basedir="${war.build.dir}" />
     </target>
+
     <target name="dist" depends="classes" description="build the entire distribution in dist/">
-        <copy todir="temp">
+        <copy todir="${all.build.dir}">
             <fileset dir="src/java">
                 <include name="**/*.xml" />
                 <include name="**/*.properties" />
             </fileset>
         </copy>
         <mkdir dir="dist/lib" />
-        <jar jarfile="dist/lib/${libname}.jar" basedir="temp">
+        <jar jarfile="dist/lib/trippi.jar" basedir="${all.build.dir}">
             <manifest>
                 <attribute name="Trippi-Version" value="${trippi.version}"/>
                 <attribute name="Main-Class" value="org.trippi.Trippi"/>
@@ -103,20 +237,20 @@
                 <exclude name="javax.servlet-2.3.jar" />
             </fileset>
         </copy>
-        <jar jarfile="dist/replay/kreplay.jar" basedir="temp/replay">
+        <jar jarfile="dist/replay/kreplay.jar" basedir="${build.dir}/replay">
             <manifest>
                 <attribute name="Main-Class" value="org.trippi.impl.kowari.replay.KReplay"/>
             </manifest>
         </jar>
     </target>
-    <target name="replayclasses" depends="prep" description="build the kreplay classes in temp/replay">
-        <mkdir dir="temp/replay"/>
+    <target name="replayclasses" depends="prep" description="build the kreplay classes">
+        <mkdir dir="${build.dir}/replay"/>
         <javac srcdir="src/java" 
-               destdir="temp/replay" 
+               destdir="${build.dir}/replay" 
                includes="org/trippi/impl/kowari/replay/**" 
                classpathref="classpath.dist" 
-               optimize="${optimize}" 
-               debug="${debug}" />
+               optimize="${javac.optimize}" 
+               debug="${javac.debug}" />
     </target>
     <target name="doc" depends="prep" description="Build the documentation in dist">
         <mkdir dir="dist/doc"/>
@@ -140,11 +274,11 @@
         </javadoc>
     </target>
   <target name="prep" description="prepare for a build">
-      <mkdir dir="temp" />
+      <mkdir dir="${build.dir}" />
       <mkdir dir="dist" />
   </target>
   <target name="clean" description="remove all build-generated stuff">
-      <delete dir="temp" />
+      <delete dir="${build.dir}" />
       <delete dir="dist" />
   </target>
 </project>
