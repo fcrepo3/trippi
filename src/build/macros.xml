@@ -1,0 +1,76 @@
+<project>
+
+  <!-- Build macros -->
+
+  <macrodef name="compile-java">
+    <attribute name="classpathref"/>
+    <attribute name="destdir"/>
+    <attribute name="excludes" default=""/>
+    <attribute name="includes" default=""/>
+    <sequential>
+      <mkdir dir="@{destdir}"/>
+      <javac classpathref="@{classpathref}"
+             debug="${javac.debug}"
+             destdir="@{destdir}"
+             excludes="@{excludes}"
+             includes="@{includes}"
+             optimize="${javac.optimize}"
+             source="${javac.source}"
+             srcdir="src/java"
+             target="${javac.target}"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="copy-resources">
+    <attribute name="destdir"/>
+    <attribute name="packagepath"/>
+    <sequential>
+      <copy todir="@{destdir}">
+        <fileset dir="src/java">
+          <include name="@{packagepath}/*.xml"/>
+          <include name="@{packagepath}/*.properties"/>
+          <include name="@{packagepath}/resources/**"/>
+        </fileset>
+      </copy>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="build-connector">
+    <attribute name="classpathref"/>
+    <attribute name="destdir"/>
+    <attribute name="packagepath"/>
+    <sequential>
+      <compile-java classpathref="@{classpathref}"
+                    destdir="@{destdir}"
+                    includes="@{packagepath}/**"/>
+      <copy-resources packagepath="@{packagepath}" 
+                      destdir="@{destdir}"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="build-jar">
+    <attribute name="basedir"/>
+    <attribute name="component"/>
+    <attribute name="mainclass" default=""/>
+    <sequential>
+      <mkdir dir="${jar.build.dir}"/>
+      <jar basedir="@{basedir}"
+           destfile="${jar.build.dir}/${project.name}-${project.version}-@{component}.jar">
+        <manifest>
+          <attribute name="Main-Class" value="@{mainclass}"/>
+        </manifest>
+      </jar>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="copy-jar">
+    <attribute name="component"/>
+    <attribute name="todir"/>
+    <sequential>
+      <mkdir dir="@{todir}"/>
+      <copy file="${jar.build.dir}/${project.name}-${project.version}-@{component}.jar"
+            todir="@{todir}"/>
+    </sequential>
+  </macrodef>
+
+</project>

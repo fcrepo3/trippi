@@ -1,0 +1,26 @@
+<project>
+
+  <!-- project properties -->
+  <property name="project.name"         value="trippi"/>
+  <property name="project.version"      value="${trippi.version}"/>
+
+  <!-- main build directories -->
+  <property name="classes.build.dir"    value="${build.dir}/classes"/>
+  <property name="jar.build.dir"        value="${build.dir}/jars"/>
+
+  <!-- class build directories -->
+  <property name="core.build.dir"       value="${classes.build.dir}/core"/>
+  <property name="kowari.build.dir"     value="${classes.build.dir}/kowari"/>
+  <property name="mptstore.build.dir"   value="${classes.build.dir}/mptstore"/>
+  <property name="oracle.build.dir"     value="${classes.build.dir}/oracle"/>
+  <property name="sesame.build.dir"     value="${classes.build.dir}/sesame"/>
+
+  <!-- package paths -->
+  <property name="top.packagepath"      value="org/trippi"/>
+  <property name="impl.packagepath"     value="${top.packagepath}/impl"/>
+  <property name="kowari.packagepath"   value="${impl.packagepath}/kowari"/>
+  <property name="mptstore.packagepath" value="${impl.packagepath}/mpt"/>
+  <property name="oracle.packagepath"   value="${impl.packagepath}/oracle"/>
+  <property name="sesame.packagepath"   value="${impl.packagepath}/sesame"/>
+
+</project>

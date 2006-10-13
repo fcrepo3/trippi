@@ -1,0 +1,138 @@
+<project>
+
+  <!-- Library/class dependencies -->
+
+  <!-- common -->
+  <path id="common.classpath">
+    <pathelement path="${lib.jrdf}"/>
+    <pathelement path="${lib.log4j}"/>
+  </path>
+
+
+  <!-- core -->
+  <path id="core.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.openrdf-model}"/>
+    <pathelement path="${lib.openrdf-rio}"/>
+    <pathelement path="${lib.trove}"/>
+    <pathelement path="${lib.xmlpull}"/>
+    <pathelement path="${lib.xpp3}"/>
+  </path>
+
+  <path id="core.compile.classpath">
+    <path refid="core.common.classpath"/>
+    <pathelement path="${lib.servlet-api}"/>
+  </path>
+
+  <path id="core.runtime.classpath">
+    <path refid="core.common.classpath"/>
+  </path>
+
+  <pathconvert property="core.runtime.libs" 
+               refid="core.runtime.classpath"
+               pathsep=",">
+    <map from="${basedir}${file.separator}" to=""/>
+  </pathconvert>
+
+
+  <!-- kowari -->
+  <path id="kowari.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.jena}"/>
+    <pathelement path="${lib.kowari}"/>
+  </path>
+
+  <path id="kowari.compile.classpath">
+    <path refid="kowari.common.classpath"/>
+    <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="kowari.runtime.classpath">
+    <path refid="kowari.common.classpath"/>
+    <pathelement path="${lib.activation}"/>
+    <pathelement path="${lib.castor}"/>
+    <pathelement path="${lib.dateutils}"/>
+    <pathelement path="${lib.lucene}"/>
+    <pathelement path="${lib.mail}"/>
+    <pathelement path="${lib.trove}"/>
+    <pathelement path="${lib.xerces}"/>
+    <pathelement path="${lib.xml-apis}"/>
+  </path>
+
+  <pathconvert property="kowari.runtime.libs" 
+               refid="kowari.runtime.classpath"
+               pathsep=",">
+    <map from="${basedir}${file.separator}" to=""/>
+  </pathconvert>
+
+
+  <!-- mptstore -->
+  <path id="mptstore.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.commons-dbcp}"/>
+    <pathelement path="${lib.mptstore}"/>
+  </path>
+
+  <path id="mptstore.compile.classpath">
+    <path refid="mptstore.common.classpath"/>
+    <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="mptstore.runtime.classpath">
+    <path refid="mptstore.common.classpath"/>
+    <pathelement path="${lib.commons-collections}"/>
+    <pathelement path="${lib.commons-pool}"/>
+  </path>
+
+  <pathconvert property="mptstore.runtime.libs" 
+               refid="mptstore.runtime.classpath"
+               pathsep=",">
+    <map from="${basedir}${file.separator}" to=""/>
+  </pathconvert>
+
+
+  <!-- oracle -->
+  <path id="oracle.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.oracle-jdbc}"/>
+  </path>
+
+  <path id="oracle.compile.classpath">
+    <path refid="oracle.common.classpath"/>
+    <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="oracle.runtime.classpath">
+    <path refid="oracle.common.classpath"/>
+  </path>
+
+  <pathconvert property="oracle.runtime.libs" 
+               refid="oracle.runtime.classpath"
+               pathsep=",">
+    <map from="${basedir}${file.separator}" to=""/>
+  </pathconvert>
+
+
+  <!-- sesame -->
+  <path id="sesame.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.openrdf-model}"/>
+    <pathelement path="${lib.sesame}"/>
+  </path>
+
+  <path id="sesame.compile.classpath">
+    <path refid="sesame.common.classpath"/>
+    <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="sesame.runtime.classpath">
+    <path refid="sesame.common.classpath"/>
+  </path>
+
+  <pathconvert property="sesame.runtime.libs" 
+               refid="sesame.runtime.classpath"
+               pathsep=",">
+    <map from="${basedir}${file.separator}" to=""/>
+  </pathconvert>
+
+</project>

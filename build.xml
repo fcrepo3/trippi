@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="trippi" default="dist" basedir=".">
 
-  <import file="builddefs.xml"/>
+  <!-- TODO: target: doc
+             target: unit-test (separate, together, etc..?)
+             target: release (core-release, bin-release, src-release)
+             target: kreplay??
+             target: war??
+  -->
+               
+  <property environment="env"/>
+
+  <loadproperties srcFile="build.properties" /> 
+  <loadproperties srcFile="lib/lib.properties" />
+  <loadproperties srcFile="${src.dir}/java/org/trippi/Trippi.properties"/>
+
+  <import file="${src.dir}/build/definitions.xml"/>
+  <import file="${src.dir}/build/dependencies.xml"/>
+  <import file="${src.dir}/build/macros.xml"/>
 
   <target name="core" 
           description="build core classes">
@@ -67,8 +82,6 @@
           depends="core-jar"
           description="build core dist">
     <copy-jar component="core" todir="${dist.dir}/lib"/>
-    <echo message="basedir: ${basedir}"/>
-    <echo message="core.runtime.libs: ${core.runtime.libs}"/>
     <copy todir="${dist.dir}">
       <fileset dir="." includes="${core.runtime.libs}"/>
       <fileset dir="src" includes="config/"/>
@@ -94,17 +107,9 @@
     </copy>
   </target>
 
-  <!-- TODO: target: doc
-             target: unit-test (separate, together, etc..?)
-             target: release (core-release, bin-release, src-release)
-             target: kreplay??
-             target: war??
-       TODO: figure out how to include all the lib / path sets from
-             another file?
-  -->
-               
   <target name="clean" description="remove all build-generated stuff">
       <delete dir="${build.dir}" />
       <delete dir="dist" />
   </target>
+
 </project>
