@@ -12,15 +12,6 @@ import org.apache.log4j.*;
 
 import org.jrdf.graph.GraphElementFactory;
 
-import org.openrdf.sesame.Sesame;
-import org.openrdf.sesame.config.RepositoryConfig;
-import org.openrdf.sesame.config.SailConfig;
-import org.openrdf.sesame.sailimpl.nativerdf.NativeRdfRepositoryConfig;
-import org.openrdf.sesame.sailimpl.rdbms.RdfRepositoryConfig;
-import org.openrdf.sesame.repository.SesameRepository;
-import org.openrdf.sesame.repository.local.LocalRepository;
-import org.openrdf.sesame.repository.local.LocalService;
-
 import org.trippi.*;
 import org.trippi.impl.base.*;
 

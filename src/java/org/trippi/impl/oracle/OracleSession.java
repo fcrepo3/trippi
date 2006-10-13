@@ -27,8 +27,6 @@ import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
 import org.jrdf.graph.mem.GraphImpl;
 
-import org.openrdf.model.ValueFactory;
-
 import org.trippi.*;
 import org.trippi.impl.base.AliasManager;
 import org.trippi.impl.base.TriplestoreSession;
