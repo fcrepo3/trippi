@@ -3,17 +3,13 @@ package org.trippi.impl.base;
 import junit.framework.TestCase;
 import junit.swingui.TestRunner;
 
-public class MemUpdateBufferUnitTest extends TestCase {
+public class MemUpdateBufferUnitTest extends UpdateBufferUnitTest {
 
-    public MemUpdateBufferUnitTest(String name) { super (name); }
+    public MemUpdateBufferUnitTest(String name) throws Exception { super (name); }
 
-    public void setUp() {
-    }
-            
-    public void tearDown() {
-    }
-
-    public void testTesting() {
+    public UpdateBuffer getBuffer(int safeCapacity,
+                                    int flushBatchSize) {
+        return new MemUpdateBuffer(safeCapacity, flushBatchSize);
     }
 
 }
