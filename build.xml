@@ -169,8 +169,8 @@
 
   <!-- clean -->
   <target name="clean" description="remove all build-generated stuff">
-      <delete dir="${build.dir}" />
-      <delete dir="dist" />
+    <delete dir="${build.dir}"/>
+    <delete dir="dist" />
   </target>
 
 </project>
