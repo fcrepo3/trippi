@@ -3,6 +3,8 @@ package org.trippi.impl.base;
 import java.net.URI;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -105,7 +107,8 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         _buffer.add(getTriple(1, 1, 1));
 
         // prepare a separate thread to perform the flushing
-        FlushingThread flusher = new FlushingThread(_buffer, session);
+        FlushingThread flusher = new FlushingThread(_buffer, session, 1);
+        flusher.stopAfterNextFlush();
 
         // pause the session so it locks the flusher till we're ready
         session.setPaused(true);
@@ -162,7 +165,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
     public void testFailedFlushNotifiesErrorHandlerAndThrows() throws Exception {
 
         // set up our fake session and error handler
-        FakeTriplestoreSession session = new FakeTriplestoreSession(1000);
+        FakeTriplestoreSession session = new FakeTriplestoreSession();
         session.setExceptionToThrow(new TrippiException("test"));
         FakeFlushErrorHandler errorHandler = new FakeFlushErrorHandler();
 
@@ -186,6 +189,126 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
     }
 
+    // Do several dozen chunks of adds while flushes are intermittenly
+    // happening.  Ensure when it's all said and done, we have flushed
+    // all the triples we expect to have flushed.
+
+    public void testConcurrentSingleAdds() throws Exception {
+        FakeTriplestoreSession session = new FakeTriplestoreSession();
+
+        int numModders       = 10;
+        int chunksPerModder  = 20;
+        int triplesPerChunk  = 100;
+        int flushThreshold   = 2000;
+        int expected = numModders * chunksPerModder * triplesPerChunk;
+
+        doConcurrentMods(session, numModders, false, chunksPerModder, 
+                         triplesPerChunk, true, flushThreshold);
+
+        assertEquals("Wrong number of triples flushed", expected, session.size());
+        
+    }
+
+    /**
+     * On the given session, do the indicated mods with multiple modder
+     * threads and asynchronous flushing.
+     *
+     * This method returns when all threads are done.
+     */
+    private void doConcurrentMods(FakeTriplestoreSession session,
+                                  int numModders,
+                                  boolean useBatchCalls,
+                                  int chunksPerModder,
+                                  int triplesPerChunk,
+                                  boolean adds,
+                                  int flushThreshold) throws Exception {
+
+        _buffer = getBuffer(flushThreshold, flushThreshold);
+
+        // init + start the flusher
+        FlushingThread flusher = new FlushingThread(_buffer, session, flushThreshold);
+        flusher.start();
+
+        // init + start the modders
+        ModdingThread[] modders = new ModdingThread[numModders];
+        for (int i = 0; i < numModders; i++) {
+            modders[i] = new ModdingThread(i,
+                                           _buffer,
+                                           useBatchCalls,
+                                           chunksPerModder,
+                                           triplesPerChunk,
+                                           adds);
+            modders[i].start();
+        }
+
+        // wait for modders to finish
+        int numModdersFinished = 0;
+        while (numModdersFinished < numModders) {
+            numModdersFinished = 0;
+            for (int i = 0; i < numModders; i++) {
+                if (!modders[i].isAlive()) {
+                    numModdersFinished++;
+                }
+            }
+        }
+
+        // wait for flusher to deal with overflow
+        while (_buffer.size() >= flushThreshold) {
+            try { Thread.sleep(10); } catch (InterruptedException e) { }
+        }
+
+        // signal to flusher to do one more if needed, then finish
+        flusher.stopAfterNextFlush();
+
+        // wait for flusher to finish
+        while (flusher.isAlive()) {
+            try { Thread.sleep(10); } catch (InterruptedException e) { }
+        }
+
+        // check modders for any errors, and throw first found
+        for (int i = 0; i < numModders; i++) {
+            Exception e = modders[i].getError();
+            if (e != null) {
+                throw new Exception("Unexpected error in modder thread", e);
+            }
+        }
+
+    }
+
+/*
+    public void tryManyAddsWithAsyncFlushing() throws Exception {
+        FakeTriplestoreSession session = new FakeTriplestoreSession(1000);
+        _buffer = getBuffer(800, 600);
+
+        FlushingThread flusher = new FlushingThread(_buffer, session, 800);
+
+        flusher.start();
+
+        for (int i = 1; i <= 40; i++) {
+            for (int j = 1; j <= 433; j++) {
+                _buffer.add(getTriple(1, i, j));
+            }
+        }
+
+        // wait for flusher to deal with overflow
+        while (_buffer.size() >= 800) {
+            try { Thread.sleep(10); } catch (InterruptedException e) { }
+        }
+
+        // signal to flusher to do one more if needed, then finish
+        flusher.stopAfterNextFlush();
+
+        // wait for flusher to finish
+        while (flusher.isAlive()) {
+            try { Thread.sleep(10); } catch (InterruptedException e) { }
+        }
+
+        // just check the count...it should be what we expect!!
+        System.out.println("fake triplestore size: " + session.size());
+
+    }
+
+*/
 
     //
     // Helper Methods for the unit tests in this class
@@ -233,6 +356,8 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
         private TrippiException _exceptionToThrow;
 
+        private Set _triples;
+
         /**
          * @param maxMillis maximum milliseconds to pause before
          *        throwing an exception during an add/delete while
@@ -240,6 +365,12 @@ public abstract class UpdateBufferUnitTest extends TestCase {
          */
         public FakeTriplestoreSession(long maxMillis) { 
             _maxMillis = maxMillis;
+            _triples = new HashSet();
+        }
+
+        public FakeTriplestoreSession() {
+            _maxMillis = 0;
+            _triples = new HashSet();
         }
 
         public void setExceptionToThrow(TrippiException e) {
@@ -280,6 +411,11 @@ public abstract class UpdateBufferUnitTest extends TestCase {
             }
         }
 
+        // for testing
+        public int size() {
+            return _triples.size();
+        }
+
         //
         // Test-specific implementations of TriplestoreSession methods.
         //
@@ -287,11 +423,13 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         public void add(Set triples) throws TrippiException {
             sleepTillUnpaused();
             throwExceptionIfSet();
+            _triples.addAll(triples);
         }
 
         public void delete(Set triples) throws TrippiException {
             sleepTillUnpaused();
             throwExceptionIfSet();
+            _triples.removeAll(triples);
         }
 
         //
@@ -348,16 +486,40 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         private UpdateBuffer _buffer;
         private TriplestoreSession _session;
         private Exception _error;
+        private boolean _stopAfterNextFlush;
+        private int _flushIfThisSizeOrAbove;
 
         public FlushingThread(UpdateBuffer buffer,
-                              TriplestoreSession session) {
+                              TriplestoreSession session,
+                              int flushIfThisSizeOrAbove) {
             _buffer = buffer;
             _session = session;
+            _flushIfThisSizeOrAbove = flushIfThisSizeOrAbove;
         }
 
+        public void stopAfterNextFlush() {
+            _stopAfterNextFlush = true;
+        }
+
+        // flush at least once, and then keep flushing until 
+        // stopAfterNextFlush is called
         public void run() {
             try {
-                _buffer.flush(_session);
+                boolean finish = false;
+                while (!finish) {
+                    if (_stopAfterNextFlush) {
+                        finish = true;
+                    }
+                    if (_buffer.size() >= _flushIfThisSizeOrAbove) {
+                        _buffer.flush(_session);
+                    }
+                    if (!finish) {
+                        try {
+                            Thread.sleep(25);
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                }
             } catch (Exception e) {
                 _error = e;
             }
@@ -366,6 +528,81 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         public Exception getError() {
             return _error;
         }
+    }
+
+    public class ModdingThread extends Thread {
+
+        private int _id;
+        private UpdateBuffer _buffer;
+        private boolean _useBatchCalls;
+        private int _numChunks;
+        private int _triplesPerChunk;
+        private boolean _doAdds;
+
+        private Exception _error;
+
+        public ModdingThread(int id, 
+                             UpdateBuffer buffer,
+                             boolean useBatchCalls, 
+                             int numChunks,
+                             int triplesPerChunk, 
+                             boolean doAdds) {
+            _id = id;
+            _buffer = buffer;
+            _useBatchCalls = useBatchCalls;
+            _numChunks = numChunks;
+            _triplesPerChunk = triplesPerChunk;
+            _doAdds = doAdds;
+
+        }
+
+        public void run() {
+
+            try {
+                for (int i = 0; i < _numChunks; i++) {
+
+                    // generate triples for this chunk
+                    List triples = new ArrayList();
+                    for (int j = 0; j < _triplesPerChunk; j++) {
+                        triples.add(getTriple(_id, i, j));
+                    }
+
+                    // do the adds or deletes for this chunk
+                    if (_doAdds) {
+                        if (_useBatchCalls) {
+                            _buffer.add(triples);
+                        } else {
+                            Iterator iter = triples.iterator();
+                            while (iter.hasNext()) {
+                                Triple triple = (Triple) iter.next();
+                                _buffer.add(triple);
+                            }
+                        }
+                    } else {
+                        if (_useBatchCalls) {
+                            _buffer.delete(triples);
+                        } else {
+                            Iterator iter = triples.iterator();
+                            while (iter.hasNext()) {
+                                Triple triple = (Triple) iter.next();
+                                _buffer.delete(triple);
+                            }
+                        }
+                    }
+
+                    // yield so we're not hogging any impl-specific
+                    // buffer locks
+                    this.yield();
+                }
+            } catch (Exception e) {
+                _error = e;
+            }
+        }
+
+        private Exception getError() {
+            return _error;
+        }
+
     }
 
 }
