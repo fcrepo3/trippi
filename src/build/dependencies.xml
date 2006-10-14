@@ -136,4 +136,25 @@
     <map from="${basedir}${file.separator}" to=""/>
   </pathconvert>
 
+  <!-- test -->
+  <path id="test.common.classpath">
+    <pathelement path="${core.build.dir}"/>
+    <pathelement path="${kowari.build.dir}"/>
+    <pathelement path="${mptstore.build.dir}"/>
+    <pathelement path="${oracle.build.dir}"/>
+    <pathelement path="${sesame.build.dir}"/>
+    <fileset dir="lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <path id="test.compile.classpath">
+    <path refid="test.common.classpath"/>
+  </path>
+
+  <path id="test.runtime.classpath">
+    <path refid="test.common.classpath"/>
+    <pathelement path="${test.build.dir}"/>
+  </path>
+
 </project>

@@ -14,6 +14,7 @@
   <property name="mptstore.build.dir"   value="${classes.build.dir}/mptstore"/>
   <property name="oracle.build.dir"     value="${classes.build.dir}/oracle"/>
   <property name="sesame.build.dir"     value="${classes.build.dir}/sesame"/>
+  <property name="test.build.dir"       value="${classes.build.dir}/test"/>
 
   <!-- package paths -->
   <property name="top.packagepath"      value="org/trippi"/>

@@ -2,7 +2,7 @@
 <project name="trippi" default="dist" basedir=".">
 
   <!-- TODO: target: doc
-             target: unit-test (separate, together, etc..?)
+             target: checkstyle
              target: release (core-release, bin-release, src-release)
              target: kreplay??
              target: war??
@@ -18,7 +18,8 @@
   <import file="${src.dir}/build/dependencies.xml"/>
   <import file="${src.dir}/build/macros.xml"/>
 
-  <target name="core" 
+  <!-- core-classes -->
+  <target name="core-classes" 
           description="build core classes">
     <compile-java classpathref="core.compile.classpath"
                    destdir="${core.build.dir}"
@@ -34,43 +35,66 @@
                     destdir="${core.build.dir}"/>
   </target>
     
-  <target name="kowari" depends="core">
+  <!-- kowari-classes -->
+  <target name="kowari-classes" depends="core-classes">
     <build-connector classpathref="kowari.compile.classpath"
                      destdir="${kowari.build.dir}"
                      packagepath="${kowari.packagepath}"/>
   </target>
 
-  <target name="mptstore" depends="core">
+  <!-- mptstore-classes -->
+  <target name="mptstore-classes" depends="core-classes">
     <build-connector classpathref="mptstore.compile.classpath"
                      destdir="${mptstore.build.dir}"
                      packagepath="${mptstore.packagepath}"/>
   </target>
 
-  <target name="oracle" depends="core">
+  <!-- oracle-classes -->
+  <target name="oracle-classes" depends="core-classes">
     <build-connector classpathref="oracle.compile.classpath"
                      destdir="${oracle.build.dir}"
                      packagepath="${oracle.packagepath}"/>
   </target>
 
-  <target name="sesame" depends="core">
+  <!-- sesame-classes -->
+  <target name="sesame-classes" depends="core-classes">
     <build-connector classpathref="sesame.compile.classpath"
                      destdir="${sesame.build.dir}"
                      packagepath="${sesame.packagepath}"/>
   </target>
 
+  <!-- connector-classes -->
+  <target name="connector-classes"
+          description="build all connector classes"
+          depends="kowari-classes,
+                   mptstore-classes,
+                   oracle-classes,
+                   sesame-classes">
+  </target>
+
+  <!-- test-classes -->
+  <target name="test-classes"
+          description="build all test classes"
+          depends="core-classes,
+                   connector-classes">
+    <compile-java classpathref="test.compile.classpath"
+                  destdir="${test.build.dir}"
+                  includes="${top.packagepath}/**"
+                  srcdir="src/test"/>
+  </target>
+
+  <!-- core-jar -->
   <target name="core-jar"
-          depends="core"
+          depends="core-classes"
           description="build core jar">
     <build-jar basedir="${core.build.dir}" 
                component="core" 
                mainclass="org.trippi.Trippi"/>
   </target>
 
+  <!-- connector-jars -->
   <target name="connector-jars"
-          depends="kowari,
-                   mptstore,
-                   oracle,
-                   sesame"
+          depends="connector-classes"
           description="build jars for all connectors">
     <build-jar basedir="${kowari.build.dir}" component="kowari"/>
     <build-jar basedir="${mptstore.build.dir}" component="mptstore"/>
@@ -78,6 +102,42 @@
     <build-jar basedir="${sesame.build.dir}" component="sesame"/>
   </target>
 
+  <!-- unit-test -->
+  <target name="unit-test"
+          depends="test-classes"
+          description="run all unit tests">
+    <junit printsummary="no" 
+           haltonfailure="yes" 
+           showoutput="true" 
+           filtertrace="true">
+      <formatter type="plain" usefile="false"/>
+      <classpath refid="test.runtime.classpath"/>
+      <test name="org.trippi.TrippiUnitTestSuite"/>
+    </junit>
+  </target>
+
+  <!-- integration-test -->
+  <target name="integration-test"
+          depends="test-classes"
+          description="run all integration tests">
+    <junit printsummary="no" 
+           haltonfailure="yes" 
+           showoutput="true" 
+           filtertrace="true">
+      <formatter type="plain" usefile="false"/>
+      <classpath refid="test.runtime.classpath"/>
+      <test name="org.trippi.TrippiIntegrationTestSuite"/>
+    </junit>
+  </target>
+
+  <!-- test -->
+  <target name="test"
+          depends="unit-test,
+                   integration-test"
+          description="run all unit and integration tests">
+  </target>
+
+  <!-- core-dist -->
   <target name="core-dist"
           depends="core-jar"
           description="build core dist">
@@ -86,11 +146,11 @@
       <fileset dir="." includes="${core.runtime.libs}"/>
       <fileset dir="src" includes="config/"/>
       <fileset dir="src" includes="samples/"/>
-      <fileset dir="src/sh" includes="trippi"/>
-      <fileset dir="src/bat" includes="trippi.bat"/>
+      <fileset dir="src/bin"/>
     </copy>
   </target>
 
+  <!-- dist -->
   <target name="dist"
           depends="core-dist,
                    connector-jars"
@@ -107,6 +167,7 @@
     </copy>
   </target>
 
+  <!-- clean -->
   <target name="clean" description="remove all build-generated stuff">
       <delete dir="${build.dir}" />
       <delete dir="dist" />

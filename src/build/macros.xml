@@ -7,6 +7,7 @@
     <attribute name="destdir"/>
     <attribute name="excludes" default=""/>
     <attribute name="includes" default=""/>
+    <attribute name="srcdir" default="src/java"/>
     <sequential>
       <mkdir dir="@{destdir}"/>
       <javac classpathref="@{classpathref}"
@@ -16,7 +17,7 @@
              includes="@{includes}"
              optimize="${javac.optimize}"
              source="${javac.source}"
-             srcdir="src/java"
+             srcdir="@{srcdir}"
              target="${javac.target}"/>
     </sequential>
   </macrodef>
