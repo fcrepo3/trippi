@@ -31,6 +31,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
     private int m_safeCapacity;
     private int m_flushBatchSize;
     private List m_buffer;
+    private Object m_bufferLock = new Object();
 
     private FlushErrorHandler m_flushErrorHandler;
 
@@ -43,22 +44,30 @@ public class MemUpdateBuffer implements UpdateBuffer {
 
     public void add(List triples) {
         debugUpdate("Adding " + triples.size() + " triples to buffer", triples);
-        m_buffer.addAll(TripleUpdate.get(TripleUpdate.ADD, triples));
+        synchronized (m_bufferLock) {
+            m_buffer.addAll(TripleUpdate.get(TripleUpdate.ADD, triples));
+        }
     }
 
     public void add(Triple triple) {
         debugUpdate("Adding 1 triple to buffer", triple);
-        m_buffer.add(TripleUpdate.get(TripleUpdate.ADD, triple));
+        synchronized (m_bufferLock) {
+            m_buffer.add(TripleUpdate.get(TripleUpdate.ADD, triple));
+        }
     }
 
     public void delete(List triples) {
         debugUpdate("Deleting " + triples.size() + " triples from buffer", triples);
-        m_buffer.addAll(TripleUpdate.get(TripleUpdate.DELETE, triples));
+        synchronized (m_bufferLock) {
+            m_buffer.addAll(TripleUpdate.get(TripleUpdate.DELETE, triples));
+        }
     }
 
     public void delete(Triple triple) {
         debugUpdate("Deleting 1 triple from buffer", triple);
-        m_buffer.add(TripleUpdate.get(TripleUpdate.DELETE, triple));
+        synchronized (m_bufferLock) {
+            m_buffer.add(TripleUpdate.get(TripleUpdate.DELETE, triple));
+        }
     }
 
     private static void debugUpdate(String msg, Triple triple) {
@@ -92,15 +101,17 @@ public class MemUpdateBuffer implements UpdateBuffer {
     /**
      * Flush the contents of the buffer to the triplestore.
      */
-    public void flush(TriplestoreSession session) throws TrippiException {
+    public synchronized void flush(TriplestoreSession session) throws TrippiException {
         // copy the buffer, then clear it
-        ArrayList toFlush = new ArrayList(m_buffer.size());
-        synchronized (m_buffer) {
-            toFlush.addAll(m_buffer);
-            m_buffer = Collections.synchronizedList(new ArrayList(m_safeCapacity));
+        List toFlush = null;
+        synchronized (m_bufferLock) {
+            if (m_buffer.size() > 0) {
+                toFlush = m_buffer;
+                m_buffer = Collections.synchronizedList(new ArrayList(m_safeCapacity));
+            }
         }
         try {
-            if (toFlush.size() > 0) writeBatches(toFlush.iterator(), session);
+            if (toFlush != null) writeBatches(toFlush.iterator(), session);
         } catch (TrippiException e) {
             // in the event of failure, send toFlush and the exception to the 
             // flushErrorHandler, if set.
