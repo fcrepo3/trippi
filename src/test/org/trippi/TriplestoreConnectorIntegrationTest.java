@@ -57,7 +57,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
             _writer.delete(triples, true);
         } finally {
             if (out != null) out.close();
-            dump.delete();
+//            dump.delete();
         }
     }
 
@@ -127,6 +127,68 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
     // TODO: Above with unicode chars in literals
     // TODO: Add tests for adding/deleting triples with unicode chars in literals
 
+    public void testAddConcurrencyForceFlushOnce() throws Exception {
+        doAddConcurrency(5, 50, 75, false);
+    }
+
+    public void testAddConcurrencyForceFlushOften() throws Exception {
+        doAddConcurrency(5, 50, 75, true);
+    }
+
+    /**
+     * Test that we can add a bunch of triples from multiple threads,
+     * and they all get flushed properly.
+     */
+    private void doAddConcurrency(int numAdders,
+                                  int batchesPerAdder,
+                                  int triplesPerBatch,
+                                  boolean forceFlushOften) throws Exception {
+
+        int expected = numAdders * batchesPerAdder * triplesPerBatch;
+
+        // init and start adder threads
+        TripleAdder[] adders = new TripleAdder[numAdders];
+        int addersAlive = 0;
+        for (int i = 0; i < numAdders; i++) {
+            adders[i] = new TripleAdder(i + 1, 
+                                        batchesPerAdder, 
+                                        triplesPerBatch, 
+                                        _writer);
+            adders[i].start();
+            addersAlive++;
+        }
+
+        // wait till all adders are done
+        while (addersAlive > 0) {
+            if (forceFlushOften) {
+                _writer.flushBuffer();
+            } else {
+                try { Thread.sleep(10); } catch (InterruptedException e) { }
+            }
+            addersAlive = 0;
+            for (int i = 0; i < numAdders; i++) {
+                if (adders[i].isAlive()) addersAlive++;
+            }
+        }
+
+        // check if any had error, if so fail
+        for (int i = 0; i < numAdders; i++) {
+            Exception e = adders[i].getError();
+            if (e != null) {
+                int adderId = i + 1;
+                throw new RuntimeException("Adder thread #" 
+                        + adderId + " encountered error", e);
+            }
+        }
+
+        // force flush
+        _writer.flushBuffer();
+
+        assertEquals("Wrong number of triples after add",
+                     expected,
+                     _reader.countTriples(null, null, null, -1));
+    }
+
     private Set getSet(TripleIterator iter) throws Exception {
         HashSet set = new HashSet();
         while (iter.hasNext()) {
@@ -159,6 +221,45 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
                 _util.createResource(new URI("urn:test:" + s)),
                 _util.createResource(new URI("urn:test:" + p)),
                 _util.createResource(new URI("urn:test:" + o)));
+    }
+
+    public class TripleAdder extends Thread {
+
+        private int _id;
+        private int _numBatches;
+        private int _triplesPerBatch;
+        private TriplestoreWriter _writer;
+
+        private Exception _error;
+
+        public TripleAdder(int id, // first is 1, not 0
+                           int numBatches,
+                           int triplesPerBatch,
+                           TriplestoreWriter writer) {
+            _id = id;
+            _numBatches = numBatches;
+            _triplesPerBatch = triplesPerBatch;
+            _writer = writer;
+        }
+
+        public void run() {
+            try {
+                for (int i = 0; i < _numBatches; i++) {
+                    List triples = getTriples(_id, _id,
+                                              i + 1, i + 1,
+                                              1, _triplesPerBatch);
+                    _writer.add(triples, false);
+                    this.yield();
+                }
+            } catch (Exception e) {
+                _error = e;
+            }
+        }
+
+        public Exception getError() {
+            return _error;
+        }
+
     }
             
 }
