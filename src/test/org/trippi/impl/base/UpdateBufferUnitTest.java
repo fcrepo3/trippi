@@ -193,7 +193,23 @@ public abstract class UpdateBufferUnitTest extends TestCase {
     // happening.  Ensure when it's all said and done, we have flushed
     // all the triples we expect to have flushed.
 
+    public void testConcurrentMultiAdds() throws Exception {
+        doConcurrentAddTest(true);
+    }
+
     public void testConcurrentSingleAdds() throws Exception {
+        doConcurrentAddTest(false);
+    }
+
+    public void testConcurrentMultiDeletes() throws Exception {
+        doConcurrentDeleteTest(true);
+    }
+
+    public void testConcurrentSingleDeletes() throws Exception {
+        doConcurrentDeleteTest(false);
+    }
+
+    private void doConcurrentAddTest(boolean multi) throws Exception {
         FakeTriplestoreSession session = new FakeTriplestoreSession();
 
         int numModders       = 10;
@@ -202,10 +218,43 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         int flushThreshold   = 2000;
         int expected = numModders * chunksPerModder * triplesPerChunk;
 
-        doConcurrentMods(session, numModders, false, chunksPerModder, 
-                         triplesPerChunk, true, flushThreshold);
+        // the session starts over an empty "triplestore"
 
+        doConcurrentMods(session, numModders, multi, chunksPerModder, 
+                         triplesPerChunk, true, flushThreshold);
         assertEquals("Wrong number of triples flushed", expected, session.size());
+        
+    }
+
+    private void doConcurrentDeleteTest(boolean multi) throws Exception {
+        FakeTriplestoreSession session = new FakeTriplestoreSession();
+
+        int numModders       = 10;
+        int chunksPerModder  = 20;
+        int triplesPerChunk  = 100;
+        int flushThreshold   = 2000;
+        int expected = numModders * chunksPerModder * triplesPerChunk;
+
+        // populate the "triplestore"
+        Set triples = new HashSet();
+        for (int i = 0; i < numModders; i++) {
+            for (int j = 0; j < chunksPerModder; j++) {
+                for (int k = 0; k < triplesPerChunk; k++) {
+                    triples.add(getTriple(i, j, k));
+                }
+            }
+        }
+        session.add(triples);
+
+        // quick sanity checks to make sure we set up the test correctly
+        assertEquals(session.size(), triples.size());
+        assertEquals(session.size(), expected);
+
+        // now do the deletes...
+        // if dels are flushed properly, we should end up with 0
+        doConcurrentMods(session, numModders, multi, chunksPerModder, 
+                         triplesPerChunk, false, flushThreshold);
+        assertEquals("Triple deletes were not all flushed", 0, session.size());
         
     }
 
@@ -274,41 +323,6 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         }
 
     }
-
-/*
-    public void tryManyAddsWithAsyncFlushing() throws Exception {
-        FakeTriplestoreSession session = new FakeTriplestoreSession(1000);
-        _buffer = getBuffer(800, 600);
-
-        FlushingThread flusher = new FlushingThread(_buffer, session, 800);
-
-        flusher.start();
-
-        for (int i = 1; i <= 40; i++) {
-            for (int j = 1; j <= 433; j++) {
-                _buffer.add(getTriple(1, i, j));
-            }
-        }
-
-        // wait for flusher to deal with overflow
-        while (_buffer.size() >= 800) {
-            try { Thread.sleep(10); } catch (InterruptedException e) { }
-        }
-
-        // signal to flusher to do one more if needed, then finish
-        flusher.stopAfterNextFlush();
-
-        // wait for flusher to finish
-        while (flusher.isAlive()) {
-            try { Thread.sleep(10); } catch (InterruptedException e) { }
-        }
-
-        // just check the count...it should be what we expect!!
-        System.out.println("fake triplestore size: " + session.size());
-
-    }
-
-*/
 
     //
     // Helper Methods for the unit tests in this class
@@ -514,10 +528,13 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         _buffer.flush(_session);
                     }
                     if (!finish) {
+                        this.yield();
+                        /*
                         try {
                             Thread.sleep(25);
                         } catch (InterruptedException e) {
                         }
+                        */
                     }
                 }
             } catch (Exception e) {
@@ -560,7 +577,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
             try {
                 for (int i = 0; i < _numChunks; i++) {
-
+         
                     // generate triples for this chunk
                     List triples = new ArrayList();
                     for (int j = 0; j < _triplesPerChunk; j++) {
