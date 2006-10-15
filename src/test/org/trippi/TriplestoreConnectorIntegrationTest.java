@@ -8,6 +8,7 @@ import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -57,7 +58,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
             _writer.delete(triples, true);
         } finally {
             if (out != null) out.close();
-//            dump.delete();
+            dump.delete();
         }
     }
 
@@ -128,65 +129,85 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
     // TODO: Add tests for adding/deleting triples with unicode chars in literals
 
     public void testAddConcurrencyForceFlushOnce() throws Exception {
-        doAddConcurrency(5, 50, 75, false);
+        doModifyConcurrency(5, 50, 75, false, false, true);
     }
 
     public void testAddConcurrencyForceFlushOften() throws Exception {
-        doAddConcurrency(5, 50, 75, true);
+        doModifyConcurrency(5, 50, 75, false, true, true);
+    }
+
+    public void testDeleteConcurrencyForceFlushOnce() throws Exception {
+        _writer.add(getTriples(5, 50, 75), true);
+        doModifyConcurrency(5, 50, 75, false, false, false);
+    }
+
+    public void testDeleteConcurrencyForceFlushOften() throws Exception {
+        _writer.add(getTriples(5, 50, 75), true);
+        doModifyConcurrency(5, 50, 75, false, true, false);
     }
 
     /**
      * Test that we can add a bunch of triples from multiple threads,
      * and they all get flushed properly.
      */
-    private void doAddConcurrency(int numAdders,
-                                  int batchesPerAdder,
-                                  int triplesPerBatch,
-                                  boolean forceFlushOften) throws Exception {
+    private void doModifyConcurrency(int numModifiers,
+                                     int batchesPerModifier,
+                                     int triplesPerBatch,
+                                     boolean oneTripleAtATime,
+                                     boolean forceFlushOften,
+                                     boolean adds) throws Exception {
 
-        int expected = numAdders * batchesPerAdder * triplesPerBatch;
+        int expected = numModifiers * batchesPerModifier * triplesPerBatch;
 
-        // init and start adder threads
-        TripleAdder[] adders = new TripleAdder[numAdders];
-        int addersAlive = 0;
-        for (int i = 0; i < numAdders; i++) {
-            adders[i] = new TripleAdder(i + 1, 
-                                        batchesPerAdder, 
+        // init and start modifier threads
+        TripleModifier[] modifiers = new TripleModifier[numModifiers];
+        int modifiersAlive = 0;
+        for (int i = 0; i < numModifiers; i++) {
+            modifiers[i] = new TripleModifier(i + 1, 
+                                        batchesPerModifier, 
                                         triplesPerBatch, 
-                                        _writer);
-            adders[i].start();
-            addersAlive++;
+                                        _writer,
+                                        oneTripleAtATime,
+                                        adds);
+            modifiers[i].start();
+            modifiersAlive++;
         }
 
-        // wait till all adders are done
-        while (addersAlive > 0) {
+        // wait till all modifiers are done
+        while (modifiersAlive > 0) {
             if (forceFlushOften) {
                 _writer.flushBuffer();
             } else {
                 try { Thread.sleep(10); } catch (InterruptedException e) { }
             }
-            addersAlive = 0;
-            for (int i = 0; i < numAdders; i++) {
-                if (adders[i].isAlive()) addersAlive++;
+            modifiersAlive = 0;
+            for (int i = 0; i < numModifiers; i++) {
+                if (modifiers[i].isAlive()) modifiersAlive++;
             }
         }
 
         // check if any had error, if so fail
-        for (int i = 0; i < numAdders; i++) {
-            Exception e = adders[i].getError();
+        for (int i = 0; i < numModifiers; i++) {
+            Exception e = modifiers[i].getError();
             if (e != null) {
-                int adderId = i + 1;
-                throw new RuntimeException("Adder thread #" 
-                        + adderId + " encountered error", e);
+                int modifierId = i + 1;
+                throw new RuntimeException("Modifier thread #" 
+                        + modifierId + " encountered error", e);
             }
         }
 
         // force flush
         _writer.flushBuffer();
 
-        assertEquals("Wrong number of triples after add",
-                     expected,
-                     _reader.countTriples(null, null, null, -1));
+        if (adds) {
+            assertEquals("Wrong number of triples after add",
+                         expected,
+                         _reader.countTriples(null, null, null, -1));
+        } else {
+            assertEquals("Triplestore should have been empty after delete",
+                         0,
+                         _reader.countTriples(null, null, null, -1));
+        }
     }
 
     private Set getSet(TripleIterator iter) throws Exception {
@@ -223,23 +244,29 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
                 _util.createResource(new URI("urn:test:" + o)));
     }
 
-    public class TripleAdder extends Thread {
+    public class TripleModifier extends Thread {
 
         private int _id;
         private int _numBatches;
         private int _triplesPerBatch;
         private TriplestoreWriter _writer;
+        private boolean _oneAtATime;
+        private boolean _adds;
 
         private Exception _error;
 
-        public TripleAdder(int id, // first is 1, not 0
+        public TripleModifier(int id, // first is 1, not 0
                            int numBatches,
                            int triplesPerBatch,
-                           TriplestoreWriter writer) {
+                           TriplestoreWriter writer,
+                           boolean oneAtATime,
+                           boolean adds) {
             _id = id;
             _numBatches = numBatches;
             _triplesPerBatch = triplesPerBatch;
             _writer = writer;
+            _oneAtATime = oneAtATime;
+            _adds = adds;
         }
 
         public void run() {
@@ -248,7 +275,22 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
                     List triples = getTriples(_id, _id,
                                               i + 1, i + 1,
                                               1, _triplesPerBatch);
-                    _writer.add(triples, false);
+                    if (_oneAtATime) {
+                        Iterator iter = triples.iterator();
+                        while (iter.hasNext()) {
+                            if (_adds) {
+                                _writer.add((Triple) iter.next(), false);
+                            } else {
+                                _writer.delete((Triple) iter.next(), false);
+                            }
+                        }
+                    } else {
+                        if (_adds) {
+                            _writer.add(triples, false);
+                        } else {
+                            _writer.delete(triples, false);
+                        }
+                    }
                     this.yield();
                 }
             } catch (Exception e) {
