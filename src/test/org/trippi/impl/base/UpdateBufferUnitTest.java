@@ -523,18 +523,15 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                 while (!finish) {
                     if (_stopAfterNextFlush) {
                         finish = true;
-                    }
-                    if (_buffer.size() >= _flushIfThisSizeOrAbove) {
-                        _buffer.flush(_session);
-                    }
-                    if (!finish) {
-                        this.yield();
-                        /*
-                        try {
-                            Thread.sleep(25);
-                        } catch (InterruptedException e) {
+                        while (_buffer.size() > 0) {
+                            _buffer.flush(_session);
+                            this.yield();
                         }
-                        */
+                    } else {
+                        if (_buffer.size() >= _flushIfThisSizeOrAbove) {
+                            _buffer.flush(_session);
+                        }
+                        this.yield();
                     }
                 }
             } catch (Exception e) {
