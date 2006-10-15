@@ -8,13 +8,13 @@
   <property name="classes.build.dir"    value="${build.dir}/classes"/>
   <property name="jar.build.dir"        value="${build.dir}/jars"/>
 
-  <!-- class build directories -->
+  <!-- specific build directories -->
   <property name="core.build.dir"       value="${classes.build.dir}/core"/>
   <property name="kowari.build.dir"     value="${classes.build.dir}/kowari"/>
   <property name="mptstore.build.dir"   value="${classes.build.dir}/mptstore"/>
   <property name="oracle.build.dir"     value="${classes.build.dir}/oracle"/>
   <property name="sesame.build.dir"     value="${classes.build.dir}/sesame"/>
-  <property name="test.build.dir"       value="${classes.build.dir}/test"/>
+  <property name="test.build.dir"       value="${build.dir}/test"/>
 
   <!-- package paths -->
   <property name="top.packagepath"      value="org/trippi"/>

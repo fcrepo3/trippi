@@ -102,9 +102,16 @@
     <build-jar basedir="${sesame.build.dir}" component="sesame"/>
   </target>
 
+  <target name="test-prep"
+          depends="test-classes">
+    <copy todir="${test.build.dir}">
+      <fileset dir="src/test" excludes="**/*.java"/>
+    </copy>
+  </target>
+
   <!-- unit-test -->
   <target name="unit-test"
-          depends="test-classes"
+          depends="test-classes,test-prep"
           description="run all unit tests">
     <junit printsummary="no" 
            haltonfailure="yes" 
@@ -112,13 +119,14 @@
            filtertrace="true">
       <formatter type="plain" usefile="false"/>
       <classpath refid="test.runtime.classpath"/>
+      <sysproperty key="test.dir" value="${test.build.dir}"/>
       <test name="org.trippi.TrippiUnitTestSuite"/>
     </junit>
   </target>
 
   <!-- integration-test -->
   <target name="integration-test"
-          depends="test-classes"
+          depends="test-classes,test-prep"
           description="run all integration tests">
     <junit printsummary="no" 
            haltonfailure="yes" 
@@ -126,6 +134,7 @@
            filtertrace="true">
       <formatter type="plain" usefile="false"/>
       <classpath refid="test.runtime.classpath"/>
+      <sysproperty key="test.dir" value="${test.build.dir}"/>
       <test name="org.trippi.TrippiIntegrationTestSuite"/>
     </junit>
   </target>

@@ -47,7 +47,7 @@ public class TrippiConfig {
         return profileMap;
     }
 
-    private static TrippiProfile getProfile(Properties p, String id, String label) {
+    public static TrippiProfile getProfile(Properties p, String id, String label) {
         String connectorClassName = null;
         String configStart = "profile." + id + ".config.";
         Map config = new HashMap();
@@ -61,7 +61,7 @@ public class TrippiConfig {
                 config.put(realKey, p.getProperty(key));
             }
         }
-        if (label == null) return null;
+        if (label == null || connectorClassName == null) return null;
         return new TrippiProfile(id, label, connectorClassName, config);
     }
 

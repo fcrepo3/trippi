@@ -5,6 +5,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.swingui.TestRunner;
 
+import org.trippi.TestConfig;
+import org.trippi.config.TrippiProfile;
+import org.trippi.impl.mpt.MPTIntegrationTestSuite;
+
 public class ImplIntegrationTestSuite extends TestCase {
 
     public static Test suite() throws Exception {
@@ -15,7 +19,16 @@ public class ImplIntegrationTestSuite extends TestCase {
         //suite.addTestSuite(Whatever.class);
 
         // sub-package suites
-//        suite.addTest(SomeIntegrationTestSuite.suite());
+
+        // add sub-package suite based on current test configuration
+        TrippiProfile profile = TestConfig.getTestProfile();
+        String name = profile.getConnectorClassName();
+        if (name.equals("org.trippi.impl.mpt.MPTConnector")) {
+            suite.addTest(MPTIntegrationTestSuite.suite());
+        } else {
+            throw new RuntimeException("Don't know integration test suite for "
+                  + "connector: " + name);
+        }
 
         return suite;
 
