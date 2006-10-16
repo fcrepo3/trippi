@@ -82,7 +82,7 @@
     <path refid="mptstore.common.classpath"/>
     <pathelement path="${lib.commons-collections}"/>
     <pathelement path="${lib.commons-pool}"/>
-    <pathelement path="${lib.h2}"/>
+    <pathelement path="${lib.derby}"/>
   </path>
 
   <pathconvert property="mptstore.runtime.libs" 
