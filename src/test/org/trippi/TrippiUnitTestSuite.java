@@ -14,7 +14,7 @@ public class TrippiUnitTestSuite extends TestCase {
         TestSuite suite = new TestSuite(TrippiUnitTestSuite.class.getName());
    
         // classes in this package
-        //suite.addTestSuite(Whatever.class);
+        suite.addTestSuite(RDFUtilUnitTest.class);
 
         // sub-package suites
         suite.addTest(ImplUnitTestSuite.suite());

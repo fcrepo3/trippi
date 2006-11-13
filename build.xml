@@ -120,7 +120,7 @@
       <formatter type="plain" usefile="false"/>
       <classpath refid="test.runtime.classpath"/>
       <sysproperty key="test.dir" value="${test.build.dir}"/>
-      <test name="org.trippi.TrippiUnitTestSuite"/>
+      <test name="${unit.test}"/>
     </junit>
   </target>
 
