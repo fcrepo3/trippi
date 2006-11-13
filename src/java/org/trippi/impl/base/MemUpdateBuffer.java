@@ -91,7 +91,11 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     public int size() {
-        return m_buffer.size();
+        try {
+            return m_buffer.size();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public int safeCapacity() {
@@ -170,15 +174,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
      * Close the buffer, releasing any associated system resources.
      */
     public void close() {
-        m_buffer.clear();
-        m_buffer = null;
-    }
-
-    /**
-     * Ensure close() is called at garbage collection time.
-     */
-    public void finalize() {
-        close();
+        // nothing to release
     }
 
 	public List findBufferedUpdates(SubjectNode subject, 

@@ -266,8 +266,9 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
     public void flushBuffer() throws IOException,
                                      TrippiException {
         long start = System.currentTimeMillis();
-        int size = m_buffer.size();
+        int size = 0;
         synchronized (m_updateSession) {
+            size = m_buffer.size();
             m_buffer.flush(m_updateSession);
         }
         long end = System.currentTimeMillis();
