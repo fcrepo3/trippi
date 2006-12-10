@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="trippi" default="dist" basedir=".">
 
-  <!-- TODO: target: doc
-             target: checkstyle
-             target: release (core-release, bin-release, src-release)
-             target: kreplay??
-             target: war??
-  -->
-               
   <property environment="env"/>
 
   <loadproperties srcFile="build.properties" /> 
@@ -33,6 +26,14 @@
                              ${top.packagepath}/ui/**"/>
     <copy-resources packagepath="${top.packagepath}" 
                     destdir="${core.build.dir}"/>
+    <propertyfile file="build/version.properties">
+      <entry key="buildDate" type="date" value="now"/>
+    </propertyfile>
+    <replace file="${core.build.dir}/org/trippi/Trippi.properties"
+             value="value not found in version.properties"
+             propertyFile="build/version.properties">
+      <replacefilter token="@buildDate@" property="buildDate"/>
+    </replace>
   </target>
     
   <!-- kowari-classes -->
@@ -174,6 +175,54 @@
       <fileset dir="." includes="${oracle.runtime.libs}"/>
       <fileset dir="." includes="${sesame.runtime.libs}"/>
     </copy>
+  </target>
+
+  <!-- srcrelease -->
+  <target name="srcrelease" 
+          description="Build the source release in dist/release">
+    <copy todir="dist/release/trippi-${trippi.version}-src">
+      <fileset dir=".">
+        <exclude name="build/**"/>
+        <exclude name="dist/**"/>
+        <exclude name="${lib.oracle-jdbc}"/>
+      </fileset>
+    </copy>
+    <replace file="dist/release/trippi-${trippi.version}-src/README.txt"
+             value="[trippi.version not found in Trippi.properties]"
+             propertyFile="src/java/org/trippi/Trippi.properties">
+      <replacefilter token="@trippi.version@" property="trippi.version"/>
+    </replace>
+    <zip zipfile="dist/release/trippi-${trippi.version}-src.zip" 
+         basedir="dist/release" 
+         includes="trippi-${trippi.version}-src/**"/>
+    <delete dir="dist/release/trippi-${trippi.version}-src"/>
+  </target>
+
+  <!-- binrelease -->
+  <target name="binrelease" 
+          description="Build the binary release in dist/release"
+          depends="dist,doc">
+    <copy todir="dist/release/trippi-${trippi.version}">
+      <fileset dir="dist">
+        <exclude name="release/**"/>
+        <exclude name="${lib.oracle-jdbc}"/>
+      </fileset>
+    </copy>
+    <zip zipfile="dist/release/trippi-${trippi.version}.zip" 
+         basedir="dist/release" 
+         includes="trippi-${trippi.version}/**"/>
+    <delete dir="dist/release/trippi-${trippi.version}"/>
+  </target>
+
+  <!-- release -->
+  <target name="release" 
+          depends="clean,test,srcrelease,binrelease" 
+          description="Build the source and binary releases in dist/release">
+    <checksum fileext=".md5">
+      <fileset dir="dist/release">
+        <include name="*.zip"/>
+      </fileset>
+    </checksum>
   </target>
 
   <!-- doc -->

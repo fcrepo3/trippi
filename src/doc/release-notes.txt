@@ -1,0 +1,123 @@
+
+                           Trippi Release Notes
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Version 1.1 - October 7th, 2006
+===============================
+
+ o Item1
+
+ o Item2
+
+Version 1.0.0 - September 9th, 2005
+===================================
+
+
+Version 0.9.9 - September 9th, 2005
+===================================
+
+ o Item1
+
+ o Item2
+
+
+
+....from Website...............
+
+
+
+Trippi Triplestore API
+Trippi is a Java library providing a consistent, thread-safe access point for updating and querying a triplestore. It is similar in spirit to JDBC, but for RDF databases
+Latest Download:
+
+    * Trippi 1.1
+      This version uses JRDF v0.3.3 and works with:
+          o Kowari 1.0.5 (patched) in local and remote mode
+          o MPTStore 0.9
+          o Oracle 10g Spatial
+          o Sesame 1.2RC2
+
+Older Downloads:
+
+    * Trippi v1.0.0 This version works with Sesame v1.2RC2 and Kowari 1.1.0pre2 and uses JRDF v0.3.4
+    * Trippi v0.9.9 This version works with Sesame v1.2RC2 and Kowari 1.0.5 and uses JRDF v0.3.3
+
+Documentation:
+
+    * User Guide - How to use the API and the included console and query web service
+    * Implementation Guide - How to write a TriplestoreConnector (a Trippi driver) for working with arbitrary triplestore software
+    * API Javadocs
+    * Trippi also comes with a Kowari "replayer" utility that can be used to re-execute a transaction log without involving the trippi layer. To use it, ant replay, cd dist/replay, then type "kreplay" by itself for usage instructions.
+
+Software that Uses Trippi:
+
+    * Tripletest - A framework for testing triplestores
+    * Fedora - A general-purpose repository service
+
+Other Trippi links:
+
+    * Browse Trippi Source Code
+    * Project Page
+    * trippi-codewatch mailing list - for automatic notification of cvs commits.
+
+
+
+
+
+....from README................
+
+
+
+
+This is Trippi v1.1.1 from http://www.sourceforge.net/projects/trippi
+
+CONTRIBUTORS
+------------
+The following people contributed to this release:
+
+  - Stephen Bayliss of Rightscom (Remote Kowari support)
+  - Sam Liberman of Case Western (Oracle Spatial Connector)
+
+
+COMPATIBILITY
+-------------
+This version works with the following Triplestores:
+
+  - Kowari 1.0.5 (patched) from http://sourceforge.net/projects/kowari
+  - Sesame 1.2RC2          from http://openrdf.org/
+  - Oracle 10g Spatial     from http://oracle.com/
+  - MPTStore 0.9.1         from http://mptstore.sourceforge.net/
+
+This version includes, and depends on JRDF v0.3.3.
+
+
+KOWARI PATCH INFORMATION
+------------------------
+The driver-1.0.5.jar that comes with this distribution has
+several patches applied from the released version.  
+Further information about the patches (including the source code)
+can be found in lib/kowari-1.0.5-patches.zip
+
+
+IMPORTANT INFORMATION RE:COMPILING WITH ORACLE
+----------------------------------------------
+Due to license restrictions, we cannot include the appropriate
+Oracle JDBC driver in the source or binary distribution.
+
+However, currently it is required in order to compile.
+This will be addressed.
+
+In the mean time, you can download the ojdbc14.jar from
+the following location:
+
+  http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html
+
+Put it in lib/, then build.
+
+
+IMPORTANT INFORMATION RE:JAVA VERSION SUPPORT
+---------------------------------------------
+This release compiles and runs with Java 1.4 and 1.5.
+Future releases are likely to require Java 1.5.
+

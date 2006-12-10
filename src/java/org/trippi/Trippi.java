@@ -7,7 +7,12 @@ public abstract class Trippi {
     /**
      * Current version of Trippi.
      */
-    public static String VERSION;
+    public static String VERSION = "unknown";
+    
+    /**
+     * Date it was built.
+     */
+    public static String BUILD_DATE = "unknown";
     
     static {
         try {
@@ -16,10 +21,10 @@ public abstract class Trippi {
                                    .getResourceAsStream(
                                     "org/trippi/Trippi.properties"));
             VERSION = props.getProperty("trippi.version", "unknown");
+            BUILD_DATE = props.getProperty("buildDate", "unknown");
         } catch (Exception e) {
-            System.err.println("Unable to load properties from jar!");
+            System.err.println("Unable to load Trippi.properties from jar!");
             e.printStackTrace();
-            VERSION = "unknown";
         }
     }
     
@@ -28,7 +33,8 @@ public abstract class Trippi {
     }
     
     public static void printVersion() {
-        System.out.println("Trippi version " + VERSION);
+        System.out.println("Trippi version " + VERSION + " ["
+                + BUILD_DATE + "]");
     }
     
 }
