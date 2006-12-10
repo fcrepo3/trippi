@@ -176,6 +176,39 @@
     </copy>
   </target>
 
+  <!-- doc -->
+  <target name="doc"
+          description="Build all documentation in dist/doc">
+    <copy todir="dist/doc">
+      <fileset dir="src/doc"/>
+    </copy>
+    <replace file="dist/doc/index.html"
+             value="[trippi.version not found in Trippi.properties]"
+             propertyFile="src/java/org/trippi/Trippi.properties">
+      <replacefilter token="@trippi.version@" property="trippi.version"/>
+    </replace>
+    <javadoc packagenames="org.trippi, 
+                           org.trippi.config,
+                           org.trippi.impl.base,
+                           org.trippi.impl.jena,
+                           org.trippi.impl.kowari,
+                           org.trippi.impl.mpt,
+                           org.trippi.impl.oracle,
+                           org.trippi.impl.sesame,
+                           org.trippi.io,
+                           org.trippi.nodegraph,
+                           org.trippi.server,
+                           org.trippi.server.http,
+                           org.trippi.ui"
+             classpathref="test.common.classpath"
+             sourcepath="src/java"
+             defaultexcludes="yes"
+             destdir="dist/doc/api"
+             windowtitle="Trippi ${trippi.version} Java API">
+        <doctitle><![CDATA[<h1>Trippi ${trippi.version} Java API</h1>]]></doctitle>
+    </javadoc>
+  </target>
+
   <!-- clean -->
   <target name="clean" description="remove all build-generated stuff">
     <delete dir="${build.dir}"/>

@@ -34,8 +34,8 @@
   <p>
      This guide describes how to write a <code><a href="api/org/trippi/TriplestoreConnector.html">TriplestoreConnector</a></code> implementation
      for Trippi.  Once implemented, you can use your own triplestore as
-     the back-end for the <a href="user-guide.html#console">Trippi console</a>, 
-     the <a href="user-guide.html#service">Trippi Query Web Service</a>, and
+     the back-end for the <a href="index.html#console">Trippi console</a>, 
+     the <a href="index.html#service">Trippi Query Web Service</a>, and
      <a href="http://tripletest.sourceforge.net/">other</a> <a href="http://www.fedora.info/download/2.0/userdocs/server/resourceIndex/index.html">applications</a>.
   </p>
 </div>
@@ -45,7 +45,7 @@
   <p>
      Before setting out, you should understand:
      <ol>
-       <li> <a href="user-guide.html">How to use Trippi</a>.</li>
+       <li> <a href="index.html">How to use Trippi</a>.</li>
        <li> How to add, delete, and perform queries in your native triplestore, 
             using whatever means it provides.</li>
        <li> Whether your underlying triplestore is thread-safe, and whether
@@ -95,7 +95,7 @@
            implementation, but use the suffix "Descriptor.xml".</li>
     </ol>
     Finally, you should package it all up in a jar, put it in
-    the lib directory, and use the <a href="user-guide.html#console">Trippi Console</a> 
+    the lib directory, and use the <a href="index.html#console">Trippi Console</a> 
     application to test it!  Make sure you have included the <a href="http://jakarta.apache.org/commons/dbcp/">commons-dbcp</a> jar (and any jars
     it requires) as well as any DB-specific JDBC drivers in the lib directory 
     before attempting this.
