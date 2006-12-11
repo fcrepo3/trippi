@@ -10,7 +10,7 @@ Version 1.1.1 - December 10th, 2006
    - Improper synchronization in MemUpdateBuffer.
      When many simultaneous updates were occurring, this had the potential 
      to result to lost or duplicate triples being flushed to the triplestore.
-     See http://www.fedora.info/bugzilla/show_bug.cgi?id=171
+     See http://www.fedora.info/bugzilla/show_bug.cgi?id=193
 
  o Build improvements:
    - Better identification of dependencies
