@@ -4,24 +4,17 @@
                       
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
-    <title>Trippi User Guide</title> 
-    <link rel="stylesheet" type="text/css" href="docstyle.css" />
+    <title>Trippi @trippi.version@</title> 
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
-<div id="header">
-    <a href="" id="logo"></a>
-    <div id="title">
-        <h1>Trippi @trippi.version@ User Guide</h1>
-    </div>
-</div>
+<h1>Trippi @trippi.version@</h1>
 
 <div id="toc">
-    <h2>Table of Contents</h2>
-
-    <div id="tocbox">
       <ol>
         <li> <a href="#what">What is Trippi?</a></li>
+        <li> <a href="#inst">Downloading and Installing</a>
         <li> <a href="#console">Using the Console</a>
           <ol>
             <li> <a href="#console.creating">Creating a Model</a></li>
@@ -34,7 +27,6 @@
         <li> <a href="#programming">Using the Java API</a></li>
         <li> <a href="#issues">Known Issues / Bugs</a>
       </ol>
-    </div>
 
 </div>
 
@@ -64,7 +56,33 @@
 </div>
 
 <div class="sect">
-  <h2><a name="console">2. Using the Console</a></h2>
+  <h2><a name="inst">2. Downloading and Installing</a></h2>
+  <p>
+    <ul>
+      <li> <a href="http://www.sourceforge.net/projects/trippi">Download the latest release</a> from SourceForge.</li>
+
+      <li> <a href="release-notes.txt">View the release notes</a>.</li>
+      <li> <a href="#console">Use the console</a> to get familiar with Trippi.</li>
+      <li> Use Trippi in your application by including the appropriate libraries
+           (see the <code>lib/</code> directory) and using the 
+           <a href="#programming">Java API</a>.
+      <li> NOTE: To configure logging:
+        <ul>
+          <li> If you don't already have Log4J set up for your project,
+               edit the included <code>log4j.xml</code> and make sure 
+               it's in your CLASSPATH.  For some help with Log4J configuration,
+               see the <a href="http://wiki.apache.org/logging-log4j/Log4jXmlFormat">
+               Log4J XML Configuration Primer</a>.</li>
+          <li> If you're already using Log4J, add Trippi logging
+               categories to your existing configuration, if desired.</li>
+        </ul>
+      </li>
+    </ul>
+  </p>
+</div>
+
+<div class="sect">
+  <h2><a name="console">3. Using the Console</a></h2>
   <p>
     The Trippi console is a text-oriented Java application for 
     working with Trippi-enabled triplestores.
@@ -79,9 +97,7 @@
              <code><b>trippi -c</b></code></li>
         <li> Create a profile (connection settings for a specific triplestore)
              using the create command: <code><b>create;</b></code></li>
-        <li> Respond to the prompts with appropriate values.  See the
-             <a href="example-profiles.html">Example Trippi Profiles</a> for
-             examples that work with Kowari and Sesame.</li>
+        <li> Respond to the prompts.
       </ol>
     </p>
     <p>Once a profile is created, you can access it within the console
@@ -351,8 +367,7 @@ Seconds Elapsed: 1.051
       </p>
       <p>
         The
-        <a href="http://cvs.sourceforge.net/viewcvs.py/trippi/trippi/src/samples/routes/README-sesame.txt?view=markup">README-sesame.txt</a>
-        and <a href="http://cvs.sourceforge.net/viewcvs.py/trippi/trippi/src/samples/routes/README-kowari.txt?view=markup">README-kowari.txt</a>
+        <code>README-sesame.txt</code> and <code>README-kowari.txt</code>
         files in the samples/routes directory show how this can be done for each of these triplestores.  Notice that
         Sesame includes a special <b>construct</b> command in the query language itself, whereas in
         the Kowari example, a <b>tuples-to-triples</b> template is provided and Trippi internally takes
@@ -365,26 +380,20 @@ Seconds Elapsed: 1.051
 </div>
 
 <div class="sect">
-  <h2><a name="service">3. Using the Query Web Service</a></h2>
+  <h2><a name="service">4. Using the Query Web Service</a></h2>
   <p>
     The Trippi Web Service is a REST-oriented web service for providing
     read-only access to Trippi-enabled triplestores.
   </p>
   <p>
-    <font color="#aa2222"><b>TODO: Explain installation/configuration of the Java webapp here</b></font>
-  </p>
-  <p>
-    <font color="#aa2222"><b>TODO: Explain the user / application interface here</b></font>
-  </p>
-  <p>
     This guide will eventually explain how to use the service.
-    In the meantime, see the <a href="http://www.fedora.info/download/2.1b/userdocs/server/webservices/risearch/">Fedora Resource 
+    In the meantime, see the <a href="http://www.fedora.info/download/2.1.1/userdocs/server/webservices/risearch/">Fedora Resource 
     Index Search Service</a> for a Fedora-oriented guide to the service.
   </p>
 </div>
 
 <div class="sect">
-  <h2><a name="programming">4. Using the Java API</a></h2>
+  <h2><a name="programming">5. Using the Java API</a></h2>
   <p>
      The main interfaces you work with in the Trippi API 
      are <code><a href="api/org/trippi/TriplestoreReader.html">TriplestoreReader</a></code>, 
@@ -432,9 +441,6 @@ try {
     }
 }
 </pre></div>
-  <p>
-    <font color="#aa2222"><b>TODO: More API examples here</b></font>
-  </p>
 </div>
 
 <div class="sect">
@@ -452,15 +458,6 @@ try {
 
 
 <div id="footer">
-    <div id="lastModified">
-        Last Modified
-        <script type="text/javascript">
-            var cvsDate = "$Date: 2006/10/07 07:16:45 $";
-            var parts = cvsDate.split(" ");
-            var modifiedDate = parts[1];
-            document.write(modifiedDate);
-        </script>
-    </div>
 </div>
 
 </body>
