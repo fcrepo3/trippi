@@ -5,27 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 <head>
     <title>Trippi Implementation Guide</title> 
-    <link rel="stylesheet" type="text/css" href="docstyle.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
 <body>
-<div id="header">
-    <a href="" id="logo"></a>
-    <div id="title">
-        <h1>Trippi Implementation Guide</h1>
-    </div>
-</div>
+<h1>Trippi Implementation Guide</h1>
 
 <div id="toc">
-    <h2>Table of Contents</h2>
 
-    <div id="tocbox">
       <ol>
         <li> <a href="#overview">Overview</a></li>
         <li> <a href="#prerequisites">Prerequisites</a></li>
         <li> <a href="#impl">What You Need to Implement</a></li>
       </ol>
-    </div>
 
 </div>
 
@@ -34,9 +26,9 @@
   <p>
      This guide describes how to write a <code><a href="api/org/trippi/TriplestoreConnector.html">TriplestoreConnector</a></code> implementation
      for Trippi.  Once implemented, you can use your own triplestore as
-     the back-end for the <a href="user-guide.html#console">Trippi console</a>, 
-     the <a href="user-guide.html#service">Trippi Query Web Service</a>, and
-     <a href="http://tripletest.sourceforge.net/">other</a> <a href="http://www.fedora.info/download/2.0/userdocs/server/resourceIndex/index.html">applications</a>.
+     the back-end for the <a href="index.html#console">Trippi console</a>, 
+     the <a href="index.html#service">Trippi Query Web Service</a>, and
+     <a href="http://tripletest.sourceforge.net/">other</a> <a href="http://www.fedora.info/download/2.1.1/userdocs/server/resourceIndex/index.html">applications</a>.
   </p>
 </div>
 
@@ -45,7 +37,7 @@
   <p>
      Before setting out, you should understand:
      <ol>
-       <li> <a href="user-guide.html">How to use Trippi</a>.</li>
+       <li> <a href="index.html">How to use Trippi</a>.</li>
        <li> How to add, delete, and perform queries in your native triplestore, 
             using whatever means it provides.</li>
        <li> Whether your underlying triplestore is thread-safe, and whether
@@ -95,7 +87,7 @@
            implementation, but use the suffix "Descriptor.xml".</li>
     </ol>
     Finally, you should package it all up in a jar, put it in
-    the lib directory, and use the <a href="user-guide.html#console">Trippi Console</a> 
+    the lib directory, and use the <a href="index.html#console">Trippi Console</a> 
     application to test it!  Make sure you have included the <a href="http://jakarta.apache.org/commons/dbcp/">commons-dbcp</a> jar (and any jars
     it requires) as well as any DB-specific JDBC drivers in the lib directory 
     before attempting this.
@@ -594,15 +586,6 @@ import org.apache.commons.dbcp.BasicDataSourceFactory;
 
 
 <div id="footer">
-    <div id="lastModified">
-        Last Modified
-        <script type="text/javascript">
-            var cvsDate = "$Date: 2005/12/08 13:53:44 $";
-            var parts = cvsDate.split(" ");
-            var modifiedDate = parts[1];
-            document.write(modifiedDate);
-        </script>
-    </div>
 </div>
 
 </body>

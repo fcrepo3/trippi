@@ -30,6 +30,12 @@ public class RDFUtilUnitTest extends TestCase {
 
     public void testLiteralEquality() throws Exception {
 
+        // empty string plain no lang vs. empty string plain no lang
+        Literal ePlainNoLang1 = _util.createLiteral("");
+        Literal ePlainNoLang2 = _util.createLiteral("");
+        Literal ePlainNoLang3 = _util.createLiteral("not empty");
+        doObjectEqualityTest(ePlainNoLang1, ePlainNoLang2, ePlainNoLang3);
+
         // plain no lang vs. plain no lang
         Literal plainNoLang1 = _util.createLiteral("val");
         Literal plainNoLang2 = _util.createLiteral("val");
@@ -62,6 +68,12 @@ public class RDFUtilUnitTest extends TestCase {
         URIReference ref3 = _util.createResource(new URI("urn:test:different"));
         doTripleEqualityTest(ref1, ref2, ref3);
 
+        // empty plain no lang as object vs. empty plain no lang as object
+        Literal ePlainNoLang1 = _util.createLiteral("");
+        Literal ePlainNoLang2 = _util.createLiteral("");
+        Literal ePlainNoLang3 = _util.createLiteral("not empty");
+        doTripleEqualityTest(ePlainNoLang1, ePlainNoLang2, ePlainNoLang3);
+
         // plain no lang as object vs. plain no lang as object
         Literal plainNoLang1 = _util.createLiteral("val");
         Literal plainNoLang2 = _util.createLiteral("val");
@@ -81,11 +93,18 @@ public class RDFUtilUnitTest extends TestCase {
         doTripleEqualityTest(typed1, typed2, typed3);
 
         // mixed
+        ensureDifferent(getTriple(ref1), getTriple(ePlainNoLang1));
         ensureDifferent(getTriple(ref1), getTriple(plainNoLang1));
         ensureDifferent(getTriple(ref1), getTriple(plainWithLang1));
         ensureDifferent(getTriple(ref1), getTriple(typed1));
+
+        ensureDifferent(getTriple(ePlainNoLang1), getTriple(plainNoLang1));
+        ensureDifferent(getTriple(ePlainNoLang1), getTriple(plainWithLang1));
+        ensureDifferent(getTriple(ePlainNoLang1), getTriple(typed1));
+
         ensureDifferent(getTriple(plainNoLang1), getTriple(plainWithLang1));
         ensureDifferent(getTriple(plainNoLang1), getTriple(typed1));
+
         ensureDifferent(getTriple(plainWithLang1), getTriple(typed1));
     }
 

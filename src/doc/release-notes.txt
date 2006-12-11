@@ -1,0 +1,73 @@
+
+                           Trippi Release Notes
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Version 1.1.1 - December 10th, 2006
+===================================
+
+ o Bug fixes:
+   - Improper synchronization in MemUpdateBuffer.
+     When many simultaneous updates were occurring, this had the potential 
+     to result to lost or duplicate triples being flushed to the triplestore.
+     See http://www.fedora.info/bugzilla/show_bug.cgi?id=171
+
+ o Build improvements:
+   - Better identification of dependencies
+   - lib.properties contains more detail about each library used
+   - Added unit and integration tests (required to pass before release)
+   - Added test, doc, and release targets
+   - Separation of core vs. triplestore-specific jars
+
+ o Library updates:
+   - MPTStore version 0.9.1 (minor bugfix release)
+   - Log4J 1.2.14 (supports TRACE)
+
+
+Version 1.1 - October 7th, 2006
+===============================
+
+ o Bug fixes:
+   - Delayed shutdown while deleting Trippi tempfiles
+     See http://www.fedora.info/bugzilla/show_bug.cgi?id=171
+
+ o This version uses JRDF 0.3.3 and works with the following triplestores:
+   - Kowari 1.0.5 (patched) in local and remote mode
+   - MPTStore 0.9
+   - Oracle 10g Spatial
+   - Sesame 1.2RC2
+
+ o Thanks to the following people for their contributions to this release!
+   - Stephen Bayliss of Rightscom (Remote Kowari support)
+   - Sam Liberman of Case Western (Oracle Spatial Connector)
+
+ o Note: The version of Kowari included with this release is patched.
+   Please see lib/kowari-1.0.5-patches for further details and source code.
+
+ o Note: Due to license restrictions, we cannot include the appropriate
+   Oracle JDBC driver in the release.  However, it is currently required
+   in order to compile.  You can download ojdbc14.jar from the following URL:
+   http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html
+   Before attempting to build, you must put the jar file in the lib/ directory.
+
+ o This release works with Java 1.4 and Java 1.5.
+   Please be aware the future releases are likely to require Java 1.5.
+
+
+Version 1.0.0 - September 9th, 2005
+===================================
+
+ o This version uses JRDF 0.3.4 and works with the following triplestores:
+   - Kowari 1.1.0pre2 in local mode
+   - Sesame 1.2RC2
+
+
+Version 0.9.9 - September 9th, 2005
+===================================
+
+ o This was the first public release of Trippi.
+ 
+ o This version uses JRDF 0.3.3 and works with the following triplestores:
+   - Kowari 1.0.5 in local mode
+   - Sesame 1.2RC2
+
