@@ -26,7 +26,7 @@ import org.trippi.TrippiException;
  */
 public class MemUpdateBuffer implements UpdateBuffer {
 
-    private static Logger logger = Logger.getLogger(MemUpdateBuffer.class.getName());
+    private static Logger LOG = Logger.getLogger(MemUpdateBuffer.class.getName());
 
     private int m_safeCapacity;
     private int m_flushBatchSize;
@@ -43,42 +43,42 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     public void add(List triples) {
-        debugUpdate("Adding " + triples.size() + " triples to buffer", triples);
+        debugUpdate("Adding " + triples.size() + " triple ADDs to buffer", triples);
         synchronized (m_bufferLock) {
             m_buffer.addAll(TripleUpdate.get(TripleUpdate.ADD, triples));
         }
     }
 
     public void add(Triple triple) {
-        debugUpdate("Adding 1 triple to buffer", triple);
+        debugUpdate("Adding 1 triple ADD to buffer", triple);
         synchronized (m_bufferLock) {
             m_buffer.add(TripleUpdate.get(TripleUpdate.ADD, triple));
         }
     }
 
     public void delete(List triples) {
-        debugUpdate("Deleting " + triples.size() + " triples from buffer", triples);
+        debugUpdate("Adding " + triples.size() + " triple DELETEs to buffer", triples);
         synchronized (m_bufferLock) {
             m_buffer.addAll(TripleUpdate.get(TripleUpdate.DELETE, triples));
         }
     }
 
     public void delete(Triple triple) {
-        debugUpdate("Deleting 1 triple from buffer", triple);
+        debugUpdate("Adding 1 triple DELETE to buffer", triple);
         synchronized (m_bufferLock) {
             m_buffer.add(TripleUpdate.get(TripleUpdate.DELETE, triple));
         }
     }
 
     private static void debugUpdate(String msg, Triple triple) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(msg + "\n" + RDFUtil.toString(triple));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(msg + "\n" + RDFUtil.toString(triple));
         }
     }
 
     private static void debugUpdate(String msg, List triples) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(msg + "\n" + tripleListToString(triples));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(msg + "\n" + tripleListToString(triples));
         }
     }
 
@@ -115,7 +115,19 @@ public class MemUpdateBuffer implements UpdateBuffer {
             }
         }
         try {
-            if (toFlush != null) writeBatches(toFlush.iterator(), session);
+            if (toFlush != null) {
+                Set[] updates = normalize(toFlush.iterator(), toFlush.size());
+                if (updates[0].size() > m_flushBatchSize) {
+                    writeBatches(updates[0].iterator(), TripleUpdate.ADD, session);
+                } else {
+                    writeBatch(TripleUpdate.ADD, updates[0], session);
+                }
+                if (updates[1].size() > m_flushBatchSize) {
+                    writeBatches(updates[1].iterator(), TripleUpdate.DELETE, session);
+                } else {
+                    writeBatch(TripleUpdate.DELETE, updates[1], session);
+                }
+            }
         } catch (TrippiException e) {
             // in the event of failure, send toFlush and the exception to the 
             // flushErrorHandler, if set.
@@ -132,29 +144,46 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     /**
-     * Go through iter, writing in batches.
+     * Normalize the content of the buffer for efficiency.
+     *
+     * This will return an array of two Sets of Triples.
+     * The first set consists of the ADDs, and the second
+     * set consists of the DELETEs.
      */
-    private void writeBatches(Iterator iter, TriplestoreSession session)
-            throws TrippiException {
-        int lastType = TripleUpdate.NONE;
-        Set triples = new HashSet();
+    private static Set[] normalize(Iterator iter, int size) {
+        int initialCapacity = size / 2;
+        Set adds = new HashSet(initialCapacity);
+        Set deletes = new HashSet(initialCapacity);
+
         while (iter.hasNext()) {
             TripleUpdate update = (TripleUpdate) iter.next();
-            if (update.type != lastType) {
-                // types changed: force write, switch types, and clear list
-                writeBatch(lastType, triples, session);
-                lastType = update.type;
-                triples.clear();
+            if (update.type == TripleUpdate.ADD) {
+                if (!deletes.remove(update.triple)) {
+                    adds.add(update.triple);
+                }
+            } else {
+                if (!adds.remove(update.triple)) {
+                    deletes.add(update.triple);
+                }
             }
-            triples.add(update.triple);
-            if (triples.size() >= m_flushBatchSize) {
-                // flush batch size reached: force write and clear list
-                writeBatch(lastType, triples, session);
+        }
+
+        return new Set[] { adds, deletes };
+    }
+
+    private void writeBatches(Iterator iter, int updateType,
+            TriplestoreSession session)
+            throws TrippiException {
+        Set triples = new HashSet();
+        while (iter.hasNext()) {
+            triples.add(iter.next());
+            if (triples.size() == m_flushBatchSize) {
+                writeBatch(updateType, triples, session);
                 triples.clear();
             }
         }
         if (triples.size() > 0) { // final write
-            writeBatch(lastType, triples, session);
+            writeBatch(updateType, triples, session);
         }
     }
 
@@ -164,8 +193,14 @@ public class MemUpdateBuffer implements UpdateBuffer {
     private void writeBatch(int type, Set triples, TriplestoreSession session)
             throws TrippiException {
         if (type == TripleUpdate.ADD) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Writing batch of " + triples.size() + " ADDs");
+            }
             session.add(triples);
         } else if (type == TripleUpdate.DELETE) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Writing batch of " + triples.size() + " DELETEs");
+            }
             session.delete(triples);
         }
     }
