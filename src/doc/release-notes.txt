@@ -9,12 +9,12 @@ Version 1.1.2 - January 11th, 2007
  o Improved buffer flushing performance:
    - When the triple update buffer (MemUpdateBuffer) is flushed,
      it is now normalized first, to minimize the number of adds/deletes
-	 to the underlying triplestore.  For example, if the buffer contains
-	 the following: Add A, Del B, Add C, Add D, Del C, Del F, Add G, Add B,
-	 flushing would have formerly resulted in five operations on the 
-	 underlying triplestore: 1) Add(A), 2) Del(B), 3) Add(C,D), 4) Del(C,F), 
-	 5) Add(G,B).  Now, it results in only two operations: 1) Add(A,D,G),
-	 2) Del(F).
+     to the underlying triplestore.  For example, if the buffer contains
+     the following: Add A, Del B, Add C, Add D, Del C, Del F, Add G, Add B,
+     flushing would have formerly resulted in five operations on the 
+     underlying triplestore: 1) Add(A), 2) Del(B), 3) Add(C,D), 4) Del(C,F), 
+     5) Add(G,B).  Now, it results in only two operations: 1) Add(A,D,G),
+     2) Del(F).
 
  o Minor documentation fix:
    - Fixed bugzilla URL in release notes for 1.1.1.
