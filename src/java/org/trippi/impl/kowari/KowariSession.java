@@ -146,7 +146,7 @@ public class KowariSession implements TriplestoreSession {
                 }
                 m_session.delete(m_modelURI, triples);
             }
-            if (m_textModelURI != null) doPlainLiteralTriples(triples, true);
+            if (m_textModelURI != null) doPlainLiteralTriples(triples, add);
             
         } catch (Exception e) {
             e.printStackTrace();
