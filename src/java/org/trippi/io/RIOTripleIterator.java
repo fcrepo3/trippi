@@ -4,18 +4,26 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
+
+import org.openrdf.rio.NamespaceListener;
 import org.openrdf.rio.Parser;
 import org.openrdf.rio.StatementHandler;
 import org.openrdf.rio.StatementHandlerException;
+
 import org.trippi.RDFFormat;
 import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;
@@ -28,6 +36,7 @@ import org.trippi.TrippiException;
  */
 public class RIOTripleIterator extends TripleIterator 
                                implements StatementHandler,
+                                          NamespaceListener,
                                           Runnable {
 
     private static final Logger logger =
@@ -49,6 +58,8 @@ public class RIOTripleIterator extends TripleIterator
 
     private int m_tripleCount = 0;
 
+    private Map m_aliases;
+
     /**
      * Initialize the iterator by starting the parsing thread.
      */
@@ -57,12 +68,19 @@ public class RIOTripleIterator extends TripleIterator
                              String baseURI) throws TrippiException {
         m_in = in;
         m_parser = parser;
+        m_parser.setNamespaceListener(this);
+        m_aliases = new HashMap();
         m_baseURI = baseURI;
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
         Thread parserThread = new Thread(this);
         logger.info("Starting parse thread");
         parserThread.start();
         m_next = getNext();
+    }
+
+    public void handleNamespace(String prefix, String uri) {
+        m_aliases.put(prefix, uri);
+        setAliasMap(m_aliases);
     }
 
     /**

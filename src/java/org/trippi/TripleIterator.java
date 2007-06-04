@@ -27,6 +27,7 @@ import org.openrdf.rio.turtle.TurtleWriter;
 import org.trippi.io.RIOTripleIterator;
 import org.trippi.io.RIOTripleWriter;
 import org.trippi.io.TripleWriter;
+import org.trippi.io.XMLDeclarationRemover;
 
 /**
  * An iterator over a series of <code>Triple</code> objects.
@@ -78,6 +79,13 @@ public abstract class TripleIterator {
     }
 
     /**
+     * Gets a copy of the alias map used by this iterator.
+     */
+    public Map getAliasMap() {
+        return new HashMap(m_aliases);
+    }
+
+    /**
      * Get the number of triples in the iterator, then close it.
      */
     public int count() throws TrippiException {
@@ -96,16 +104,41 @@ public abstract class TripleIterator {
     /**
      * Serialize to the given stream.
      *
+     * If the format is XML-based, the XML declaration will be included
+     * in the output.
+     *
      * After successfully writing, the TripleIterator will be closed,
      * but not the outputstream.
      */
     public int toStream(OutputStream out,
                         RDFFormat format) throws TrippiException {
+        return toStream(out, format, true);
+    }
+
+    /**
+     * Serialize to the given stream.
+     *
+     * If the format is XML-based, the XML declaration will be included
+     * if <code>includeXMLDeclaration</code> is <code>true</code>.
+     *
+     * After successfully writing, the TripleIterator will be closed,
+     * but not the outputstream.
+     */
+    public int toStream(OutputStream out,
+                        RDFFormat format,
+                        boolean includeXMLDeclaration)
+            throws TrippiException {
         TripleWriter writer;
         if (format == RDFFormat.TURTLE) {
             writer = new RIOTripleWriter(new TurtleWriter(out), m_aliases);
         } else if (format == RDFFormat.RDF_XML) {
-            writer = new RIOTripleWriter(new RdfXmlWriter(out), m_aliases);
+            OutputStream sink;
+            if (includeXMLDeclaration) {
+                sink = out;
+            } else {
+                sink = new XMLDeclarationRemover(out);
+            }
+            writer = new RIOTripleWriter(new RdfXmlWriter(sink), m_aliases);
         } else if (format == RDFFormat.N_TRIPLES) {
             writer = new RIOTripleWriter(new NTriplesWriter(out), m_aliases);
         } else if (format == RDFFormat.NOTATION_3) {
