@@ -1,0 +1,3 @@
+Ben O'Steen - Oxford Research Archive
+    Added option to request a count via the
+    web interface.  Sourceforge feature #1768761
