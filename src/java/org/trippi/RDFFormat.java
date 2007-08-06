@@ -82,6 +82,14 @@ public class RDFFormat {
                                                       "UTF-8",
                                                       "text/plain",
                                                       ".tsv");
+                                                      
+    /**
+     * Simple 'count' output format - plain text number only.
+     */
+    public static final RDFFormat COUNT = new RDFFormat("count",
+                                                      "UTF-8",
+                                                      "text/plain",
+                                                      ".txt");
 
     public static final RDFFormat[] ALL = new RDFFormat[] { N_TRIPLES,
                                                             NOTATION_3,
@@ -90,7 +98,8 @@ public class RDFFormat {
                                                             CSV,
                                                             SIMPLE,
                                                             SPARQL,
-                                                            TSV };
+                                                            TSV,
+                                                            COUNT };
 
     private String m_name;
     private String m_encoding;

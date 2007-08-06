@@ -17,6 +17,7 @@ import org.trippi.io.SparqlTupleIterator;
 import org.trippi.io.SparqlTupleWriter;
 import org.trippi.io.TSVTupleWriter;
 import org.trippi.io.TupleWriter;
+import org.trippi.io.CountTupleWriter;
 
 /**
  * An iterator over a series of tuples.
@@ -45,7 +46,8 @@ public abstract class TupleIterator {
                                          new RDFFormat[] { RDFFormat.CSV,
                                                            RDFFormat.SIMPLE,
                                                            RDFFormat.SPARQL,
-                                                           RDFFormat.TSV };
+                                                           RDFFormat.TSV,
+                                                           RDFFormat.COUNT };
 
     private Map m_aliases = new HashMap();
 
@@ -131,6 +133,8 @@ public abstract class TupleIterator {
             writer = new CSVTupleWriter(out, m_aliases); 
         } else if (format == RDFFormat.TSV) {
             writer = new TSVTupleWriter(out, m_aliases); 
+        } else if (format == RDFFormat.COUNT) {
+            writer = new CountTupleWriter(out); 
         } else {
             throw new TrippiException("Unsupported output format: " + format.getName());
         }
