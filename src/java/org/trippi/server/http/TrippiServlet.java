@@ -281,9 +281,12 @@ public class TrippiServlet
                     doGet((TrippiServer) m_servers.get(profileId), request, response);
                 }
             }
+        } catch (ServletException e) {
+            throw e;
         } catch (Throwable th) {
             try {
                 response.setContentType("text/html; charset=UTF-8");
+                response.setStatus(500);
                 StringWriter sWriter = new StringWriter();
                 PrintWriter out = new PrintWriter(sWriter);
                 out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
