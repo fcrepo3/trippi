@@ -2,17 +2,17 @@ package org.trippi;
 
 import java.io.File;
 import java.io.FileInputStream;
-
 import java.util.Properties;
 
 import org.trippi.config.TrippiConfig;
 import org.trippi.config.TrippiProfile;
 
+
 /**
  * Provides static access to test configuration.
  *
  * The source of the test configuration is the <code>test.properties</code>
- * file, which is exprected to be located in directory given by the
+ * file, which is expected to be located in directory given by the
  * the <code>test.dir</code> system property.
  *
  * @author cwilper@cs.cornell.edu

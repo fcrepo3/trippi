@@ -14,7 +14,7 @@
     <path refid="common.classpath"/>
     <pathelement path="${lib.openrdf-model}"/>
     <pathelement path="${lib.openrdf-rio}"/>
-    <pathelement path="${lib.trove}"/>
+    <pathelement path="${lib.mulgara}"/>
     <pathelement path="${lib.xmlpull}"/>
     <pathelement path="${lib.xpp3}"/>
   </path>
@@ -34,38 +34,6 @@
                pathsep=",">
     <map from="${basedir}${file.separator}" to=""/>
   </pathconvert>
-
-
-  <!-- kowari -->
-  <path id="kowari.common.classpath">
-    <path refid="common.classpath"/>
-    <pathelement path="${lib.jena}"/>
-    <pathelement path="${lib.kowari}"/>
-  </path>
-
-  <path id="kowari.compile.classpath">
-    <path refid="kowari.common.classpath"/>
-    <pathelement path="${core.build.dir}"/>
-  </path>
-
-  <path id="kowari.runtime.classpath">
-    <path refid="kowari.common.classpath"/>
-    <pathelement path="${lib.activation}"/>
-    <pathelement path="${lib.castor}"/>
-    <pathelement path="${lib.dateutils}"/>
-    <pathelement path="${lib.lucene}"/>
-    <pathelement path="${lib.mail}"/>
-    <pathelement path="${lib.trove}"/>
-    <pathelement path="${lib.xerces}"/>
-    <pathelement path="${lib.xml-apis}"/>
-  </path>
-
-  <pathconvert property="kowari.runtime.libs" 
-               refid="kowari.runtime.classpath"
-               pathsep=",">
-    <map from="${basedir}${file.separator}" to=""/>
-  </pathconvert>
-
 
   <!-- mptstore -->
   <path id="mptstore.common.classpath">
@@ -92,6 +60,26 @@
     <map from="${basedir}${file.separator}" to=""/>
   </pathconvert>
 
+  <!-- mulgara -->
+  <path id="mulgara.common.classpath">
+    <path refid="common.classpath"/>
+    <pathelement path="${lib.mulgara}"/>
+  </path>
+
+  <path id="mulgara.compile.classpath">
+    <path refid="mulgara.common.classpath"/>
+    <pathelement path="${core.build.dir}"/>
+  </path>
+
+  <path id="mulgara.runtime.classpath">
+    <path refid="mulgara.common.classpath"/>
+  </path>
+
+  <pathconvert property="mulgara.runtime.libs" 
+               refid="mulgara.runtime.classpath"
+               pathsep=",">
+    <map from="${basedir}${file.separator}" to=""/>
+  </pathconvert>
 
   <!-- oracle -->
   <path id="oracle.common.classpath">
@@ -140,8 +128,8 @@
   <!-- test -->
   <path id="test.common.classpath">
     <pathelement path="${core.build.dir}"/>
-    <pathelement path="${kowari.build.dir}"/>
     <pathelement path="${mptstore.build.dir}"/>
+  	<pathelement path="${mulgara.build.dir}"/>
     <pathelement path="${oracle.build.dir}"/>
     <pathelement path="${sesame.build.dir}"/>
     <fileset dir="lib">

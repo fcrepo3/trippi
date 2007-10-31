@@ -23,7 +23,8 @@ import org.jrdf.graph.URIReference;
 
 public class RDFUtil implements GraphElementFactory, java.io.Serializable {
 
-    private Map m_blankMap = null;
+	private static final long serialVersionUID = 1L;
+	private Map m_blankMap = null;
 
     public RDFUtil() {
     }
@@ -178,7 +179,8 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
     }
 
     public class FreeBlankNode extends AbstractBlankNode {
-        private int m_hashCode;
+		private static final long serialVersionUID = 1L;
+		private int m_hashCode;
         private Object m_object;
         public FreeBlankNode(int hashCode) { 
             m_hashCode = hashCode;
@@ -193,24 +195,21 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
     }
 
     public class FreeLiteral extends AbstractLiteral {
-        public FreeLiteral(String lexicalForm) {
-            // jrdf 0.3.4: super(lexicalForm);
-            this.lexicalForm = lexicalForm;
+		private static final long serialVersionUID = 1L;
+		public FreeLiteral(String lexicalForm) {
+            super(lexicalForm);
         }
         public FreeLiteral(String lexicalForm, String language) {
-            // jrdf 0.3.4: super(lexicalForm, language);
-            this.lexicalForm = lexicalForm;
-            this.language = language;
+            super(lexicalForm, language);
         }
         public FreeLiteral(String lexicalForm, URI datatypeURI) {
-            // jrdf 0.3.4: super(lexicalForm, datatypeURI);
-            this.lexicalForm = lexicalForm;
-            this.datatypeURI = datatypeURI;
+            super(lexicalForm, datatypeURI);
         }
     }
 
     public class FreeURIReference extends AbstractURIReference {
-        public FreeURIReference(URI uri) {
+		private static final long serialVersionUID = 1L;
+		public FreeURIReference(URI uri) {
             super(uri);
         }
         public FreeURIReference(URI uri, boolean validate) {
@@ -219,7 +218,9 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
     }
 
     public class FreeTriple extends AbstractTriple {
-        public FreeTriple(SubjectNode subjectNode,
+		private static final long serialVersionUID = 1L;
+
+		public FreeTriple(SubjectNode subjectNode,
                           PredicateNode predicateNode,
                           ObjectNode objectNode) {
             this.subjectNode = subjectNode;

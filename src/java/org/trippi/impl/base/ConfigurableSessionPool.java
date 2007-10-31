@@ -76,7 +76,7 @@ public class ConfigurableSessionPool extends Thread
     /**
      * Get a connection from the pool.
      *
-     * @return a session, or null if none are available and growth isnt allowed.
+     * @return a session, or null if none are available and growth isn't allowed.
      * @throws TrippiException if there were no spare sessions and an 
      *                              attempt to create one on-demand failed.
      */

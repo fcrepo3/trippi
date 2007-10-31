@@ -3,9 +3,7 @@ package org.trippi;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-
 import java.net.URI;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,10 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import junit.swingui.TestRunner;
 
 import org.jrdf.graph.Triple;
-
 import org.trippi.config.TrippiProfile;
 
 public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
@@ -40,6 +36,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
 
     public void tearDown() throws Exception {
         deleteAllTriples();
+        _connector.close();
     }
 
     private void deleteAllTriples() throws Exception {
@@ -83,16 +80,14 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         assertEquals("Wrong number of triples",
                      8,
                      _reader.countTriples(null, null, null, -1));
-
         Set inputSet = new HashSet();
         inputSet.addAll(testTriples);
-
         Set outputSet = getSet(_reader.findTriples(null, null, null, -1));
-
         assertEquals("Count was ok, but got different set of triples!",
                      inputSet,
                      outputSet);
     }
+
 
     /**
      * Test deleting some triples.
@@ -145,7 +140,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         _writer.add(getTriples(5, 50, 75), true);
         doModifyConcurrency(5, 50, 75, false, true, false);
     }
-
+    
     /**
      * Test that we can add a bunch of triples from multiple threads,
      * and they all get flushed properly.

@@ -1,15 +1,17 @@
 package org.trippi;
 
-import java.io.*;
-import java.util.*;
-
 import gnu.trove.TIntObjectHashMap;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jrdf.graph.BlankNode;
 import org.jrdf.graph.Graph;
-import org.jrdf.graph.GraphException;
 import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.GraphElementFactoryException;
+import org.jrdf.graph.GraphException;
 import org.jrdf.graph.Literal;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.ObjectNode;
@@ -17,16 +19,13 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
-import org.jrdf.graph.mem.GraphImpl;
-
 import org.openrdf.rio.n3.N3Writer;
 import org.openrdf.rio.ntriples.NTriplesWriter;
 import org.openrdf.rio.rdfxml.RdfXmlWriter;
 import org.openrdf.rio.turtle.TurtleWriter;
-
+import org.trippi.io.CountTripleWriter;
 import org.trippi.io.RIOTripleIterator;
 import org.trippi.io.RIOTripleWriter;
-import org.trippi.io.CountTripleWriter;
 import org.trippi.io.TripleWriter;
 import org.trippi.io.XMLDeclarationRemover;
 

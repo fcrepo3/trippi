@@ -84,7 +84,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
     /**
      * Add a series of triples to the store.
      *
-     * This implementation actually buffers the triples for asychronous 
+     * This implementation actually buffers the triples for asynchronous 
      * addition, which will occur in the autoFlush thread when <b>bufferSize</b> 
      * or <b>dormantSeconds</b> is reached.  However, if <i>flush</i> is 
      * true, the buffer will be flushed in this thread before returning.

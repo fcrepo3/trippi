@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connector-descriptor name="Mulgara Connector">
+	<description>
+		This connector is written for Mulgara 1.1.0 For more information
+		on Mulgara, visit http://www.mulgara.org/
+	</description>
+	<parameter name="remote"
+		label="Whether the triplestore is available via rmi.">
+		<description>
+			This tells the connector to communicate with Kowari in
+			remote or local mode.
+		</description>
+		<option value="true">
+			<parameter name="host"
+				label="The hostname where Kowari is running." />
+			<parameter name="port"
+				label="The rmi port it's running on, if not 1099 (the default)."
+				optional="true" />
+		</option>
+		<option value="false">
+			<parameter name="path"
+				label="The local path to the main triplestore directory." />
+		</option>
+	</parameter>
+	<parameter name="serverName"
+		label="The server name for rmi binding." />
+	<parameter name="modelName" label="The name of the model to use." />
+	<parameter name="poolInitialSize"
+		label="The initial size of the session pool used for queries.">
+		<description>
+			If one or greater, pooling will be used. If zero, all
+			read/write access will be synchronized and no buffering will
+			be done.
+		</description>
+	</parameter>
+	<parameter name="poolMaxGrowth"
+		label="Maximum number of additional sessions the pool may add.">
+		<description>
+			If specified as -1, no limit will be placed on pool growth.
+		</description>
+	</parameter>
+	<parameter name="poolSpareSessions"
+		label="The number of spare sessions to proactively make available."
+		optional="true">
+		<description>
+			If unspecified, this defaults to 0, which means that
+			additional sessions will only be created as needed. Note
+			that if poolMaxGrowth is 0, the value of this parameter is
+			inconsequential.
+		</description>
+	</parameter>
+	<parameter name="readOnly"
+		label="Whether to connect in read-only mode.">
+		<description>
+			Read-only mode will prevent accidental changes to the
+			triplestore.
+		</description>
+		<option value="true" />
+		<option value="false">
+			<parameter name="autoCreate"
+				label="Whether to create the model if it doesn't already exist.">
+				<description>
+					At startup, the model will be automatically created.
+					In addition, an XML schema datatyped model named
+					"xsd" will also be automatically created.
+				</description>
+				<option value="true" />
+				<option value="false" />
+			</parameter>
+			<parameter name="autoTextIndex"
+				label="Whether to propogate adds/deletes to a fulltext model automatically.">
+				<description>
+					If true, the text model will be named
+					modelName-fullText. Note that if this is true and
+					autoCreate is true, the text model will also be
+					created if it doesn't already exist.
+				</description>
+				<option value="true" />
+				<option value="false" />
+			</parameter>
+			<parameter name="autoFlushDormantSeconds"
+				label="Seconds of buffer inactivity that will trigger an auto-flush.">
+				<description>
+					If this threshold is reached, flushing will occur in
+					the background, during which time the buffer is
+					still available for writing.
+				</description>
+			</parameter>
+			<parameter name="autoFlushBufferSize"
+				label="The size at which the buffer should be auto-flushed.">
+				<description>
+					If this threshold is reached, flushing will occur in
+					the background, during which time the buffer is
+					still available for writing.
+				</description>
+			</parameter>
+			<parameter name="bufferSafeCapacity"
+				label="The maximum size the buffer can reach before being forcibly flushed.">
+				<description>
+					If this threshold is reached, flushing will occur in
+					the foreground and the buffer will be locked for
+					writing until it is finished. This should be larger
+					than autoFlushBufferSize.
+				</description>
+			</parameter>
+			<parameter name="bufferFlushBatchSize"
+				label="The number of updates to send to the triplestore at a time.">
+				<description>
+					This should be the same size as, or smaller than
+					autoFlushBufferSize.
+				</description>
+			</parameter>
+		</option>
+	</parameter>
+</connector-descriptor>

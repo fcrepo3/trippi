@@ -8,6 +8,7 @@ import junit.swingui.TestRunner;
 import org.trippi.TestConfig;
 import org.trippi.config.TrippiProfile;
 import org.trippi.impl.mpt.MPTIntegrationTestSuite;
+import org.trippi.impl.mulgara.MulgaraIntegrationTestSuite;
 
 public class ImplIntegrationTestSuite extends TestCase {
 
@@ -25,6 +26,8 @@ public class ImplIntegrationTestSuite extends TestCase {
         String name = profile.getConnectorClassName();
         if (name.equals("org.trippi.impl.mpt.MPTConnector")) {
             suite.addTest(MPTIntegrationTestSuite.suite());
+        } else if (name.equals("org.trippi.impl.mulgara.MulgaraConnector")) {
+        	suite.addTest(MulgaraIntegrationTestSuite.suite());
         } else {
             throw new RuntimeException("Don't know integration test suite for "
                   + "connector: " + name);

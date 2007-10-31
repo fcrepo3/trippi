@@ -46,7 +46,20 @@ public class TrippiConfig {
         }
         return profileMap;
     }
-
+    
+    public static Map<String, TrippiProfile> getProfiles(Properties p) {
+    	Map<String, TrippiProfile> profileMap = new HashMap<String, TrippiProfile>();
+        Enumeration<?> e = p.propertyNames();
+        while (e.hasMoreElements()) {
+            String key = (String) e.nextElement();
+            if (key.startsWith("profile.") && key.endsWith(".label")) {
+                String id = key.substring(8, key.lastIndexOf("."));
+                profileMap.put(id, getProfile(p, id, p.getProperty(key)));
+            }
+        }
+        return profileMap;
+    }
+    
     public static TrippiProfile getProfile(Properties p, String id, String label) {
         String connectorClassName = null;
         String configStart = "profile." + id + ".config.";

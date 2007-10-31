@@ -35,19 +35,19 @@
       <replacefilter token="@buildDate@" property="buildDate"/>
     </replace>
   </target>
-    
-  <!-- kowari-classes -->
-  <target name="kowari-classes" depends="core-classes">
-    <build-connector classpathref="kowari.compile.classpath"
-                     destdir="${kowari.build.dir}"
-                     packagepath="${kowari.packagepath}"/>
-  </target>
 
   <!-- mptstore-classes -->
   <target name="mptstore-classes" depends="core-classes">
     <build-connector classpathref="mptstore.compile.classpath"
                      destdir="${mptstore.build.dir}"
                      packagepath="${mptstore.packagepath}"/>
+  </target>
+	
+  <!-- mulgara-classes -->
+  <target name="mulgara-classes" depends="core-classes">
+    <build-connector classpathref="mulgara.compile.classpath"
+                     destdir="${mulgara.build.dir}"
+                     packagepath="${mulgara.packagepath}"/>
   </target>
 
   <!-- oracle-classes -->
@@ -67,8 +67,8 @@
   <!-- connector-classes -->
   <target name="connector-classes"
           description="build all connector classes"
-          depends="kowari-classes,
-                   mptstore-classes,
+          depends="mptstore-classes,
+  				   mulgara-classes,
                    oracle-classes,
                    sesame-classes">
   </target>
@@ -97,9 +97,9 @@
   <target name="connector-jars"
           depends="connector-classes"
           description="build jars for all connectors">
-    <build-jar basedir="${kowari.build.dir}" component="kowari"/>
     <build-jar basedir="${mptstore.build.dir}" component="mptstore"/>
-    <build-jar basedir="${oracle.build.dir}" component="oracle"/>
+  	<build-jar basedir="${mulgara.build.dir}" component="mulgara"/>
+  	<build-jar basedir="${oracle.build.dir}" component="oracle"/>
     <build-jar basedir="${sesame.build.dir}" component="sesame"/>
   </target>
 
@@ -165,13 +165,13 @@
           depends="core-dist,
                    connector-jars"
           description="build dist with all connectors">
-    <copy-jar component="kowari" todir="${dist.dir}/lib"/>
     <copy-jar component="mptstore" todir="${dist.dir}/lib"/>
+  	<copy-jar component="mulgara" todir="${dist.dir}/lib"/>
     <copy-jar component="oracle" todir="${dist.dir}/lib"/>
     <copy-jar component="sesame" todir="${dist.dir}/lib"/>
     <copy todir="${dist.dir}">
-      <fileset dir="." includes="${kowari.runtime.libs}"/>
       <fileset dir="." includes="${mptstore.runtime.libs}"/>
+	  <fileset dir="." includes="${mulgara.runtime.libs}"/>
       <fileset dir="." includes="${oracle.runtime.libs}"/>
       <fileset dir="." includes="${sesame.runtime.libs}"/>
     </copy>
@@ -239,9 +239,8 @@
     <javadoc packagenames="org.trippi, 
                            org.trippi.config,
                            org.trippi.impl.base,
-                           org.trippi.impl.jena,
-                           org.trippi.impl.kowari,
                            org.trippi.impl.mpt,
+    					   org.trippi.impl.mulgara,
                            org.trippi.impl.oracle,
                            org.trippi.impl.sesame,
                            org.trippi.io,
