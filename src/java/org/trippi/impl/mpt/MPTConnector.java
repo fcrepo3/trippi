@@ -15,6 +15,8 @@ import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
 
+import org.trippi.config.ConfigUtils;
+
 import org.trippi.impl.base.AliasManager;
 import org.trippi.impl.base.ConcurrentTriplestoreWriter;
 import org.trippi.impl.base.ConfigurableSessionPool;
@@ -44,22 +46,22 @@ public class MPTConnector extends TriplestoreConnector {
     public void init(Map config) throws TrippiException {
 
         // get and validate configuration values
-        String ddlGenerator = getRequired(config, "ddlGenerator");
-        String jdbcDriver = getRequired(config, "jdbcDriver");
-        String jdbcURL = getRequired(config, "jdbcURL");
-        String username = getRequired(config, "username");
-        String password = getRequired(config, "password");
-        int poolInitialSize = getRequiredInt(config, "poolInitialSize");
-        int poolMaxSize = getRequiredInt(config, "poolMaxSize");
+        String ddlGenerator = ConfigUtils.getRequired(config, "ddlGenerator");
+        String jdbcDriver = ConfigUtils.getRequired(config, "jdbcDriver");
+        String jdbcURL = ConfigUtils.getRequired(config, "jdbcURL");
+        String username = ConfigUtils.getRequired(config, "username");
+        String password = ConfigUtils.getRequired(config, "password");
+        int poolInitialSize = ConfigUtils.getRequiredInt(config, "poolInitialSize");
+        int poolMaxSize = ConfigUtils.getRequiredInt(config, "poolMaxSize");
         if (poolMaxSize < poolInitialSize) {
             throw new TrippiException("poolMaxSize cannot be less than poolInitialSize");
         }
-        int fetchSize = getRequiredInt(config, "fetchSize");
-        boolean backslashIsEscape = getRequiredBoolean(config, "backslashIsEscape");
-        int autoFlushDormantSeconds = getRequiredInt(config, "autoFlushDormantSeconds");
-        int autoFlushBufferSize = getRequiredInt(config, "autoFlushBufferSize");
-        int bufferSafeCapacity = getRequiredInt(config, "bufferSafeCapacity");
-        int bufferFlushBatchSize = getRequiredInt(config, "bufferFlushBatchSize");
+        int fetchSize = ConfigUtils.getRequiredInt(config, "fetchSize");
+        boolean backslashIsEscape = ConfigUtils.getRequiredBoolean(config, "backslashIsEscape");
+        int autoFlushDormantSeconds = ConfigUtils.getRequiredNNInt(config, "autoFlushDormantSeconds");
+        int autoFlushBufferSize = ConfigUtils.getRequiredPosInt(config, "autoFlushBufferSize");
+        int bufferSafeCapacity = ConfigUtils.getRequiredInt(config, "bufferSafeCapacity");
+        int bufferFlushBatchSize = ConfigUtils.getRequiredPosInt(config, "bufferFlushBatchSize");
 
         // bring everything together, ultimately constructing our
         // ConcurrentTriplestoreWriter
@@ -129,45 +131,6 @@ public class MPTConnector extends TriplestoreConnector {
         pool.setDriverClassName(driver);
 
         return pool;
-    }
-
-    /**
-     * Get a trimmed non-empty string from the map, or throw an exception.
-     */
-    private static String getRequired(Map map, String key) throws TrippiException {
-        String value = (String) map.get(key);
-        if (value == null || value.length() == 0) {
-            throw new TrippiException("Missing required configuration value: " + key);
-        } else {
-            return value.trim();
-        }
-    }
-
-    /**
-     * Get a positive integer from the map, or throw an exception.
-     */
-    private static int getRequiredInt(Map map, String key) throws TrippiException {
-        try {
-            int i = Integer.parseInt(getRequired(map, key));
-            if (i < 1) {
-                throw new TrippiException("Configuration value must be 1 or greater: " + key);
-            } else {
-                return i;
-            }
-        } catch (NumberFormatException e) {
-            throw new TrippiException("Configuration value must be an integer: " + key);
-        }
-    }
-
-    private static boolean getRequiredBoolean(Map map, String key) throws TrippiException {
-        String val = getRequired(map, key);
-        if (val.equalsIgnoreCase("true")) {
-            return true;
-        } else if (val.equalsIgnoreCase("false")) {
-            return false;
-        } else {
-            throw new TrippiException("Expected boolean for " + key + ", but got " + val);
-        }
     }
 
     // Implements TriplestoreConnector.getReader()

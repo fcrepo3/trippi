@@ -17,6 +17,7 @@ import org.openrdf.sesame.repository.local.LocalRepository;
 import org.openrdf.sesame.repository.local.LocalService;
 
 import org.trippi.*;
+import org.trippi.config.ConfigUtils;
 import org.trippi.impl.base.*;
 
 /**
@@ -36,48 +37,33 @@ public class SesameConnector extends TriplestoreConnector {
     public SesameConnector() {
     }
 
-    private static String getRequired(Map config, String name) throws TrippiException {
-        String val = (String) config.get(name);
-        if (val == null) throw new TrippiException("Must specify " + name);
-        return val;
-    }
-
-    private static int getRequiredInt(Map config, String name) throws TrippiException {
-        String val = getRequired(config, name);
-        try {
-            return Integer.parseInt(val);
-        } catch (Exception e) {
-            throw new TrippiException("Expected an integer for " + name + ", got " + val);
-        }
-    }
-
     // set reader, writer, and elementFactory as needed
     public void init(Map config) throws TrippiException {
 
         AliasManager aliasManager = new AliasManager(new HashMap());
 
         // Get and validate configuration
-        String storageType            = getRequired(config, "storageType");
+        String storageType            = ConfigUtils.getRequired(config, "storageType");
         File dir          = null;
         String jdbcDriver = null;
         String jdbcUrl    = null;
         String user       = null;
         String password   = null;
         if (storageType.equals("native")) {
-            dir                       = new File(getRequired(config, "dir"));
+            dir                       = new File(ConfigUtils.getRequired(config, "dir"));
         } else if (storageType.equals("rdbms")) {
-            jdbcDriver                = getRequired(config, "jdbcDriver");
-            jdbcUrl                   = getRequired(config, "jdbcUrl");
-            user                      = getRequired(config, "user");
-            password                  = getRequired(config, "password");
+            jdbcDriver                = ConfigUtils.getRequired(config, "jdbcDriver");
+            jdbcUrl                   = ConfigUtils.getRequired(config, "jdbcUrl");
+            user                      = ConfigUtils.getRequired(config, "user");
+            password                  = ConfigUtils.getRequired(config, "password");
         } else {
             throw new TrippiException("Invalid storageType: " + storageType 
                     + " (must be native or rdbms)");
         }
-        int  autoFlushDormantSeconds  = getRequiredInt(config, "autoFlushDormantSeconds");
-        int  autoFlushBufferSize      = getRequiredInt(config, "autoFlushBufferSize");
-        int  bufferSafeCapacity       = getRequiredInt(config, "bufferSafeCapacity");
-        int  bufferFlushBatchSize     = getRequiredInt(config, "bufferFlushBatchSize");
+        int  autoFlushDormantSeconds  = ConfigUtils.getRequiredInt(config, "autoFlushDormantSeconds");
+        int  autoFlushBufferSize      = ConfigUtils.getRequiredInt(config, "autoFlushBufferSize");
+        int  bufferSafeCapacity       = ConfigUtils.getRequiredInt(config, "bufferSafeCapacity");
+        int  bufferFlushBatchSize     = ConfigUtils.getRequiredInt(config, "bufferFlushBatchSize");
 
         if (autoFlushDormantSeconds < 0) {
             throw new TrippiException("autoFlushDormantSeconds cannot be negative.");
