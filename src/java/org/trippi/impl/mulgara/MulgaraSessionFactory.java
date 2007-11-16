@@ -116,13 +116,14 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 
 	/**
 	 * 
+	 * @param serverName
+     * @param modelName
+     * @param textModelName
 	 * @param hostname
 	 *            Hostname the Mulgara server is running on. <code>null</code> value indicates Mulgara is running in-JVM.
 	 * @param port
 	 *            Port the Mulgara server is running on. Ignored if Mulgara is running in-JVM.
-	 * @param serverName
-	 * @param modelName
-	 * @param textModelName
+	 * 
 	 * @throws TrippiException
 	 */
 	private void setModelURIs(String serverName, 
@@ -191,24 +192,22 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 	 */
 	private void createModels() throws TrippiException {
 		Session session = null;
-		//LocalJRDFSession session = null;
 		
 		try {
 			session = m_factory.newSession();
-			//session = (LocalJRDFDatabaseSession) m_factory.newJRDFSession();
 			
-			//if (!session.modelExists(m_modelURI)) {
+			if (!session.modelExists(m_modelURI)) {
 				session.createModel(m_modelURI, MulgaraModelType.MODEL.uri());
-			//}
+			}
 			
-			//if (!session.modelExists(m_xsdModelURI)) {
+			if (!session.modelExists(m_xsdModelURI)) {
 				session.createModel(m_xsdModelURI, MulgaraModelType.XSD.uri());
-			//}
+			}
 			
-			//if (m_textModelURI != null && !session.modelExists(m_textModelURI)) {
+			if (m_textModelURI != null && !session.modelExists(m_textModelURI)) {
 				session.createModel(m_textModelURI, MulgaraModelType.LUCENE
 						.uri());
-			//}
+			}
 		} catch (QueryException e) {
 			e.printStackTrace();
 			throw new TrippiException(e.getMessage(), e);
