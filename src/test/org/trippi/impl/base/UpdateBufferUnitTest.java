@@ -1,7 +1,6 @@
 package org.trippi.impl.base;
 
 import java.net.URI;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,13 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.TestCase;
-import junit.swingui.TestRunner;
 
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
 import org.trippi.FlushErrorHandler;
 import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;

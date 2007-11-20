@@ -1,7 +1,5 @@
 package org.trippi.impl.base;
 
-import junit.framework.TestCase;
-import junit.swingui.TestRunner;
 
 public class MemUpdateBufferUnitTest extends UpdateBufferUnitTest {
 

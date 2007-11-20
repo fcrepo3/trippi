@@ -1,7 +1,5 @@
 package org.trippi.impl.mpt;
 
-import junit.framework.TestCase;
-
 import org.trippi.TriplestoreConnectorIntegrationTest;
 
 public class MPTConnectorIntegrationTest 
