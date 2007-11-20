@@ -14,7 +14,7 @@
     <path refid="common.classpath"/>
     <pathelement path="${lib.openrdf-model}"/>
     <pathelement path="${lib.openrdf-rio}"/>
-    <pathelement path="${lib.mulgara}"/>
+    <pathelement path="${lib.trove}"/>
     <pathelement path="${lib.xmlpull}"/>
     <pathelement path="${lib.xpp3}"/>
   </path>
@@ -73,6 +73,24 @@
 
   <path id="mulgara.runtime.classpath">
     <path refid="mulgara.common.classpath"/>
+  	<pathelement path="${lib.activation}"/>
+  	<pathelement path="${lib.beep}"/>
+  	<pathelement path="${lib.castor}"/>
+  	<pathelement path="${lib.commons-codec}"/>
+	<pathelement path="${lib.commons-discovery}"/>
+	<pathelement path="${lib.commons-httpclient}"/>
+  	<pathelement path="${lib.commons-logging}"/>
+	<pathelement path="${lib.date-utils}"/>
+	<pathelement path="${lib.emory-util}"/>
+  	<pathelement path="${lib.jca}"/>
+  	<pathelement path="${lib.jotm}"/>
+  	<pathelement path="${lib.jotm-carol}"/>
+	<pathelement path="${lib.jotm-iiop}"/>
+  	<pathelement path="${lib.jta}"/>
+  	<pathelement path="${lib.lucene}"/>
+	<pathelement path="${lib.mail}"/>
+	<pathelement path="${lib.saaj}"/>
+	<pathelement path="${lib.trove}"/>
   </path>
 
   <pathconvert property="mulgara.runtime.libs" 
