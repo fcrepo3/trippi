@@ -99,7 +99,6 @@ public class MulgaraConnector extends TriplestoreConnector {
         int bufferSafeCapacity = ConfigUtils.getRequiredInt(config, "bufferSafeCapacity");
         int bufferFlushBatchSize = ConfigUtils.getRequiredPosInt(config, "bufferFlushBatchSize");
         int poolInitialSize = ConfigUtils.getRequiredInt(config, "poolInitialSize");
-        int poolMaxSize = ConfigUtils.getRequiredInt(config, "poolMaxSize");
         
         if (bufferSafeCapacity < autoFlushBufferSize + 1) {
             throw new TrippiException("bufferSafeCapacity must be greater than autoFlushBufferSize.");
@@ -107,9 +106,7 @@ public class MulgaraConnector extends TriplestoreConnector {
         if (bufferFlushBatchSize > autoFlushBufferSize) {
             throw new TrippiException("bufferFlushBatchSize must be less than or equal to autoFlushBufferSize.");
         }
-        if (poolMaxSize < poolInitialSize) {
-            throw new TrippiException("poolMaxSize cannot be less than poolInitialSize");
-        }
+
         int poolMaxGrowth = 0, poolSpareSessions = 0;
         if (poolInitialSize > 0) {
             poolMaxGrowth = ConfigUtils.getRequiredInt(config, "poolMaxGrowth");
@@ -195,6 +192,10 @@ public class MulgaraConnector extends TriplestoreConnector {
             }
         }
         
+	}
+	
+	protected TriplestoreSessionFactory getSessionFactory() {
+	    return m_factory;
 	}
 
 }

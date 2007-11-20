@@ -149,7 +149,7 @@ public class MulgaraSession implements TriplestoreSession {
     }
 
 	private void doTriples(Set<Triple> triples, boolean add) throws TrippiException {
-		try {
+	    try {
 			if (add) {
 				m_session.insert(m_modelURI, triples);
 			} else {
@@ -159,7 +159,6 @@ public class MulgaraSession implements TriplestoreSession {
 				doPlainLiteralTriples(triples, add);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			String mod = "deleting";
 			if (add)
 				mod = "adding";

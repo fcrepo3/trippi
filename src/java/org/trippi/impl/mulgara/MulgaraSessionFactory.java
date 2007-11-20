@@ -209,7 +209,6 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 						.uri());
 			}
 		} catch (QueryException e) {
-			e.printStackTrace();
 			throw new TrippiException(e.getMessage(), e);
 		} finally {
 			if (session != null) {
@@ -225,6 +224,14 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 	private URI getModelURI(String hostname, String serverName, String modelName)
 			throws URISyntaxException {
 		return new URI(RMI, hostname, "/" + serverName, modelName);
+	}
+	
+	protected URI getModelURI() {
+	    return m_modelURI;
+	}
+	
+	protected URI getTextModelURI() {
+	    return m_textModelURI;
 	}
 	
 	/**
