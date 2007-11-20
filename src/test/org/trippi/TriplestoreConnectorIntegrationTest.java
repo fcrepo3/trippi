@@ -17,7 +17,7 @@ import org.trippi.config.TrippiProfile;
 
 public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
 
-    private TriplestoreConnector _connector;
+    public TriplestoreConnector _connector;
     private TriplestoreReader _reader;
     private TriplestoreWriter _writer;
     private RDFUtil _util;
