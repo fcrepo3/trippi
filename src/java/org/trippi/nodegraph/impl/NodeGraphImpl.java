@@ -2,8 +2,7 @@ package org.trippi.nodegraph.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import java.util.*;
+import java.util.Iterator;
 
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
@@ -15,9 +14,8 @@ import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.TripleFactory;
 import org.jrdf.util.ClosableIterator;
-
-import org.trippi.nodegraph.NodeResults;
 import org.trippi.nodegraph.NodeGraph;
+import org.trippi.nodegraph.NodeResults;
 import org.trippi.nodegraph.TripleResults;
 
 public class NodeGraphImpl extends NodeGraph {

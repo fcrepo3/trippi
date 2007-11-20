@@ -3,9 +3,7 @@ package org.trippi.nodegraph;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphException;
 import org.jrdf.graph.Node;
-import org.jrdf.graph.Triple;
 import org.jrdf.graph.mem.GraphImpl;
-
 import org.trippi.nodegraph.impl.NodeGraphImpl;
 
 /**

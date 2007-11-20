@@ -1,14 +1,13 @@
 package org.trippi.impl.sesame;
 
-import java.net.*;
-import java.util.*;
+import java.net.URI;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
-
 import org.jrdf.graph.BlankNode;
-import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.GraphException;
 import org.jrdf.graph.Literal;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.ObjectNode;
@@ -16,14 +15,14 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
-import org.jrdf.graph.mem.GraphImpl;
-
 import org.openrdf.model.ValueFactory;
 import org.openrdf.sesame.constants.QueryLanguage;
 import org.openrdf.sesame.repository.SesameRepository;
 import org.openrdf.sesame.repository.local.LocalRepository;
-
-import org.trippi.*;
+import org.trippi.RDFUtil;
+import org.trippi.TripleIterator;
+import org.trippi.TrippiException;
+import org.trippi.TupleIterator;
 import org.trippi.impl.base.AliasManager;
 import org.trippi.impl.base.TriplestoreSession;
 

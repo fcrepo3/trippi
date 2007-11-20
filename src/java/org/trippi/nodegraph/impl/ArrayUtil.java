@@ -1,6 +1,7 @@
 package org.trippi.nodegraph.impl;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jrdf.graph.Node;
 import org.jrdf.graph.Triple;

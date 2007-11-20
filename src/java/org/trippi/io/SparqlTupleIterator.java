@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jrdf.graph.GraphException;
 import org.jrdf.graph.Node;
 import org.trippi.RDFUtil;
 import org.trippi.TrippiException;

@@ -1,8 +1,8 @@
 package org.trippi.nodegraph.impl;
 
-import java.util.*;
-
 import gnu.trove.TIntHashSet;
+
+import java.util.NoSuchElementException;
 
 import org.jrdf.graph.Node;
 import org.jrdf.graph.Triple;

@@ -1,15 +1,12 @@
 package org.trippi.io;
 
 import java.io.IOException;
-
-import org.trippi.TupleIterator;
-import org.trippi.TrippiException;
-
 import java.io.OutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+
+import org.trippi.TrippiException;
+import org.trippi.TupleIterator;
 
 /**
  * TupleWriter extension to simply write to the OutputStream the number of

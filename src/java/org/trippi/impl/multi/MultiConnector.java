@@ -1,13 +1,13 @@
 package org.trippi.impl.multi;
 
-import java.util.*;
-
-import org.apache.log4j.*;
+import java.util.Map;
 
 import org.jrdf.graph.GraphElementFactory;
-
-import org.trippi.*;
-import org.trippi.impl.base.*;
+import org.trippi.RDFUtil;
+import org.trippi.TriplestoreConnector;
+import org.trippi.TriplestoreReader;
+import org.trippi.TriplestoreWriter;
+import org.trippi.TrippiException;
 
 /**
  * A <code>TriplestoreConnector</code> for a local, native Sesame RDF

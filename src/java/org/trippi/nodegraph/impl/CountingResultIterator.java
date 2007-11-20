@@ -1,6 +1,6 @@
 package org.trippi.nodegraph.impl;
 
-import java.util.*;
+import java.util.NoSuchElementException;
 
 import org.jrdf.util.ClosableIterator;
 

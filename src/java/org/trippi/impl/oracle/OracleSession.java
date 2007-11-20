@@ -1,35 +1,6 @@
 package org.trippi.impl.oracle;
 
-import java.sql.*;
-//import oracle.jdbc.pool.OracleOCIConnectionPool;
-//import oracle.jdbc.pool.*;
-//import oracle.jdbc.oci.*;
-
-import java.net.*;
-import java.util.*;
-
-import java.io.BufferedWriter;
-//TODO REMOVE
-import java.io.FileWriter;
-//TODO REMOVE
-import org.apache.log4j.Logger;
-
-import org.jrdf.graph.BlankNode;
-import org.jrdf.graph.Graph;
-import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.GraphException;
-import org.jrdf.graph.Literal;
-import org.jrdf.graph.Node;
-import org.jrdf.graph.ObjectNode;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
-import org.jrdf.graph.URIReference;
-import org.jrdf.graph.mem.GraphImpl;
-
-import org.trippi.*;
-import org.trippi.impl.base.AliasManager;
-import org.trippi.impl.base.TriplestoreSession;
+import java.sql.Connection;import java.sql.SQLException;import java.sql.Statement;import java.util.Iterator;import java.util.Map;import java.util.Set;import org.apache.log4j.Logger;import org.jrdf.graph.BlankNode;import org.jrdf.graph.GraphElementFactory;import org.jrdf.graph.Literal;import org.jrdf.graph.Node;import org.jrdf.graph.ObjectNode;import org.jrdf.graph.PredicateNode;import org.jrdf.graph.SubjectNode;import org.jrdf.graph.Triple;import org.jrdf.graph.URIReference;import org.trippi.RDFUtil;import org.trippi.TripleIterator;import org.trippi.TrippiException;import org.trippi.TupleIterator;import org.trippi.impl.base.AliasManager;import org.trippi.impl.base.TriplestoreSession;
 
 /**
  * A <code>TriplestoreSession</code> that wraps a OracleRepository.

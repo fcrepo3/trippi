@@ -1,15 +1,24 @@
 package org.trippi.impl.base;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
-import org.trippi.*;
+import org.trippi.FlushErrorHandler;
+import org.trippi.RDFFormat;
+import org.trippi.TripleIterator;
+import org.trippi.TriplestoreWriter;
+import org.trippi.TrippiException;
 
 /**
  * A SynchronizedTriplestoreReader that also implements TriplestoreWriter

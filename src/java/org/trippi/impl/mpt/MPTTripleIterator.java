@@ -1,22 +1,19 @@
 package org.trippi.impl.mpt;
 
 import java.util.List;
-import java.util.Map;
 
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
-import org.trippi.TripleIterator;
-import org.trippi.TrippiException;
-import org.trippi.RDFUtil;
-
 import org.nsdl.mptstore.query.QueryResults;
 import org.nsdl.mptstore.rdf.Literal;
 import org.nsdl.mptstore.rdf.Node;
 import org.nsdl.mptstore.rdf.URIReference;
+import org.trippi.RDFUtil;
+import org.trippi.TripleIterator;
+import org.trippi.TrippiException;
 
 public class MPTTripleIterator extends TripleIterator {
 

@@ -1,24 +1,21 @@
 package org.trippi.impl.sesame;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import org.apache.log4j.*;
-
-import org.jrdf.graph.Triple;
-
-import org.openrdf.sesame.constants.QueryLanguage;
-import org.openrdf.sesame.query.GraphQueryResultListener;
-import org.openrdf.sesame.repository.SesameRepository;
-
+import org.apache.log4j.Logger;
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
-import org.trippi.*;
+import org.openrdf.sesame.constants.QueryLanguage;
+import org.openrdf.sesame.query.GraphQueryResultListener;
+import org.openrdf.sesame.repository.SesameRepository;
+import org.trippi.RDFUtil;
+import org.trippi.TripleIterator;
+import org.trippi.TrippiException;
 
 public class SesameTripleIterator 
              extends TripleIterator 

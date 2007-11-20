@@ -1,15 +1,12 @@
 package org.trippi.io;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
-
-import java.io.OutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 /**
  * TripleWriter extension to simply write to the OutputStream the number of

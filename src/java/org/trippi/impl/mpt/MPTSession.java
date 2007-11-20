@@ -2,16 +2,12 @@ package org.trippi.impl.mpt;
 
 import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.dbcp.BasicDataSource;
-
 import org.jrdf.graph.Literal;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.ObjectNode;
@@ -19,16 +15,13 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
-
-import org.trippi.RDFUtil;
+import org.nsdl.mptstore.core.DatabaseAdaptor;
+import org.nsdl.mptstore.query.QueryResults;
+import org.nsdl.mptstore.query.lang.QueryLanguage;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 import org.trippi.impl.base.TriplestoreSession;
-
-import org.nsdl.mptstore.core.DatabaseAdaptor;
-import org.nsdl.mptstore.query.lang.QueryLanguage;
-import org.nsdl.mptstore.query.QueryResults;
 
 public class MPTSession implements TriplestoreSession {
 

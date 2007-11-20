@@ -1,19 +1,6 @@
 package org.trippi.impl.oracle;
 
-import oracle.jdbc.oci.*;
-import oracle.jdbc.pool.*;
-
-import java.io.*;
-import java.util.*;
-
-import java.sql.*;
-
-import org.apache.log4j.*;
-
-import org.jrdf.graph.GraphElementFactory;
-
-import org.trippi.*;
-import org.trippi.impl.base.*;
+import java.io.File;import java.sql.Connection;import java.sql.DriverManager;import java.util.HashMap;import java.util.Map;import java.util.Properties;import oracle.jdbc.pool.OracleOCIConnectionPool;import org.apache.log4j.Logger;import org.jrdf.graph.GraphElementFactory;import org.trippi.TriplestoreConnector;import org.trippi.TriplestoreReader;import org.trippi.TriplestoreWriter;import org.trippi.TrippiException;import org.trippi.impl.base.AliasManager;import org.trippi.impl.base.ConcurrentTriplestoreWriter;import org.trippi.impl.base.MemUpdateBuffer;import org.trippi.impl.base.SingleSessionPool;import org.trippi.impl.base.TriplestoreSessionPool;import org.trippi.impl.base.UpdateBuffer;
 
 /**
  * A <code>TriplestoreConnector</code> for a remote or local, Oracle Spatical

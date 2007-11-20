@@ -1,16 +1,25 @@
 package org.trippi.impl.multi;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
-import org.trippi.*;
+import org.trippi.FlushErrorHandler;
+import org.trippi.RDFFormat;
+import org.trippi.TripleIterator;
+import org.trippi.TriplestoreReader;
+import org.trippi.TriplestoreWriter;
+import org.trippi.TrippiException;
+import org.trippi.TupleIterator;
 
 /**
  * A TriplestoreWriter that dispatches all calls to a set of underlying

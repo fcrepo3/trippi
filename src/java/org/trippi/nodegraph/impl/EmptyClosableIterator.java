@@ -1,8 +1,8 @@
 package org.trippi.nodegraph.impl;
 
-import org.jrdf.util.ClosableIterator;
+import java.util.NoSuchElementException;
 
-import java.util.*;
+import org.jrdf.util.ClosableIterator;
 
 public class EmptyClosableIterator implements ClosableIterator {
 

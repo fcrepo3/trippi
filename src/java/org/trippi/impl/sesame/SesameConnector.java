@@ -1,24 +1,29 @@
 package org.trippi.impl.sesame;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.log4j.*;
-
+import org.apache.log4j.Logger;
 import org.jrdf.graph.GraphElementFactory;
-
 import org.openrdf.sesame.Sesame;
 import org.openrdf.sesame.config.RepositoryConfig;
 import org.openrdf.sesame.config.SailConfig;
+import org.openrdf.sesame.repository.SesameRepository;
+import org.openrdf.sesame.repository.local.LocalService;
 import org.openrdf.sesame.sailimpl.nativerdf.NativeRdfRepositoryConfig;
 import org.openrdf.sesame.sailimpl.rdbms.RdfRepositoryConfig;
-import org.openrdf.sesame.repository.SesameRepository;
-import org.openrdf.sesame.repository.local.LocalRepository;
-import org.openrdf.sesame.repository.local.LocalService;
-
-import org.trippi.*;
+import org.trippi.TriplestoreConnector;
+import org.trippi.TriplestoreReader;
+import org.trippi.TriplestoreWriter;
+import org.trippi.TrippiException;
 import org.trippi.config.ConfigUtils;
-import org.trippi.impl.base.*;
+import org.trippi.impl.base.AliasManager;
+import org.trippi.impl.base.ConcurrentTriplestoreWriter;
+import org.trippi.impl.base.MemUpdateBuffer;
+import org.trippi.impl.base.SingleSessionPool;
+import org.trippi.impl.base.TriplestoreSessionPool;
+import org.trippi.impl.base.UpdateBuffer;
 
 /**
  * A <code>TriplestoreConnector</code> for a local, native Sesame RDF

@@ -1,35 +1,6 @@
 package org.trippi.impl.oracle;
 
-import java.io.BufferedWriter;
-//TODO REMOVE
-import java.io.FileWriter;
-//TODO REMOVE
-
-import java.sql.*;
-import oracle.jdbc.pool.*;
-import oracle.jdbc.oci.*;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
-import org.apache.log4j.*;
-
-import org.jrdf.graph.Triple;
-
-//import org.openrdf.sesame.constants.QueryLanguage;
-//import org.openrdf.sesame.query.GraphQueryResultListener;
-//import org.openrdf.sesame.repository.SesameRepository;
-
-import org.jrdf.graph.GraphElementFactoryException;
-import org.jrdf.graph.ObjectNode;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
-import org.jrdf.graph.Triple;
-
-import org.trippi.TripleMaker;
-
-import org.trippi.*;
+import java.sql.Connection;import java.sql.ResultSet;import java.sql.ResultSetMetaData;import java.sql.Statement;import org.apache.log4j.Logger;import org.jrdf.graph.ObjectNode;import org.jrdf.graph.PredicateNode;import org.jrdf.graph.SubjectNode;import org.jrdf.graph.Triple;import org.trippi.TripleIterator;import org.trippi.TripleMaker;import org.trippi.TrippiException;
 
 /**
  *  Description of the Class

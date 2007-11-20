@@ -1,22 +1,23 @@
 package org.trippi.impl.sesame;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.log4j.*;
-
+import org.apache.log4j.Logger;
+import org.jrdf.graph.GraphElementFactoryException;
+import org.jrdf.graph.ObjectNode;
 import org.openrdf.sesame.constants.QueryLanguage;
 import org.openrdf.sesame.query.QueryErrorType;
 import org.openrdf.sesame.query.TableQueryResultListener;
 import org.openrdf.sesame.repository.SesameRepository;
-
-import org.jrdf.graph.GraphElementFactoryException;
-import org.jrdf.graph.ObjectNode;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
-
-import org.trippi.*;
+import org.trippi.RDFUtil;
+import org.trippi.TrippiException;
+import org.trippi.TupleIterator;
 
 public class SesameTupleIterator 
              extends TupleIterator 
