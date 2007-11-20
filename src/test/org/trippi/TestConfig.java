@@ -2,7 +2,6 @@ package org.trippi;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Properties;
 
 import org.trippi.config.TrippiConfig;
 import org.trippi.config.TrippiProfile;

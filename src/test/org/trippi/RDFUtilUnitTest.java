@@ -6,8 +6,6 @@ import junit.framework.TestCase;
 
 import org.jrdf.graph.Literal;
 import org.jrdf.graph.ObjectNode;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
 
