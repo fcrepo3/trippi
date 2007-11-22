@@ -1,5 +1,6 @@
 package org.trippi.impl.mulgara;
 
+import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
@@ -7,18 +8,19 @@ import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.mulgara.query.Answer;
 import org.mulgara.query.TuplesException;
-import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 
 public class MulgaraTripleIterator extends TripleIterator {
 	
 	private Answer m_answer;
+	private GraphElementFactory m_geFactory;
 	private boolean m_hasNext;
 	private boolean m_isClosed;
 
-    public MulgaraTripleIterator(Answer answer) throws TrippiException {
+    public MulgaraTripleIterator(Answer answer, GraphElementFactory geFactory) throws TrippiException {
     	m_answer = answer;
+    	m_geFactory = geFactory;
     	m_isClosed = false;
     	
 		try {
@@ -54,7 +56,7 @@ public class MulgaraTripleIterator extends TripleIterator {
 			PredicateNode p = (PredicateNode) m_answer.getObject(1);
 			ObjectNode o = (ObjectNode) m_answer.getObject(2);
 			checkNext();
-			return new RDFUtil().createTriple(s, p, o);
+			return m_geFactory.createTriple(s, p, o);
 		} catch (TuplesException e) {
 			throw new TrippiException(e.getMessage(), e);
 		} catch (GraphElementFactoryException e) {

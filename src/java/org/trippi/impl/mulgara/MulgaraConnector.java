@@ -51,8 +51,8 @@ public class MulgaraConnector extends TriplestoreConnector {
                     m_updateSession.close();
                 }
             } finally {
-                m_reader.close();  // ensure this closes even if above dies
-                if (m_synch) m_factory.close();
+                if (m_reader != null) m_reader.close();  // ensure this closes even if above dies
+                //if (m_synch) m_factory.close();
             }
             m_isClosed = true;
         }
@@ -146,11 +146,7 @@ public class MulgaraConnector extends TriplestoreConnector {
         if (poolInitialSize == 0) {
             m_synch = true;
             MulgaraSession mSession = (MulgaraSession) m_factory.newSession();
-            try {
-				m_elementFactory = mSession.getElementFactory();
-			} catch (GraphException e) {
-				throw new TrippiException(e.getMessage(), e);
-			}
+            m_elementFactory = mSession.getElementFactory();
             SynchronizedTriplestoreSession synchSession = new SynchronizedTriplestoreSession(mSession);
             if (readOnly) {
                 m_reader = new SynchronizedTriplestoreReader(synchSession, aliasManager);
@@ -164,19 +160,16 @@ public class MulgaraConnector extends TriplestoreConnector {
                                                 poolInitialSize,
                                                 poolMaxGrowth,
                                                 poolSpareSessions);
+            
+            MulgaraSession updateSession = (MulgaraSession) m_factory.newSession();
+            m_elementFactory = updateSession.getElementFactory();
+            
             if (readOnly) {
                 m_reader = new ConcurrentTriplestoreReader(pool, aliasManager);
-                m_elementFactory = new RDFUtil();
             } else {
                 UpdateBuffer buffer = null;
                 buffer = new MemUpdateBuffer(bufferSafeCapacity,
                                              bufferFlushBatchSize);
-                MulgaraSession updateSession = (MulgaraSession) m_factory.newSession();
-                try {
-					m_elementFactory = updateSession.getElementFactory();
-				} catch (GraphException e) {
-					throw new TrippiException(e.getMessage(), e);
-				}
                 m_updateSession = updateSession;
                 try {
 					m_writer = new ConcurrentTriplestoreWriter(pool,
@@ -191,7 +184,6 @@ public class MulgaraConnector extends TriplestoreConnector {
                 m_reader = m_writer;
             }
         }
-        
 	}
 	
 	protected TriplestoreSessionFactory getSessionFactory() {

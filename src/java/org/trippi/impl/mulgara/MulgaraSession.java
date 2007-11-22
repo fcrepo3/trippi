@@ -60,7 +60,7 @@ public class MulgaraSession implements TriplestoreSession {
 
 	}
 
-	public void add(Set triples) throws UnsupportedOperationException,
+	public void add(Set<Triple> triples) throws UnsupportedOperationException,
 			TrippiException {
 		doTriples(triples, true);
 	}
@@ -76,7 +76,7 @@ public class MulgaraSession implements TriplestoreSession {
 		}
 	}
 
-	public void delete(Set triples) throws UnsupportedOperationException,
+	public void delete(Set<Triple> triples) throws UnsupportedOperationException,
 			TrippiException {
 		doTriples(triples, false);
 	}
@@ -95,7 +95,7 @@ public class MulgaraSession implements TriplestoreSession {
 			throw new TrippiException(e.getMessage(), e);
 		}
 		
-		return new MulgaraTripleIterator(answer);
+        return new MulgaraTripleIterator(answer, getElementFactory());
 	}
 
 	public String[] listTripleLanguages() {
@@ -116,7 +116,7 @@ public class MulgaraSession implements TriplestoreSession {
 	        queryText = queryText.replaceAll("\\s+from\\s+<#", " from <" + m_serverURI); 
 	        // expand shortcut "in <#" to "in <" + m_serverURI
 	        queryText = queryText.replaceAll("\\s+in\\s+<#", " in <" + m_serverURI);
-	        ItqlInterpreter interpreter = new ItqlInterpreter(new HashMap());
+	        ItqlInterpreter interpreter = new ItqlInterpreter(new HashMap<Object, Object>());
 	        try {
 				ans = m_session.query(interpreter.parseQuery(queryText));
 			} catch (QueryException e) {
@@ -135,13 +135,21 @@ public class MulgaraSession implements TriplestoreSession {
         }
 	}
 	
-	public GraphElementFactory getElementFactory() throws GraphException {
+	public GraphElementFactory getElementFactory() throws TrippiException {
         if (m_elementFactory == null) {
         	Graph graph;
         	if (m_dbSession != null) {
-        		graph = new JRDFGraph(m_dbSession, m_modelURI);
+        		try {
+                    graph = new JRDFGraph(m_dbSession, m_modelURI);
+                } catch (GraphException e) {
+                    throw new TrippiException(e.getMessage(), e);
+                }
         	} else {
-        		graph = JRDFGraphFactory.newClientGraph(m_session, m_modelURI);
+        		try {
+                    graph = JRDFGraphFactory.newClientGraph(m_session, m_modelURI);
+                } catch (GraphException e) {
+                    throw new TrippiException(e.getMessage(), e);
+                }
         	}
             m_elementFactory = graph.getElementFactory();
         }
@@ -194,11 +202,11 @@ public class MulgaraSession implements TriplestoreSession {
 
 	private String doAliasReplacements(String q) {
 		String out = q;
-		Map m = m_aliasManager.getAliasMap();
-		Iterator iter = m.keySet().iterator();
+		Map<String, String> m = m_aliasManager.getAliasMap();
+		Iterator<String> iter = m.keySet().iterator();
 		while (iter.hasNext()) {
-			String alias = (String) iter.next();
-			String fullForm = (String) m.get(alias);
+			String alias = iter.next();
+			String fullForm = m.get(alias);
 			out = out.replaceAll("<" + alias + ":", "<" + fullForm).replaceAll(
 					"\\^\\^" + alias + ":(\\S+)", "^^<" + fullForm + "$1>");
 		}

@@ -107,7 +107,6 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 			m_factory = factory;
 			if (autoCreate) createModels();
 		} catch (SessionFactoryFinderException e) {
-			e.printStackTrace();
 			throw new TrippiException(e.getMessage(), e);
 		} catch (NonRemoteSessionException e) {
 			throw new TrippiException(e.getMessage(), e);

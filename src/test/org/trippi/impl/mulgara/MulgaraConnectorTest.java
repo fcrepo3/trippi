@@ -8,63 +8,47 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
-import org.trippi.RDFUtil;
 import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 
 public class MulgaraConnectorTest extends TestCase {
-	//private MulgaraConnector connector;
+	private MulgaraConnector _connector;
+    private GraphElementFactory _geFactory;
 
 	protected void setUp() throws Exception {
-		super.setUp();
-		//connector = new MulgaraConnector();
+		_connector = new MulgaraConnector();
+        _connector.init(getConfig());
+        _geFactory = _connector.getElementFactory();
 	}
 
 	protected void tearDown() throws Exception {
-		super.tearDown();
+		_connector.close();
 	}
-
-	public void testInit() throws Exception {
-		MulgaraConnector connector = new MulgaraConnector();
-		connector.init(getConfig());
-		connector.close();
-	}
-
+	
 	public void testGetReader() throws Exception {
-		MulgaraConnector connector = new MulgaraConnector();
-		connector.init(getConfig());
-		TriplestoreReader reader = connector.getReader();
-		assertEquals(0, reader.countTriples(null, null, null, -1));
-		connector.close();
-	}
+        TriplestoreReader reader = _connector.getReader();
+        assertEquals(0, reader.countTriples(null, null, null, -1));
+    }
 
-	public void testGetWriter() throws Exception {
-		MulgaraConnector connector = new MulgaraConnector();
-		connector.init(getConfig());
-		TriplestoreWriter writer = connector.getWriter();
-		List triples = new ArrayList();
-		triples.add(getTriple("foo", "bar", "baz"));
+	public void testGetWriter() throws Exception {		
+	    List<Triple> triples = new ArrayList<Triple>();
+        triples.add(getTriple("foo", "bar", "baz"));
+		TriplestoreWriter writer = _connector.getWriter();
 		writer.add(triples, true);
-		
-		TriplestoreReader reader = connector.getReader();
-		assertEquals(1, reader.countTriples(null, null, null, 10));
-		connector.close();
-	}
-	/*
-	public void testGetElementFactory() {
-		fail("Not yet implemented");
-	}
 
-	public void testClose() {
-		fail("Not yet implemented");
+		assertEquals(1, writer.countTriples(null, null, null, 10));
+		
+		writer.delete(triples, true);
+		assertEquals(0, writer.countTriples(null, null, null, 10));
+		writer.close();
 	}
-	*/
 	
 	private Map<String, String> getConfig() {
 		Map<String, String> config = new HashMap<String, String>();
-		config.put("serverName",				"fedora");
+		config.put("serverName",				"server1");
 		config.put("modelName",					"ri");
 		config.put("readOnly",					"false");
 		config.put("autoCreate",				"true");
@@ -74,10 +58,9 @@ public class MulgaraConnectorTest extends TestCase {
 		config.put("bufferFlushBatchSize",		"1000");
 		config.put("bufferSafeCapacity",		"2000");
 		config.put("poolInitialSize",			"2");
-		config.put("poolMaxSize",				"5");
 		config.put("poolMaxGrowth",				"-1");
 		
-		boolean isRemote = false;
+		boolean isRemote = true;
 		if (isRemote) {
 			config.put("remote",				"true");
 			config.put("host",					"localhost");
@@ -90,13 +73,11 @@ public class MulgaraConnectorTest extends TestCase {
 	}
 	
 	private Triple getTriple(String s, String p, String o) throws Exception {
-		RDFUtil util = new RDFUtil();
-		return util.createTriple(getResource(s), getResource(p), getResource(o));
+		return _geFactory.createTriple(getResource(s), getResource(p), getResource(o));
 	}
 	
 	private URIReference getResource(String r) throws Exception {
-		RDFUtil util = new RDFUtil();
-		return util.createResource(new URI("urn:test/" + r));
+	    return _geFactory.createResource(new URI("urn:test/" + r));
 	}
 
 }

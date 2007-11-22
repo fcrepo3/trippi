@@ -1,7 +1,6 @@
 package org.trippi;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URI;
 import java.util.ArrayList;
@@ -12,15 +11,16 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
+import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.Triple;
 import org.trippi.config.TrippiProfile;
 
 public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
 
-    public TriplestoreConnector _connector;
+    private TriplestoreConnector _connector;
     private TriplestoreReader _reader;
     private TriplestoreWriter _writer;
-    private RDFUtil _util;
+    private GraphElementFactory _geFactory;
 
     public TriplestoreConnectorIntegrationTest(String name) throws Exception { 
         super(name); 
@@ -29,9 +29,9 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
     public void setUp() throws Exception {
         TrippiProfile profile = TestConfig.getTestProfile();
         _connector = profile.getConnector();
+        _geFactory = _connector.getElementFactory();
         _reader = _connector.getReader();
         _writer = _connector.getWriter();
-        _util = new RDFUtil();
     }
 
     public void tearDown() throws Exception {
@@ -43,15 +43,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         File dump = new File(TestConfig.getTestDir(), "all-triples.txt");
         FileOutputStream out = null;
         try {
-            // write all to temp file
             TripleIterator triples = _reader.findTriples(null, null, null, -1);
-            out = new FileOutputStream(dump);
-            triples.toStream(out, RDFFormat.TURTLE);
-            try { out.close(); } catch (Exception e) { }
-            out = null;
-
-            // load all from temp file
-            triples = TripleIterator.fromStream(new FileInputStream(dump), RDFFormat.TURTLE);
             _writer.delete(triples, true);
         } finally {
             if (out != null) out.close();
@@ -75,14 +67,14 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
      * Make sure the count is correct and the set matches.
      */
     public void testAddTriples() throws Exception {
-        List testTriples = getTriples(2, 2, 2);
+        List<Triple> testTriples = getTriples(2, 2, 2);
         _writer.add(testTriples, true);
         assertEquals("Wrong number of triples",
                      8,
                      _reader.countTriples(null, null, null, -1));
-        Set inputSet = new HashSet();
+        Set<Triple> inputSet = new HashSet<Triple>();
         inputSet.addAll(testTriples);
-        Set outputSet = getSet(_reader.findTriples(null, null, null, -1));
+        Set<Triple> outputSet = getSet(_reader.findTriples(null, null, null, -1));
         assertEquals("Count was ok, but got different set of triples!",
                      inputSet,
                      outputSet);
@@ -95,7 +87,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
      * Make sure none exist after adding and deleting the same triples.
      */
     public void testDeleteTriples() throws Exception {
-        List testTriples = getTriples(2, 2, 2);
+        List<Triple> testTriples = getTriples(2, 2, 2);
         _writer.add(testTriples, true);
         _writer.delete(testTriples, true);
         assertEquals("Wrong number of triples", 
@@ -205,8 +197,8 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         }
     }
 
-    private Set getSet(TripleIterator iter) throws Exception {
-        HashSet set = new HashSet();
+    private Set<Triple> getSet(TripleIterator iter) throws Exception {
+        HashSet<Triple> set = new HashSet<Triple>();
         while (iter.hasNext()) {
             set.add(iter.next());
         }
@@ -214,14 +206,14 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         return set;
     }
 
-    private List getTriples(int endS, int endP, int endO) throws Exception {
+    private List<Triple> getTriples(int endS, int endP, int endO) throws Exception {
         return getTriples(1, endS, 1, endP, 1, endO);
     }
 
-    private List getTriples(int startS, int endS,
+    private List<Triple> getTriples(int startS, int endS,
                             int startP, int endP,
                             int startO, int endO) throws Exception {
-        List list = new ArrayList();
+        List<Triple> list = new ArrayList<Triple>();
         for (int s = startS; s <= endS; s++) {
             for (int p = startP; p <= endP; p++) {
                 for (int o = startO; o <= endO; o++) {
@@ -233,10 +225,10 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
     }
 
     private Triple getTriple(int s, int p, int o) throws Exception {
-        return _util.createTriple(
-                _util.createResource(new URI("urn:test:" + s)),
-                _util.createResource(new URI("urn:test:" + p)),
-                _util.createResource(new URI("urn:test:" + o)));
+        return _geFactory.createTriple(
+                _geFactory.createResource(new URI("urn:test:" + s)),
+                _geFactory.createResource(new URI("urn:test:" + p)),
+                _geFactory.createResource(new URI("urn:test:" + o)));
     }
 
     public class TripleModifier extends Thread {
@@ -267,11 +259,11 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         public void run() {
             try {
                 for (int i = 0; i < _numBatches; i++) {
-                    List triples = getTriples(_id, _id,
+                    List<Triple> triples = getTriples(_id, _id,
                                               i + 1, i + 1,
                                               1, _triplesPerBatch);
                     if (_oneAtATime) {
-                        Iterator iter = triples.iterator();
+                        Iterator<Triple> iter = triples.iterator();
                         while (iter.hasNext()) {
                             if (_adds) {
                                 _writer.add((Triple) iter.next(), false);
@@ -286,7 +278,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
                             _writer.delete(triples, false);
                         }
                     }
-                    this.yield();
+                    Thread.yield();
                 }
             } catch (Exception e) {
                 _error = e;
