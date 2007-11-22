@@ -22,7 +22,7 @@ public interface TriplestoreWriter
      * @param  triples  a list of <code>Triple</code> objects
      * @param  flush    whether to flush the buffer before returning
      */
-    public void add(List triples,
+    public void add(List<Triple> triples,
                     boolean flush) throws IOException,
                                           TrippiException;
 
@@ -52,7 +52,7 @@ public interface TriplestoreWriter
      * @param  triples  a list of <code>Triple</code> objects
      * @param  flush    whether to flush the buffer before returning
      */
-    public void delete(List triples,
+    public void delete(List<Triple> triples,
                        boolean flush) throws IOException,
                                              TrippiException;
 
@@ -83,7 +83,7 @@ public interface TriplestoreWriter
                                      TrippiException;
 
     /**
-     * Set the (optional) handler that will recieve failed flush notification.
+     * Set the (optional) handler that will receive failed flush notification.
      *
      * Applications can use this to ensure that the contents of the buffer
      * are not lost when a flushing error occurs.
@@ -96,10 +96,12 @@ public interface TriplestoreWriter
     public int getBufferSize();
     
     /**
-     * Returns an unmodifiable List of TripleUpdates currently in queue.
-     * @return unmodifiable List of TripleUpdates currently in queue
+     * Returns an unmodifiable <code>List</code> of <code>TripleUpdate</code>s 
+     * currently in queue.
+     * @return unmodifiable <code>List</code> of <code>TripleUpdate</code>s 
+     * currently in queue.
      */
-    public List findBufferedUpdates(SubjectNode subject, 
+    public List<TripleUpdate> findBufferedUpdates(SubjectNode subject, 
     								PredicateNode predicate, 
     								ObjectNode object, 
     								int updateType);

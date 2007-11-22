@@ -218,7 +218,7 @@ public class ConfigurableSessionPool extends Thread
             logger.info("Closing all sessions...");
             closeAll(m_freeSessions.iterator());
             closeAll(m_inUseSessions.iterator());
-            m_factory.close();
+            //m_factory.close();
             m_needToFinish = true;
         }
     }

@@ -54,12 +54,12 @@ public class TriplePattern {
     public static TriplePattern[] parse(String patterns) 
                                          throws TrippiException {
         try {
-            List tokens = tokenize(patterns.replaceAll("\r", " "));
+            List<String> tokens = tokenize(patterns.replaceAll("\r", " "));
             if (tokens.size() % 3 != 0 || tokens.size() == 0) {
                 throw new TrippiException("Triple pattern token count not divisible by 3.");
             }
             TriplePattern[] out = new TriplePattern[tokens.size() / 3];
-            Iterator iter = tokens.iterator();
+            Iterator<String> iter = tokens.iterator();
             int i = 0;
             RDFUtil factory = new RDFUtil();
             while (iter.hasNext()) {
@@ -80,12 +80,12 @@ public class TriplePattern {
      * Parse and return a Set of Triples, treating variable bindings
      * as anonymous nodes.
      */
-    public static List parse(String triples,
+    public static List<Triple> parse(String triples,
                              GraphElementFactory factory) throws TrippiException {
         try {
         TriplePattern[] patterns = parse(triples);
-        HashMap bNodes = new HashMap();
-        ArrayList list = new ArrayList();
+        HashMap<String, BlankNode> bNodes = new HashMap<String, BlankNode>();
+        ArrayList<Triple> list = new ArrayList<Triple>();
         for (int i = 0; i < patterns.length; i++) {
             Object s = patterns[i].getSubject();
             Object p = patterns[i].getPredicate();
@@ -97,7 +97,7 @@ public class TriplePattern {
                 BlankNode b = (BlankNode) bNodes.get(s);
                 if (b == null) {
                     b = factory.createResource();
-                    bNodes.put(s, b);
+                    bNodes.put((String)s, b);
                 }
                 subject = b;
             } else {
@@ -112,7 +112,7 @@ public class TriplePattern {
                 BlankNode b = (BlankNode) bNodes.get(o);
                 if (b == null) {
                     b = factory.createResource();
-                    bNodes.put(o, b);
+                    bNodes.put((String)o, b);
                 }
                 object = b;
             } else {
@@ -140,8 +140,8 @@ public class TriplePattern {
         }
     }
 
-    private static List tokenize(String patterns) {
-        List tokens = new ArrayList();
+    private static List<String> tokenize(String patterns) {
+        List<String> tokens = new ArrayList<String>();
         boolean inToken = false;
         boolean inLiteral = false;
         boolean lastWasEscape = false;
@@ -256,7 +256,7 @@ public class TriplePattern {
      * @throws TrippiException if the Map does not contain a key that
      *                              matches a binding name in this pattern.
      */
-    public Triple match(Map tuple) throws TrippiException {
+    public Triple match(Map<String, Node> tuple) throws TrippiException {
         SubjectNode subject;
         PredicateNode predicate;
         ObjectNode object;
@@ -320,10 +320,10 @@ public class TriplePattern {
     // USE MAP HASHKEY....?
 
     private Node getMatchingNode(String key, 
-                                 Map tuple,
+                                 Map<String, Node> tuple,
                                  int type) throws TrippiException {
         if (tuple.containsKey(key)) {
-            Node node = (Node) tuple.get(key);
+            Node node = tuple.get(key);
             if (node == null) return null; // null value bound for this tuple
             if (type == 0) {
                 if (node instanceof SubjectNode) return node;

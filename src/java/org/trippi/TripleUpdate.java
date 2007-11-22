@@ -50,8 +50,8 @@ public class TripleUpdate {
          * Get a list of <code>TripleUpdate</code>s of a certain type given
          * a list of <code>Triple</code>s.
          */
-        public static List get(int type, List triples) {
-            List updates = new ArrayList(triples.size());
+        public static List<TripleUpdate> get(int type, List<Triple> triples) {
+            List<TripleUpdate> updates = new ArrayList<TripleUpdate>(triples.size());
             for (int i = 0; i < triples.size(); i++) {
                 Triple triple = (Triple) triples.get(i);
                 updates.add(new TripleUpdate(type, triple));

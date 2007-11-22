@@ -23,7 +23,7 @@ import org.jrdf.graph.URIReference;
 public class RDFUtil implements GraphElementFactory, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Map m_blankMap = null;
+	private Map<String, Node> m_blankMap = null;
 
     public RDFUtil() {
     }
@@ -62,7 +62,7 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
     public Node parse(String n) 
             throws GraphElementFactoryException,
                    URISyntaxException {
-        if (m_blankMap == null) m_blankMap = new HashMap();  // lazily
+        if (m_blankMap == null) m_blankMap = new HashMap<String, Node>();  // lazily
         if (n.length() > 0) {
             char c = n.charAt(0);
             if (c == '<' && n.length() > 4) {   // <a:b>
@@ -180,12 +180,10 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
     public class FreeBlankNode extends AbstractBlankNode {
 		private static final long serialVersionUID = 1L;
 		private int m_hashCode;
-        private Object m_object;
         public FreeBlankNode(int hashCode) { 
             m_hashCode = hashCode;
         }
         public FreeBlankNode(Object object) {
-            m_object = object;
             m_hashCode = object.hashCode();
         }
         public int hashCode() { 

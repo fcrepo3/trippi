@@ -17,7 +17,7 @@ public abstract class TriplestoreConnector {
      * Instantiate a named TriplestoreConnector.
      */
     public static TriplestoreConnector init(String className,
-                                            Map configuration) 
+                                            Map<String, String> configuration) 
             throws TrippiException,
                    ClassNotFoundException {
         TriplestoreConnector connector = getConnector(className);
@@ -39,8 +39,7 @@ public abstract class TriplestoreConnector {
     private static TriplestoreConnector getConnector(String className)
             throws TrippiException,
                    ClassNotFoundException {
-        Class connectorClass = Class.forName(className);
-        TriplestoreConnector connector = null;
+        Class<?> connectorClass = Class.forName(className);
         try {
             return (TriplestoreConnector) connectorClass.newInstance();
         } catch (Exception e) {
@@ -52,7 +51,7 @@ public abstract class TriplestoreConnector {
     /**
      * Initialize this connector with the given configuration.
      */
-    public abstract void init(Map configuration) throws TrippiException;
+    public abstract void init(Map<String, String> configuration) throws TrippiException;
 
     /**
      * Get the reader. 

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jrdf.graph.Node;
 import org.jrdf.graph.Triple;
 import org.trippi.io.CSVTupleWriter;
 import org.trippi.io.SimpleTupleWriter;
@@ -49,7 +50,7 @@ public abstract class TupleIterator {
                                                            RDFFormat.TSV,
                                                            RDFFormat.COUNT };
 
-    private Map m_aliases = new HashMap();
+    private Map<String, String> m_aliases = new HashMap<String, String>();
 
     /**
      * Return true if there are more results.
@@ -59,7 +60,7 @@ public abstract class TupleIterator {
     /**
      * Return the next result.
      */
-    public abstract Map next() throws TrippiException;
+    public abstract Map<String, Node> next() throws TrippiException;
 
     /**
      * Get the names of the binding variables.
@@ -76,10 +77,10 @@ public abstract class TupleIterator {
     /**
      * Return the next result as a List of Triple objects.
      */
-    public List nextTriples(TriplePattern[] patterns) throws TrippiException {
-        Map map = next();
+    public List<Triple> nextTriples(TriplePattern[] patterns) throws TrippiException {
+        Map<String, Node> map = next();
         if ( map == null ) return null;
-        List triples = new ArrayList();
+        List<Triple> triples = new ArrayList<Triple>();
         for (int i = 0; i < patterns.length; i++) {
             Triple triple = patterns[i].match(map);
             if (triple != null) {
@@ -96,7 +97,7 @@ public abstract class TupleIterator {
         close();
     }
 
-    public void setAliasMap(Map aliases) {
+    public void setAliasMap(Map<String, String> aliases) {
         m_aliases = aliases;
     }
 

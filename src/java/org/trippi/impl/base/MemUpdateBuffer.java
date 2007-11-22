@@ -30,7 +30,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
 
     private int m_safeCapacity;
     private int m_flushBatchSize;
-    private List m_buffer;
+    private List<TripleUpdate> m_buffer;
     private Object m_bufferLock = new Object();
 
     private FlushErrorHandler m_flushErrorHandler;
@@ -39,10 +39,10 @@ public class MemUpdateBuffer implements UpdateBuffer {
                            int flushBatchSize) {
         m_safeCapacity = safeCapacity;
         m_flushBatchSize = flushBatchSize;
-        m_buffer = Collections.synchronizedList(new ArrayList(safeCapacity));
+        m_buffer = Collections.synchronizedList(new ArrayList<TripleUpdate>(safeCapacity));
     }
 
-    public void add(List triples) {
+    public void add(List<Triple> triples) {
         debugUpdate("Adding " + triples.size() + " triple ADDs to buffer", triples);
         synchronized (m_bufferLock) {
             m_buffer.addAll(TripleUpdate.get(TripleUpdate.ADD, triples));
@@ -56,7 +56,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
         }
     }
 
-    public void delete(List triples) {
+    public void delete(List<Triple> triples) {
         debugUpdate("Adding " + triples.size() + " triple DELETEs to buffer", triples);
         synchronized (m_bufferLock) {
             m_buffer.addAll(TripleUpdate.get(TripleUpdate.DELETE, triples));
@@ -76,13 +76,13 @@ public class MemUpdateBuffer implements UpdateBuffer {
         }
     }
 
-    private static void debugUpdate(String msg, List triples) {
+    private static void debugUpdate(String msg, List<Triple> triples) {
         if (LOG.isDebugEnabled()) {
             LOG.debug(msg + "\n" + tripleListToString(triples));
         }
     }
 
-    private static String tripleListToString(List triples) {
+    private static String tripleListToString(List<Triple> triples) {
         StringBuffer out = new StringBuffer();
         for (int i = 0; i < triples.size(); i++) {
             out.append(RDFUtil.toString((Triple) triples.get(i)) + "\n");
@@ -107,16 +107,16 @@ public class MemUpdateBuffer implements UpdateBuffer {
      */
     public synchronized void flush(TriplestoreSession session) throws TrippiException {
         // copy the buffer, then clear it
-        List toFlush = null;
+        List<TripleUpdate> toFlush = null;
         synchronized (m_bufferLock) {
             if (m_buffer.size() > 0) {
                 toFlush = m_buffer;
-                m_buffer = Collections.synchronizedList(new ArrayList(m_safeCapacity));
+                m_buffer = Collections.synchronizedList(new ArrayList<TripleUpdate>(m_safeCapacity));
             }
         }
         try {
             if (toFlush != null) {
-                Set[] updates = normalize(toFlush.iterator(), toFlush.size());
+                Set<Triple>[] updates = normalize(toFlush.iterator(), toFlush.size());
                 if (updates[0].size() > m_flushBatchSize) {
                     writeBatches(updates[0].iterator(), TripleUpdate.ADD, session);
                 } else {
@@ -150,13 +150,13 @@ public class MemUpdateBuffer implements UpdateBuffer {
      * The first set consists of the ADDs, and the second
      * set consists of the DELETEs.
      */
-    private static Set[] normalize(Iterator iter, int size) {
+    private static Set<Triple>[] normalize(Iterator<TripleUpdate> iter, int size) {
         int initialCapacity = size / 2;
-        Set adds = new HashSet(initialCapacity);
-        Set deletes = new HashSet(initialCapacity);
+        Set<Triple> adds = new HashSet<Triple>(initialCapacity);
+        Set<Triple> deletes = new HashSet<Triple>(initialCapacity);
 
         while (iter.hasNext()) {
-            TripleUpdate update = (TripleUpdate) iter.next();
+            TripleUpdate update = iter.next();
             if (update.type == TripleUpdate.ADD) {
                 if (!deletes.remove(update.triple)) {
                     adds.add(update.triple);
@@ -171,10 +171,10 @@ public class MemUpdateBuffer implements UpdateBuffer {
         return new Set[] { adds, deletes };
     }
 
-    private void writeBatches(Iterator iter, int updateType,
+    private void writeBatches(Iterator<Triple> iter, int updateType,
             TriplestoreSession session)
             throws TrippiException {
-        Set triples = new HashSet();
+        Set<Triple> triples = new HashSet<Triple>();
         while (iter.hasNext()) {
             triples.add(iter.next());
             if (triples.size() == m_flushBatchSize) {
@@ -190,7 +190,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
     /**
      * Do the actual writing of a batch to the session.
      */
-    private void writeBatch(int type, Set triples, TriplestoreSession session)
+    private void writeBatch(int type, Set<Triple> triples, TriplestoreSession session)
             throws TrippiException {
         if (type == TripleUpdate.ADD) {
             if (LOG.isDebugEnabled()) {
@@ -212,15 +212,15 @@ public class MemUpdateBuffer implements UpdateBuffer {
         // nothing to release
     }
 
-	public List findBufferedUpdates(SubjectNode subject, 
+	public List<TripleUpdate> findBufferedUpdates(SubjectNode subject, 
     								PredicateNode predicate, 
     								ObjectNode object, 
     								int updateType) {
-		List updates = new ArrayList();
+		List<TripleUpdate> updates = new ArrayList<TripleUpdate>();
 		synchronized(m_buffer) {
-			Iterator it = m_buffer.iterator();
+			Iterator<TripleUpdate> it = m_buffer.iterator();
 			while (it.hasNext()) {
-				TripleUpdate tup = (TripleUpdate)it.next();
+				TripleUpdate tup = it.next();
 				if (updateType == UpdateBuffer.EITHER_UPDATE_TYPE || 
 						tup.type == updateType) {
 					Triple t = tup.triple;

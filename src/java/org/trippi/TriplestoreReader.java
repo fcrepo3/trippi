@@ -16,12 +16,12 @@ public interface TriplestoreReader {
     /**
      * Set the default alias map for queries.
      */
-    public void setAliasMap(Map aliasToPrefix) throws TrippiException;
+    public void setAliasMap(Map<String, String> aliasToPrefix) throws TrippiException;
 
     /**
      * Get the default alias map for queries.
      */
-    public Map getAliasMap() throws TrippiException;
+    public Map<String, String> getAliasMap() throws TrippiException;
 
     /**
      * Perform a tuple query on the store and return an iterator over the

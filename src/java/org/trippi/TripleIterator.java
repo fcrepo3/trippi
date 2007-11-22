@@ -58,7 +58,7 @@ public abstract class TripleIterator {
                                                            RDFFormat.TURTLE,
                                                            RDFFormat.COUNT };
 
-    private Map m_aliases = new HashMap();
+    private Map<String, String> m_aliases = new HashMap<String, String>();
 
     /**
      * Return true if there are any more triples.
@@ -75,15 +75,15 @@ public abstract class TripleIterator {
      */
     public abstract void close() throws TrippiException;
 
-    public void setAliasMap(Map aliases) {
+    public void setAliasMap(Map<String, String> aliases) {
         m_aliases = aliases;
     }
 
     /**
      * Gets a copy of the alias map used by this iterator.
      */
-    public Map getAliasMap() {
-        return new HashMap(m_aliases);
+    public Map<String, String> getAliasMap() {
+        return new HashMap<String, String>(m_aliases);
     }
 
     /**

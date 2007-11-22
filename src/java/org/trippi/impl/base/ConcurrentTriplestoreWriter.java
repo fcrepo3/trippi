@@ -15,6 +15,7 @@ import org.jrdf.graph.Triple;
 import org.trippi.FlushErrorHandler;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
+import org.trippi.TripleUpdate;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
 
@@ -99,7 +100,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
      * @param  triples  a list of <code>Triple</code> objects
      * @param    flush  whether to flush the buffer before returning.
      */
-    public void add(List triples,
+    public void add(List<Triple> triples,
                     boolean flush) throws IOException,
                                           TrippiException {
         boolean flushed = false;
@@ -121,7 +122,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
                                           TrippiException {
         try {
             int maxListSize = m_autoFlushBufferSize;
-            List triples = new ArrayList();
+            List<Triple> triples = new ArrayList<Triple>();
             while (iter.hasNext()) {
                 triples.add(iter.next());
                 if (triples.size() == maxListSize) {
@@ -178,7 +179,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
      * @param  triples  a list of <code>Triple</code> objects
      * @param    flush  whether to flush the buffer before returning
      */
-    public void delete(List triples,
+    public void delete(List<Triple> triples,
                        boolean flush)      throws IOException,
                                                          TrippiException {
         boolean flushed = false;
@@ -213,7 +214,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
             }
             try {
                 int maxListSize = m_autoFlushBufferSize;
-                List triples = new ArrayList();
+                List<Triple> triples = new ArrayList<Triple>();
                 while (iter.hasNext()) {
                     triples.add(iter.next());
                     if (triples.size() == maxListSize) {
@@ -353,7 +354,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
         }
     }
 
-	public List findBufferedUpdates(SubjectNode subject, 
+	public List<TripleUpdate> findBufferedUpdates(SubjectNode subject, 
 								   PredicateNode predicate, 
 								   ObjectNode object, 
 								   int updateType) {

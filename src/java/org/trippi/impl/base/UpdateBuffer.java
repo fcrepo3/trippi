@@ -8,6 +8,7 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.trippi.FlushErrorHandler;
+import org.trippi.TripleUpdate;
 import org.trippi.TrippiException;
 
 /**
@@ -23,7 +24,7 @@ public interface UpdateBuffer {
     /**
      * Buffer the addition of the given triples.
      */
-    public void add(List triples) throws IOException;
+    public void add(List<Triple> triples) throws IOException;
 
     /**
      * Buffer the addition of the given triple.
@@ -33,7 +34,7 @@ public interface UpdateBuffer {
     /**
      * Buffer the deletion of the given triples.
      */
-    public void delete(List triples) throws IOException;
+    public void delete(List<Triple> triples) throws IOException;
 
     /**
      * Buffer the deletion of the given triple.
@@ -79,7 +80,7 @@ public interface UpdateBuffer {
      * 
      * @return List of TripleUpdates
      */
-    public List findBufferedUpdates(SubjectNode subject, 
+    public List<TripleUpdate> findBufferedUpdates(SubjectNode subject, 
     		PredicateNode predicate, 
     		ObjectNode object, 
     		int updateType);

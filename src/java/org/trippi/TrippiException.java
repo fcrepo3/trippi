@@ -6,6 +6,7 @@ package org.trippi;
  * @author cwilper@cs.cornell.edu
  */
 public class TrippiException extends Exception {
+    private static final long serialVersionUID = 1L;
 
     public TrippiException(String message) {
         super(message);

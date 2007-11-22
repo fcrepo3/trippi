@@ -5,6 +5,7 @@ import java.util.Set;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
+import org.jrdf.graph.Triple;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
@@ -26,7 +27,7 @@ public interface TriplestoreSession {
      * @throws UnsupportedOperationException if modifications are not supported.
      * @throws TrippiException if adding to the store otherwise failed.
      */
-    public void add(Set triples) throws UnsupportedOperationException,
+    public void add(Set<Triple> triples) throws UnsupportedOperationException,
                                          TrippiException;
 
     /**
@@ -36,7 +37,7 @@ public interface TriplestoreSession {
      * @throws UnsupportedOperationException if modifications are not supported.
      * @throws TrippiException if deleting from the store failed.
      */
-    public void delete(Set triples) throws UnsupportedOperationException,
+    public void delete(Set<Triple> triples) throws UnsupportedOperationException,
                                             TrippiException;
 
     /**
