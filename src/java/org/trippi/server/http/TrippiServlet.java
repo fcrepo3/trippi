@@ -51,6 +51,8 @@ public class TrippiServlet
     // Used in single-server mode.
     //////////////////////////////////////////////////////////////////////////
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * The connector to expose.
      */
@@ -69,12 +71,12 @@ public class TrippiServlet
      * Map of <code>TriplestoreConnector</code>s 
      * keyed by <code>TrippiProfile</code>s.
      */
-    private Map m_connectors;
+    private Map<TrippiProfile, TriplestoreConnector> m_connectors;
 
     /**
      * Map of <code>TrippiServer</code>s keyed by profile id.
      */
-    private Map m_servers;
+    private Map<String, TrippiServer> m_servers;
 
     /**
      * Stylesheet transformer for index, form, and error pages.
@@ -128,10 +130,10 @@ public class TrippiServlet
      *
      * This will be a Map, with <code>TrippiProfile</code> objects as keys.
      */
-    private Map getConnectors() throws ServletException {
+    private Map<TrippiProfile, TriplestoreConnector> getConnectors() throws ServletException {
         String configFile = getInitParameter("configFile");
         if (configFile != null && !configFile.equals("")) {
-            Map connectors = new HashMap();
+            Map<TrippiProfile, TriplestoreConnector> connectors = new HashMap<TrippiProfile, TriplestoreConnector>();
             try {
                 TrippiConfig config = new TrippiConfig(new File(configFile));
                 Map profiles = config.getProfiles();
@@ -145,7 +147,7 @@ public class TrippiServlet
                 return connectors;
             } catch (Exception e) {
                 // clean up any connectors that have been opened
-                Iterator iter = connectors.keySet().iterator();
+                Iterator<TrippiProfile> iter = connectors.keySet().iterator();
                 while (iter.hasNext()) {
                     TrippiProfile profile = (TrippiProfile) iter.next();
                     TriplestoreConnector conn = (TriplestoreConnector) connectors.get(profile);
@@ -238,10 +240,10 @@ public class TrippiServlet
         } else {
             m_connectors = getConnectors();
             // build the id-to-server map
-            m_servers = new HashMap();
-            Iterator iter = m_connectors.keySet().iterator();
+            m_servers = new HashMap<String, TrippiServer>();
+            Iterator<TrippiProfile> iter = m_connectors.keySet().iterator();
             while (iter.hasNext()) {
-                TrippiProfile profile = (TrippiProfile) iter.next();
+                TrippiProfile profile = iter.next();
                 TriplestoreConnector conn = (TriplestoreConnector) m_connectors.get(profile);
                 m_servers.put(profile.getId(), new TrippiServer(conn));
             }
@@ -384,17 +386,17 @@ public class TrippiServlet
             sout.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             String href = enc(requestURI.replaceAll("/$", ""));
             sout.println("<trippi-server href=\"" + href + "\" context=\"" + enc(getContext(contextPath)) + "\">");
-            Iterator iter = m_connectors.keySet().iterator();
+            Iterator<TrippiProfile> iter = m_connectors.keySet().iterator();
             while (iter.hasNext()) {
-                TrippiProfile profile = (TrippiProfile) iter.next();
+                TrippiProfile profile = iter.next();
                 sout.println("  <profile id=\"" + profile.getId() 
                         + "\" label=\"" + enc(profile.getLabel())
                         + "\" connector=\"" + profile.getConnectorClassName() + "\">");
-                Map config = profile.getConfiguration();
-                Iterator names = config.keySet().iterator();
+                Map<String, String> config = profile.getConfiguration();
+                Iterator<String> names = config.keySet().iterator();
                 while (names.hasNext()) {
-                    String name = (String) names.next();
-                    String value = (String) config.get(name);
+                    String name = names.next();
+                    String value = config.get(name);
                     sout.println("    <param name=\"" + name + "\" value=\"" + enc(value) + "\"/>");
                 }
                 sout.println("  </profile>");
@@ -425,11 +427,11 @@ public class TrippiServlet
             String href = enc(requestURI.replaceAll("/$", ""));
             sout.println("<query-service href=\"" + href + "\" context=\"" + enc(getContext(contextPath)) + "\">");
             sout.println("  <alias-map>");
-            Map map = reader.getAliasMap();
-            Iterator iter = map.keySet().iterator();
+            Map<String, String> map = reader.getAliasMap();
+            Iterator<String> iter = map.keySet().iterator();
             while (iter.hasNext()) {
-                String name = (String) iter.next();
-                String uri = (String) map.get(name);
+                String name = iter.next();
+                String uri = map.get(name);
                 sout.println("    <alias name=\"" + name + "\" uri=\"" + enc(uri) + "\"/>");
             }
             sout.println("  </alias-map>");
@@ -551,7 +553,7 @@ public class TrippiServlet
                 }
             } else if (m_connectors != null) {
                 // multi-server mode
-                Iterator iter = m_connectors.values().iterator();
+                Iterator<TriplestoreConnector> iter = m_connectors.values().iterator();
                 while (iter.hasNext()) {
                     TriplestoreConnector conn = (TriplestoreConnector) iter.next();
                     try {

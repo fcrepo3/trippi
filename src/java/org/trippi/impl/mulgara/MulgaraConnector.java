@@ -6,8 +6,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.jrdf.graph.GraphElementFactory;
-import org.jrdf.graph.GraphException;
-import org.trippi.RDFUtil;
 import org.trippi.TriplestoreConnector;
 import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
@@ -79,8 +77,8 @@ public class MulgaraConnector extends TriplestoreConnector {
 	}
 
 	@Override
-	public void init(Map config) throws TrippiException {
-		AliasManager aliasManager = new AliasManager(new HashMap());
+	public void init(Map<String, String> config) throws TrippiException {
+		AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
 		
 		boolean remote = ConfigUtils.getRequiredBoolean(config, "remote");
 		String host = null, port = null, path = null;

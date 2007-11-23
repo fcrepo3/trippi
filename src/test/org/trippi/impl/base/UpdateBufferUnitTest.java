@@ -16,6 +16,7 @@ import org.jrdf.graph.Triple;
 import org.trippi.FlushErrorHandler;
 import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;
+import org.trippi.TripleUpdate;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 
@@ -233,7 +234,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         int expected = numModders * chunksPerModder * triplesPerChunk;
 
         // populate the "triplestore"
-        Set triples = new HashSet();
+        Set<Triple> triples = new HashSet<Triple>();
         for (int i = 0; i < numModders; i++) {
             for (int j = 0; j < chunksPerModder; j++) {
                 for (int k = 0; k < triplesPerChunk; k++) {
@@ -341,8 +342,8 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         return getTriple("urn:s" + sNum, "urn:p" + pNum, "urn:o" + oNum);
     }
 
-    private List getTriples(int sPerms, int pPerms, int oPerms) throws Exception {
-        List list = new ArrayList(sPerms * pPerms * oPerms);
+    private List<Triple> getTriples(int sPerms, int pPerms, int oPerms) throws Exception {
+        List<Triple> list = new ArrayList<Triple>(sPerms * pPerms * oPerms);
         for (int sNum = sPerms; sNum > 0; sNum--) {
             for (int pNum = pPerms; pNum > 0; pNum--) {
                 for (int oNum = oPerms; oNum > 0; oNum--) {
@@ -367,7 +368,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
         private TrippiException _exceptionToThrow;
 
-        private Set _triples;
+        private Set<Triple> _triples;
 
         /**
          * @param maxMillis maximum milliseconds to pause before
@@ -376,12 +377,12 @@ public abstract class UpdateBufferUnitTest extends TestCase {
          */
         public FakeTriplestoreSession(long maxMillis) { 
             _maxMillis = maxMillis;
-            _triples = new HashSet();
+            _triples = new HashSet<Triple>();
         }
 
         public FakeTriplestoreSession() {
             _maxMillis = 0;
-            _triples = new HashSet();
+            _triples = new HashSet<Triple>();
         }
 
         public void setExceptionToThrow(TrippiException e) {
@@ -431,13 +432,13 @@ public abstract class UpdateBufferUnitTest extends TestCase {
         // Test-specific implementations of TriplestoreSession methods.
         //
 
-        public void add(Set triples) throws TrippiException {
+        public void add(Set<Triple> triples) throws TrippiException {
             sleepTillUnpaused();
             throwExceptionIfSet();
             _triples.addAll(triples);
         }
 
-        public void delete(Set triples) throws TrippiException {
+        public void delete(Set<Triple> triples) throws TrippiException {
             sleepTillUnpaused();
             throwExceptionIfSet();
             _triples.removeAll(triples);
@@ -481,7 +482,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
         public FakeFlushErrorHandler() { }
 
-        public void handleFlushError(List failedUpdates, 
+        public void handleFlushError(List<TripleUpdate> failedUpdates, 
                                      TrippiException cause) {
             _exception = cause;
         }
@@ -522,13 +523,13 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         finish = true;
                         while (_buffer.size() > 0) {
                             _buffer.flush(_session);
-                            this.yield();
+                            FlushingThread.yield();
                         }
                     } else {
                         if (_buffer.size() >= _flushIfThisSizeOrAbove) {
                             _buffer.flush(_session);
                         }
-                        this.yield();
+                        FlushingThread.yield();
                     }
                 }
             } catch (Exception e) {
@@ -573,7 +574,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                 for (int i = 0; i < _numChunks; i++) {
          
                     // generate triples for this chunk
-                    List triples = new ArrayList();
+                    List<Triple> triples = new ArrayList<Triple>();
                     for (int j = 0; j < _triplesPerChunk; j++) {
                         triples.add(getTriple(_id, i, j));
                     }
@@ -583,7 +584,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         if (_useBatchCalls) {
                             _buffer.add(triples);
                         } else {
-                            Iterator iter = triples.iterator();
+                            Iterator<Triple> iter = triples.iterator();
                             while (iter.hasNext()) {
                                 Triple triple = (Triple) iter.next();
                                 _buffer.add(triple);
@@ -593,7 +594,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         if (_useBatchCalls) {
                             _buffer.delete(triples);
                         } else {
-                            Iterator iter = triples.iterator();
+                            Iterator<Triple> iter = triples.iterator();
                             while (iter.hasNext()) {
                                 Triple triple = (Triple) iter.next();
                                 _buffer.delete(triple);
@@ -603,7 +604,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
                     // yield so we're not hogging any impl-specific
                     // buffer locks
-                    this.yield();
+                    ModdingThread.yield();
                 }
             } catch (Exception e) {
                 _error = e;

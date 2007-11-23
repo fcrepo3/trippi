@@ -43,9 +43,9 @@ public class SesameConnector extends TriplestoreConnector {
     }
 
     // set reader, writer, and elementFactory as needed
-    public void init(Map config) throws TrippiException {
+    public void init(Map<String, String> config) throws TrippiException {
 
-        AliasManager aliasManager = new AliasManager(new HashMap());
+        AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
 
         // Get and validate configuration
         String storageType            = ConfigUtils.getRequired(config, "storageType");

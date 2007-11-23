@@ -106,16 +106,16 @@ public class MPTSession implements TriplestoreSession {
     }
 
     // Implements TriplestoreSession.add(Set)
-    public void add(Set triples) throws TrippiException {
+    public void add(Set<Triple> triples) throws TrippiException {
         update(triples, false);
     }
 
     // Implements TriplestoreSession.delete(Set)
-    public void delete(Set triples) throws TrippiException {
+    public void delete(Set<Triple> triples) throws TrippiException {
         update(triples, true);
     }
     
-    private void update(Set triples, boolean delete) 
+    private void update(Set<Triple> triples, boolean delete) 
             throws TrippiException {
         Connection conn = null;
         boolean startedTransaction = false;
@@ -125,7 +125,7 @@ public class MPTSession implements TriplestoreSession {
             conn.setAutoCommit(false);
             startedTransaction = true;
 
-            Set mptSet = jrdfToMPT(triples);
+            Set<org.nsdl.mptstore.rdf.Triple> mptSet = jrdfToMPT(triples);
 
             if (delete) {
                 _adaptor.deleteTriples(conn, mptSet.iterator());
@@ -157,9 +157,9 @@ public class MPTSession implements TriplestoreSession {
      * Convert the given set of JRDF Triple objects to 
      * MPT Triple objects.
      */
-    protected static Set jrdfToMPT(Set jrdfTriples) {
-        Set mptSet = new HashSet(jrdfTriples.size());
-        Iterator iter = jrdfTriples.iterator();
+    protected static Set<org.nsdl.mptstore.rdf.Triple> jrdfToMPT(Set<Triple> jrdfTriples) {
+        Set<org.nsdl.mptstore.rdf.Triple> mptSet = new HashSet<org.nsdl.mptstore.rdf.Triple>(jrdfTriples.size());
+        Iterator<Triple> iter = jrdfTriples.iterator();
         while (iter.hasNext()) {
             Triple jrdfTriple = (Triple) iter.next();
             org.nsdl.mptstore.rdf.SubjectNode mptSubject =

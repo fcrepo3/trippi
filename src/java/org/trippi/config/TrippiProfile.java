@@ -16,12 +16,12 @@ public class TrippiProfile {
     private String m_id;
     private String m_label;
     private String m_connectorClassName;
-    private Map m_configuration;
+    private Map<String, String> m_configuration;
 
     public TrippiProfile(String id,
                          String label,
                          String connectorClassName,
-                         Map configuration) {
+                         Map<String, String> configuration) {
         m_id = id;
         m_label = label;
         m_connectorClassName = connectorClassName;
@@ -31,7 +31,7 @@ public class TrippiProfile {
     public String getId() { return m_id; }
     public String getLabel() { return m_label; }
     public String getConnectorClassName() { return m_connectorClassName; }
-    public Map getConfiguration() { return m_configuration; }
+    public Map<String, String> getConfiguration() { return m_configuration; }
 
     public void setLabel(String label) { m_label = label; }
 
@@ -46,11 +46,11 @@ public class TrippiProfile {
         out.append("Trippi Profile : " + getId() + "\n");
         out.append("         Label : " + getLabel() + "\n");
         out.append("         Class : " + getConnectorClassName() + "\n");
-        Map m = getConfiguration();
-        Iterator iter = m.keySet().iterator();
+        Map<String, String> m = getConfiguration();
+        Iterator<String> iter = m.keySet().iterator();
         while (iter.hasNext()) {
             String key = (String) iter.next();
-            out.append("         Param : " + key + " = " + (String) m.get(key) + "\n");
+            out.append("         Param : " + key + " = " + m.get(key) + "\n");
         }
         return out.toString();
     }

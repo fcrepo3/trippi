@@ -3,6 +3,8 @@ package org.trippi.impl.base;
 import java.util.List;
 import java.util.Map;
 
+import org.jrdf.graph.Node;
+import org.jrdf.graph.Triple;
 import org.trippi.TriplePattern;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
@@ -36,11 +38,11 @@ public class PoolAwareTupleIterator extends TupleIterator {
         return has;
     }
     
-    public Map next() throws TrippiException {
+    public Map<String, Node> next() throws TrippiException {
         return m_iter.next();
     }
 
-    public List nextTriples(TriplePattern[] patterns) throws TrippiException {
+    public List<Triple> nextTriples(TriplePattern[] patterns) throws TrippiException {
         return m_iter.nextTriples(patterns);
     }
     

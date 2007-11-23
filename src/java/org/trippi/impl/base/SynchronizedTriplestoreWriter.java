@@ -17,6 +17,7 @@ import org.jrdf.graph.Triple;
 import org.trippi.FlushErrorHandler;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
+import org.trippi.TripleUpdate;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
 
@@ -49,10 +50,10 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
     /**
      * Immediately add all triples in the list to the store, then return.
      */
-    public void add(List triples,
+    public void add(List<Triple> triples,
                     boolean flush) throws TrippiException {
-        HashSet set = new HashSet();
-        Iterator iter = triples.iterator();
+        HashSet<Triple> set = new HashSet<Triple>();
+        Iterator<Triple> iter = triples.iterator();
         while (iter.hasNext()) {
             set.add(iter.next());
         }
@@ -66,13 +67,13 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
                     boolean flush) throws IOException,
                                           TrippiException {
         try {
-            HashSet set = new HashSet();
+            HashSet<Triple> set = new HashSet<Triple>();
             while (iter.hasNext()) {
                 set.add(iter.next());
                 if (set.size() == m_flushSize) {
                     m_session.add(set);
                     set = null;
-                    set = new HashSet();
+                    set = new HashSet<Triple>();
                 }
             }
             if (set.size() > 0) {
@@ -88,7 +89,7 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
      */
     public void add(Triple triple,
                     boolean flush) throws TrippiException {
-        HashSet set = new HashSet(1);
+        HashSet<Triple> set = new HashSet<Triple>(1);
         set.add(triple);
         m_session.add(set);
     }
@@ -104,10 +105,10 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
      * @param  triples  a list of <code>Triple</code> objects
      * @param    flush  whether to flush the buffer before returning
      */
-    public void delete(List triples,
+    public void delete(List<Triple> triples,
                        boolean flush) throws IOException, TrippiException {
-        HashSet set = new HashSet();
-        Iterator iter = triples.iterator();
+        HashSet<Triple> set = new HashSet<Triple>();
+        Iterator<Triple> iter = triples.iterator();
         while (iter.hasNext()) {
             set.add(iter.next());
         }
@@ -132,13 +133,13 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
             iter = TripleIterator.fromStream(new FileInputStream(tempFile), 
                                              RDFFormat.TURTLE);
             try {
-                HashSet set = new HashSet();
+                HashSet<Triple> set = new HashSet<Triple>();
                 while (iter.hasNext()) {
                     set.add(iter.next());
                     if (set.size() == m_flushSize) {
                         m_session.delete(set);
                         set = null;
-                        set = new HashSet();
+                        set = new HashSet<Triple>();
                     }
                 }
                 if (set.size() > 0) {
@@ -160,7 +161,7 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
     public void delete(Triple triple,
                        boolean flush) throws IOException,
                                              TrippiException {
-        HashSet set = new HashSet(1);
+        HashSet<Triple> set = new HashSet<Triple>(1);
         set.add(triple);
         m_session.delete(set);
     }
@@ -177,11 +178,11 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
         return 0;
     }
 
-	public List findBufferedUpdates(SubjectNode subject, 
+	public List<TripleUpdate> findBufferedUpdates(SubjectNode subject, 
 			PredicateNode predicate, 
 			ObjectNode object, 
 			int updateType) {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 
 }

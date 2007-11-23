@@ -4,6 +4,7 @@ import gnu.trove.TIntHashSet;
 
 import java.util.Map;
 
+import org.jrdf.graph.Node;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 
@@ -16,7 +17,7 @@ public class DistinctTupleIterator extends TupleIterator {
 
     private TupleIterator m_wrapped;
     private TIntHashSet m_seen;
-    private Map m_next;
+    private Map<String, Node> m_next;
     private boolean m_closed = false;
 
     public DistinctTupleIterator(TupleIterator wrapped) throws TrippiException {
@@ -26,9 +27,9 @@ public class DistinctTupleIterator extends TupleIterator {
     }
 
     // return null if there are no more
-    private Map getNext() throws TrippiException {
+    private Map<String, Node> getNext() throws TrippiException {
         while (m_wrapped.hasNext()) {
-            Map nextMap = m_wrapped.next();
+            Map<String, Node> nextMap = m_wrapped.next();
             if (!seen(nextMap.hashCode())) return nextMap;
         }
         return null;
@@ -44,9 +45,9 @@ public class DistinctTupleIterator extends TupleIterator {
         return (m_next != null);
     }
 
-    public Map next() throws TrippiException {
+    public Map<String, Node> next() throws TrippiException {
         if (m_next == null) return null;
-        Map last = m_next;
+        Map<String, Node> last = m_next;
         m_next = getNext();
         return last;
     }

@@ -8,7 +8,7 @@ public class ConfigUtils {
 	/**
      * Get a trimmed non-empty string from the map, or throw an exception.
      */
-	public static String getRequired(Map<String, Object> map, String key) throws TrippiException {
+	public static String getRequired(Map<String, String> map, String key) throws TrippiException {
         String value = (String) map.get(key);
         if (value == null || value.length() == 0) {
             throw new TrippiException("Missing required configuration value: " + key);
@@ -20,7 +20,7 @@ public class ConfigUtils {
     /**
      * Get an integer from the map, or throw an exception.
      */
-    public static int getRequiredInt(Map<String, Object> map, String key) throws TrippiException {
+    public static int getRequiredInt(Map<String, String> map, String key) throws TrippiException {
         try {
             return Integer.parseInt(getRequired(map, key));
         } catch (NumberFormatException e) {
@@ -31,7 +31,7 @@ public class ConfigUtils {
     /**
      * Get a non-negative integer from the map, or throw an exception.
      */
-    public static int getRequiredNNInt(Map<String, Object> map, String key) throws TrippiException {
+    public static int getRequiredNNInt(Map<String, String> map, String key) throws TrippiException {
         try {
             int i = Integer.parseInt(getRequired(map, key));
             if (i < 0) {
@@ -47,7 +47,7 @@ public class ConfigUtils {
     /**
      * Get an integer greater than 0 from the map, or throw an exception.
      */
-    public static int getRequiredPosInt(Map<String, Object> map, String key) throws TrippiException {
+    public static int getRequiredPosInt(Map<String, String> map, String key) throws TrippiException {
         try {
             int i = Integer.parseInt(getRequired(map, key));
             if (i < 1) {
@@ -67,7 +67,7 @@ public class ConfigUtils {
      * @return the boolean value of the key from the map.
      * @throws TrippiException
      */
-    public static boolean getRequiredBoolean(Map<String, Object> map, String key) throws TrippiException {
+    public static boolean getRequiredBoolean(Map<String, String> map, String key) throws TrippiException {
         String val = getRequired(map, key);
         if (val.equalsIgnoreCase("true")) {
             return true;

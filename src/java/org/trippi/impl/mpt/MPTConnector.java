@@ -43,7 +43,7 @@ public class MPTConnector extends TriplestoreConnector {
     }
 
     // Implements TriplestoreConnector.init(Map)
-    public void init(Map config) throws TrippiException {
+    public void init(Map<String, String> config) throws TrippiException {
 
         // get and validate configuration values
         String ddlGenerator = ConfigUtils.getRequired(config, "ddlGenerator");
@@ -99,7 +99,7 @@ public class MPTConnector extends TriplestoreConnector {
 
             // construct the TriplestoreWriter
             _writer = new ConcurrentTriplestoreWriter(sessionPool,
-                                                      new AliasManager(new HashMap()),
+                                                      new AliasManager(new HashMap<String, String>()),
                                                       _updateSession,
                                                       updateBuffer,
                                                       autoFlushBufferSize,

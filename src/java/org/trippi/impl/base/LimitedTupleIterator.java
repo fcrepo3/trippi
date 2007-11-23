@@ -2,6 +2,7 @@ package org.trippi.impl.base;
 
 import java.util.Map;
 
+import org.jrdf.graph.Node;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 
@@ -16,7 +17,7 @@ public class LimitedTupleIterator extends TupleIterator {
     private TupleIterator m_wrapped;
     private int m_count;
     private int m_limit;
-    private Map m_next;
+    private Map<String, Node> m_next;
     private boolean m_closed = false;
 
     public LimitedTupleIterator(TupleIterator wrapped,
@@ -28,7 +29,7 @@ public class LimitedTupleIterator extends TupleIterator {
     }
 
     // return null if there are no more or limit has been reached
-    private Map getNext() throws TrippiException {
+    private Map<String, Node> getNext() throws TrippiException {
         if (m_wrapped.hasNext() && m_count < m_limit) {
             m_count++;
             return m_wrapped.next();
@@ -41,9 +42,9 @@ public class LimitedTupleIterator extends TupleIterator {
         return (m_next != null);
     }
 
-    public Map next() throws TrippiException {
+    public Map<String, Node> next() throws TrippiException {
         if (m_next == null) return null;
-        Map last = m_next;
+        Map<String, Node> last = m_next;
         m_next = getNext();
         return last;
     }

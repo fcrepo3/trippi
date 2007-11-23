@@ -27,7 +27,7 @@ public class SparqlTupleIterator extends TupleIterator {
     private InputStream m_inputStream;
     private XmlPullParser m_xpp;
     private String[] m_names;
-    private Map m_next;
+    private Map<String, Node> m_next;
     private boolean m_closed;
     private RDFUtil m_util;
 
@@ -52,14 +52,14 @@ public class SparqlTupleIterator extends TupleIterator {
         return (m_next != null);
     }
 
-    public Map next() throws TrippiException {
+    public Map<String, Node> next() throws TrippiException {
         if (m_next == null) return null;
-        Map last = m_next;
+        Map<String, Node> last = m_next;
         m_next = getNext();
         return last;
     }
 
-    private Map getNext() throws TrippiException {
+    private Map<String, Node> getNext() throws TrippiException {
         try {
             // parse until <result>  (return null if none seen till end of doc)
             boolean inResult = false;
@@ -71,7 +71,7 @@ public class SparqlTupleIterator extends TupleIterator {
                     return null;
                 }
             }
-            Map m = new HashMap();
+            Map<String, Node> m = new HashMap<String, Node>();
             while (inResult) {
                 int eventType = m_xpp.next();
                 if (eventType == XmlPullParser.START_TAG) {
@@ -143,7 +143,7 @@ public class SparqlTupleIterator extends TupleIterator {
             }
         }
         // put each in List
-        List names = new ArrayList();
+        List<String> names = new ArrayList<String>();
         while (inVariables) {
             int eventType = m_xpp.next();
             if (eventType == XmlPullParser.START_TAG) {

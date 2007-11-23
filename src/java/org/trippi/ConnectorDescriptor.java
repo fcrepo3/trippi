@@ -23,7 +23,7 @@ public class ConnectorDescriptor {
 
     private String m_name;
     private String m_description;
-    private List m_parameters;
+    private List<ConnectorParameter> m_parameters;
 
     public static ConnectorDescriptor forName(String className) 
             throws TrippiException {
@@ -36,15 +36,15 @@ public class ConnectorDescriptor {
         throw new TrippiException("Not found in classpath: " + path);
     }
 
-    public static Map find() throws TrippiException,
+    public static Map<String, ConnectorDescriptor> find() throws TrippiException,
                                     IOException {
-        Map m = new HashMap();
+        Map<String, ConnectorDescriptor> m = new HashMap<String, ConnectorDescriptor>();
         File jarDir = new File(System.getProperty("java.endorsed.dirs"));
         String[] jarNames = jarDir.list();
         for (int i = 0; i < jarNames.length; i++) {
             if (jarNames[i].toLowerCase().endsWith(".jar")) {
                 JarFile f = new JarFile(new File(jarDir, jarNames[i]));
-                Enumeration e = f.entries();
+                Enumeration<JarEntry> e = f.entries();
                 while (e.hasMoreElements()) {
                     JarEntry entry = (JarEntry) e.nextElement();
                     if (entry.getName().endsWith("Descriptor.xml")) {
@@ -61,7 +61,7 @@ public class ConnectorDescriptor {
     }
 
     public ConnectorDescriptor(InputStream in) throws TrippiException {
-        m_parameters = new ArrayList();
+        m_parameters = new ArrayList<ConnectorParameter>();
         try {
             Element root = DocumentBuilderFactory.newInstance().
                                    newDocumentBuilder().parse(in).
@@ -91,9 +91,9 @@ public class ConnectorDescriptor {
         return null;
     }
 
-    private List getParameters(Element parent) throws Exception {
+    private List<ConnectorParameter> getParameters(Element parent) throws Exception {
         NodeList d = parent.getChildNodes();
-        List paramList = new ArrayList();
+        List<ConnectorParameter> paramList = new ArrayList<ConnectorParameter>();
         for (int i = 0; i < d.getLength(); i++) {
             Node n = d.item(i);
             if (n.getNodeType() == Node.ELEMENT_NODE && n.getNodeName().equals("parameter")) {
@@ -114,15 +114,15 @@ public class ConnectorDescriptor {
             isOptional = false;
         }
         String description = getDescription(param);
-        Map paramsMap = new HashMap();
-        List options = new ArrayList();
+        Map<String, List<ConnectorParameter>> paramsMap = new HashMap<String, List<ConnectorParameter>>();
+        List<String> options = new ArrayList<String>();
         NodeList d = param.getChildNodes();
         for (int i = 0; i < d.getLength(); i++) {
             Node n = d.item(i);
             if (n.getNodeType() == Node.ELEMENT_NODE && n.getNodeName().equals("option")) {
                 Element option = (Element) n;
                 String optionValue = option.getAttribute("value");
-                List optionParameters = getParameters(option);
+                List<ConnectorParameter> optionParameters = getParameters(option);
                 options.add(optionValue); // purpose: preserves order
                 paramsMap.put(optionValue, optionParameters);
             }
@@ -143,7 +143,7 @@ public class ConnectorDescriptor {
      * Get the list of <code>ConnectorParameter</code>s that together describe 
      * the configuration options for the connector.
      */
-    public List getParameters() {
+    public List<ConnectorParameter> getParameters() {
         return m_parameters;
     }
 
@@ -151,9 +151,9 @@ public class ConnectorDescriptor {
         StringBuffer out = new StringBuffer();
         out.append("Connector name : " + m_name + "\n");
         out.append("   Description : " + m_description + "\n");
-        Iterator iter = m_parameters.iterator();
+        Iterator<ConnectorParameter> iter = m_parameters.iterator();
         while (iter.hasNext()) {
-            ConnectorParameter param = (ConnectorParameter) iter.next();
+            ConnectorParameter param = iter.next();
             out.append(param.toString(0));
         }
         return out.toString();

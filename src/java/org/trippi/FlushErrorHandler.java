@@ -16,7 +16,7 @@ public interface FlushErrorHandler {
      * The <code>List</code> contains <code>TripleUpdate</code> objects that
      * were being flushed at the time of the failure.
      */
-    public void handleFlushError(List failedUpdates, 
+    public void handleFlushError(List<TripleUpdate> failedUpdates, 
                                  TrippiException cause);
 
 }

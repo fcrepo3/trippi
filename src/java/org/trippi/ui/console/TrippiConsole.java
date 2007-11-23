@@ -315,12 +315,12 @@ public class TrippiConsole {
         }
     }
 
-    private static String doAliasReplacements(String string, Map aliasMap) {
+    private static String doAliasReplacements(String string, Map<String, String> aliasMap) {
         String out = string;
-        Iterator iter = aliasMap.keySet().iterator();
+        Iterator<String> iter = aliasMap.keySet().iterator();
         while (iter.hasNext()) {
-            String alias = (String) iter.next();
-            String fullForm = (String) aliasMap.get(alias);
+            String alias = iter.next();
+            String fullForm = aliasMap.get(alias);
             out = out.replaceAll("<" + alias + ":", "<" + fullForm);
             out = out.replaceAll("\\^\\^" + alias + ":", "^^" + fullForm);
         }
@@ -332,7 +332,7 @@ public class TrippiConsole {
 
     public void doAdd(String tripleString) throws Exception {
         // first replace aliases in triples
-        List triples = TriplePattern.parse(
+        List<Triple> triples = TriplePattern.parse(
                 doAliasReplacements(tripleString,
                 m_connector.getReader().getAliasMap()),
                 m_connector.getElementFactory());
@@ -352,7 +352,7 @@ public class TrippiConsole {
             }
         } else {
             // first replace aliases in triples
-            List triples = TriplePattern.parse(
+            List<Triple> triples = TriplePattern.parse(
                     doAliasReplacements(tripleString,
                     m_connector.getReader().getAliasMap()),
                     m_connector.getElementFactory());
@@ -380,18 +380,18 @@ public class TrippiConsole {
     }
 
     public void doAlias(String rest) throws Exception {
-        Map aliases = m_config.getAliasMap();
+        Map<String, String> aliases = m_config.getAliasMap();
         if (rest.equals("")) {
             // show value of all aliases
-            Iterator iter = aliases.keySet().iterator();
+            Iterator<String> iter = aliases.keySet().iterator();
             while (iter.hasNext()) {
-                String alias = (String) iter.next();
-                String value = (String) aliases.get(alias);
+                String alias = iter.next();
+                String value = aliases.get(alias);
                 System.out.println(alias + "\t" + value);
             }
         } else if (rest.equals("!")) {
             // clear all aliases
-            Map emptyMap = new HashMap();
+            Map<String, String> emptyMap = new HashMap<String, String>();
             m_config.setAliasMap(emptyMap);
             if (m_connector != null) 
                     m_connector.getReader().setAliasMap(emptyMap);
@@ -586,7 +586,7 @@ public class TrippiConsole {
                 } else {
                     TrippiProfile profile = configure(id, label, className, descriptor);
                     if (profile != null) {
-                        Map profileMap = m_config.getProfiles();
+                        Map<String, TrippiProfile> profileMap = m_config.getProfiles();
                         profileMap.put(id, profile);
                         m_config.setProfiles(profileMap);
                         System.out.println("\nProfile created.  Type 'use " + id + ";' to use it.");
@@ -604,24 +604,24 @@ public class TrippiConsole {
                                    ConnectorDescriptor descriptor) throws Exception {
         System.out.println("");
         printConnectorInfo(descriptor, className);
-        Map config = configure(descriptor.getParameters());
+        Map<String, String> config = configure(descriptor.getParameters());
         if (config == null) return null;
         return new TrippiProfile(id, label, className, config);
     }
 
-    private Map configure(List params) throws IOException {
-        Map map = new HashMap();
-        Iterator iter = params.iterator();
+    private Map<String, String> configure(List<ConnectorParameter> params) throws IOException {
+        Map<String, String> map = new HashMap<String, String>();
+        Iterator<ConnectorParameter> iter = params.iterator();
         while (iter.hasNext()) {
-            Map m = configure((ConnectorParameter) iter.next());
+            Map<String, String> m = configure(iter.next());
             if (m == null) return null;
             map.putAll(m);
         }
         return map;
     }
 
-    private Map configure(ConnectorParameter param) throws IOException {
-        Map map = new HashMap();
+    private Map<String, String> configure(ConnectorParameter param) throws IOException {
+        Map<String, String> map = new HashMap<String, String>();
         System.out.println("");
         System.out.println("Parameter   : " + param.getName());
         String desc      = "Description : ";
@@ -637,7 +637,7 @@ public class TrippiConsole {
                                                     desc.length()));
         }
         System.out.println("");
-        List options = param.getOptions();
+        List<String> options = param.getOptions();
         if (options.size() == 0) {
             boolean done = false;
             String input = null;
@@ -658,13 +658,13 @@ public class TrippiConsole {
             }
             if (!input.equals("")) map.put(param.getName(), input);
         } else {
-            HashMap o = new HashMap();
-            Iterator iter = options.iterator();
+            HashMap<String, List<ConnectorParameter>> o = new HashMap<String, List<ConnectorParameter>>();
+            Iterator<String> iter = options.iterator();
             StringBuffer optString = new StringBuffer();
             int i = 0;
             while (iter.hasNext()) {
                 i++;
-                String val = (String) iter.next();
+                String val = iter.next();
                 o.put(val, param.getParameters(val));
                 if (i == options.size()) {
                     optString.append(" or ");
@@ -692,9 +692,9 @@ public class TrippiConsole {
             if (!input.equals("")) {
                 // input was ok, so set value in map and move on
                 map.put(param.getName(), input);
-                List subs = (List) o.get(input);
+                List<ConnectorParameter> subs = o.get(input);
                 if (subs != null) {
-                    Map subMap = configure(subs);
+                    Map<String, String> subMap = configure(subs);
                     if (subMap == null) return null;
                     map.putAll(subMap);
                 }
@@ -704,14 +704,14 @@ public class TrippiConsole {
     }
 
     public void doConnectors() throws Exception {
-        Map m = ConnectorDescriptor.find();
-        Iterator iter = m.keySet().iterator();
+        Map<String, ConnectorDescriptor> m = ConnectorDescriptor.find();
+        Iterator<String> iter = m.keySet().iterator();
         int i = 0;
         while (iter.hasNext()) {
             if (i > 0) System.out.println("");
             i++;
-            String className = (String) iter.next();
-            ConnectorDescriptor d = (ConnectorDescriptor) m.get(className);
+            String className = iter.next();
+            ConnectorDescriptor d = m.get(className);
             printConnectorInfo(d, className);
         }
     }
@@ -727,12 +727,12 @@ public class TrippiConsole {
     }
 
     public void doProfiles() throws TrippiException {
-        Map map = m_config.getProfiles();
+        Map<String, TrippiProfile> map = m_config.getProfiles();
         System.out.println("List of all known connection profiles (" + map.keySet().size() + "):");
         System.out.println("");
-        Iterator iter = map.keySet().iterator();
+        Iterator<String> iter = map.keySet().iterator();
         while (iter.hasNext()) {
-            TrippiProfile p = (TrippiProfile) map.get(iter.next());
+            TrippiProfile p = map.get(iter.next());
             System.out.println(p.getId() + "\t" + p.getLabel());
         }
     }

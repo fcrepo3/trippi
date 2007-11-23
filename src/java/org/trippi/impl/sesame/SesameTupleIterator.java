@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.jrdf.graph.GraphElementFactoryException;
+import org.jrdf.graph.Node;
 import org.jrdf.graph.ObjectNode;
 import org.openrdf.sesame.constants.QueryLanguage;
 import org.openrdf.sesame.query.QueryErrorType;
@@ -34,10 +35,10 @@ public class SesameTupleIterator
 
     private String[] m_names;
 
-    private Map m_bucket; // shared between parser/consumer threads
-    private Map m_next;
+    private Map<String, Node> m_bucket; // shared between parser/consumer threads
+    private Map<String, Node> m_next;
 
-    private List m_valueList; // temporarily holds values for current tuple
+    private List<Node> m_valueList; // temporarily holds values for current tuple
 
     private boolean m_closed = false;
     private boolean m_finishedIterating = false;
@@ -55,7 +56,7 @@ public class SesameTupleIterator
         m_queryText  = queryText;
         m_repository = repository;
 
-        m_valueList = new ArrayList();
+        m_valueList = new ArrayList<Node>();
 
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
 
@@ -88,9 +89,9 @@ public class SesameTupleIterator
     /**
      * Return the next tuple.
      */
-    public Map next() throws TrippiException {
+    public Map<String, Node> next() throws TrippiException {
         if (m_next == null || m_closed) return null;
-        Map last = m_next;
+        Map<String, Node> last = m_next;
         m_next = getNext();
         return last;
     }
@@ -115,7 +116,7 @@ public class SesameTupleIterator
      *      a) The iterator to finish, or
      *      b) Another tuple to arrive in the bucket.
      */
-    private synchronized Map getNext() throws TrippiException { 
+    private synchronized Map<String, Node> getNext() throws TrippiException { 
         // wait until the bucket has a value or 2) finished iterating is true
         while (m_bucket == null && !m_finishedIterating) {
             try {
@@ -133,7 +134,7 @@ public class SesameTupleIterator
             logger.info("Finished iterating " + m_tupleCount + " tuples from query.");
             return null; // iterator finished normally, no more tuples
         } else {
-            Map tuple = m_bucket;
+            Map<String, Node> tuple = m_bucket;
             m_bucket = null;
             notifyAll(); // notify parser that the bucket is ready for another
             m_tupleCount++;
@@ -196,14 +197,14 @@ public class SesameTupleIterator
     public void endTuple() throws IOException {
         // convert m_valueList (which contains JRDF nodes) into a tuple 
         // (which is a Map keyed by name[]s)
-        Map tuple = new HashMap();
+        Map<String, Node> tuple = new HashMap<String, Node>();
         for (int i = 0; i < m_names.length; i ++) {
            tuple.put(m_names[i], m_valueList.get(i));
         }
         put(tuple); // locks until m_bucket is free or close() has been called
     }
 
-    private synchronized void put(Map tuple) {
+    private synchronized void put(Map<String, Node> tuple) {
         // wait until the bucket is free or 2) close has been called
         while (m_bucket != null && !m_closed) {
             try {

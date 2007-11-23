@@ -41,11 +41,11 @@ public class SynchronizedTriplestoreReader implements TriplestoreReader {
         m_aliasManager = aliasManager;
     }
 
-    public Map getAliasMap() {
+    public Map<String, String> getAliasMap() {
         return m_aliasManager.getAliasMap();
     }
 
-    public void setAliasMap(Map aliasMap) {
+    public void setAliasMap(Map<String, String> aliasMap) {
         m_aliasManager.setAliasMap(aliasMap);
     }
 
@@ -77,11 +77,11 @@ public class SynchronizedTriplestoreReader implements TriplestoreReader {
 
     private String doAliasReplacements(String q) {
         String out = q;
-        Map m = m_aliasManager.getAliasMap();
-        Iterator iter = m.keySet().iterator();
+        Map<String, String> m = m_aliasManager.getAliasMap();
+        Iterator<String> iter = m.keySet().iterator();
         while (iter.hasNext()) {
-            String alias = (String) iter.next();
-            String fullForm = (String) m.get(alias);
+            String alias = iter.next();
+            String fullForm = m.get(alias);
             out = out.replaceAll("<" + alias + ":", "<" + fullForm)
                      .replaceAll("\\^\\^" + alias + ":(\\S+)", "^^<" + fullForm + "$1>");
         }

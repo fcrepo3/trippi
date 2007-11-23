@@ -26,15 +26,15 @@ public class ConnectorParameter {
     private String m_label;
     private String m_description;
     private boolean m_isOptional;
-    private List m_options;
-    private Map m_parameterMap;
+    private List<String> m_options;
+    private Map<String, List<ConnectorParameter>> m_parameterMap;
 
     public ConnectorParameter(String name,
                               String label,
                               String description,
                               boolean isOptional,
-                              List options,
-                              Map parameterMap) {
+                              List<String> options,
+                              Map<String, List<ConnectorParameter>> parameterMap) {
         m_name = name;
         m_label = label;
         m_description = description;
@@ -72,7 +72,7 @@ public class ConnectorParameter {
      * all possible valid values for the parameter.  Otherwise, its
      * value will be considered open-ended.
      */
-    public List getOptions() {
+    public List<String> getOptions() {
         return m_options;
     }
 
@@ -82,8 +82,8 @@ public class ConnectorParameter {
      *
      * @return the List of parameters (may be empty).
      */
-    public List getParameters(String value) {
-        return (List) m_parameterMap.get(value);
+    public List<ConnectorParameter> getParameters(String value) {
+        return m_parameterMap.get(value);
     }
 
     public String toString(int i) {
@@ -92,15 +92,15 @@ public class ConnectorParameter {
         out.append(indent(i) + " label         : " + getLabel() + "\n");
         out.append(indent(i) + " description   : " + getDescription() + "\n");
         out.append(indent(i) + " is optional   : " + isOptional() + "\n");
-        Iterator iter = getOptions().iterator();
+        Iterator<String> iter = getOptions().iterator();
         while ( iter.hasNext() ) {
-            String val = (String) iter.next();
+            String val = iter.next();
             out.append(indent(i) + " OPTION        : " + val + "\n");
-            List p = getParameters(val);
+            List<ConnectorParameter> p = getParameters(val);
             if (p != null) {
-                Iterator pIter = p.iterator();
+                Iterator<ConnectorParameter> pIter = p.iterator();
                 while ( pIter.hasNext() ) {
-                    out.append(((ConnectorParameter) pIter.next()).
+                    out.append((pIter.next()).
                                 toString(i + 4));
                 }
             }
