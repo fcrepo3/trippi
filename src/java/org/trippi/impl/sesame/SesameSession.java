@@ -81,15 +81,15 @@ public class SesameSession implements TriplestoreSession {
     }
 
 
-    public void add(Set triples) throws TrippiException {
+    public void add(Set<Triple> triples) throws TrippiException {
         doTriples(triples, true);
     }
 
-    public void delete(Set triples) throws TrippiException {
+    public void delete(Set<Triple> triples) throws TrippiException {
         doTriples(triples, false);
     }
 
-    private void doTriples(Set triples, 
+    private void doTriples(Set<Triple> triples, 
                            boolean add) throws TrippiException {
         try {
             if (add) {
@@ -109,11 +109,11 @@ public class SesameSession implements TriplestoreSession {
 
     private String doAliasReplacements(String q, boolean noBrackets) {
         String out = q;
-        Map m = m_aliasManager.getAliasMap();
-        Iterator iter = m.keySet().iterator();
+        Map<String, String> m = m_aliasManager.getAliasMap();
+        Iterator<String> iter = m.keySet().iterator();
         while (iter.hasNext()) {
-            String alias = (String) iter.next();
-            String fullForm = (String) m.get(alias);
+            String alias = iter.next();
+            String fullForm = m.get(alias);
             if (noBrackets) {
                 // In serql and rql, aliases are not surrounded by < and >
                 // If bob is an alias for http://example.org/robert/,
@@ -220,10 +220,10 @@ public class SesameSession implements TriplestoreSession {
     //////// Utility methods for converting JRDF types to Sesame types ///////
     //////////////////////////////////////////////////////////////////////////
 
-    public static org.openrdf.model.Graph getSesameGraph(Iterator jrdfTriples) {
+    public static org.openrdf.model.Graph getSesameGraph(Iterator<Triple> jrdfTriples) {
         org.openrdf.model.Graph graph = new org.openrdf.model.impl.GraphImpl();
         while (jrdfTriples.hasNext()) {
-            Triple triple = (Triple) jrdfTriples.next();
+            Triple triple = jrdfTriples.next();
             graph.add(getSesameStatement(triple, graph.getValueFactory()));
         }
         return graph;

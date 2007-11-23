@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
+import org.jrdf.graph.Triple;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
@@ -29,14 +30,14 @@ public class SynchronizedTriplestoreSession implements TriplestoreSession {
     private TriplestoreSession m_session;
 
     /** The lock queue. The Thread at position 0 has the lock. */
-    private List m_lockQueue;
+    private List<Thread> m_lockQueue;
 
     public SynchronizedTriplestoreSession(TriplestoreSession session) {
         m_session = session;
-        m_lockQueue = new ArrayList();
+        m_lockQueue = new ArrayList<Thread>();
     }
 
-    public void add(Set triples) throws UnsupportedOperationException,
+    public void add(Set<Triple> triples) throws UnsupportedOperationException,
                                          TrippiException {
         waitForLock(false);
         try {
@@ -46,7 +47,7 @@ public class SynchronizedTriplestoreSession implements TriplestoreSession {
         }
     }
 
-    public void delete(Set triples) throws UnsupportedOperationException,
+    public void delete(Set<Triple> triples) throws UnsupportedOperationException,
                                             TrippiException {
         waitForLock(false);
         try {

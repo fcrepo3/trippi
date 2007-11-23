@@ -16,6 +16,7 @@ import org.jrdf.graph.Triple;
 import org.trippi.FlushErrorHandler;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
+import org.trippi.TripleUpdate;
 import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
@@ -54,11 +55,11 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
         return m_reader.listTupleLanguages();
     }
 
-    public Map getAliasMap() throws TrippiException {
+    public Map<String, String> getAliasMap() throws TrippiException {
         return m_reader.getAliasMap();
     }
 
-    public void setAliasMap(Map aliasMap) throws TrippiException {
+    public void setAliasMap(Map<String, String> aliasMap) throws TrippiException {
         m_reader.setAliasMap(aliasMap);
         for (int i = 0; i < m_writers.length; i++) {
             m_writers[i].setAliasMap(aliasMap);
@@ -128,7 +129,7 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
     /**
      * Immediately add all triples in the list to the store, then return.
      */
-    public void add(List triples, boolean flush) {
+    public void add(List<Triple> triples, boolean flush) {
         for (int i = 0; i < m_writers.length; i++) {
             try {
                 m_writers[i].add(triples, flush);
@@ -175,7 +176,7 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
         }
     }
 
-    public void delete(List triples, boolean flush) {
+    public void delete(List<Triple> triples, boolean flush) {
         for (int i = 0; i < m_writers.length; i++) {
             try {
                 m_writers[i].delete(triples, flush);
@@ -260,11 +261,11 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
         }
     }
 
-	public List findBufferedUpdates(SubjectNode subject, 
+	public List<TripleUpdate> findBufferedUpdates(SubjectNode subject, 
 			PredicateNode predicate, 
 			ObjectNode object, 
 			int updateType) {
-		List triples = new ArrayList();
+		List<TripleUpdate> triples = new ArrayList<TripleUpdate>();
 		for (int i = 0; i < m_writers.length; i++) {
 			triples.addAll(m_writers[i].findBufferedUpdates(subject, 
 					predicate, object, updateType));

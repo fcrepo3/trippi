@@ -58,7 +58,7 @@ public class RIOTripleIterator extends TripleIterator
 
     private int m_tripleCount = 0;
 
-    private Map m_aliases;
+    private Map<String, String> m_aliases;
 
     /**
      * Initialize the iterator by starting the parsing thread.
@@ -69,7 +69,7 @@ public class RIOTripleIterator extends TripleIterator
         m_in = in;
         m_parser = parser;
         m_parser.setNamespaceListener(this);
-        m_aliases = new HashMap();
+        m_aliases = new HashMap<String, String>();
         m_baseURI = baseURI;
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
         Thread parserThread = new Thread(this);

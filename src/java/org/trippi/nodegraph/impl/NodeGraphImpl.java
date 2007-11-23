@@ -20,6 +20,7 @@ import org.trippi.nodegraph.TripleResults;
 
 public class NodeGraphImpl extends NodeGraph {
 
+    private static final long serialVersionUID = 1L;
     private Graph _graph;
 
     public NodeGraphImpl(Graph graph) {

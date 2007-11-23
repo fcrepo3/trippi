@@ -28,14 +28,14 @@ public class TupleBasedTripleIterator extends TripleIterator {
     private boolean m_closed;
 
     private Triple m_next;
-    private List m_triplesFromTuples;
+    private List<Triple> m_triplesFromTuples;
 
     public TupleBasedTripleIterator (TupleIterator tuples,
                                      TriplePattern[] patterns) throws TrippiException {
         m_tuples = tuples;
         m_patterns = patterns;
         m_closed = false;
-        m_triplesFromTuples = new ArrayList();
+        m_triplesFromTuples = new ArrayList<Triple>();
         try {
             m_next = getNext();
         } catch (TrippiException e) {

@@ -26,8 +26,8 @@ public class ConfigurableSessionPool extends Thread
 
     private int m_size;
 
-    private List m_inUseSessions;
-    private List m_freeSessions;
+    private List<TriplestoreSession> m_inUseSessions;
+    private List<TriplestoreSession> m_freeSessions;
 
     private boolean m_needToFinish = false;
 
@@ -56,8 +56,8 @@ public class ConfigurableSessionPool extends Thread
         m_spareSessions = spareSessions;
 
         m_maxSize = m_maxGrowth == -1 ? m_maxGrowth : m_initialSize + m_maxGrowth;
-        m_freeSessions = new ArrayList(initialSize);
-        m_inUseSessions = new ArrayList(initialSize);
+        m_freeSessions = new ArrayList<TriplestoreSession>(initialSize);
+        m_inUseSessions = new ArrayList<TriplestoreSession>(initialSize);
         grow(initialSize);
         if (maxGrowth != 0) {
             // only start the thread if it's needed
@@ -180,10 +180,10 @@ public class ConfigurableSessionPool extends Thread
         }
     }
 
-    private void closeAll(Iterator iter) {
+    private void closeAll(Iterator<TriplestoreSession> iter) {
         while ( iter.hasNext() ) {
             try {
-                ((TriplestoreSession) iter.next()).close();
+                iter.next().close();
             } catch (Exception e) {
                 System.err.println("Warning: attempt to close "
                         + "TriplestoreSession failed, continuing...");
@@ -197,7 +197,7 @@ public class ConfigurableSessionPool extends Thread
     private void grow(int numToAdd) throws TrippiException {
         // Rather than synchronizing on the list throughout session creation,
         // we create them first, then add them to the list in a synch block.
-        List newSessions = new ArrayList();
+        List<TriplestoreSession> newSessions = new ArrayList<TriplestoreSession>();
         for (int i = 0; i < numToAdd; i++) {
             newSessions.add( m_factory.newSession() );
         }

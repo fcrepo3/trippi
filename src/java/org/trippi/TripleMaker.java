@@ -23,9 +23,9 @@ public class TripleMaker {
     static {
         m_factory = new RDFUtil();
     }
-    private static Map m_blankMap = null;
+    private static Map<String, Node> m_blankMap = null;
     
-    private static Map m_aliasMap;
+    //private static Map<String, String> m_aliasMap;
 
     public TripleMaker() throws TrippiException {
         
@@ -165,8 +165,8 @@ public class TripleMaker {
         return m_factory;
     }
     
-    public static void setAliasMap(Map aliasMap) {
-        
+    public static void setAliasMap(Map<String, String> aliasMap) {
+
     }
 
     ////// parsing methods //////
@@ -174,7 +174,7 @@ public class TripleMaker {
     // the node should start with one following: < " ' _
     public static Node parse(String n) 
             throws TrippiException {
-        if (m_blankMap == null) m_blankMap = new HashMap();  // lazily
+        if (m_blankMap == null) m_blankMap = new HashMap<String, Node>();  // lazily
         if (n.length() > 0) {
             char c = n.charAt(0);
             if (c == '<' && n.length() > 4) {   // <a:b>
@@ -280,6 +280,7 @@ public class TripleMaker {
     }
 
     public class FreeBlankNode extends AbstractBlankNode {
+        private static final long serialVersionUID = 1L;
         private int m_hashCode;
         public FreeBlankNode(int hashCode) { 
             m_hashCode = hashCode; 

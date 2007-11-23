@@ -31,16 +31,16 @@ public class MPTTripleIterator extends TripleIterator {
 
     public Triple next() throws TrippiException {
         try {
-            List result = (List) _results.next();
+            List<Node> result = _results.next();
             Node n;
             
-            n = (Node) result.get(0);
+            n = result.get(0);
             SubjectNode subject = (SubjectNode) mptToJRDF(n);
 
-            n = (Node) result.get(1);
+            n = result.get(1);
             PredicateNode predicate = (PredicateNode) mptToJRDF(n);
 
-            n = (Node) result.get(2);
+            n = result.get(2);
             ObjectNode object = (ObjectNode) mptToJRDF(n);
 
             return _util.createTriple(subject, predicate, object);

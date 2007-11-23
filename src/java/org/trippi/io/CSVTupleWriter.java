@@ -29,9 +29,9 @@ import org.trippi.TupleIterator;
 public class CSVTupleWriter extends TupleWriter {
 
     private PrintWriter m_out;
-    private Map m_aliases;
+    private Map<String, String> m_aliases;
 
-    public CSVTupleWriter(OutputStream out, Map aliases) throws TrippiException {
+    public CSVTupleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
         try {
             m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
             m_aliases = aliases;
@@ -50,10 +50,10 @@ public class CSVTupleWriter extends TupleWriter {
             m_out.println();
             int count = 0;
             while (iter.hasNext()) {
-                Map result = iter.next();
+                Map<String, Node> result = iter.next();
                 for (int i = 0; i < names.length; i++) {
                     if (i > 0) m_out.print(",");
-                    String val = getValue((Node) result.get(names[i]));
+                    String val = getValue(result.get(names[i]));
                     if (val.indexOf(",") == -1 && val.indexOf("\"") == -1) {
                         m_out.print(val);
                     } else {
@@ -82,7 +82,7 @@ public class CSVTupleWriter extends TupleWriter {
         String fullString = RDFUtil.toString(node);
         if (m_aliases != null) {
             if (node instanceof URIReference) {
-                Iterator iter = m_aliases.keySet().iterator();
+                Iterator<String> iter = m_aliases.keySet().iterator();
                 while (iter.hasNext()) {
                     String alias = (String) iter.next();
                     String prefix = (String) m_aliases.get(alias);
@@ -94,10 +94,10 @@ public class CSVTupleWriter extends TupleWriter {
                 Literal literal = (Literal) node;
                 if (literal.getDatatypeURI() != null) {
                     String uri = literal.getDatatypeURI().toString();
-                    Iterator iter = m_aliases.keySet().iterator();
+                    Iterator<String> iter = m_aliases.keySet().iterator();
                     while (iter.hasNext()) {
-                        String alias = (String) iter.next();
-                        String prefix = (String) m_aliases.get(alias);
+                        String alias = iter.next();
+                        String prefix = m_aliases.get(alias);
                         if (uri.startsWith(prefix)) {
                             StringBuffer out = new StringBuffer();
                             out.append('"');

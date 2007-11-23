@@ -24,13 +24,13 @@ public class RIOTripleWriter extends TripleWriter {
     private org.openrdf.model.impl.ValueFactoryImpl m_rioFactory = 
             new org.openrdf.model.impl.ValueFactoryImpl();
 
-    public RIOTripleWriter(RdfDocumentWriter writer, Map aliases) throws TrippiException {
+    public RIOTripleWriter(RdfDocumentWriter writer, Map<String, String> aliases) throws TrippiException {
         try {
             m_writer = writer;
-            Iterator iter = aliases.keySet().iterator();
+            Iterator<String> iter = aliases.keySet().iterator();
             while (iter.hasNext()) {
-                String prefix = (String) iter.next();
-                String name = (String) aliases.get(prefix);
+                String prefix = iter.next();
+                String name = aliases.get(prefix);
                 m_writer.setNamespace(prefix, name);
             }
         } catch (IOException e) {

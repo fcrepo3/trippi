@@ -21,9 +21,9 @@ import org.trippi.TupleIterator;
 public class SparqlTupleWriter extends TupleWriter {
 
     private PrintWriter m_out;
-    private Map m_aliases;
+    private Map<String, String> m_aliases;
 
-    public SparqlTupleWriter(OutputStream out, Map aliases) throws TrippiException {
+    public SparqlTupleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
         try {
             m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
             m_aliases = aliases;
@@ -47,10 +47,10 @@ public class SparqlTupleWriter extends TupleWriter {
             int count = 0;
             while (iter.hasNext()) {
                 m_out.println("    <result>");
-                Map result = iter.next();
+                Map<String, Node> result = iter.next();
                 for (int i = 0; i < names.length; i++) {
                     m_out.print("      <" + names[i]);
-                    Node n = (Node) result.get(names[i]);
+                    Node n = result.get(names[i]);
                     if ( n == null ) {
                         m_out.println(" bound=\"false\"/>");
                     } else if ( n instanceof URIReference ) {
@@ -91,9 +91,9 @@ public class SparqlTupleWriter extends TupleWriter {
     private void doEntities() throws IOException {
         if (m_aliases == null || m_aliases.keySet().size() == 0) return;
         m_out.println("<!DOCTYPE sparql [");
-        Iterator iter = m_aliases.keySet().iterator();
+        Iterator<String> iter = m_aliases.keySet().iterator();
         while (iter.hasNext()) {
-            String ent = (String) iter.next();
+            String ent = iter.next();
             String value = (String) m_aliases.get(ent);
             m_out.println("  <!ENTITY " + ent + " \"" + value + "\">");
         }
@@ -102,10 +102,10 @@ public class SparqlTupleWriter extends TupleWriter {
 
     private String getURI(String s) {
         if (m_aliases == null || m_aliases.keySet().size() == 0) return enc(s);
-        Iterator iter = m_aliases.keySet().iterator();
+        Iterator<String> iter = m_aliases.keySet().iterator();
         while (iter.hasNext()) {
-            String alias = (String) iter.next();
-            String prefix = (String) m_aliases.get(alias);
+            String alias = iter.next();
+            String prefix = m_aliases.get(alias);
             if (s.startsWith(prefix)) {
                 return "&" + alias + ";" + enc(s.substring(prefix.length()));
             }

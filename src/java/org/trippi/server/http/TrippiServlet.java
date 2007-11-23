@@ -136,10 +136,10 @@ public class TrippiServlet
             Map<TrippiProfile, TriplestoreConnector> connectors = new HashMap<TrippiProfile, TriplestoreConnector>();
             try {
                 TrippiConfig config = new TrippiConfig(new File(configFile));
-                Map profiles = config.getProfiles();
-                Iterator iter = profiles.keySet().iterator();
+                Map<String, TrippiProfile> profiles = config.getProfiles();
+                Iterator<String> iter = profiles.keySet().iterator();
                 while (iter.hasNext()) {
-                    TrippiProfile profile = (TrippiProfile) profiles.get(iter.next());
+                    TrippiProfile profile = profiles.get(iter.next());
                     TriplestoreConnector conn = profile.getConnector();
                     conn.getReader().setAliasMap(config.getAliasMap());
                     connectors.put(profile, conn);
