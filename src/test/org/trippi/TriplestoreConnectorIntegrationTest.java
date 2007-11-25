@@ -109,12 +109,33 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         assertTrue("None of the triple langs returned were SPO", found);
     }
 
-    // TODO: Add tests for various findTriples(SubjectNode, ...) queries.
-    // TODO: Above with unicode chars in literals
-    // TODO: Add tests for various SPO queries.
-    // TODO: Above with unicode chars in literals
-    // TODO: Add tests for adding/deleting triples with unicode chars in literals
-
+    public void testUnicode() throws Exception {
+        Triple t1 = getTriple("一", "二", "吃了吗？");
+        Triple t2 = getTriple("一", "二", "这是中文", false);
+        List<Triple> triples = new ArrayList<Triple>();
+        triples.add(t1);
+        triples.add(t2);
+        _writer.add(triples, true);
+        assertEquals(1, _reader.countTriples(null, null, t1.getObject(), -1));
+        assertEquals(1, _reader.countTriples(null, null, t2.getObject(), -1));
+        assertEquals(2, _reader.countTriples(t1.getSubject(), null, null, -1));
+        assertEquals(2, _reader.countTriples(null, t2.getPredicate(), null, -1));
+        
+        TripleIterator iter;
+        iter = _reader.findTriples(null, null, t1.getObject(), -1);
+        assertTrue(iter.hasNext());
+        assertEquals(t1, iter.next());
+        
+        iter = _reader.findTriples(null, null, t2.getObject(), -1);
+        assertTrue(iter.hasNext());
+        assertEquals(t2, iter.next());
+        
+        _writer.delete(t1, true);
+        assertEquals(0, _reader.countTriples(null, null, t1.getObject(), -1));
+        _writer.delete(t2, true);
+        assertEquals(0, _reader.countTriples(null, null, t2.getObject(), -1));
+    }
+    
     public void testAddConcurrencyForceFlushOnce() throws Exception {
         doModifyConcurrency(5, 50, 75, false, false, true);
     }
@@ -229,6 +250,24 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
                 _geFactory.createResource(new URI("urn:test:" + s)),
                 _geFactory.createResource(new URI("urn:test:" + p)),
                 _geFactory.createResource(new URI("urn:test:" + o)));
+    }
+    
+    private Triple getTriple(String s, String p, String o) throws Exception {
+        return getTriple(s, p, o, false);
+    }
+    
+    private Triple getTriple(String s, String p, String o, boolean isLiteral) throws Exception {
+        if (isLiteral) {
+            return _geFactory.createTriple(
+                    _geFactory.createResource(new URI("urn:test:" + s)),
+                    _geFactory.createResource(new URI("urn:test:" + p)),
+                    _geFactory.createLiteral(o));
+        } else {
+            return _geFactory.createTriple(
+                    _geFactory.createResource(new URI("urn:test:" + s)),
+                    _geFactory.createResource(new URI("urn:test:" + p)),
+                    _geFactory.createResource(new URI("urn:test:" + o)));
+        }
     }
 
     public class TripleModifier extends Thread {
