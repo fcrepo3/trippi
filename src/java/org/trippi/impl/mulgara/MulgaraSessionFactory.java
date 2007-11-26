@@ -40,7 +40,7 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 	private URI m_xsdModelURI;
 	private URI m_textModelURI = null;
 	private SessionFactory m_factory;
-	private boolean m_isClosed;
+	private boolean m_isClosed = false;
 
 	/**
 	 * Constructor for a local instance.
@@ -154,6 +154,7 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 			logger.info("Closing underlying SessionFactory...");
 			try {
 				m_factory.close();
+				m_isClosed = true;
 			} catch (QueryException e) {
 				throw new TrippiException(e.getMessage(), e);
 			}

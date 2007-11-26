@@ -50,7 +50,7 @@ public class MulgaraConnector extends TriplestoreConnector {
                 }
             } finally {
                 if (m_reader != null) m_reader.close();  // ensure this closes even if above dies
-                //if (m_synch) m_factory.close();
+                if (m_synch) m_factory.close();
             }
             m_isClosed = true;
         }
