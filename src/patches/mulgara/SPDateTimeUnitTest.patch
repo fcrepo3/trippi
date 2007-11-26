@@ -1,40 +1,72 @@
 Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java
 ===================================================================
---- src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java	(revision 535)
+--- src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java	(revision 560)
 +++ src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java	(working copy)
-@@ -69,44 +69,44 @@
+@@ -26,21 +26,16 @@
+ package org.mulgara.store.stringpool.xa;
+ 
+ // Standard Java
+-import java.util.Date;
+-import java.util.Locale;
+-import java.text.SimpleDateFormat;
+ import java.nio.ByteBuffer;
+-
+-// JUnit
+-import junit.framework.*;
+-
+-// Log4j
+-import org.apache.log4j.*;
++import java.text.SimpleDateFormat;
++import java.util.Date;
++import java.util.TimeZone;
+ 
+-// Date Utils
+-import com.mousepushers.date.DateParser;
++import junit.framework.Test;
++import junit.framework.TestCase;
++import junit.framework.TestSuite;
+ 
+-// Internal Packages
++import org.apache.log4j.Logger;
+ import org.mulgara.query.rdf.XSD;
+ import org.mulgara.util.Constants;
+ 
+@@ -69,45 +64,58 @@
    /** Parser for our expected data return values */
    private static SimpleDateFormat format;
  
 -  private static final String VALID_XSD_DATETIME = "2005-01-19T20:40:17";
 -  private static final String VALID_JAVA_DATETIME = VALID_XSD_DATETIME + ".000";
 +  private static final String VALID_XSD_DATETIME = "2005-01-19T20:40:17Z";
-+  private static final String VALID_JAVA_DATETIME = "2005-01-19T20:40:17.000Z";
++  private static final String VALID_JAVA_DATETIME = "2005-01-19T20:40:17.000+0000";
  
 -  private static final String VALID_XSD_DATETIME2 = "2005-01-19T20:40:17.001";
+-  private static final String VALID_JAVA_DATETIME2 = VALID_XSD_DATETIME2;
 +  private static final String VALID_XSD_DATETIME2 = "2005-01-19T20:40:17.001Z";
-   private static final String VALID_JAVA_DATETIME2 = VALID_XSD_DATETIME2;
++  private static final String VALID_JAVA_DATETIME2 = "2005-01-19T20:40:17.001+0000";
  
 -  private static final String VALID_XSD_DATETIME3 = "2005-01-19T20:40:17.1";
 -  private static final String VALID_JAVA_DATETIME3 = VALID_XSD_DATETIME3 + "00";
 +  private static final String VALID_XSD_DATETIME3 = "2005-01-19T20:40:17.1Z";
-+  private static final String VALID_JAVA_DATETIME3 = "2005-01-19T20:40:17.100Z";
++  private static final String VALID_JAVA_DATETIME3 = "2005-01-19T20:40:17.100+0000";
  
    private static final String VALID_XSD_DATETIME4 =
 -      "123456789-01-19T20:40:17.123";
+-  private static final String VALID_JAVA_DATETIME4 = VALID_XSD_DATETIME4;
 +      "123456789-01-19T20:40:17.123Z";
-   private static final String VALID_JAVA_DATETIME4 = VALID_XSD_DATETIME4;
++  private static final String VALID_JAVA_DATETIME4 = "123456789-01-19T20:40:17.123+0000";
  
    private static final String VALID_XSD_DATETIME5 =
 -      "-123456789-01-19T20:40:17.123";
 +      "-123456789-01-19T20:40:17.123Z";
    private static final String VALID_JAVA_DATETIME5 =
 -      "-123456790-01-19T20:40:17.123";
-+      "-123456790-01-19T20:40:17.123Z";
++      "-123456790-01-19T20:40:17.123+0000";
  
 -  private static final String VALID_XSD_DATETIME6 = "0123-01-19T20:40:17.456";
+-  private static final String VALID_JAVA_DATETIME6 = VALID_XSD_DATETIME6;
 +  private static final String VALID_XSD_DATETIME6 = "0123-01-19T20:40:17.456Z";
-   private static final String VALID_JAVA_DATETIME6 = VALID_XSD_DATETIME6;
++  private static final String VALID_JAVA_DATETIME6 = "0123-01-19T20:40:17.456+0000";
  
 -  private static final String INVALID_XSD_DATETIME = "2005-01-19T20:40:17,001";
 -  private static final String INVALID_XSD_DATETIME2 = "2005-01-19T20:40";
@@ -50,23 +82,46 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
 -  private static final String XSD_1CE = "0001-01-01T00:00:00";
 -  private static final String JAVA_1CE = XSD_1CE + ".000";
 +  private static final String XSD_1CE = "0001-01-01T00:00:00Z";
-+  private static final String JAVA_1CE = "0001-01-01T00:00:00.000Z";
++  private static final String JAVA_1CE = "0001-01-01T00:00:00.000+0000";
  
    /** Constant valid test date (1 BCE) */
 -  private static final String XSD_1BCE = "0000-01-01T00:00:00";
 -  private static final String JAVA_1BCE = XSD_1BCE + ".000";
 +  private static final String XSD_1BCE = "0000-01-01T00:00:00Z";
-+  private static final String JAVA_1BCE = "-0001-01-01T00:00:00.000Z";
++  private static final String JAVA_1BCE = "-0001-01-01T00:00:00.000+0000";
  
    /** Constant valid test date (2 BCE) */
 -  private static final String XSD_2BCE = "-0001-01-01T00:00:00";
 -  private static final String JAVA_2BCE = XSD_2BCE + ".000";
+-
 +  private static final String XSD_2BCE = "-0001-01-01T00:00:00Z";
-+  private static final String JAVA_2BCE = "-0002-01-01T00:00:00.000Z";
- 
++  private static final String JAVA_2BCE = "-0002-01-01T00:00:00.000+0000";
++  
++  private static final String XSD_EPOCH = "1970-01-01T00:00:00Z";
++  private static final String JAVA_EPOCH = "1970-01-01T00:00:00.000+0000";
++  
++  private static final long LONG_1CE = -62135769600000L;
++  private static final long LONG_1BCE = -62167392000000L;
++  private static final long LONG_2BCE = -62198928000000L;
++  private static final long LONG_EPOCH = 0L;
++  
++  private static final String XSD_TZ = "2006-07-13T12:34:56.789+0800";
++  private static final String XSD_TZ_UTC = "2006-07-13T04:34:56.789Z";
++  private static final String JAVA_TZ = "2006-07-13T04:34:56.789+0000";
++  private static final long LONG_TZ = 1152765296789L;
++  
    /**
     * Constructs a new test with the given name.
-@@ -264,8 +264,7 @@
+    *
+@@ -130,6 +138,7 @@
+     suite.addTest(new SPDateTimeUnitTest("testInvalid"));
+     suite.addTest(new SPDateTimeUnitTest("testCompare"));
+     suite.addTest(new SPDateTimeUnitTest("testBoundaryDates"));
++    suite.addTest(new SPDateTimeUnitTest("testTimezones"));
+ 
+     return suite;
+   }
+@@ -264,8 +273,7 @@
  
  // Create a dateTime object by lexical string
      try {
@@ -76,7 +131,7 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
        fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME);
      }
      catch (IllegalArgumentException e) {
-@@ -271,10 +270,17 @@
+@@ -271,10 +279,17 @@
      catch (IllegalArgumentException e) {
        assertTrue(true);
      }
@@ -96,7 +151,7 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
        fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME3);
      }
      catch (IllegalArgumentException e) {
-@@ -282,8 +288,7 @@
+@@ -282,8 +297,7 @@
      }
  
      try {
@@ -106,7 +161,7 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
        fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME4);
      }
      catch (IllegalArgumentException e) {
-@@ -291,8 +296,7 @@
+@@ -291,8 +305,7 @@
      }
  
      try {
@@ -116,7 +171,7 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
        fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME5);
      }
      catch (IllegalArgumentException e) {
-@@ -298,7 +302,6 @@
+@@ -298,7 +311,6 @@
      catch (IllegalArgumentException e) {
        assertTrue(true);
      }
@@ -124,18 +179,37 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
    }
  
    public void testCompare() throws Exception {
-@@ -336,7 +339,10 @@
+@@ -330,7 +342,14 @@
+   public void testBoundaryDates() throws Exception {
+     // Create a new factory
+     SPDateTimeFactory factory = new SPDateTimeFactory();
+-    SPDateTimeImpl oneCE, oneBCE, twoBCE;
++    SPDateTimeImpl epoch, oneCE, oneBCE, twoBCE;
++    
++    // Test Epoch
++    epoch = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.DATE_TIME_URI,
++            XSD_EPOCH);
++    assertEquals(XSD_EPOCH, epoch.getLexicalForm());
++    assertEquals(JAVA_EPOCH, getDateString(epoch));
++    assertEquals(LONG_EPOCH, epoch.getData().getLong());
+ 
+     // Test 1 CE
+     oneCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+@@ -335,8 +354,12 @@
+     // Test 1 CE
      oneCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
          DATE_TIME_URI, XSD_1CE);
-     assertTrue(XSD.ONE_CE.equals(getDate(oneCE)));
+-    assertTrue(XSD.ONE_CE.equals(getDate(oneCE)));
++    assertEquals(XSD.ONE_CE, getDate(oneCE));
 +    // Test that the lexical form of the date is correct
      assertEquals(XSD_1CE, oneCE.getLexicalForm());
 +    // Test the correct value is stored
 +    assertEquals(JAVA_1CE, getDateString(oneCE));
++    assertEquals(LONG_1CE, oneCE.getData().getLong());
  
      // Test 1 BCE
      oneBCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
-@@ -342,9 +348,10 @@
+@@ -342,18 +365,23 @@
      oneBCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
          DATE_TIME_URI, XSD_1BCE);
      assertTrue(XSD.ONE_BCE.equals(getDate(oneBCE)));
@@ -144,16 +218,67 @@ Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeU
      assertEquals(XSD_1BCE, oneBCE.getLexicalForm());
 +    // Test the correct value is stored
 +    assertEquals(JAVA_1BCE, getDateString(oneBCE));
++    assertEquals(LONG_1BCE, oneBCE.getData().getLong());
  
      // Test 2 BCE
++    SimpleDateFormat df = new SimpleDateFormat(XSD.YEAR_FORMAT);
++    df.setTimeZone(TimeZone.getTimeZone("UTC"));
      twoBCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
-@@ -354,6 +361,8 @@
- 
+         DATE_TIME_URI, XSD_2BCE);
+-    assertTrue(DateParser.parse("-0001", XSD.YEAR_FORMAT, Locale.getDefault()).
+-        equals(getDate(twoBCE)));
+-
++    assertTrue(df.parse("-0001").equals(getDate(twoBCE)));
      // Test that the lexical form of the date is correct
      assertEquals(XSD_2BCE, twoBCE.getLexicalForm());
 +    // Test the correct value is stored
 +    assertEquals(JAVA_2BCE, getDateString(twoBCE));
++    assertEquals(LONG_2BCE, twoBCE.getData().getLong());
  
      // Compare
      assertTrue(oneCE.compareTo(oneCE) == 0);
+@@ -366,6 +394,15 @@
+     assertTrue(twoBCE.compareTo(oneCE) == -1);
+     assertTrue(twoBCE.compareTo(oneBCE) == -1);
+   }
++  
++  public void testTimezones() throws Exception {
++    SPDateTimeFactory factory = new SPDateTimeFactory();
++    SPDateTimeImpl tz1 = (SPDateTimeImpl)factory.newSPTypedLiteral(XSD.DATE_TIME_URI,
++            XSD_TZ);
++    assertEquals(XSD_TZ_UTC, tz1.getLexicalForm());
++    assertEquals(JAVA_TZ, getDateString(tz1));
++    assertEquals(LONG_TZ, tz1.getData().getLong());
++  }
+ 
+   private Date getDate(SPDateTimeImpl dateTime) {
+     return new Date(dateTime.getData().getLong());
+@@ -373,7 +410,9 @@
+ 
+   private String getDateString(SPDateTimeImpl dateTime) {
+     Date date = getDate(dateTime);
+-    String dateString = new SimpleDateFormat(XSD.DATE_TIME_FORMAT).format(date);
++    SimpleDateFormat df = new SimpleDateFormat(XSD.DATE_TIME_FORMAT);
++    df.setTimeZone(TimeZone.getTimeZone("UTC"));
++    String dateString = df.format(date);
+     if (date.before(XSD.ONE_CE)) {
+       dateString = "-" + dateString;
+     }
+@@ -380,8 +419,6 @@
+     return dateString;
+   }
+ 
+-
+-
+   /**
+    * Initialise members.
+    *
+@@ -397,7 +434,6 @@
+    * @throws Exception EXCEPTION TO DO
+    */
+   public void tearDown() throws Exception {
+-
+     super.tearDown();
+   }
+ }
 
