@@ -1,0 +1,159 @@
+Index: src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java
+===================================================================
+--- src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java	(revision 535)
++++ src/jar/store-stringpool/java/org/mulgara/store/stringpool/xa/SPDateTimeUnitTest.java	(working copy)
+@@ -69,44 +69,44 @@
+   /** Parser for our expected data return values */
+   private static SimpleDateFormat format;
+ 
+-  private static final String VALID_XSD_DATETIME = "2005-01-19T20:40:17";
+-  private static final String VALID_JAVA_DATETIME = VALID_XSD_DATETIME + ".000";
++  private static final String VALID_XSD_DATETIME = "2005-01-19T20:40:17Z";
++  private static final String VALID_JAVA_DATETIME = "2005-01-19T20:40:17.000Z";
+ 
+-  private static final String VALID_XSD_DATETIME2 = "2005-01-19T20:40:17.001";
++  private static final String VALID_XSD_DATETIME2 = "2005-01-19T20:40:17.001Z";
+   private static final String VALID_JAVA_DATETIME2 = VALID_XSD_DATETIME2;
+ 
+-  private static final String VALID_XSD_DATETIME3 = "2005-01-19T20:40:17.1";
+-  private static final String VALID_JAVA_DATETIME3 = VALID_XSD_DATETIME3 + "00";
++  private static final String VALID_XSD_DATETIME3 = "2005-01-19T20:40:17.1Z";
++  private static final String VALID_JAVA_DATETIME3 = "2005-01-19T20:40:17.100Z";
+ 
+   private static final String VALID_XSD_DATETIME4 =
+-      "123456789-01-19T20:40:17.123";
++      "123456789-01-19T20:40:17.123Z";
+   private static final String VALID_JAVA_DATETIME4 = VALID_XSD_DATETIME4;
+ 
+   private static final String VALID_XSD_DATETIME5 =
+-      "-123456789-01-19T20:40:17.123";
++      "-123456789-01-19T20:40:17.123Z";
+   private static final String VALID_JAVA_DATETIME5 =
+-      "-123456790-01-19T20:40:17.123";
++      "-123456790-01-19T20:40:17.123Z";
+ 
+-  private static final String VALID_XSD_DATETIME6 = "0123-01-19T20:40:17.456";
++  private static final String VALID_XSD_DATETIME6 = "0123-01-19T20:40:17.456Z";
+   private static final String VALID_JAVA_DATETIME6 = VALID_XSD_DATETIME6;
+ 
+-  private static final String INVALID_XSD_DATETIME = "2005-01-19T20:40:17,001";
+-  private static final String INVALID_XSD_DATETIME2 = "2005-01-19T20:40";
++  private static final String INVALID_XSD_DATETIME = "2005-01-19T20:40:17,001Z";
++  private static final String INVALID_XSD_DATETIME2 = "2005-01-19T20:40Z";
+   private static final String INVALID_XSD_DATETIME3 = "2005";
+-  private static final String INVALID_XSD_DATETIME4 = "-01-19T20:40:17";
+-  private static final String INVALID_XSD_DATETIME5 = "2005-01-19T20:40:17.";
++  private static final String INVALID_XSD_DATETIME4 = "-01-19T20:40:17Z";
++  private static final String INVALID_XSD_DATETIME5 = "2005-01-19T20:40:17.Z";
+ 
+   /** Constant valid test date (1 CE) */
+-  private static final String XSD_1CE = "0001-01-01T00:00:00";
+-  private static final String JAVA_1CE = XSD_1CE + ".000";
++  private static final String XSD_1CE = "0001-01-01T00:00:00Z";
++  private static final String JAVA_1CE = "0001-01-01T00:00:00.000Z";
+ 
+   /** Constant valid test date (1 BCE) */
+-  private static final String XSD_1BCE = "0000-01-01T00:00:00";
+-  private static final String JAVA_1BCE = XSD_1BCE + ".000";
++  private static final String XSD_1BCE = "0000-01-01T00:00:00Z";
++  private static final String JAVA_1BCE = "-0001-01-01T00:00:00.000Z";
+ 
+   /** Constant valid test date (2 BCE) */
+-  private static final String XSD_2BCE = "-0001-01-01T00:00:00";
+-  private static final String JAVA_2BCE = XSD_2BCE + ".000";
++  private static final String XSD_2BCE = "-0001-01-01T00:00:00Z";
++  private static final String JAVA_2BCE = "-0002-01-01T00:00:00.000Z";
+ 
+   /**
+    * Constructs a new test with the given name.
+@@ -264,8 +264,7 @@
+ 
+ // Create a dateTime object by lexical string
+     try {
+-      SPDateTimeImpl dateTime = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+-          DATE_TIME_URI, INVALID_XSD_DATETIME);
++      factory.newSPTypedLiteral(XSD.DATE_TIME_URI, INVALID_XSD_DATETIME);
+       fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME);
+     }
+     catch (IllegalArgumentException e) {
+@@ -271,10 +270,17 @@
+     catch (IllegalArgumentException e) {
+       assertTrue(true);
+     }
++    
++    try {
++        factory.newSPTypedLiteral(XSD.DATE_TIME_URI, INVALID_XSD_DATETIME2);
++        fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME2);
++      }
++      catch (IllegalArgumentException e) {
++        assertTrue(true);
++      }
+ 
+     try {
+-      SPDateTimeImpl dateTime = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+-          DATE_TIME_URI, INVALID_XSD_DATETIME3);
++      factory.newSPTypedLiteral(XSD.DATE_TIME_URI, INVALID_XSD_DATETIME3);
+       fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME3);
+     }
+     catch (IllegalArgumentException e) {
+@@ -282,8 +288,7 @@
+     }
+ 
+     try {
+-      SPDateTimeImpl dateTime = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+-          DATE_TIME_URI, INVALID_XSD_DATETIME4);
++      factory.newSPTypedLiteral(XSD.DATE_TIME_URI, INVALID_XSD_DATETIME4);
+       fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME4);
+     }
+     catch (IllegalArgumentException e) {
+@@ -291,8 +296,7 @@
+     }
+ 
+     try {
+-      SPDateTimeImpl dateTime = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+-          DATE_TIME_URI, INVALID_XSD_DATETIME5);
++      factory.newSPTypedLiteral(XSD.DATE_TIME_URI, INVALID_XSD_DATETIME5);
+       fail("Successfully parsed an invalid date: " + INVALID_XSD_DATETIME5);
+     }
+     catch (IllegalArgumentException e) {
+@@ -298,7 +302,6 @@
+     catch (IllegalArgumentException e) {
+       assertTrue(true);
+     }
+-
+   }
+ 
+   public void testCompare() throws Exception {
+@@ -336,7 +339,10 @@
+     oneCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+         DATE_TIME_URI, XSD_1CE);
+     assertTrue(XSD.ONE_CE.equals(getDate(oneCE)));
++    // Test that the lexical form of the date is correct
+     assertEquals(XSD_1CE, oneCE.getLexicalForm());
++    // Test the correct value is stored
++    assertEquals(JAVA_1CE, getDateString(oneCE));
+ 
+     // Test 1 BCE
+     oneBCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+@@ -342,9 +348,10 @@
+     oneBCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+         DATE_TIME_URI, XSD_1BCE);
+     assertTrue(XSD.ONE_BCE.equals(getDate(oneBCE)));
+-
+     // Test that the lexical form of the date is correct
+     assertEquals(XSD_1BCE, oneBCE.getLexicalForm());
++    // Test the correct value is stored
++    assertEquals(JAVA_1BCE, getDateString(oneBCE));
+ 
+     // Test 2 BCE
+     twoBCE = (SPDateTimeImpl) factory.newSPTypedLiteral(XSD.
+@@ -354,6 +361,8 @@
+ 
+     // Test that the lexical form of the date is correct
+     assertEquals(XSD_2BCE, twoBCE.getLexicalForm());
++    // Test the correct value is stored
++    assertEquals(JAVA_2BCE, getDateString(twoBCE));
+ 
+     // Compare
+     assertTrue(oneCE.compareTo(oneCE) == 0);
+

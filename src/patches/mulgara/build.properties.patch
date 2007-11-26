@@ -1,0 +1,13 @@
+Index: /home/eddie/workspace/mulgara/build.properties
+===================================================================
+--- build.properties	(revision 560)
++++ build.properties	(working copy)
+@@ -75,6 +75,7 @@
+ driver.jar        = driver-${mulgara-version}.jar
+ itql.jar          = itql-${mulgara-version}.jar
+ mulgara.jar        = mulgara-${mulgara-version}.jar
++mulgara-core.jar = mulgara-core-${mulgara-version}.jar
+ mulgara-lite.jar   = mulgara-lite-${mulgara-version}.jar
+ mulgara-http.jar   = mulgara-http-${mulgara-version}.jar
+ rdql.jar          = rdql-${mulgara-version}.jar
+

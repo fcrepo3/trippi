@@ -1,0 +1,105 @@
+Index: build.xml
+===================================================================
+--- build.xml	(revision 560)
++++ build.xml	(working copy)
+@@ -1700,7 +1700,99 @@
+     </script>
+ 
+   </target>
++  	
++  <target name="core-dist"
++          depends="client-jrdf-jar, config-jar, content-mbox-jar, 
++             content-mp3-jar, content-n3-jar, content-rdfxml-jar, 
++             content-rio-jar, demo-jar, dtd-jar, driver-jar, itql-jar, jrdf-jar, 
++             store-jar, store-xa-jar, store-nodepool-jar, 
++             store-nodepool-memory-jar, store-nodepool-xa-jar, query-jar, 
++             resolver-jar, resolver-file-jar, resolver-filesystem-jar,
++             resolver-http-jar, resolver-memory-jar, resolver-spi-jar,
++             resolver-store-jar, resolver-url-jar, resolver-lucene-jar,
++             resolver-view-jar, resolver-nodetype-jar, resolver-prefix-jar, 
++             resolver-jar-jar, resolver-relational-jar, 
++             resolver-distributed-jar, resolver-xsd-jar, resolver-test-jar, 
++             rmi-jar, server-jar, server-beep-jar, server-rmi-jar, sofa-jar, 
++             rules-jar, krule-jar, store-stringpool-jar, 
++             store-stringpool-memory-jar, store-stringpool-xa-jar, tuples-jar,
++             tuples-hybrid-jar, util-jar, util-xa-jar, -embedded-dist-uptodate"
++          description="core dist for embedded apps, without 3rd party libs"
++          unless="embedded.dist.uptodate">
++
++    <!-- HACK!!!!! -->
++    <!-- This will get the ARP parser working -->
++    <!-- My theory about why this is necessary is that the Bootloader class
++         messes up the JAR plugin framework that both JAXP and StAX use -->
+ 
++    <mkdir dir="${obj.dir}/xerces"/>
++
++    <unjar src="${lib.dir}/xercesImpl.jar" dest="${obj.dir}/xerces"/>
++    <unjar src="${lib.dir}/xmlParserAPIs.jar" dest="${obj.dir}/xerces"/>
++    <unjar src="${lib.dir}/jsr173_07_api.jar" dest="${obj.dir}/xerces"/>
++    <unjar src="${lib.dir}/jsr173_07_ri.jar" dest="${obj.dir}/xerces"/>
++
++    <!-- build the executable jar file -->
++    <jar jarfile="${dist.dir}/${mulgara-core.jar}">
++
++      <!-- core libraries -->
++      <zipfileset src="${bin.dir}/${client-jrdf.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${config.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${content-mp3.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${content-n3.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${content-mbox.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${content-rdfxml.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${content-rio.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${driver.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${dtd.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${itql.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${jrdf.base.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${krule.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${query.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-distributed.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-file.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-filesystem.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-http.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-jar.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-lucene.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-memory.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-nodetype.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-prefix.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-relational.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-spi.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-store.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-test.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-url.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-view.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${resolver-xsd.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${rmi.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${rules.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${server.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${server-beep.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${server-local.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${server-rmi.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-xa.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-nodepool.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-nodepool-memory.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-nodepool-xa.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-stringpool.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-stringpool-memory.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${store-stringpool-xa.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${tuples.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${tuples-hybrid.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${util.jar}" excludes="META-INF/**"/>
++      <zipfileset src="${bin.dir}/${util-xa.jar}" excludes="META-INF/**"/>
++
++      <!-- HACK!!!!! -->
++      <!-- This will get the ARP parser working -->
++      <!-- Ignore the xerces DocumentBuilderFactory -->
++      <fileset dir="${obj.dir}/xerces" excludes="META_INF/**,META-INF/services/javax.xml.parsers.DocumentBuilderFactory"/>
++      <!-- HACK!!!!! -->
++    </jar>
++  </target>
++  	
+   <!-- =================================================================== -->
+   <!-- Creates the distribution file for the Embedded Mulgara server        -->
+   <!-- =================================================================== -->
+

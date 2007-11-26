@@ -1,0 +1,26 @@
+Index: src/jar/resolver/java/org/mulgara/resolver/ModelExistsOperation.java
+===================================================================
+--- src/jar/resolver/java/org/mulgara/resolver/ModelExistsOperation.java	(revision 501)
++++ src/jar/resolver/java/org/mulgara/resolver/ModelExistsOperation.java	(working copy)
+@@ -66,10 +66,17 @@
+                       ResolverSessionFactory resolverSessionFactory,
+                       DatabaseMetadata       metadata) throws Exception
+   {
+-    long model = systemResolver.lookupPersistent(new URIReferenceImpl(
++    try {
++      long model = systemResolver.lookupPersistent(new URIReferenceImpl(
+         modelURI));
+-
+-    result = systemResolver.modelExists(model);
++      result = systemResolver.modelExists(model);
++      // Temporary workaround: if modelURI is not known, the localize attempt
++      // fails and returns an exception. However, in this case, we should return
++      // false. See:
++      // http://mulgara.org/pipermail/mulgara-general/2007-October/000195.html
++    } catch(LocalizeException le) {
++        result = false;
++    }
+   }
+ 
+   public boolean isWriteOperation() {
+
