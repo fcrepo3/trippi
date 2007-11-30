@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <connector-descriptor name="Mulgara Connector">
 	<description>
-		This connector is written for Mulgara 1.1.0 For more information
+		This connector is written for Mulgara 1.1.1 For more information
 		on Mulgara, visit http://www.mulgara.org/
 	</description>
 	<parameter name="remote"
 		label="Whether the triplestore is available via rmi.">
 		<description>
-			This tells the connector to communicate with Kowari in
+			This tells the connector to communicate with Mulgara in
 			remote or local mode.
 		</description>
 		<option value="true">
 			<parameter name="host"
-				label="The hostname where Kowari is running." />
+				label="The hostname where Mulgara is running." />
 			<parameter name="port"
 				label="The rmi port it's running on, if not 1099 (the default)."
 				optional="true" />
