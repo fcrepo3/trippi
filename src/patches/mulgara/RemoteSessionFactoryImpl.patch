@@ -1,0 +1,13 @@
+Index: src/jar/server-rmi/java/org/mulgara/server/rmi/RemoteSessionFactoryImpl.java
+===================================================================
+--- src/jar/server-rmi/java/org/mulgara/server/rmi/RemoteSessionFactoryImpl.java	(revision 560)
++++ src/jar/server-rmi/java/org/mulgara/server/rmi/RemoteSessionFactoryImpl.java	(working copy)
+@@ -245,7 +245,6 @@
+    * {@inheritDoc RemoteSessionFactory}
+    */
+   public void close() throws QueryException {
+-
+-    sessionFactory.close();
++    
+   }
+ }
