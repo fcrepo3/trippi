@@ -4,26 +4,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
-import org.openrdf.rio.NamespaceListener;
-import org.openrdf.rio.Parser;
-import org.openrdf.rio.StatementHandler;
-import org.openrdf.rio.StatementHandlerException;
-
+import org.openrdf.model.Statement;
+import org.openrdf.rio.RDFHandler;
+import org.openrdf.rio.RDFHandlerException;
+import org.openrdf.rio.RDFParser;
 import org.trippi.RDFFormat;
 import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;
@@ -35,15 +30,13 @@ import org.trippi.TrippiException;
  * @author cwilper@cs.cornell.edu
  */
 public class RIOTripleIterator extends TripleIterator 
-                               implements StatementHandler,
-                                          NamespaceListener,
-                                          Runnable {
+                               implements RDFHandler, Runnable {
 
     private static final Logger logger =
         Logger.getLogger(RIOTripleIterator.class.getName());
 
     private InputStream m_in;
-    private Parser m_parser;
+    private RDFParser m_parser;
     private String m_baseURI;
 
     private Triple m_bucket; // shared between parser/consumer threads
@@ -64,13 +57,15 @@ public class RIOTripleIterator extends TripleIterator
      * Initialize the iterator by starting the parsing thread.
      */
     public RIOTripleIterator(InputStream in, 
-                             Parser parser, 
+                             RDFParser parser, 
                              String baseURI) throws TrippiException {
         m_in = in;
         m_parser = parser;
-        m_parser.setNamespaceListener(this);
         m_aliases = new HashMap<String, String>();
         m_baseURI = baseURI;
+        m_parser.setRDFHandler(this);
+        m_parser.setVerifyData(true);
+        m_parser.setStopAtFirstError(false);
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
         Thread parserThread = new Thread(this);
         logger.info("Starting parse thread");
@@ -79,8 +74,12 @@ public class RIOTripleIterator extends TripleIterator
     }
 
     public void handleNamespace(String prefix, String uri) {
-        m_aliases.put(prefix, uri);
-        setAliasMap(m_aliases);
+        if (prefix == null || prefix.equals("")) {
+
+        } else {
+            m_aliases.put(prefix, uri);
+            setAliasMap(m_aliases);
+        }
     }
 
     /**
@@ -120,18 +119,21 @@ public class RIOTripleIterator extends TripleIterator
             return triple;
         }
     }
-
+    
+    @Override
     public boolean hasNext() throws TrippiException {
         return (m_next != null);
     }
     
+    @Override
     public Triple next() throws TrippiException {
         if (m_next == null) return null;
         Triple last = m_next;
         m_next = getNext();
         return last;
     }
-
+    
+    @Override
     public void close() throws TrippiException {
         if (!m_closed) {
             m_closed = true;
@@ -148,7 +150,6 @@ public class RIOTripleIterator extends TripleIterator
      */
     public void run() {
         try {
-            m_parser.setStatementHandler(this);
             m_parser.parse(m_in, m_baseURI);
         } catch (Exception e) {
             m_parseException = e;
@@ -160,20 +161,17 @@ public class RIOTripleIterator extends TripleIterator
 
     /**
      * Handle a statement from the parser.
+     * @throws URISyntaxException 
+     * @throws GraphElementFactoryException 
      */
     public void handleStatement(org.openrdf.model.Resource subject,
                                 org.openrdf.model.URI predicate,
-                                org.openrdf.model.Value object)
-                         throws StatementHandlerException {
+                                org.openrdf.model.Value object) throws GraphElementFactoryException, URISyntaxException {
         // first, convert the rio statement to a jrdf triple
         Triple triple = null;
-        try {
             triple = m_util.createTriple( subjectNode(subject),
                                           predicateNode(predicate),
                                           objectNode(object));
-        } catch (Exception e) {
-            throw new StatementHandlerException("Error converting to Triple", e);
-        }
         put(triple); // locks until m_bucket is free or close() has been called
     }
 
@@ -199,7 +197,7 @@ public class RIOTripleIterator extends TripleIterator
             throws GraphElementFactoryException,
                    URISyntaxException {
         if (subject instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) subject).getURI()) );
+            return m_util.createResource( new URI(((org.openrdf.model.URI) subject).stringValue()) );
         } else {
             return m_util.createResource(((org.openrdf.model.BNode) subject).getID().hashCode());
         }
@@ -208,14 +206,14 @@ public class RIOTripleIterator extends TripleIterator
     private PredicateNode predicateNode(org.openrdf.model.URI predicate)
             throws GraphElementFactoryException,
                    URISyntaxException {
-        return m_util.createResource( new URI(((org.openrdf.model.URI) predicate).getURI()) );
+        return m_util.createResource( new URI(((org.openrdf.model.URI) predicate).stringValue()) );
     }
 
     private ObjectNode objectNode(org.openrdf.model.Value object)
             throws GraphElementFactoryException,
                    URISyntaxException {
         if (object instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) object).getURI()) );
+            return m_util.createResource( new URI(((org.openrdf.model.URI) object).stringValue()) );
         } else if (object instanceof  org.openrdf.model.Literal) {
             org.openrdf.model.Literal lit = (org.openrdf.model.Literal) object;
             org.openrdf.model.URI uri = lit.getDatatype();
@@ -239,9 +237,9 @@ public class RIOTripleIterator extends TripleIterator
         File f = new File(args[0]);
         String baseURI = "http://localhost/";
         RDFFormat format = RDFFormat.forName(args[1]);
-        Parser parser;
+        RDFParser parser;
         if (format == RDFFormat.RDF_XML) {
-            parser = new org.openrdf.rio.rdfxml.RdfXmlParser();
+            parser = new org.openrdf.rio.rdfxml.RDFXMLParser();
         } else if (format == RDFFormat.TURTLE) {
             parser = new org.openrdf.rio.turtle.TurtleParser();
         } else if (format == RDFFormat.N_TRIPLES) {
@@ -257,6 +255,36 @@ public class RIOTripleIterator extends TripleIterator
         } finally {
             iter.close();
         }
+    }
+
+    public void endRDF() throws RDFHandlerException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void handleComment(String arg0) throws RDFHandlerException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void handleStatement(Statement st) throws RDFHandlerException {
+        // first, convert the rio statement to a jrdf triple
+        Triple triple = null;
+            try {
+                triple = m_util.createTriple( subjectNode(st.getSubject()),
+                                              predicateNode(st.getPredicate()),
+                                              objectNode(st.getObject()));
+            } catch (GraphElementFactoryException e) {
+                throw new RDFHandlerException(e.getMessage(), e);
+            } catch (URISyntaxException e) {
+                throw new RDFHandlerException(e.getMessage(), e);
+            }
+        put(triple); // locks until m_bucket is free or close() has been called
+    }
+
+    public void startRDF() throws RDFHandlerException {
+        // TODO Auto-generated method stub
+        
     }
 
 }

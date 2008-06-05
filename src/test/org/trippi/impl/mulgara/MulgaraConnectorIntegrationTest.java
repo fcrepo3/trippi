@@ -31,6 +31,13 @@ public class MulgaraConnectorIntegrationTest
         _connector = getConnector();
         _geFactory = _connector.getElementFactory();
     }
+    
+    public void tearDown() throws Exception {
+        TriplestoreWriter writer = _connector.getWriter();
+        TripleIterator iter = writer.findTriples(null, null, null, -1);
+        writer.delete(iter, true);
+        _connector.close();
+    }
 	
     public MulgaraConnectorIntegrationTest(String name) throws Exception { 
         super(name);
@@ -55,9 +62,23 @@ public class MulgaraConnectorIntegrationTest
         } finally {
             iter.close();
         }
+        
+        // SPO query for explicit values
+        String query = String.format("<%s> <%s> '%s'^^%s", s, p, XSD_DATETIME, XSD.DATE_TIME_URI);
+        iter = writer.findTriples("spo", query, -1, false);
+        try {
+            assertTrue(iter.hasNext());
+            ObjectNode object = iter.next().getObject();
+            assertTrue(object instanceof Literal);
+            Literal date = (Literal) object;
+            assertEquals(XSD.DATE_TIME_URI, date.getDatatypeURI());
+            assertEquals(XSD_DATETIME, date.getLexicalForm());
+        } finally {
+            iter.close();
+        }
     }
     
-    public void testLuceneModel() throws Exception {
+    public void xtestLuceneModel() throws Exception {
         if (!(_connector instanceof MulgaraConnector)) {
             fail("expected MulgaraConnector");
         }
@@ -90,11 +111,5 @@ public class MulgaraConnectorIntegrationTest
         assertFalse(tuples.hasNext());
         Literal text = (Literal)map.get("o");
         assertEquals(textLiteral.toString(), text.toString());
-        
-        
-        
-
     }
-    
-    //public void tearDown() throws Exception {}
 }

@@ -21,7 +21,7 @@ import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
 import org.openrdf.rio.n3.N3Writer;
 import org.openrdf.rio.ntriples.NTriplesWriter;
-import org.openrdf.rio.rdfxml.RdfXmlWriter;
+import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.rio.turtle.TurtleWriter;
 import org.trippi.io.CountTripleWriter;
 import org.trippi.io.RIOTripleIterator;
@@ -139,7 +139,7 @@ public abstract class TripleIterator {
             } else {
                 sink = new XMLDeclarationRemover(out);
             }
-            writer = new RIOTripleWriter(new RdfXmlWriter(sink), m_aliases);
+            writer = new RIOTripleWriter(new RDFXMLWriter(sink), m_aliases);
         } else if (format == RDFFormat.N_TRIPLES) {
             writer = new RIOTripleWriter(new NTriplesWriter(out), m_aliases);
         } else if (format == RDFFormat.NOTATION_3) {
@@ -162,9 +162,9 @@ public abstract class TripleIterator {
                                             String baseURI,
                                             RDFFormat format) throws TrippiException {
         if (baseURI == null) baseURI = "http://localhost/";
-        org.openrdf.rio.Parser parser;
+        org.openrdf.rio.RDFParser parser;
         if (format == RDFFormat.RDF_XML) {
-            parser = new org.openrdf.rio.rdfxml.RdfXmlParser();
+            parser = new org.openrdf.rio.rdfxml.RDFXMLParser();
         } else if (format == RDFFormat.TURTLE) {
             parser = new org.openrdf.rio.turtle.TurtleParser();
         } else if (format == RDFFormat.N_TRIPLES) {

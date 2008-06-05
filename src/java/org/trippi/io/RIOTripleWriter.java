@@ -1,6 +1,5 @@
 package org.trippi.io;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -11,7 +10,9 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
-import org.openrdf.rio.RdfDocumentWriter;
+import org.openrdf.model.impl.StatementImpl;
+import org.openrdf.rio.RDFHandlerException;
+import org.openrdf.rio.RDFWriter;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 
@@ -20,40 +21,40 @@ import org.trippi.TrippiException;
  */
 public class RIOTripleWriter extends TripleWriter {
 
-    private RdfDocumentWriter m_writer;
+    private RDFWriter m_writer;
     private org.openrdf.model.impl.ValueFactoryImpl m_rioFactory = 
             new org.openrdf.model.impl.ValueFactoryImpl();
 
-    public RIOTripleWriter(RdfDocumentWriter writer, Map<String, String> aliases) throws TrippiException {
+    public RIOTripleWriter(RDFWriter writer, Map<String, String> aliases) throws TrippiException {
         try {
             m_writer = writer;
             Iterator<String> iter = aliases.keySet().iterator();
             while (iter.hasNext()) {
                 String prefix = iter.next();
                 String name = aliases.get(prefix);
-                m_writer.setNamespace(prefix, name);
+                m_writer.handleNamespace(prefix, name);
             }
-        } catch (IOException e) {
+        } catch (RDFHandlerException e) {
             throw new TrippiException("Error setting up RIOTripleWriter", e);
         }
     }
 
     public int write(TripleIterator iter) throws TrippiException {
         try {
-            m_writer.startDocument();
+            m_writer.startRDF();
             int count = 0;
             while (iter.hasNext()) {
                 Triple triple = iter.next();
                 // write the triple to the rio writer using rio equivalents
-                m_writer.writeStatement(rioResource(triple.getSubject()),
+                m_writer.handleStatement(new StatementImpl(rioResource(triple.getSubject()),
                                         rioURI(triple.getPredicate()),
-                                        rioValue(triple.getObject()));
+                                        rioValue(triple.getObject())));
                 count++;
             }
-            m_writer.endDocument();
+            m_writer.endRDF();
             iter.close();
             return count;
-        } catch (IOException e) {
+        } catch (RDFHandlerException e) {
             throw new TrippiException("Error setting up RIOTripleWriter", e);
         }
     }
