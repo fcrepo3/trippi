@@ -57,7 +57,7 @@ public class MulgaraConnectorIntegrationTest
         }
     }
     
-    public void testLuceneModel() throws Exception {
+    public void xtestLuceneModel() throws Exception {
         if (!(_connector instanceof MulgaraConnector)) {
             fail("expected MulgaraConnector");
         }

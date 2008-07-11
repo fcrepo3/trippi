@@ -1,7 +1,9 @@
 package org.trippi.impl.mulgara;
 
 import java.io.IOException;
+
 import java.net.URI;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.GraphException;
@@ -17,15 +20,17 @@ import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-import org.mulgara.itql.ItqlInterpreter;
-import org.mulgara.itql.lexer.LexerException;
-import org.mulgara.itql.parser.ParserException;
+
+import org.mulgara.itql.TqlInterpreter;
 import org.mulgara.jrdf.JRDFGraph;
+import org.mulgara.parser.MulgaraLexerException;
+import org.mulgara.parser.MulgaraParserException;
 import org.mulgara.query.Answer;
 import org.mulgara.query.QueryException;
 import org.mulgara.resolver.LocalJRDFDatabaseSession;
 import org.mulgara.server.JRDFSession;
 import org.mulgara.server.driver.JRDFGraphFactory;
+
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
@@ -116,16 +121,16 @@ public class MulgaraSession implements TriplestoreSession {
 	        queryText = queryText.replaceAll("\\s+from\\s+<#", " from <" + m_serverURI); 
 	        // expand shortcut "in <#" to "in <" + m_serverURI
 	        queryText = queryText.replaceAll("\\s+in\\s+<#", " in <" + m_serverURI);
-	        ItqlInterpreter interpreter = new ItqlInterpreter(new HashMap<Object, Object>());
+	        TqlInterpreter interpreter = new TqlInterpreter(new HashMap<String, URI>());
 	        try {
 				ans = m_session.query(interpreter.parseQuery(queryText));
 			} catch (QueryException e) {
 				throw new TrippiException(e.getMessage(), e);
 			} catch (IOException e) {
 				throw new TrippiException(e.getMessage(), e);
-			} catch (LexerException e) {
+			} catch (MulgaraLexerException e) {
 				throw new TrippiException(e.getMessage(), e);
-			} catch (ParserException e) {
+			} catch (MulgaraParserException e) {
 				throw new TrippiException(e.getMessage(), e);
 			}
 	        return new MulgaraTupleIterator(ans);
