@@ -73,7 +73,9 @@ public class MulgaraSession implements TriplestoreSession {
 	public void close() throws TrippiException {
 		if (!m_isClosed) {
 			try {
-				m_session.close();
+			    synchronized(m_session) {
+			        m_session.close();
+			    }
 			} catch (QueryException e) {
 				throw new TrippiException(e.getMessage(), e);
 			}
@@ -164,9 +166,13 @@ public class MulgaraSession implements TriplestoreSession {
 	private void doTriples(Set<Triple> triples, boolean add) throws TrippiException {
 	    try {
 			if (add) {
-				m_session.insert(m_modelURI, triples);
+			    synchronized(m_session) {
+			        m_session.insert(m_modelURI, triples);
+			    }
 			} else {
-				m_session.delete(m_modelURI, triples);
+			    synchronized(m_session) {
+			        m_session.delete(m_modelURI, triples);
+			    }
 			}
 			if (m_textModelURI != null)
 				doPlainLiteralTriples(triples, add);
@@ -198,9 +204,13 @@ public class MulgaraSession implements TriplestoreSession {
 		}
 		if (plainLiteralTriples.size() > 0) {
 			if (add) {
-				m_session.insert(m_textModelURI, plainLiteralTriples);
+			    synchronized(m_session) {
+			        m_session.insert(m_textModelURI, plainLiteralTriples);
+			    }
 			} else {
-				m_session.delete(m_textModelURI, plainLiteralTriples);
+			    synchronized(m_session) {
+			        m_session.delete(m_textModelURI, plainLiteralTriples);
+			    }
 			}
 		}
 	}

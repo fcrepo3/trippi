@@ -49,7 +49,9 @@ public class MulgaraConnector extends TriplestoreConnector {
                     m_updateSession.close();
                 }
             } finally {
-                if (m_reader != null) m_reader.close();  // ensure this closes even if above dies
+                if (m_reader != null) {
+                    m_reader.close();  // ensure this closes even if above dies
+                }
                 if (m_synch) m_factory.close();
             }
             m_isClosed = true;
