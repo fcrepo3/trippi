@@ -90,10 +90,6 @@ public class MulgaraConnectorIntegrationTest
         assertFalse(tuples.hasNext());
         Literal text = (Literal)map.get("o");
         assertEquals(textLiteral.toString(), text.toString());
-        
-        
-        
-
     }
     
     //public void tearDown() throws Exception {}

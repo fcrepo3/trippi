@@ -143,7 +143,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
     /**
      * Add a single triple to the store (convenience method).
      *
-     * This implementation actually buffers the triple for asychronous 
+     * This implementation actually buffers the triple for asynchronous 
      * addition, which will occur in the autoFlush thread when <b>bufferSize</b> 
      * or <b>dormantSeconds</b> is reached.  However, if <i>flush</i> is 
      * true, the buffer will be flushed in this thread before returning.
@@ -171,7 +171,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
     /**
      * Remove a series of triples from the store.
      *
-     * This implementation actually buffers the triples for asychronous 
+     * This implementation actually buffers the triples for asynchronous 
      * deletion, which will occur in the updater thread when <b>bufferSize</b> 
      * or <b>dormantSeconds</b> is reached.  However, if <i>flush</i> is 
      * true, the buffer will be flushed in this thread before returning.
@@ -240,7 +240,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
     /**
      * Remove a single triple from the store (convenience method).
      *
-     * This implementation actually buffers the triple for asychronous 
+     * This implementation actually buffers the triple for asynchronous 
      * deletion, which will occur in the updater thread when <b>bufferSize</b> 
      * or <b>dormantSeconds</b> is reached.  However, if <i>flush</i> is 
      * true, the buffer will be flushed in this thread before returning.
