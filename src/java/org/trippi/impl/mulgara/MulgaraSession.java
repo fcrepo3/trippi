@@ -164,6 +164,9 @@ public class MulgaraSession implements TriplestoreSession {
     }
 
 	private void doTriples(Set<Triple> triples, boolean add) throws TrippiException {
+	    if (triples == null || triples.size() == 0) {
+	        return;
+	    }
 	    try {
 			if (add) {
 			    synchronized(m_session) {
