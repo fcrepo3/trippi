@@ -6,14 +6,15 @@
   <path id="common.classpath">
     <pathelement path="${lib.jrdf}"/>
     <pathelement path="${lib.log4j}"/>
-    <pathelement path="${lib.openrdf-model}"/>
+  	<pathelement path="${lib.openrdf-sesame-onejar}"/>
   </path>
 
 
   <!-- core -->
   <path id="core.common.classpath">
     <path refid="common.classpath"/>
-    <pathelement path="${lib.openrdf-rio}"/>
+    <pathelement path="${lib.slf4j-api}"/>
+    <pathelement path="${lib.slf4j-jdk14}"/>
     <pathelement path="${lib.trove}"/>
     <pathelement path="${lib.xmlpull}"/>
     <pathelement path="${lib.xpp3}"/>
@@ -127,8 +128,6 @@
   <!-- sesame -->
   <path id="sesame.common.classpath">
     <path refid="common.classpath"/>
-    <pathelement path="${lib.openrdf-model}"/>
-    <pathelement path="${lib.sesame}"/>
   </path>
 
   <path id="sesame.compile.classpath">

@@ -59,9 +59,11 @@
 
   <!-- sesame-classes -->
   <target name="sesame-classes" depends="core-classes">
+      <!--
     <build-connector classpathref="sesame.compile.classpath"
                      destdir="${sesame.build.dir}"
                      packagepath="${sesame.packagepath}"/>
+                     -->
   </target>
 
   <!-- connector-classes -->
@@ -100,7 +102,9 @@
     <build-jar basedir="${mptstore.build.dir}" component="mptstore"/>
   	<build-jar basedir="${mulgara.build.dir}" component="mulgara"/>
   	<build-jar basedir="${oracle.build.dir}" component="oracle"/>
+      <!--
     <build-jar basedir="${sesame.build.dir}" component="sesame"/>
+    -->
   </target>
 
   <target name="test-prep"
@@ -168,7 +172,7 @@
     <copy-jar component="mptstore" todir="${dist.dir}/lib"/>
   	<copy-jar component="mulgara" todir="${dist.dir}/lib"/>
     <copy-jar component="oracle" todir="${dist.dir}/lib"/>
-    <copy-jar component="sesame" todir="${dist.dir}/lib"/>
+    <!--<copy-jar component="sesame" todir="${dist.dir}/lib"/>-->
     <copy todir="${dist.dir}">
       <fileset dir="." includes="${mptstore.runtime.libs}"/>
 	  <fileset dir="." includes="${mulgara.runtime.libs}"/>
