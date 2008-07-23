@@ -200,7 +200,7 @@ public class SesameTripleIterator
             throws GraphElementFactoryException,
                    URISyntaxException {
         if (subject instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) subject).getURI()) );
+            return m_util.createResource( new URI(((org.openrdf.model.URI) subject).toString()) );
         } else {
             return m_util.createResource(((org.openrdf.model.BNode) subject).getID().hashCode());
         }
@@ -209,14 +209,14 @@ public class SesameTripleIterator
     private PredicateNode predicateNode(org.openrdf.model.URI predicate)
             throws GraphElementFactoryException,
                    URISyntaxException {
-        return m_util.createResource( new URI(((org.openrdf.model.URI) predicate).getURI()) );
+        return m_util.createResource( new URI(((org.openrdf.model.URI) predicate).toString()) );
     }
 
     private ObjectNode objectNode(org.openrdf.model.Value object)
             throws GraphElementFactoryException,
                    URISyntaxException {
         if (object instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) object).getURI()) );
+            return m_util.createResource( new URI(((org.openrdf.model.URI) object).toString()) );
         } else if (object instanceof  org.openrdf.model.Literal) {
             org.openrdf.model.Literal lit = (org.openrdf.model.Literal) object;
             org.openrdf.model.URI uri = lit.getDatatype();

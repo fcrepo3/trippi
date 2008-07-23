@@ -227,7 +227,7 @@ public class SesameTupleIterator
                    URISyntaxException {
         if (object == null) return null;
         if (object instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) object).getURI()) );
+            return m_util.createResource( new URI(((org.openrdf.model.URI) object).toString()) );
         } else if (object instanceof  org.openrdf.model.Literal) {
             org.openrdf.model.Literal lit = (org.openrdf.model.Literal) object;
             org.openrdf.model.URI uri = lit.getDatatype();
