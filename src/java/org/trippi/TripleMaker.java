@@ -288,7 +288,8 @@ public class TripleMaker {
         public int hashCode() { 
             return m_hashCode; 
         }
+        public String getID() {
+            return "node" + Integer.toString(m_hashCode);
+        }
     }
-
-
 }

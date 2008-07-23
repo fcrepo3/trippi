@@ -6,13 +6,13 @@
   <path id="common.classpath">
     <pathelement path="${lib.jrdf}"/>
     <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.openrdf-model}"/>
   </path>
 
 
   <!-- core -->
   <path id="core.common.classpath">
     <path refid="common.classpath"/>
-    <pathelement path="${lib.openrdf-model}"/>
     <pathelement path="${lib.openrdf-rio}"/>
     <pathelement path="${lib.trove}"/>
     <pathelement path="${lib.xmlpull}"/>

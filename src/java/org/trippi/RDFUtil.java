@@ -189,6 +189,9 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
         public int hashCode() { 
             return m_hashCode; 
         }
+        public String getID() {
+            return "node" + Integer.toString(m_hashCode);
+        }
     }
 
     public class FreeLiteral extends AbstractLiteral {
