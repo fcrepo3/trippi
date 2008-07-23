@@ -27,7 +27,6 @@
 
   <path id="core.runtime.classpath">
     <path refid="core.common.classpath"/>
-    <pathelement path="${lib.openrdf-util}"/>
   </path>
 
   <pathconvert property="core.runtime.libs" 
