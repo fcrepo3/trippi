@@ -7,6 +7,7 @@
     <pathelement path="${lib.jrdf}"/>
     <pathelement path="${lib.log4j}"/>
   	<pathelement path="${lib.openrdf-sesame-onejar}"/>
+  	<pathelement path="${lib.mulgara}"/>
   </path>
 
 
