@@ -25,7 +25,7 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 			.getLogger(MulgaraSessionFactory.class.getName());
 
 	/** iTQL */
-	public static final String[] TUPLE_LANGUAGES = new String[] { "itql" };
+	public static final String[] TUPLE_LANGUAGES = new String[] { "itql", "sparql" };
 
 	/** SPO */
 	public static final String[] TRIPLE_LANGUAGES = new String[] { "spo" };

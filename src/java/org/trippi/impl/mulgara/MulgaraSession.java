@@ -30,6 +30,7 @@ import org.mulgara.query.QueryException;
 import org.mulgara.resolver.LocalJRDFDatabaseSession;
 import org.mulgara.server.JRDFSession;
 import org.mulgara.server.driver.JRDFGraphFactory;
+import org.mulgara.sparql.SparqlInterpreter;
 
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
@@ -136,6 +137,27 @@ public class MulgaraSession implements TriplestoreSession {
 				throw new TrippiException(e.getMessage(), e);
 			}
 	        return new MulgaraTupleIterator(ans);
+		} else if (language.equalsIgnoreCase("sparql")) {
+		    queryText = doAliasReplacements(queryText);
+            Answer ans = null;
+
+            // expand shortcut "from <#" to "from <" + m_serverURI
+            queryText = queryText.replaceAll("\\s+from\\s+<#", " from <" + m_serverURI); 
+            // expand shortcut "in <#" to "in <" + m_serverURI
+            queryText = queryText.replaceAll("\\s+in\\s+<#", " in <" + m_serverURI);
+            SparqlInterpreter interpreter = new SparqlInterpreter();
+            try {
+                ans = m_session.query(interpreter.parseQuery(queryText));
+            } catch (QueryException e) {
+                throw new TrippiException(e.getMessage(), e);
+            } catch (IOException e) {
+                throw new TrippiException(e.getMessage(), e);
+            } catch (MulgaraLexerException e) {
+                throw new TrippiException(e.getMessage(), e);
+            } catch (MulgaraParserException e) {
+                throw new TrippiException(e.getMessage(), e);
+            }
+            return new MulgaraTupleIterator(ans);
 		} else {
             throw new TrippiException("Unrecognized query language: " 
                     + language);

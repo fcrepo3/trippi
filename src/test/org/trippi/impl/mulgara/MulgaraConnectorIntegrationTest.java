@@ -57,6 +57,74 @@ public class MulgaraConnectorIntegrationTest
         }
     }
     
+    public void testTql() throws Exception {
+        if (!(_connector instanceof MulgaraConnector)) {
+            fail("expected MulgaraConnector");
+        }
+        
+        TriplestoreReader reader = _connector.getReader();
+        TriplestoreWriter writer = _connector.getWriter();
+        MulgaraConnector conn = (MulgaraConnector) _connector;
+        MulgaraSessionFactory factory = (MulgaraSessionFactory) conn
+                .getSessionFactory();
+        URI modelURI = factory.getModelURI();
+
+        SubjectNode s = _geFactory.createResource(new URI("urn:test:subject"));
+        PredicateNode p = _geFactory.createResource(new URI("urn:test:predicate"));
+        ObjectNode o = _geFactory.createResource(new URI("urn:test:object"));
+        Triple triple = _geFactory.createTriple(s, p, o);
+        writer.add(triple, true);
+
+        String query = "select $s $o from <" + modelURI + "> "
+                + "where $s <" + p + "> $o;";
+
+        System.out.println("query: " + query);
+        
+        TupleIterator tuples = reader.findTuples("itql", query, 0, false);
+        
+        assertTrue(tuples.hasNext());
+        Map<String, Node> map = tuples.next();
+        assertFalse(tuples.hasNext());
+        ObjectNode obj = (ObjectNode)map.get("o");
+        assertEquals(o.toString(), obj.toString());
+    }
+    
+    /**
+     * This is just a sanity check for SPARQL support.
+     * 
+     * @throws Exception
+     */
+    public void testSparql() throws Exception {
+        if (!(_connector instanceof MulgaraConnector)) {
+            fail("expected MulgaraConnector");
+        }
+        
+        TriplestoreReader reader = _connector.getReader();
+        TriplestoreWriter writer = _connector.getWriter();
+        MulgaraConnector conn = (MulgaraConnector) _connector;
+        MulgaraSessionFactory factory = (MulgaraSessionFactory) conn
+                .getSessionFactory();
+        URI modelURI = factory.getModelURI();
+
+        SubjectNode s = _geFactory.createResource(new URI("urn:test:subject"));
+        PredicateNode p = _geFactory.createResource(new URI("urn:test:predicate"));
+        ObjectNode o = _geFactory.createResource(new URI("urn:test:object"));
+        Triple triple = _geFactory.createTriple(s, p, o);
+        writer.add(triple, true);
+
+        String query = "SELECT * FROM <" + modelURI + "> WHERE { ?s <" + p + "> ?o }";
+
+        System.out.println("query: " + query);
+        
+        TupleIterator tuples = reader.findTuples("sparql", query, 0, false);
+        
+        assertTrue(tuples.hasNext());
+        Map<String, Node> map = tuples.next();
+        assertFalse(tuples.hasNext());
+        ObjectNode obj = (ObjectNode)map.get("o");
+        assertEquals(o.toString(), obj.toString());
+    }
+    
     public void xtestLuceneModel() throws Exception {
         if (!(_connector instanceof MulgaraConnector)) {
             fail("expected MulgaraConnector");
