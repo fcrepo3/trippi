@@ -109,6 +109,14 @@ public class RowGroup {
                 if (m_rowCount > 0) {
                     m_nextValues = null;
                 }
+
+                for (int i = 0; i < m_valueList.size(); i++) {
+                    Object val = m_valueList.get(i);
+                    if (val instanceof Answer) {
+                        Answer innerAnswer = (Answer) val;
+                        innerAnswer.close();
+                    }
+                }
             }
         } else {
             m_nextValues = null;
