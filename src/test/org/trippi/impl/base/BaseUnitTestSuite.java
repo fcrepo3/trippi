@@ -3,7 +3,6 @@ package org.trippi.impl.base;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
 
 public class BaseUnitTestSuite extends TestCase {
 
@@ -16,13 +15,5 @@ public class BaseUnitTestSuite extends TestCase {
 
         return suite;
 
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (System.getProperty("text") != null && System.getProperty("text").equals("true")) {
-            junit.textui.TestRunner.run(BaseUnitTestSuite.suite());
-        } else {
-            TestRunner.run(BaseUnitTestSuite.class);
-        }
     }
 }

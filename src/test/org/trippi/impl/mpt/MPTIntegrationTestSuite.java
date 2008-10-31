@@ -3,7 +3,6 @@ package org.trippi.impl.mpt;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
 
 public class MPTIntegrationTestSuite extends TestCase {
 
@@ -19,13 +18,5 @@ public class MPTIntegrationTestSuite extends TestCase {
 
         return suite;
 
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (System.getProperty("text") != null && System.getProperty("text").equals("true")) {
-            junit.textui.TestRunner.run(MPTIntegrationTestSuite.suite());
-        } else {
-            TestRunner.run(MPTIntegrationTestSuite.class);
-        }
     }
 }

@@ -1,14 +1,13 @@
 package org.trippi.impl;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
-
 import org.trippi.TestConfig;
 import org.trippi.config.TrippiProfile;
 import org.trippi.impl.mpt.MPTIntegrationTestSuite;
 import org.trippi.impl.mulgara.MulgaraIntegrationTestSuite;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class ImplIntegrationTestSuite extends TestCase {
 
@@ -35,15 +34,5 @@ public class ImplIntegrationTestSuite extends TestCase {
 
         return suite;
 
-    }
-
-
-
-    public static void main(String[] args) throws Exception {
-        if (System.getProperty("text") != null && System.getProperty("text").equals("true")) {
-            junit.textui.TestRunner.run(ImplIntegrationTestSuite.suite());
-        } else {
-            TestRunner.run(ImplIntegrationTestSuite.class);
-        }
     }
 }

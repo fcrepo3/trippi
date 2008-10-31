@@ -1,11 +1,10 @@
 package org.trippi.impl;
 
+import org.trippi.impl.base.BaseUnitTestSuite;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.swingui.TestRunner;
-
-import org.trippi.impl.base.BaseUnitTestSuite;
 
 public class ImplUnitTestSuite extends TestCase {
 
@@ -21,13 +20,5 @@ public class ImplUnitTestSuite extends TestCase {
 
         return suite;
 
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (System.getProperty("text") != null && System.getProperty("text").equals("true")) {
-            junit.textui.TestRunner.run(ImplUnitTestSuite.suite());
-        } else {
-            TestRunner.run(ImplUnitTestSuite.class);
-        }
     }
 }
