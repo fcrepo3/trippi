@@ -75,7 +75,6 @@
   <path id="mulgara.runtime.classpath">
     <path refid="mulgara.common.classpath"/>
   	<pathelement path="${lib.activation}"/>
-  	<pathelement path="${lib.beep}"/>
   	<pathelement path="${lib.castor}"/>
   	<pathelement path="${lib.castor-xml}"/>
     <pathelement path="${lib.castor-schema}"/>
