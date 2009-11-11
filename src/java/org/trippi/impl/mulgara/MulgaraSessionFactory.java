@@ -28,7 +28,7 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 	public static final String[] TUPLE_LANGUAGES = new String[] { "itql", "sparql" };
 
 	/** SPO */
-	public static final String[] TRIPLE_LANGUAGES = new String[] { "spo" };
+	public static final String[] TRIPLE_LANGUAGES = new String[] { "spo", "sparql" };
 
 	private static final String LOCALHOST = "localhost";
 	private static final String RMI = "rmi";

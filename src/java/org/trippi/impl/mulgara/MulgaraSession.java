@@ -91,7 +91,28 @@ public class MulgaraSession implements TriplestoreSession {
 
 	public TripleIterator findTriples(String lang, String queryText)
 			throws TrippiException {
-		throw new TrippiException("Unsupported triple query language: " + lang);
+		if (lang.equalsIgnoreCase("sparql")) {
+		    queryText = doAliasReplacements(queryText);
+            Answer ans = null;
+
+            SparqlInterpreter interpreter = new SparqlInterpreter();
+            interpreter.setDefaultGraphUri(m_modelURI);
+            try {
+                ans = m_session.query(interpreter.parseQuery(queryText));
+            } catch (QueryException e) {
+                throw new TrippiException(e.getMessage(), e);
+            } catch (IOException e) {
+                throw new TrippiException(e.getMessage(), e);
+            } catch (MulgaraLexerException e) {
+                throw new TrippiException(e.getMessage(), e);
+            } catch (MulgaraParserException e) {
+                throw new TrippiException(e.getMessage(), e);
+            }
+            return new MulgaraTripleIterator(ans,getElementFactory());
+		} else {
+            throw new TrippiException("Unrecognized query language: " 
+                    + lang);
+        }
 	}
 
 	public TripleIterator findTriples(SubjectNode subject,
@@ -120,10 +141,6 @@ public class MulgaraSession implements TriplestoreSession {
 			queryText = doAliasReplacements(queryText);
 			Answer ans = null;
 
-	        // expand shortcut "from <#" to "from <" + m_serverURI
-	        queryText = queryText.replaceAll("\\s+from\\s+<#", " from <" + m_serverURI); 
-	        // expand shortcut "in <#" to "in <" + m_serverURI
-	        queryText = queryText.replaceAll("\\s+in\\s+<#", " in <" + m_serverURI);
 	        TqlInterpreter interpreter = new TqlInterpreter(new HashMap<String, URI>());
 	        try {
 				ans = m_session.query(interpreter.parseQuery(queryText));
@@ -141,11 +158,8 @@ public class MulgaraSession implements TriplestoreSession {
 		    queryText = doAliasReplacements(queryText);
             Answer ans = null;
 
-            // expand shortcut "from <#" to "from <" + m_serverURI
-            queryText = queryText.replaceAll("\\s+from\\s+<#", " from <" + m_serverURI); 
-            // expand shortcut "in <#" to "in <" + m_serverURI
-            queryText = queryText.replaceAll("\\s+in\\s+<#", " in <" + m_serverURI);
             SparqlInterpreter interpreter = new SparqlInterpreter();
+            interpreter.setDefaultGraphUri(m_modelURI);
             try {
                 ans = m_session.query(interpreter.parseQuery(queryText));
             } catch (QueryException e) {
@@ -250,6 +264,9 @@ public class MulgaraSession implements TriplestoreSession {
 			out = out.replaceAll("<" + alias + ":", "<" + fullForm).replaceAll(
 					"\\^\\^" + alias + ":(\\S+)", "^^<" + fullForm + "$1>");
 		}
+		// base model URI includes separator
+		// relative URIs introduce a library dependency on Jena, so keeping m_serverURI for now 
+		out = out.replaceAll("<#(.+)>", "<" + m_serverURI + "$1>"); 
 		if (!q.equals(out)) {
 			logger.info("Substituted aliases, query is now: " + out);
 		}
