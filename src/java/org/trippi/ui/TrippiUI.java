@@ -72,14 +72,14 @@ public class TrippiUI {
                 if (args[0].startsWith("-c")) {
                     new TrippiConsole(config, null);
                 } else {
-                    TrippiProfile profile = (TrippiProfile) config.getProfiles().get(args[0]);
+                    TrippiProfile profile = config.getProfiles().get(args[0]);
                     if (profile == null)
                         throw new TrippiException("Non-existent profile: " + args[0]);
                     new TrippiSwing(config, profile);
                 }
             } else { // must be 2, -c profile or -b commands.txt
                 if (args[0].startsWith("-c")) {
-                    TrippiProfile profile = (TrippiProfile) config.getProfiles().get(args[1]);
+                    TrippiProfile profile = config.getProfiles().get(args[1]);
                     if (profile == null)
                         throw new TrippiException("Non-existent profile: " + args[1]);
                     new TrippiConsole(config, profile);

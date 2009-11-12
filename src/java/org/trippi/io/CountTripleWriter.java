@@ -26,7 +26,8 @@ public class CountTripleWriter extends TripleWriter {
 		_out = out;
 	}
 
-    public int write(TripleIterator iter) throws TrippiException {
+    @Override
+	public int write(TripleIterator iter) throws TrippiException {
         try {
             /* Use the in-built TripleIterator.count() method */
             int count = iter.count();

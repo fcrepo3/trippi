@@ -50,14 +50,16 @@ public class TupleBasedTripleIterator extends TripleIterator {
             if (!m_tuples.hasNext()) return null;
             m_triplesFromTuples = m_tuples.nextTriples(m_patterns);
         }
-        return (Triple) m_triplesFromTuples.remove(0);
+        return m_triplesFromTuples.remove(0);
     }
 
-    public boolean hasNext() {
+    @Override
+	public boolean hasNext() {
         return (m_next != null);
     }
     
-    public Triple next() throws TrippiException {
+    @Override
+	public Triple next() throws TrippiException {
         if (m_next == null) {
             return null;
         }
@@ -66,14 +68,16 @@ public class TupleBasedTripleIterator extends TripleIterator {
         return last;
     }
 
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (!m_closed) {
             m_tuples.close();
             m_closed = true;
         }
     }
 
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

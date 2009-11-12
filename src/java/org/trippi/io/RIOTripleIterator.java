@@ -206,7 +206,7 @@ public class RIOTripleIterator extends TripleIterator
     private PredicateNode predicateNode(org.openrdf.model.URI predicate)
             throws GraphElementFactoryException,
                    URISyntaxException {
-        return m_util.createResource( new URI(((org.openrdf.model.URI) predicate).stringValue()) );
+        return m_util.createResource( new URI((predicate).stringValue()) );
     }
 
     private ObjectNode objectNode(org.openrdf.model.Value object)

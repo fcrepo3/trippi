@@ -14,7 +14,8 @@ public class XMLDeclarationRemover extends FilterOutputStream {
         m_buffering = true;
     }
 
-    public void write(int b) throws IOException {
+    @Override
+	public void write(int b) throws IOException {
         if (m_buffering) {
             buffer((char) b);
         } else {
@@ -22,7 +23,8 @@ public class XMLDeclarationRemover extends FilterOutputStream {
         }
     }
 
-    public void write(byte[] b) throws IOException {
+    @Override
+	public void write(byte[] b) throws IOException {
         if (m_buffering) {
             for (int i = 0; i < b.length; i++) {
                 buffer((char) b[i]);
@@ -32,7 +34,8 @@ public class XMLDeclarationRemover extends FilterOutputStream {
         }
     }
 
-    public void write(byte[] b, int off, int len) throws IOException {
+    @Override
+	public void write(byte[] b, int off, int len) throws IOException {
         if (m_buffering) {
             for (int i = off; i < off + len; i++) {
                 buffer((char) b[i]);
@@ -48,11 +51,11 @@ public class XMLDeclarationRemover extends FilterOutputStream {
                 m_ltCount++;
                 if (m_ltCount == 2) {
                     m_buffering = false;
-                    write((int) c);
+                    write(c);
                 }
             }
         } else {
-            write((int) c);
+            write(c);
         }
     }
 

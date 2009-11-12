@@ -29,7 +29,8 @@ public class NodeGraphImpl extends NodeGraph {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    public NodeResults findSubjects(Node p,
+    @Override
+	public NodeResults findSubjects(Node p,
                                          Node o) 
             throws GraphException {
 
@@ -44,7 +45,8 @@ public class NodeGraphImpl extends NodeGraph {
         }
     }
 
-    public NodeResults findPredicates(Node s,
+    @Override
+	public NodeResults findPredicates(Node s,
                                       Node o) 
             throws GraphException {
 
@@ -59,7 +61,8 @@ public class NodeGraphImpl extends NodeGraph {
         }
     }
 
-    public NodeResults findObjects(Node s,
+    @Override
+	public NodeResults findObjects(Node s,
                                    Node p) 
             throws GraphException {
 
@@ -74,7 +77,8 @@ public class NodeGraphImpl extends NodeGraph {
         }
     }
 
-    public TripleResults findTriples(Node s, Node p, Node o)
+    @Override
+	public TripleResults findTriples(Node s, Node p, Node o)
             throws GraphException {
 
         if ( ( (s == null) || (s instanceof SubjectNode  ) ) &&
@@ -138,9 +142,8 @@ public class NodeGraphImpl extends NodeGraph {
     }
 
     // from org.jrdf.graph.Graph
-    public void add(Iterator triples) 
+    public void add(Iterator<Triple> triples) 
             throws GraphException {
-
         _graph.add(triples);
     }
 
@@ -161,9 +164,8 @@ public class NodeGraphImpl extends NodeGraph {
     }
 
     // from org.jrdf.graph.Graph
-    public void remove(Iterator triples) 
+    public void remove(Iterator<Triple> triples) 
             throws GraphException {
-
         _graph.remove(triples);
     }
 

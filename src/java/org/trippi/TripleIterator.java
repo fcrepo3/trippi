@@ -206,7 +206,7 @@ public abstract class TripleIterator {
         try {
 
             GraphElementFactory factory = graph.getElementFactory();
-            TIntObjectHashMap nodePool = new TIntObjectHashMap();
+            TIntObjectHashMap<Node> nodePool = new TIntObjectHashMap<Node>();
 
             while (hasNext()) {
 
@@ -236,11 +236,11 @@ public abstract class TripleIterator {
 
     private static Node localize(Node node,
                                  GraphElementFactory factory,
-                                 TIntObjectHashMap nodePool) throws TrippiException {
+                                 TIntObjectHashMap<Node> nodePool) throws TrippiException {
 
         try {
             if (nodePool.containsKey(node.hashCode())) {
-                return (Node) nodePool.get(node.hashCode());
+                return nodePool.get(node.hashCode());
             } else {
                 Node newNode;
                 if (node instanceof URIReference) {

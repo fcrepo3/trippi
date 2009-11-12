@@ -9,7 +9,7 @@ public class ConfigUtils {
      * Get a trimmed non-empty string from the map, or throw an exception.
      */
 	public static String getRequired(Map<String, String> map, String key) throws TrippiException {
-        String value = (String) map.get(key);
+        String value = map.get(key);
         if (value == null || value.length() == 0) {
             throw new TrippiException("Missing required configuration value: " + key);
         } else {

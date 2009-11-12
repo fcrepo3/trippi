@@ -36,23 +36,28 @@ public class MultiConnector extends TriplestoreConnector {
         m_elementFactory = new RDFUtil();
     }
 
-    public void init(Map config) throws TrippiException {
+    @Override
+	public void init(Map<String,String> config) throws TrippiException {
         throw new TrippiException("This connector cannot be initialized via init()");
     }
 
-    public TriplestoreReader getReader() {
+    @Override
+	public TriplestoreReader getReader() {
         return m_connectors[0].getReader();
     }
 
-    public TriplestoreWriter getWriter() {
+    @Override
+	public TriplestoreWriter getWriter() {
         return m_multiWriter;
     }
 
-    public GraphElementFactory getElementFactory() {
+    @Override
+	public GraphElementFactory getElementFactory() {
         return m_elementFactory;
     }
 
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         TrippiException m_exception = null;
         for (int i = 0; i < m_connectors.length; i++) {
             try {

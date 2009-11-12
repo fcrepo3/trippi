@@ -192,7 +192,7 @@ public class SynchronizedTriplestoreSession implements TriplestoreSession {
             logger.info("Lock Status: FREE");
         } else {
             int waitCount = size - 1;
-            Thread lockingThread = (Thread) m_lockQueue.get(0);
+            Thread lockingThread = m_lockQueue.get(0);
             logger.info("Lock Status: LOCKER = '" + lockingThread.getName() 
                     + "', WAITING = " + waitCount);
         }

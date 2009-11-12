@@ -203,7 +203,7 @@ public class TripleMaker {
                     }
                 }
             } else if (c == '_') {
-                Node blankNode = (Node) m_blankMap.get(n);
+                Node blankNode = m_blankMap.get(n);
                 if (blankNode == null) {
                     blankNode = createResource();
                     m_blankMap.put(n, blankNode);
@@ -285,7 +285,8 @@ public class TripleMaker {
         public FreeBlankNode(int hashCode) { 
             m_hashCode = hashCode; 
         }
-        public int hashCode() { 
+        @Override
+		public int hashCode() { 
             return m_hashCode; 
         }
         public String getID() {

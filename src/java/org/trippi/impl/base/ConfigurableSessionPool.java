@@ -92,7 +92,7 @@ public class ConfigurableSessionPool extends Thread
             }
         }
         synchronized (m_freeSessions) {
-            session = (TriplestoreSession) m_freeSessions.remove(0);
+            session = m_freeSessions.remove(0);
         }
         synchronized (m_inUseSessions) {
             m_inUseSessions.add(session);
@@ -148,7 +148,8 @@ public class ConfigurableSessionPool extends Thread
      * This just ensures that pool growth occurs when necessary,
      * checking every 1/4 of a second.
      */
-    public void run() {
+    @Override
+	public void run() {
         while ( !m_needToFinish ) {
             int diff = m_spareSessions - getFreeCount();
             if ( diff > 0 ) {
@@ -227,7 +228,8 @@ public class ConfigurableSessionPool extends Thread
      * Call close() at garbage collection time in case it hasn't been
      * called yet.
      */
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

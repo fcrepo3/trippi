@@ -28,7 +28,8 @@ public class SynchronizedTupleIterator extends TupleIterator {
         m_session = session;
     }
 
-    public boolean hasNext() throws TrippiException {
+    @Override
+	public boolean hasNext() throws TrippiException {
         boolean has = m_iter.hasNext();
         if (!has) {
             close();
@@ -36,22 +37,26 @@ public class SynchronizedTupleIterator extends TupleIterator {
         return has;
     }
     
-    public Map<String, Node> next() throws TrippiException {
+    @Override
+	public Map<String, Node> next() throws TrippiException {
         return m_iter.next();
     }
 
-    public List<Triple> nextTriples(TriplePattern[] patterns) throws TrippiException {
+    @Override
+	public List<Triple> nextTriples(TriplePattern[] patterns) throws TrippiException {
         return m_iter.nextTriples(patterns);
     }
     
-    public String[] names() throws TrippiException {
+    @Override
+	public String[] names() throws TrippiException {
         return m_iter.names();
     }
     
     /**
      * Close the wrapped iterator and release the session to the pool.
      */
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (!m_closed) {
             // This ensures that even if the wrapped iter throws an exception,
             // the thread's lock on the session is released.
@@ -69,7 +74,8 @@ public class SynchronizedTupleIterator extends TupleIterator {
     /**
      * Ensure close() gets called at garbage collection time.
      */
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

@@ -36,25 +36,29 @@ public class LimitedTripleIterator extends TripleIterator {
         }
     }
 
-    public boolean hasNext() {
+    @Override
+	public boolean hasNext() {
         return (m_next != null);
     }
 
-    public Triple next() throws TrippiException {
+    @Override
+	public Triple next() throws TrippiException {
         if (m_next == null) return null;
         Triple last = m_next;
         m_next = getNext();
         return last;
     }
 
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (!m_closed) {
             m_wrapped.close();
             m_closed = true;
         }
     }
 
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

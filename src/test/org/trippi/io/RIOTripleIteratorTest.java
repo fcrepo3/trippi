@@ -25,11 +25,13 @@ public class RIOTripleIteratorTest extends TestCase {
         sb.append("</rdf:RDF>");
         rdf = sb.toString();
     }
-    protected void setUp() throws Exception {
+    @Override
+	protected void setUp() throws Exception {
         super.setUp();
     }
 
-    protected void tearDown() throws Exception {
+    @Override
+	protected void tearDown() throws Exception {
         super.tearDown();
     }
     

@@ -83,7 +83,7 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
                     }
                 }
             } else if (c == '_') {
-                Node blankNode = (Node) m_blankMap.get(n);
+                Node blankNode = m_blankMap.get(n);
                 if (blankNode == null) {
                     blankNode = createResource();
                     m_blankMap.put(n, blankNode);
@@ -186,7 +186,8 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
         public FreeBlankNode(Object object) {
             m_hashCode = object.hashCode();
         }
-        public int hashCode() { 
+        @Override
+		public int hashCode() { 
             return m_hashCode; 
         }
         public String getID() {

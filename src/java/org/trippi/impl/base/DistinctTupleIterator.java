@@ -41,29 +41,34 @@ public class DistinctTupleIterator extends TupleIterator {
         return false;
     }
 
-    public boolean hasNext() {
+    @Override
+	public boolean hasNext() {
         return (m_next != null);
     }
 
-    public Map<String, Node> next() throws TrippiException {
+    @Override
+	public Map<String, Node> next() throws TrippiException {
         if (m_next == null) return null;
         Map<String, Node> last = m_next;
         m_next = getNext();
         return last;
     }
 
-    public String[] names() throws TrippiException {
+    @Override
+	public String[] names() throws TrippiException {
         return m_wrapped.names();
     }
 
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (!m_closed) {
             m_wrapped.close();
             m_closed = true;
         }
     }
 
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

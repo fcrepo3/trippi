@@ -26,7 +26,8 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         super(name); 
     }
 
-    public void setUp() throws Exception {
+    @Override
+	public void setUp() throws Exception {
         TrippiProfile profile = TestConfig.getTestProfile();
         _connector = profile.getConnector();
         _geFactory = _connector.getElementFactory();
@@ -34,7 +35,8 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
         _writer = _connector.getWriter();
     }
 
-    public void tearDown() throws Exception {
+    @Override
+	public void tearDown() throws Exception {
         deleteAllTriples();
         _connector.close();
     }
@@ -295,7 +297,8 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
             _adds = adds;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             try {
                 for (int i = 0; i < _numBatches; i++) {
                     List<Triple> triples = getTriples(_id, _id,
@@ -305,9 +308,9 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
                         Iterator<Triple> iter = triples.iterator();
                         while (iter.hasNext()) {
                             if (_adds) {
-                                _writer.add((Triple) iter.next(), false);
+                                _writer.add(iter.next(), false);
                             } else {
-                                _writer.delete((Triple) iter.next(), false);
+                                _writer.delete(iter.next(), false);
                             }
                         }
                     } else {

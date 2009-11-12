@@ -26,7 +26,8 @@ public class CountTupleWriter extends TupleWriter {
 		_out = out;
 	}
 
-    public int write(TupleIterator iter) throws TrippiException {
+    @Override
+	public int write(TupleIterator iter) throws TrippiException {
         try {
             /* Use the in-built TupleIterator.count() method */
             int count = iter.count();

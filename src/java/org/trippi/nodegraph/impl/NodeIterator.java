@@ -14,7 +14,7 @@ public class NodeIterator implements ClosableIterator {
     public static final int PREDICATES = 1;
     public static final int OBJECTS = 2;
 
-    private ClosableIterator _triples;
+    private ClosableIterator<?> _triples;
     private int _type;
 
     private Node _nextNode;
@@ -22,7 +22,7 @@ public class NodeIterator implements ClosableIterator {
     private TIntHashSet _seen;
     private boolean _closed;
 
-    public NodeIterator(ClosableIterator triples,
+    public NodeIterator(ClosableIterator<?> triples,
                         int type,
                         boolean alreadyDistinct) {
         _triples = triples;

@@ -43,7 +43,8 @@ public class MPTConnector extends TriplestoreConnector {
     }
 
     // Implements TriplestoreConnector.init(Map)
-    public void init(Map<String, String> config) throws TrippiException {
+    @Override
+	public void init(Map<String, String> config) throws TrippiException {
 
         // get and validate configuration values
         String ddlGenerator = ConfigUtils.getRequired(config, "ddlGenerator");
@@ -134,22 +135,26 @@ public class MPTConnector extends TriplestoreConnector {
     }
 
     // Implements TriplestoreConnector.getReader()
-    public TriplestoreReader getReader() {
+    @Override
+	public TriplestoreReader getReader() {
         return _writer;
     }
 
     // Implements TriplestoreConnector.getWriter()
-    public TriplestoreWriter getWriter() {
+    @Override
+	public TriplestoreWriter getWriter() {
         return _writer;
     }
 
     // Implements TriplestoreConnector.getElementFactory()
-    public GraphElementFactory getElementFactory() {
+    @Override
+	public GraphElementFactory getElementFactory() {
         return _elementFactory;
     }
 
     // Implements TriplestoreConnector.close()
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (_writer != null) {
             _writer.close(); // flushes and closes update buffer,
                              // then closes session pool,

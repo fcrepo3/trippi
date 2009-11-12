@@ -232,7 +232,7 @@ public class MulgaraSession implements TriplestoreSession {
 		Set<Triple> plainLiteralTriples = new HashSet<Triple>();
 		Iterator<Triple> iter = triples.iterator();
 		while (iter.hasNext()) {
-			Triple triple = (Triple) iter.next();
+			Triple triple = iter.next();
 			if (triple.getObject() instanceof Literal) {
 				Literal literal = (Literal) triple.getObject();
 				if (literal.getDatatypeURI() == null
@@ -276,7 +276,8 @@ public class MulgaraSession implements TriplestoreSession {
 	/**
      * Ensure close() gets called at garbage collection time.
      */
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

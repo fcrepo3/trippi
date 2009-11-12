@@ -85,7 +85,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
     private static String tripleListToString(List<Triple> triples) {
         StringBuffer out = new StringBuffer();
         for (int i = 0; i < triples.size(); i++) {
-            out.append(RDFUtil.toString((Triple) triples.get(i)) + "\n");
+            out.append(RDFUtil.toString(triples.get(i)) + "\n");
         }
         return out.toString();
     }

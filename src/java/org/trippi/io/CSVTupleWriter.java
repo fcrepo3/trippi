@@ -40,7 +40,8 @@ public class CSVTupleWriter extends TupleWriter {
         }
     }
 
-    public int write(TupleIterator iter) throws TrippiException {
+    @Override
+	public int write(TupleIterator iter) throws TrippiException {
         try {
             String[] names = iter.names();
             for (int i = 0; i < names.length; i++) {
@@ -84,8 +85,8 @@ public class CSVTupleWriter extends TupleWriter {
             if (node instanceof URIReference) {
                 Iterator<String> iter = m_aliases.keySet().iterator();
                 while (iter.hasNext()) {
-                    String alias = (String) iter.next();
-                    String prefix = (String) m_aliases.get(alias);
+                    String alias = iter.next();
+                    String prefix = m_aliases.get(alias);
                     if (fullString.startsWith("<" + prefix)) {
                         return fix("<" + alias + ":" + fullString.substring(prefix.length() + 1));
                     }

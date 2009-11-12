@@ -41,7 +41,8 @@ public class TrippiProfile {
                                          getConfiguration());
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer out = new StringBuffer();
         out.append("Trippi Profile : " + getId() + "\n");
         out.append("         Label : " + getLabel() + "\n");
@@ -49,7 +50,7 @@ public class TrippiProfile {
         Map<String, String> m = getConfiguration();
         Iterator<String> iter = m.keySet().iterator();
         while (iter.hasNext()) {
-            String key = (String) iter.next();
+            String key = iter.next();
             out.append("         Param : " + key + " = " + m.get(key) + "\n");
         }
         return out.toString();

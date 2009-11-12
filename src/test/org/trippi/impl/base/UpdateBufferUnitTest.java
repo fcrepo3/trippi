@@ -334,7 +334,8 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                                   _util.createResource(new URI(oURI)));
     }
 
-    public void tearDown() throws Exception {
+    @Override
+	public void tearDown() throws Exception {
         if (_buffer != null) _buffer.close();
     }
 
@@ -515,7 +516,8 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
         // flush at least once, and then keep flushing until 
         // stopAfterNextFlush is called
-        public void run() {
+        @Override
+		public void run() {
             try {
                 boolean finish = false;
                 while (!finish) {
@@ -523,13 +525,13 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         finish = true;
                         while (_buffer.size() > 0) {
                             _buffer.flush(_session);
-                            FlushingThread.yield();
+                            Thread.yield();
                         }
                     } else {
                         if (_buffer.size() >= _flushIfThisSizeOrAbove) {
                             _buffer.flush(_session);
                         }
-                        FlushingThread.yield();
+                        Thread.yield();
                     }
                 }
             } catch (Exception e) {
@@ -568,7 +570,8 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
         }
 
-        public void run() {
+        @Override
+		public void run() {
 
             try {
                 for (int i = 0; i < _numChunks; i++) {
@@ -586,7 +589,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         } else {
                             Iterator<Triple> iter = triples.iterator();
                             while (iter.hasNext()) {
-                                Triple triple = (Triple) iter.next();
+                                Triple triple = iter.next();
                                 _buffer.add(triple);
                             }
                         }
@@ -596,7 +599,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
                         } else {
                             Iterator<Triple> iter = triples.iterator();
                             while (iter.hasNext()) {
-                                Triple triple = (Triple) iter.next();
+                                Triple triple = iter.next();
                                 _buffer.delete(triple);
                             }
                         }
@@ -604,7 +607,7 @@ public abstract class UpdateBufferUnitTest extends TestCase {
 
                     // yield so we're not hogging any impl-specific
                     // buffer locks
-                    ModdingThread.yield();
+                    Thread.yield();
                 }
             } catch (Exception e) {
                 _error = e;

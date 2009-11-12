@@ -23,20 +23,23 @@ public class SynchronizedTripleIterator extends TripleIterator {
         m_session = session;
     }
 
-    public boolean hasNext() throws TrippiException {
+    @Override
+	public boolean hasNext() throws TrippiException {
         boolean has = m_iter.hasNext();
         if (!has) close(); // proactively
         return has;
     }
     
-    public Triple next() throws TrippiException {
+    @Override
+	public Triple next() throws TrippiException {
         return m_iter.next();
     }
 
     /**
      * Close the wrapped iterator and release the session to the pool.
      */
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (!m_closed) {
             // This ensures that even if the wrapped iter throws an exception,
             // the thread's lock on the session is released.
@@ -54,7 +57,8 @@ public class SynchronizedTripleIterator extends TripleIterator {
     /**
      * Ensure close() gets called at garbage collection time.
      */
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

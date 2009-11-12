@@ -46,7 +46,7 @@ public class ConnectorDescriptor {
                 JarFile f = new JarFile(new File(jarDir, jarNames[i]));
                 Enumeration<JarEntry> e = f.entries();
                 while (e.hasMoreElements()) {
-                    JarEntry entry = (JarEntry) e.nextElement();
+                    JarEntry entry = e.nextElement();
                     if (entry.getName().endsWith("Descriptor.xml")) {
                         String c = entry.getName().replaceAll("Descriptor.xml", "");
                         if (f.getJarEntry(c + ".class") != null) {
@@ -147,7 +147,8 @@ public class ConnectorDescriptor {
         return m_parameters;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer out = new StringBuffer();
         out.append("Connector name : " + m_name + "\n");
         out.append("   Description : " + m_description + "\n");

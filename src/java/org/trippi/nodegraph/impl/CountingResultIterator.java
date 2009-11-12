@@ -6,10 +6,10 @@ import org.jrdf.util.ClosableIterator;
 
 public class CountingResultIterator implements ClosableIterator {
 
-    private ClosableIterator _iter;
+    private ClosableIterator<?> _iter;
     private boolean _closed;
 
-    public CountingResultIterator(ClosableIterator iter) {
+    public CountingResultIterator(ClosableIterator<?> iter) {
         
         _iter = iter;
     }

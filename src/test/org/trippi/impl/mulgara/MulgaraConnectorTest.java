@@ -18,12 +18,14 @@ public class MulgaraConnectorTest extends TestCase {
 	private MulgaraConnector _connector;
     private GraphElementFactory _geFactory;
 
+	@Override
 	protected void setUp() throws Exception {
 		_connector = new MulgaraConnector();
         _connector.init(getConfig());
         _geFactory = _connector.getElementFactory();
 	}
 
+	@Override
 	protected void tearDown() throws Exception {
 		_connector.close();
 	}
