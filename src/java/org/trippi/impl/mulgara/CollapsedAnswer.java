@@ -84,10 +84,6 @@ public class CollapsedAnswer implements Answer {
     ///////////////// from org.mulgara.query.Answer ///////////////////
     ///////////////////////////////////////////////////////////////////
     
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Object getObject(int column) throws TuplesException {
         return m_values[column];
     }
@@ -95,7 +91,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * {@inheritDoc}
      */
-    @Override
     public Object getObject(String columnName) throws TuplesException {
         return getObject(getColumnIndex(columnName));
     }
@@ -108,7 +103,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void beforeFirst() throws TuplesException { 
        // don't do anything -- this is a one-use impl
     }
@@ -116,7 +110,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void close() throws TuplesException {
         m_wrappedAnswer.close();
     }
@@ -124,7 +117,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * {@inheritDoc}
      */
-    @Override
     public int getColumnIndex(Variable column) throws TuplesException {
         return getColumnIndex(column.getName());
     }
@@ -139,7 +131,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * Return the number of variables (columns).
      */
-    @Override
     public int getNumberOfVariables() {
         return m_variables.length;
     }
@@ -147,7 +138,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * {@inheritDoc}
      */
-    @Override
     public Variable[] getVariables() {
         return m_variables;
     }
@@ -157,7 +147,6 @@ public class CollapsedAnswer implements Answer {
      * 
      * This method is unimplemented and will always throw a TuplesException.
      */
-    @Override
     public boolean isUnconstrained() throws TuplesException {
         throw new TuplesException("isUnconstrained() not implemented.");
     }
@@ -167,7 +156,6 @@ public class CollapsedAnswer implements Answer {
      * 
      * This method is unimplemented and will always throw a TuplesException.
      */
-    @Override
     public long getRowCount() throws TuplesException {
         throw new TuplesException("getRowCount() not implemented.");
     }
@@ -177,8 +165,7 @@ public class CollapsedAnswer implements Answer {
      * 
      * This method is unimplemented and will always throw a TuplesException.
      */
-    @Override
-	public long getRowExpectedCount() throws TuplesException {
+    public long getRowExpectedCount() throws TuplesException {
 		throw new TuplesException("getRowExpectCount() not implemented.");
 	}
 
@@ -187,7 +174,6 @@ public class CollapsedAnswer implements Answer {
      * 
      * This method is unimplemented and will always throw a TuplesException.
      */
-    @Override
     public long getRowUpperBound() throws TuplesException {
         throw new TuplesException("getRowUpperBound() not implemented.");
     }
@@ -197,7 +183,6 @@ public class CollapsedAnswer implements Answer {
      * 
      * This method is unimplemented and will always throw a TuplesException.
      */
-    @Override
     public int getRowCardinality() throws TuplesException {
         throw new TuplesException("getRowCardinality() not implemented.");
     }
@@ -205,7 +190,6 @@ public class CollapsedAnswer implements Answer {
     /**
      * {@inheritDoc}
      */
-    @Override
     public boolean next() throws TuplesException {
         if (m_values == null) return false;
         m_values = m_currentRowGroup.nextValues();
