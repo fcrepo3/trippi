@@ -48,11 +48,13 @@ public class SparqlTupleIterator extends TupleIterator {
         }
     }
 
-    public boolean hasNext() {
+    @Override
+	public boolean hasNext() {
         return (m_next != null);
     }
 
-    public Map<String, Node> next() throws TrippiException {
+    @Override
+	public Map<String, Node> next() throws TrippiException {
         if (m_next == null) return null;
         Map<String, Node> last = m_next;
         m_next = getNext();
@@ -152,14 +154,16 @@ public class SparqlTupleIterator extends TupleIterator {
                 inVariables = false;
             }
         }
-        return (String[]) names.toArray(new String[0]);
+        return names.toArray(new String[0]);
     }
 
-    public String[] names() {
+    @Override
+	public String[] names() {
         return m_names;
     }
 
-    public void close() throws TrippiException {
+    @Override
+	public void close() throws TrippiException {
         if (!m_closed) {
             try {
                 m_inputStream.close();

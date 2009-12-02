@@ -38,7 +38,8 @@ public class TSVTupleWriter extends TupleWriter {
         }
     }
 
-    public int write(TupleIterator iter) throws TrippiException {
+    @Override
+	public int write(TupleIterator iter) throws TrippiException {
         String[] names = iter.names();
         for (int i = 0; i < names.length; i++) {
             if (i > 0) m_out.print("\t");
@@ -50,7 +51,7 @@ public class TSVTupleWriter extends TupleWriter {
             Map<String, Node> result = iter.next();
             for (int i = 0; i < names.length; i++) {
                 if (i > 0) m_out.print("\t");
-                String val = getValue((Node) result.get(names[i]));
+                String val = getValue(result.get(names[i]));
                 m_out.print(val.replaceAll("\t", " ").replaceAll("\n", " "));
             }
             m_out.println();

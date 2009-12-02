@@ -39,7 +39,8 @@ public class RIOTripleWriter extends TripleWriter {
         }
     }
 
-    public int write(TripleIterator iter) throws TrippiException {
+    @Override
+	public int write(TripleIterator iter) throws TrippiException {
         try {
             m_writer.startRDF();
             int count = 0;

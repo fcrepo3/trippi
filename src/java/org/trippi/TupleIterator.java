@@ -93,7 +93,8 @@ public abstract class TupleIterator {
     /**
      * Ensure close() gets called at garbage collection time.
      */
-    public void finalize() throws TrippiException {
+    @Override
+	public void finalize() throws TrippiException {
         close();
     }
 

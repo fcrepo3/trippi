@@ -29,7 +29,8 @@ public class MulgaraConnectorIntegrationTest
     private SubjectNode _s;
     private PredicateNode _p;
     private ObjectNode _o;
-    public void setUp() throws Exception {
+    @Override
+	public void setUp() throws Exception {
         super.setUp();
         _connector = getConnector();
         _geFactory = _connector.getElementFactory();
@@ -216,7 +217,7 @@ public class MulgaraConnectorIntegrationTest
         assertTrue("TripleIterator.hasNext returned false before first row",triples.hasNext());
         Triple found = triples.next();
         assertFalse("TripleIterator.hasNext returned true past end of result set",triples.hasNext());
-        ObjectNode obj = (ObjectNode)found.getObject();
+        ObjectNode obj = found.getObject();
         assertEquals(_o.toString(), obj.toString());
     }
     public void xtestLuceneModel() throws Exception {

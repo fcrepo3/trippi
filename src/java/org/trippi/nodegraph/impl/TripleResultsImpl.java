@@ -8,7 +8,7 @@ import org.trippi.nodegraph.TripleResults;
 public class TripleResultsImpl extends CountingResultIterator
                                implements TripleResults {
 
-    public TripleResultsImpl(ClosableIterator triples) {
+    public TripleResultsImpl(ClosableIterator<?> triples) {
 
         super(triples);
     }

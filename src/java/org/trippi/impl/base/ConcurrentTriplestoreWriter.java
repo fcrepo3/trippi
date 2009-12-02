@@ -280,7 +280,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
             m_buffer.flush(m_updateSession);
         }
         long end = System.currentTimeMillis();
-        double sec = ( (double) (end - start) ) / 1000.0;
+        double sec = ( (end - start) ) / 1000.0;
         logger.info("Flushed " + size + " updates in " + sec + "seconds.");
     }
 
@@ -330,7 +330,8 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
      * and finally, close the pool.
      *
      */
-    public synchronized void close() throws TrippiException {
+    @Override
+	public synchronized void close() throws TrippiException {
         if (!m_needToClose) {
             logger.info("Closing...");
             m_needToClose = true;

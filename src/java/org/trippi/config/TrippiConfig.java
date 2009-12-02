@@ -85,7 +85,7 @@ public class TrippiConfig {
         clearProfiles(p);
         Iterator<String> ids = profiles.keySet().iterator();
         while (ids.hasNext()) {
-            String id = (String) ids.next();
+            String id = ids.next();
             putProfile(p, profiles.get(id));
         }
         saveProps(p);
@@ -160,7 +160,7 @@ public class TrippiConfig {
         }
         Iterator<String> iter = keysToRemove.iterator();
         while (iter.hasNext()) {
-            p.remove((String) iter.next());
+            p.remove(iter.next());
         }
     }
 

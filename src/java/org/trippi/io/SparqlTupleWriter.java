@@ -32,7 +32,8 @@ public class SparqlTupleWriter extends TupleWriter {
         }
     }
 
-    public int write(TupleIterator iter) throws TrippiException {
+    @Override
+	public int write(TupleIterator iter) throws TrippiException {
         try {
             m_out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             doEntities();
@@ -94,7 +95,7 @@ public class SparqlTupleWriter extends TupleWriter {
         Iterator<String> iter = m_aliases.keySet().iterator();
         while (iter.hasNext()) {
             String ent = iter.next();
-            String value = (String) m_aliases.get(ent);
+            String value = m_aliases.get(ent);
             m_out.println("  <!ENTITY " + ent + " \"" + value + "\">");
         }
         m_out.println("]>");

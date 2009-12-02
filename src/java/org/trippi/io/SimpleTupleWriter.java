@@ -31,7 +31,8 @@ public class SimpleTupleWriter extends TupleWriter {
         }
     }
 
-    public int write(TupleIterator iter) throws TrippiException {
+    @Override
+	public int write(TupleIterator iter) throws TrippiException {
             String[] names = iter.names();
             int longest = 0;
             for (int i = 0; i < names.length; i++) {

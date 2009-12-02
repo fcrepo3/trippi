@@ -53,7 +53,7 @@ public class TripleUpdate {
         public static List<TripleUpdate> get(int type, List<Triple> triples) {
             List<TripleUpdate> updates = new ArrayList<TripleUpdate>(triples.size());
             for (int i = 0; i < triples.size(); i++) {
-                Triple triple = (Triple) triples.get(i);
+                Triple triple = triples.get(i);
                 updates.add(new TripleUpdate(type, triple));
             }
             return updates;

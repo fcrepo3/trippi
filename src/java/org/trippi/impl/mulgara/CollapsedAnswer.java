@@ -83,38 +83,39 @@ public class CollapsedAnswer implements Answer {
     ///////////////////////////////////////////////////////////////////
     ///////////////// from org.mulgara.query.Answer ///////////////////
     ///////////////////////////////////////////////////////////////////
-
+    
     public Object getObject(int column) throws TuplesException {
         return m_values[column];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Object getObject(String columnName) throws TuplesException {
         return getObject(getColumnIndex(columnName));
     }
 
     ///////////////////////////////////////////////////////////////////
-    ///////////////// from org.kowari.query.Cursor ////////////////////
+    ///////////////// from org.mulgara.query.Cursor ////////////////////
     ///////////////////////////////////////////////////////////////////
 
 
     /**
-     * Reset to iterate through every single element.
+     * {@inheritDoc}
      */
     public void beforeFirst() throws TuplesException { 
        // don't do anything -- this is a one-use impl
     }
 
     /**
-     * Free resources associated with this instance.
+     * {@inheritDoc}
      */
     public void close() throws TuplesException {
         m_wrappedAnswer.close();
     }
 
     /**
-     * Find the index of a variable.
-     *
-     * @return the ColumnIndex value
+     * {@inheritDoc}
      */
     public int getColumnIndex(Variable column) throws TuplesException {
         return getColumnIndex(column.getName());
@@ -135,65 +136,59 @@ public class CollapsedAnswer implements Answer {
     }
 
     /**
-     * Get the variables bound and their default collation order. 
-     *
-     * The array returned by this method should be treated as if its contents 
-     * were immutable, even though Java won't enforce this. If the elements of 
-     * the array are modified, there may be side effects on the past and 
-     * future clones of the tuples it was obtained from.
-     *
-     * @return the Variables bound within this answer
+     * {@inheritDoc}
      */
     public Variable[] getVariables() {
         return m_variables;
     }
 
     /**
-     * Test whether this is a unit-valued answer. 
-     *
-     * A unit answer appended to something yields the unit answer. A unit 
-     * answer joined to something yields the same something. Notionally, the 
-     * unit answer has zero columns and one row.
-     *
-     * @return true if the answer is unconstrained
+     * {@inheritDoc}
+     * 
+     * This method is unimplemented and will always throw a TuplesException.
      */
     public boolean isUnconstrained() throws TuplesException {
         throw new TuplesException("isUnconstrained() not implemented.");
     }
 
     /**
-     * Return the exact number of rows this instance contains.
+     * {@inheritDoc}
+     * 
+     * This method is unimplemented and will always throw a TuplesException.
      */
     public long getRowCount() throws TuplesException {
         throw new TuplesException("getRowCount() not implemented.");
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * This method is unimplemented and will always throw a TuplesException.
+     */
+    public long getRowExpectedCount() throws TuplesException {
+		throw new TuplesException("getRowExpectCount() not implemented.");
+	}
 
     /**
-     * Return an upper bound on the number of rows this instance contains.
+     * {@inheritDoc}
+     * 
+     * This method is unimplemented and will always throw a TuplesException.
      */
     public long getRowUpperBound() throws TuplesException {
         throw new TuplesException("getRowUpperBound() not implemented.");
     }
 
     /**
-     * Return cardinality of the number of rows which this instance contains.
-     *
-     * @return the cardinality of this tuples. {0,1,N} rows.
+     * {@inheritDoc}
+     * 
+     * This method is unimplemented and will always throw a TuplesException.
      */
     public int getRowCardinality() throws TuplesException {
         throw new TuplesException("getRowCardinality() not implemented.");
     }
 
     /**
-     * Move to the next row. 
-     *
-     * If no such row exists, return false and the current row becomes 
-     * unspecified. The current row is unspecified when an instance is 
-     * created. To specify the current row, the beforeFirst() method must 
-     * be invoked.
-     *
-     * @return whether a subsequent row exists.
+     * {@inheritDoc}
      */
     public boolean next() throws TuplesException {
         if (m_values == null) return false;
@@ -216,7 +211,8 @@ public class CollapsedAnswer implements Answer {
     /////////////////// from java.lang.Cloneable //////////////////////
     ///////////////////////////////////////////////////////////////////
 
-    public Object clone() {
+	@Override
+	public Object clone() {
         throw new RuntimeException("CollapsedAnswer.clone() not implemented.");
     }
 }

@@ -161,7 +161,7 @@ public class MPTSession implements TriplestoreSession {
         Set<org.nsdl.mptstore.rdf.Triple> mptSet = new HashSet<org.nsdl.mptstore.rdf.Triple>(jrdfTriples.size());
         Iterator<Triple> iter = jrdfTriples.iterator();
         while (iter.hasNext()) {
-            Triple jrdfTriple = (Triple) iter.next();
+            Triple jrdfTriple = iter.next();
             org.nsdl.mptstore.rdf.SubjectNode mptSubject =
                     (org.nsdl.mptstore.rdf.SubjectNode) 
                     jrdfToMPT(jrdfTriple.getSubject());

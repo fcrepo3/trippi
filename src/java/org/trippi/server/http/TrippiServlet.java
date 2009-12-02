@@ -209,7 +209,8 @@ public class TrippiServlet
     /**
      * Initialize the servlet.
      */
-    public final void init() throws ServletException {
+    @Override
+	public final void init() throws ServletException {
         // first load the styles
         try {
             String indexStylesheetPath = getPath(getIndexStylesheetLocation());
@@ -256,7 +257,8 @@ public class TrippiServlet
      * If no server is specified in the request URI, and the servlet is running
      * in multi-server mode, show an index of servers.
      */
-    public void doGet(HttpServletRequest request, 
+    @Override
+	public void doGet(HttpServletRequest request, 
                       HttpServletResponse response) 
               throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
@@ -542,7 +544,8 @@ public class TrippiServlet
     /**
      * Close the connector instance when cleaning up if closeOnDestroy().
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
         if (closeOnDestroy()) {
             if (m_connector != null) {
                 // single-server mode
@@ -567,7 +570,8 @@ public class TrippiServlet
     }
 
     /** Exactly the same behavior as doGet. */
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }

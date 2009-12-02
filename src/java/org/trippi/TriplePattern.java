@@ -63,9 +63,9 @@ public class TriplePattern {
             int i = 0;
             RDFUtil factory = new RDFUtil();
             while (iter.hasNext()) {
-                Object subject = parseToken((String) iter.next(), factory);
-                Object predicate = parseToken((String) iter.next(), factory);
-                Object object = parseToken((String) iter.next(), factory);
+                Object subject = parseToken(iter.next(), factory);
+                Object predicate = parseToken(iter.next(), factory);
+                Object object = parseToken(iter.next(), factory);
                 out[i++] = new TriplePattern(subject, predicate, object);
             }
             return out;
@@ -94,7 +94,7 @@ public class TriplePattern {
             PredicateNode predicate;
             ObjectNode object;
             if (s instanceof String) {
-                BlankNode b = (BlankNode) bNodes.get(s);
+                BlankNode b = bNodes.get(s);
                 if (b == null) {
                     b = factory.createResource();
                     bNodes.put((String)s, b);
@@ -109,7 +109,7 @@ public class TriplePattern {
                 predicate = (PredicateNode) p;
             }
             if (o instanceof String) {
-                BlankNode b = (BlankNode) bNodes.get(o);
+                BlankNode b = bNodes.get(o);
                 if (b == null) {
                     b = factory.createResource();
                     bNodes.put((String)o, b);
@@ -340,7 +340,8 @@ public class TriplePattern {
         }
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer out = new StringBuffer();
         if (m_subject instanceof String) {
             out.append(m_subject + " ");

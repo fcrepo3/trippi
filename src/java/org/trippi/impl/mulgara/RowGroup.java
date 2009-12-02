@@ -59,7 +59,7 @@ public class RowGroup {
         }
         m_variables = new Variable[newVars.size()];
         for (int i = 0; i < newVars.size(); i++) {
-            m_variables[i] = (Variable) newVars.get(i);
+            m_variables[i] = newVars.get(i);
         }
         m_nextValues = new Object[m_variables.length];
     }

@@ -86,7 +86,7 @@ public class MulgaraConnector extends TriplestoreConnector {
 		String host = null, port = null, path = null;
         if (remote) {
             host = ConfigUtils.getRequired(config, "host");
-            port = (String)config.get("port");
+            port = config.get("port");
         } else {
             path = ConfigUtils.getRequired(config, "path");
         }
@@ -110,7 +110,7 @@ public class MulgaraConnector extends TriplestoreConnector {
         int poolMaxGrowth = 0, poolSpareSessions = 0;
         if (poolInitialSize > 0) {
             poolMaxGrowth = ConfigUtils.getRequiredInt(config, "poolMaxGrowth");
-            String temp = (String)config.get("poolSpareSessions");
+            String temp = config.get("poolSpareSessions");
             poolSpareSessions = (temp == null) ? 0 : Integer.parseInt(temp);
         }
         

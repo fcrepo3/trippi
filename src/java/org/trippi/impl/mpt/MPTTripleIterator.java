@@ -25,11 +25,13 @@ public class MPTTripleIterator extends TripleIterator {
         _util = new RDFUtil();
     }
 
-    public boolean hasNext() {
+    @Override
+	public boolean hasNext() {
         return _results.hasNext();
     }
 
-    public Triple next() throws TrippiException {
+    @Override
+	public Triple next() throws TrippiException {
         try {
             List<Node> result = _results.next();
             Node n;
@@ -50,7 +52,8 @@ public class MPTTripleIterator extends TripleIterator {
         }
     }
 
-    public void close() {
+    @Override
+	public void close() {
         _results.close();
     }
 

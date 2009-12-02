@@ -16,7 +16,9 @@ import org.trippi.nodegraph.impl.NodeGraphImpl;
  */
 public abstract class NodeGraph implements Graph {
 
-    /**
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Get an instance that wraps the given JRDF Graph, or a new memory-backed
      * instance if <code>graph</code> is * given as <code>null</code>.
      *
