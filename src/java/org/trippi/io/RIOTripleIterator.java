@@ -68,7 +68,9 @@ public class RIOTripleIterator extends TripleIterator
         m_parser.setStopAtFirstError(false);
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
         Thread parserThread = new Thread(this);
-        logger.info("Starting parse thread");
+        if (logger.isDebugEnabled()) {
+        	logger.debug("Starting parse thread");
+        }
         parserThread.start();
         m_next = getNext();
     }
@@ -106,14 +108,18 @@ public class RIOTripleIterator extends TripleIterator
             throw new TrippiException("RDF Parse Error.", m_parseException);
         }
         if (m_bucket == null) {
-            logger.info("Finished parsing " + m_tripleCount + " triples.");
+        	if (logger.isDebugEnabled()) {
+        		logger.debug("Finished parsing " + m_tripleCount + " triples.");
+        	}
             return null; // parser finished normally, no more triples
         } else {
             Triple triple = m_bucket;
             m_bucket = null;
             m_tripleCount++;
             if (m_tripleCount % 1000 == 0) {
-                logger.info("Iterated " + m_tripleCount + ", mem free = " + Runtime.getRuntime().freeMemory() );
+            	if (logger.isDebugEnabled()) {
+            		logger.debug("Iterated " + m_tripleCount + ", mem free = " + Runtime.getRuntime().freeMemory() );
+            	}
             }
             notifyAll(); // notify parser that the bucket is ready for another
             return triple;
