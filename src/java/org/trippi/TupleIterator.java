@@ -13,12 +13,14 @@ import java.util.Map;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.Triple;
 import org.trippi.io.CSVTupleWriter;
+import org.trippi.io.FormatCountTupleWriter;
 import org.trippi.io.SimpleTupleWriter;
 import org.trippi.io.SparqlTupleIterator;
 import org.trippi.io.SparqlTupleWriter;
 import org.trippi.io.TSVTupleWriter;
 import org.trippi.io.TupleWriter;
 import org.trippi.io.CountTupleWriter;
+import org.trippi.io.JSONTupleWriter;
 
 /**
  * An iterator over a series of tuples.
@@ -48,10 +50,16 @@ public abstract class TupleIterator {
                                                            RDFFormat.SIMPLE,
                                                            RDFFormat.SPARQL,
                                                            RDFFormat.TSV,
-                                                           RDFFormat.COUNT };
+                                                           RDFFormat.COUNT,
+                                                           RDFFormat.COUNT_JSON,
+                                                           RDFFormat.COUNT_SPARQL,
+                                                           RDFFormat.JSON
+                                                           };
 
     private Map<String, String> m_aliases = new HashMap<String, String>();
 
+    private String m_callback = null;
+    
     /**
      * Return true if there are more results.
      */
@@ -137,6 +145,12 @@ public abstract class TupleIterator {
             writer = new TSVTupleWriter(out, m_aliases); 
         } else if (format == RDFFormat.COUNT) {
             writer = new CountTupleWriter(out); 
+        } else if (format == RDFFormat.COUNT_JSON) {
+            writer = new FormatCountTupleWriter(new JSONTupleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.COUNT_SPARQL) {
+            writer = new FormatCountTupleWriter(new SparqlTupleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.JSON) {
+            writer = new JSONTupleWriter(out, m_aliases); 
         } else {
             throw new TrippiException("Unsupported output format: " + format.getName());
         }
@@ -159,5 +173,13 @@ public abstract class TupleIterator {
     public static void main(String[] args) throws Exception {
         TupleIterator.fromStream(new FileInputStream(new File(args[0])), RDFFormat.SPARQL).toStream(System.out, RDFFormat.SIMPLE);
     }
+
+	public void setCallback(String callback) {
+		if (callback != null) m_callback  = callback;
+	}
+	
+	public String getCallback(){
+		return m_callback;
+	}
 
 }

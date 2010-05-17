@@ -68,6 +68,20 @@ public class TrippiServer {
         return getMediaType(format.getMediaType(), useDumbType);
     }
 
+    public String find(String type,       // default = tuples
+            String template, 
+            String lang,       // required
+            String query,      // required
+            String limit,      // default = 0 (no limit)
+            String distinct,   // default = false
+            String format,     // default = sparql
+            String dumbTypes,  // default = false
+			 String flush,      // default = false
+            OutputStream out, boolean breakIt) throws IOException,
+                                     TrippiException {
+    	return find(type,template,lang,query,limit,distinct,format,dumbTypes,"",flush,out);
+    }
+    
     /**
      * Do a query against the triplestore, putting results into the
      * OutputStream.
@@ -80,6 +94,7 @@ public class TrippiServer {
                      String distinct,   // default = false
                      String format,     // default = sparql
                      String dumbTypes,  // default = false
+                     String callback, // default = ""
 					 String flush,      // default = false
                      OutputStream out) throws IOException,
                                               TrippiException {
@@ -121,6 +136,7 @@ public class TrippiServer {
                                                      Integer.parseInt(limit),
                                                      doDistinct);
             try {
+            	iter.setCallback(callback);
                 iter.toStream(out, fmt);
                 return getMediaType(fmt.getMediaType(), useDumbTypes);
             } finally { iter.close(); }
@@ -141,6 +157,7 @@ public class TrippiServer {
                                                 Integer.parseInt(limit),
                                             doDistinct);
                 }
+                iter.setCallback(callback);
                 iter.toStream(out, fmt);
                 return getMediaType(fmt.getMediaType(), useDumbTypes);
             } finally {

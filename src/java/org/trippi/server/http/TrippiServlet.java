@@ -18,16 +18,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.trippi.RDFFormat;
-import org.trippi.TripleIterator;
+import org.trippi.server.TrippiServer;
 import org.trippi.TriplestoreConnector;
+import org.trippi.RDFFormat;
+import org.trippi.config.TrippiProfile;
+import org.trippi.config.TrippiConfig;
+import org.trippi.TripleIterator;
 import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
-import org.trippi.config.TrippiConfig;
-import org.trippi.config.TrippiProfile;
-import org.trippi.server.TrippiServer;
 
 /**
  * A Java servlet that exposes <code>TrippiServer</code>(s) via HTTP.
@@ -361,6 +361,7 @@ public class TrippiServlet
         String format = request.getParameter("format");
         String dumbTypes = request.getParameter("dt");
         String stream = request.getParameter("stream");
+        String callback = request.getParameter("jsoncallback");
         boolean streamImmediately = (stream != null) && (stream.toLowerCase().startsWith("t") || stream.toLowerCase().equals("on"));
         String flush = request.getParameter("flush");
         if (type == null && template == null && lang == null && query == null && limit == null && distinct == null && format == null) {
@@ -376,7 +377,7 @@ public class TrippiServlet
                            request.getRequestURL().toString(),
                            request.getContextPath());
         } else {
-            doFind(server, type, template, lang, query, limit, distinct, format, dumbTypes, streamImmediately, flush, response);
+            doFind(server, type, template, lang, query, limit, distinct, format, dumbTypes, streamImmediately, flush, callback, response);
         }
     }
 
@@ -481,6 +482,20 @@ public class TrippiServlet
     }
 
     public void doFind(TrippiServer server,
+            String type, 
+            String template, 
+            String lang, 
+            String query, 
+            String limit, 
+            String distinct, 
+            String format, 
+            String dumbTypes,
+            boolean streamImmediately,
+			  String flush,
+            HttpServletResponse response, boolean breakIt) throws Exception {
+    	 doFind(server,type,template,lang,query,limit,distinct,format,dumbTypes,streamImmediately,flush,null,response);
+    }
+    public void doFind(TrippiServer server,
                           String type, 
                           String template, 
                           String lang, 
@@ -491,6 +506,7 @@ public class TrippiServlet
                           String dumbTypes,
                           boolean streamImmediately,
 						  String flush,
+						  String callback,
                           HttpServletResponse response) throws Exception {
         OutputStream out = null;
         File tempFile = null;
@@ -503,7 +519,7 @@ public class TrippiServlet
                 try {
                     response.setContentType(mediaType + "; charset=UTF-8");
                     out = response.getOutputStream();
-                    server.find(type, template, lang, query, limit, distinct, format, dumbTypes, flush, out);
+                    server.find(type, template, lang, query, limit, distinct, format, dumbTypes, callback, flush, out);
                 } catch (Exception e) {
                     e.printStackTrace();
                     throw new ServletException("Error querying", e);
@@ -511,7 +527,7 @@ public class TrippiServlet
             } else {
                 tempFile = File.createTempFile("trippi", "result");
                 FileOutputStream tempOut = new FileOutputStream(tempFile);
-                String mediaType = server.find(type, template, lang, query, limit, distinct, format, dumbTypes, flush, tempOut);
+                String mediaType = server.find(type, template, lang, query, limit, distinct, format, dumbTypes, callback, flush, tempOut);
                 tempOut.close();
                 response.setContentType(mediaType + "; charset=UTF-8");
                 out = response.getOutputStream();

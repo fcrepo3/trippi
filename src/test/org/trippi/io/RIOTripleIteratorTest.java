@@ -83,4 +83,12 @@ public class RIOTripleIteratorTest extends TestCase {
         iter.toStream(System.out, RDFFormat.RDF_XML);
     }
 
+    public void testFromStreamToJson() throws Exception {
+        InputStream in = new ByteArrayInputStream(rdf.getBytes());
+        TripleIterator iter = TripleIterator.fromStream(in, RDFFormat.RDF_XML);
+        
+        System.out.println("\n\n\n***\n");
+        iter.toStream(System.out, RDFFormat.JSON);
+    }
+
 }

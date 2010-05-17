@@ -24,8 +24,11 @@ import org.openrdf.rio.ntriples.NTriplesWriter;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.rio.turtle.TurtleWriter;
 import org.trippi.io.CountTripleWriter;
+import org.trippi.io.FormatCountTripleWriter;
+import org.trippi.io.JSONTripleWriter;
 import org.trippi.io.RIOTripleIterator;
 import org.trippi.io.RIOTripleWriter;
+import org.trippi.io.SparqlTupleWriter;
 import org.trippi.io.TripleWriter;
 import org.trippi.io.XMLDeclarationRemover;
 
@@ -59,6 +62,8 @@ public abstract class TripleIterator {
                                                            RDFFormat.COUNT };
 
     private Map<String, String> m_aliases = new HashMap<String, String>();
+    
+    private String m_callback = null;
 
     /**
      * Return true if there are any more triples.
@@ -146,6 +151,10 @@ public abstract class TripleIterator {
             writer = new RIOTripleWriter(new N3Writer(out), m_aliases);
         } else if (format == RDFFormat.COUNT) {
             writer = new CountTripleWriter(out);
+        } else if (format == RDFFormat.COUNT_JSON) {
+            writer = new FormatCountTripleWriter(new JSONTripleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.JSON) {
+            writer = new JSONTripleWriter(out, m_aliases); 
         } else {
             throw new TrippiException("Unsupported output format: " + format.getName());
         }
@@ -268,5 +277,13 @@ public abstract class TripleIterator {
             throw new TrippiException("Unable to localize node", th);
         }
     }
+    
+	public void setCallback(String callback) {
+		if (callback != null) m_callback  = callback;
+	}
+	
+	public String getCallback(){
+		return m_callback;
+	}
 
 }

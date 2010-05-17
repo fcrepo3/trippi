@@ -90,6 +90,25 @@ public class RDFFormat {
                                                       "UTF-8",
                                                       "text/plain",
                                                       ".txt");
+    /**
+     * <a href="http://json.org/">JSON</a> format
+     * intended to support an optional <a href="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/">JSONP callback</a>
+     */
+    public static final RDFFormat JSON = new RDFFormat("json",
+            "UTF-8",
+            "application/json",
+            ".js");
+    /**
+     * Formatted counts
+     */
+    public static final RDFFormat COUNT_JSON = new RDFFormat("count/json",
+            "UTF-8",
+            "application/json",
+            ".js");
+    public static final RDFFormat COUNT_SPARQL = new RDFFormat("count/Sparql",
+            "UTF-8",
+            "application/xml",
+            ".xml");
 
     public static final RDFFormat[] ALL = new RDFFormat[] { N_TRIPLES,
                                                             NOTATION_3,
@@ -99,18 +118,23 @@ public class RDFFormat {
                                                             SIMPLE,
                                                             SPARQL,
                                                             TSV,
-                                                            COUNT };
+                                                            COUNT,
+                                                            COUNT_JSON,
+                                                            COUNT_SPARQL,
+                                                            JSON};
 
-    private String m_name;
-    private String m_encoding;
-    private String m_mediaType;
-    private String m_extension;
+    private final String m_name;
+    private final String m_simplified_name;
+    private final String m_encoding;
+    private final String m_mediaType;
+    private final String m_extension;
 
     private RDFFormat(String name,
                       String encoding,
                       String mediaType,
                       String extension) {
         m_name = name;
+        m_simplified_name = simplifyName(name);
         m_encoding = encoding;
         m_mediaType = mediaType;
         m_extension = extension;
@@ -124,7 +148,7 @@ public class RDFFormat {
     public static RDFFormat forName(String name) throws TrippiException {
         String s = simplifyName(name);
         for (int i = 0; i < ALL.length; i++) {
-            if (s.equals(simplifyName(ALL[i].getName()))) return ALL[i];
+            if (s.equals(ALL[i].m_simplified_name)) return ALL[i];
         }
         throw new TrippiException("Unrecognized format: " + name);
     }
