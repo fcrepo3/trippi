@@ -43,8 +43,13 @@ public class MPTConnector extends TriplestoreConnector {
     }
 
     // Implements TriplestoreConnector.init(Map)
-    @Override
+	@Override
+	@Deprecated
 	public void init(Map<String, String> config) throws TrippiException {
+		setConfiguration(config);
+	}
+	@Override
+	public void setConfiguration(Map<String, String> config) throws TrippiException {
 
         // get and validate configuration values
         String ddlGenerator = ConfigUtils.getRequired(config, "ddlGenerator");

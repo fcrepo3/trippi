@@ -79,7 +79,12 @@ public class MulgaraConnector extends TriplestoreConnector {
 	}
 
 	@Override
+	@Deprecated
 	public void init(Map<String, String> config) throws TrippiException {
+		setConfiguration(config);
+	}
+	@Override
+	public void setConfiguration(Map<String, String> config) throws TrippiException {
 		AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
 		
 		boolean remote = ConfigUtils.getRequiredBoolean(config, "remote");

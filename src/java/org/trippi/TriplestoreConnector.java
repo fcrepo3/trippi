@@ -51,8 +51,13 @@ public abstract class TriplestoreConnector {
     /**
      * Initialize this connector with the given configuration.
      */
+    @Deprecated
     public abstract void init(Map<String, String> configuration) throws TrippiException;
 
+    /**
+     * Initialize this connector with the given configuration.
+     */
+    public abstract void setConfiguration(Map<String, String> configuration) throws TrippiException;
     /**
      * Get the reader. 
      */

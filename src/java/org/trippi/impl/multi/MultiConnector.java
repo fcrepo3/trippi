@@ -48,9 +48,14 @@ public class MultiConnector extends TriplestoreConnector {
         m_elementFactory = new RDFUtil();
     }
 
-    @Override
-	public void init(Map<String,String> config) throws TrippiException {
-    	logger.warn(MultiConnector.class.getName() + " configured without target connectors!");
+	@Override
+	@Deprecated
+	public void init(Map<String, String> config) throws TrippiException {
+		setConfiguration(config);
+	}
+	@Override
+	public void setConfiguration(Map<String, String> config) throws TrippiException {
+    	logger.warn(MultiConnector.class.getName() + " configured with initializer/setter");
     }
 
     @Override
