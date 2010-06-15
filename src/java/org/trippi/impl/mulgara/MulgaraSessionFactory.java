@@ -156,6 +156,7 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 				m_factory.close();
 				m_isClosed = true;
 			} catch (QueryException e) {
+				logger.warn("Error closing Mulgara session factory: " + e.toString());
 				throw new TrippiException(e.getMessage(), e);
 			}
 		}
@@ -181,6 +182,7 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 				return new MulgaraSession(session, m_modelURI, m_textModelURI, m_aliasManager);
 			}
 		} catch (QueryException e) {
+			logger.error("Error creating session", e);
 			throw new TrippiException(e.getMessage(), e);
 		}
 	}
@@ -209,13 +211,14 @@ public class MulgaraSessionFactory implements TriplestoreSessionFactory {
 						.uri());
 			}
 		} catch (QueryException e) {
+			logger.error("Error creating models", e);
 			throw new TrippiException(e.getMessage(), e);
 		} finally {
 			if (session != null) {
 				try {
 					session.close();
 				} catch (QueryException e) {
-					logger.warn("Error closing Mulgara session.");
+					logger.warn("Error closing Mulgara session: " + e.toString());
 				}
 			}
 		}
