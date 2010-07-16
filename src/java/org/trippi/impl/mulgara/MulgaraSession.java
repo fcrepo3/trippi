@@ -10,7 +10,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
@@ -39,7 +40,7 @@ import org.trippi.impl.base.AliasManager;
 import org.trippi.impl.base.TriplestoreSession;
 
 public class MulgaraSession implements TriplestoreSession {
-	private static final Logger logger = Logger.getLogger(MulgaraSession.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MulgaraSession.class.getName());
 
 	private JRDFSession m_session;
 	private LocalJRDFDatabaseSession m_dbSession;

@@ -3,7 +3,8 @@ package org.trippi.impl.base;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
@@ -22,7 +23,7 @@ import org.trippi.TupleIterator;
 public class ConcurrentTriplestoreReader implements TriplestoreReader {
 
     private static final Logger logger =
-        Logger.getLogger(ConcurrentTriplestoreReader.class.getName());
+        LoggerFactory.getLogger(ConcurrentTriplestoreReader.class.getName());
 
     /** The session pool to draw from. */
     private TriplestoreSessionPool m_pool;

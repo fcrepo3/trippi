@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.GraphElementFactory;
 import org.trippi.TriplestoreConnector;
 import org.trippi.TriplestoreReader;
@@ -26,8 +27,9 @@ import org.trippi.impl.base.UpdateBuffer;
 
 public class MulgaraConnector extends TriplestoreConnector {
 	private static final Logger logger =
-        Logger.getLogger(MulgaraConnector.class.getName());
+        LoggerFactory.getLogger(MulgaraConnector.class.getName());
 
+	private Map<String,String> m_config;
     private TriplestoreReader m_reader;
     private TriplestoreWriter m_writer;
     private GraphElementFactory m_elementFactory;
@@ -40,6 +42,9 @@ public class MulgaraConnector extends TriplestoreConnector {
     private boolean m_isClosed = false;
     private boolean m_synch = false;
     
+	/**
+	 * @see org.trippi.TriplestoreConnector#close() 
+	 */
 	@Override
 	public void close() throws TrippiException {
 		if (!m_isClosed) {
@@ -58,18 +63,43 @@ public class MulgaraConnector extends TriplestoreConnector {
         }
 	}
 
+	/**
+	 * @see org.trippi.TriplestoreConnector#getElementFactory() 
+	 */
 	@Override
 	public GraphElementFactory getElementFactory() {
 		return m_elementFactory;
 	}
 
+	/**
+	 * @see org.trippi.TriplestoreConnector#getReader() 
+	 */
 	@Override
 	public TriplestoreReader getReader() {
+		if (m_reader == null){
+			try{
+				open();
+			}
+			catch(TrippiException e){
+				logger.error(e.toString(),e);
+			}
+		}
 		return m_reader;
 	}
 
+	/**
+	 * @see org.trippi.TriplestoreConnector#getWriter() 
+	 */
 	@Override
 	public TriplestoreWriter getWriter() {
+		if (m_reader == null){
+			try{
+				open();
+			}
+			catch(TrippiException e){
+				logger.error(e.toString(),e);
+			}
+		}
 		if (m_writer == null) {
             throw new UnsupportedOperationException(
                     "This MulgaraConnector is read-only!");
@@ -78,55 +108,128 @@ public class MulgaraConnector extends TriplestoreConnector {
         }
 	}
 
+	/**
+	 * @see org.trippi.TriplestoreConnector#init(Map) 
+	 */
+	@Deprecated
 	@Override
 	public void init(Map<String, String> config) throws TrippiException {
-		AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
+		setConfiguration(config);
+	}
+
+	/**
+	 * @see org.trippi.TriplestoreConnector#setConfiguration(Map) 
+	 */
+	@Override
+	public void setConfiguration(Map<String, String> config) throws TrippiException {
+		Map<String,String> validated = new HashMap<String,String>(config);
 		
 		boolean remote = ConfigUtils.getRequiredBoolean(config, "remote");
-		String host = null, port = null, path = null;
+		validated.put("remote",Boolean.toString(remote));
+		
         if (remote) {
-            host = ConfigUtils.getRequired(config, "host");
-            port = config.get("port");
+        	validated.put("host",ConfigUtils.getRequired(config, "host"));
+            
+            String port = config.get("port");
+            int portNumber = (port == null) ? 1099 : Integer.valueOf(port).intValue();
+            validated.put("port", Integer.toString(portNumber));
         } else {
-            path = ConfigUtils.getRequired(config, "path");
+        	validated.put("path",ConfigUtils.getRequired(config, "path"));
         }
         // default RMI port is 1099
-        int portNumber = (port == null) ? 1099 : Integer.valueOf(port).intValue();
-        String serverName = ConfigUtils.getRequired(config, "serverName");
+        validated.put("serverName",ConfigUtils.getRequired(config, "serverName"));
+        validated.put("autoFlushDormantSeconds", Integer.toString(ConfigUtils.getRequiredNNInt(config, "autoFlushDormantSeconds")));
+
         String modelName = ConfigUtils.getRequired(config, "modelName");
-        int autoFlushDormantSeconds = ConfigUtils.getRequiredNNInt(config, "autoFlushDormantSeconds");
-        int autoFlushBufferSize = ConfigUtils.getRequiredPosInt(config, "autoFlushBufferSize");
-        int bufferSafeCapacity = ConfigUtils.getRequiredInt(config, "bufferSafeCapacity");
-        int bufferFlushBatchSize = ConfigUtils.getRequiredPosInt(config, "bufferFlushBatchSize");
-        int poolInitialSize = ConfigUtils.getRequiredInt(config, "poolInitialSize");
+        validated.put("modelName", modelName);
         
+        int autoFlushBufferSize = ConfigUtils.getRequiredPosInt(config, "autoFlushBufferSize");
+        validated.put("autoFlushBufferSize", Integer.toString(autoFlushBufferSize));
+        
+        int bufferSafeCapacity = ConfigUtils.getRequiredInt(config, "bufferSafeCapacity");
         if (bufferSafeCapacity < autoFlushBufferSize + 1) {
-            throw new TrippiException("bufferSafeCapacity must be greater than autoFlushBufferSize.");
+            throw new TrippiException("bufferSafeCapacity must be less than or equal to autoFlushBufferSize.");
         }
+        validated.put("bufferSafeCapacity",Integer.toString(bufferSafeCapacity));
+        
+
+        int bufferFlushBatchSize = ConfigUtils.getRequiredPosInt(config, "bufferFlushBatchSize");
         if (bufferFlushBatchSize > autoFlushBufferSize) {
             throw new TrippiException("bufferFlushBatchSize must be less than or equal to autoFlushBufferSize.");
         }
+        validated.put("bufferFlushBatchSize", Integer.toString(bufferFlushBatchSize));
 
-        int poolMaxGrowth = 0, poolSpareSessions = 0;
+        int poolInitialSize = ConfigUtils.getRequiredInt(config, "poolInitialSize");
         if (poolInitialSize > 0) {
-            poolMaxGrowth = ConfigUtils.getRequiredInt(config, "poolMaxGrowth");
+            int poolMaxGrowth = ConfigUtils.getRequiredInt(config, "poolMaxGrowth");
+            validated.put("poolMaxGrowth", Integer.toString(poolMaxGrowth));
             String temp = config.get("poolSpareSessions");
-            poolSpareSessions = (temp == null) ? 0 : Integer.parseInt(temp);
+            int poolSpareSessions = (temp == null) ? 0 : Integer.parseInt(temp);
+            validated.put("poolSpareSessions", Integer.toString(poolSpareSessions));
         }
+        validated.put("poolInitialSize", Integer.toString(poolInitialSize));
         
         boolean readOnly = ConfigUtils.getRequiredBoolean(config, "readOnly");
-        boolean autoCreate = false, autoTextIndex;
-        String textModelName = null;
+        validated.put("readOnly", Boolean.toString(readOnly));
+        
+        boolean autoCreate = false, autoTextIndex = false;
+
         if (!readOnly) {
         	autoCreate = ConfigUtils.getRequiredBoolean(config, "autoCreate");
+            
             autoTextIndex = ConfigUtils.getRequiredBoolean(config, "autoTextIndex");
+            
             if (autoTextIndex) {
-              textModelName = modelName + "-fullText";
+              validated.put("textModelName", modelName + "-fullText");
             }
         }
+        validated.put("autoCreate", Boolean.toString(autoCreate));
+        validated.put("autoTextIndex", Boolean.toString(autoTextIndex));
         
-        m_factory = null;
+        m_config = validated;
+	}
+	
+    /**
+     * @see org.trippi.TriplestoreConnector#getConfiguration()
+     */
+    @Override
+	public Map<String,String> getConfiguration(){
+		return m_config;
+	}
+	
+    /**
+     * @see org.trippi.TriplestoreConnector#open()
+     */
+    @Override
+    public void open() throws TrippiException {    
+    	if (m_config == null){
+    		throw new TrippiException("Cannot open " + getClass().getName() + " without valid configuration");
+    	}
+    	
+		AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
+
+		boolean readOnly = Boolean.valueOf(m_config.get("readOnly"));
+        //Mulgara location properties
+		boolean remote = Boolean.valueOf(m_config.get("remote"));
+        String serverName = m_config.get("serverName");
+        String modelName = m_config.get("modelName");
+        String textModelName = m_config.get("textModelName"); // will be null when autoTextIndex == false
+        
+        // connection pool configuration
+        int poolInitialSize = Integer.parseInt(m_config.get("poolInitialSize"));
+        int poolMaxGrowth = Integer.parseInt(m_config.get("poolMaxGrowth"));
+        int poolSpareSessions = Integer.parseInt(m_config.get("poolSpareSessions"));
+        boolean autoCreate = Boolean.valueOf(m_config.get("autoCreate"));
+        
+        // buffer configuration
+        int autoFlushBufferSize = Integer.parseInt(m_config.get("autoFlushBufferSize"));
+        int bufferFlushBatchSize = Integer.parseInt(m_config.get("bufferFlushBatchSize"));
+        int bufferSafeCapacity = Integer.parseInt(m_config.get("bufferSafeCapacity"));
+        int autoFlushDormantSeconds = Integer.parseInt(m_config.get("autoFlushDormantSeconds"));
+        
         if (remote) {
+            String host = m_config.get("host");
+            int portNumber = Integer.parseInt(m_config.get("port"));
             m_factory =  new MulgaraSessionFactory(serverName,
 												modelName,
 												textModelName,
@@ -135,6 +238,7 @@ public class MulgaraConnector extends TriplestoreConnector {
 												host,
             									portNumber);
         } else {
+            String path = m_config.get("path");
             m_factory =  new MulgaraSessionFactory(serverName,
                                                   modelName,
                                                   textModelName,

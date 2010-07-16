@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
@@ -31,7 +32,7 @@ import org.trippi.TupleIterator;
 public class MultiTriplestoreWriter implements TriplestoreWriter {
 
     private static final Logger logger =
-        Logger.getLogger(MultiTriplestoreWriter.class.getName());
+        LoggerFactory.getLogger(MultiTriplestoreWriter.class.getName());
 
     private TriplestoreReader m_reader;
     private TriplestoreWriter[] m_writers;

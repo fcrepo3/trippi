@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
@@ -24,7 +25,7 @@ import org.trippi.TupleIterator;
 public class SynchronizedTriplestoreSession implements TriplestoreSession {
 
     private static final Logger logger =
-            Logger.getLogger(SynchronizedTriplestoreSession.class.getName());
+            LoggerFactory.getLogger(SynchronizedTriplestoreSession.class.getName());
 
     /** The underlying session. */
     private TriplestoreSession m_session;

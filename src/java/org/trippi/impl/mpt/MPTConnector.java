@@ -9,6 +9,8 @@ import org.apache.commons.dbcp.BasicDataSourceFactory;
 
 import org.jrdf.graph.GraphElementFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trippi.RDFUtil;
 import org.trippi.TriplestoreConnector;
 import org.trippi.TriplestoreReader;
@@ -32,40 +34,96 @@ import org.nsdl.mptstore.core.DDLGenerator;
 import org.nsdl.mptstore.core.TableManager;
 
 public class MPTConnector extends TriplestoreConnector {
+	private static Logger logger = LoggerFactory.getLogger(MPTConnector.class.getName());
+	
+	private Map<String,String> m_config;
 
-    private GraphElementFactory _elementFactory = new RDFUtil();
+    private GraphElementFactory m_elementFactory = new RDFUtil();
 
-    private TriplestoreSession _updateSession;
+    private TriplestoreSession m_updateSession;
 
-    private TriplestoreWriter _writer;
+    private TriplestoreWriter m_writer;
 
     public MPTConnector() {
     }
+    
+    public MPTConnector(Map<String,String> config)
+        throws TrippiException {
+    	setConfiguration(config);
+    }
 
-    // Implements TriplestoreConnector.init(Map)
+    /**
+     * @deprecated
+     * @see org.trippi.TriplestoreConnector#init(Map)
+     */
+    @Deprecated
     @Override
-	public void init(Map<String, String> config) throws TrippiException {
+    public void init(Map<String,String> config) throws TrippiException {
+    	setConfiguration(config);
+    }
+    
+    /**
+     * @see org.trippi.TriplestoreConnector#setConfiguration(Map)
+     */
+    @Override
+	public void setConfiguration(Map<String, String> config) throws TrippiException {
 
-        // get and validate configuration values
-        String ddlGenerator = ConfigUtils.getRequired(config, "ddlGenerator");
-        String jdbcDriver = ConfigUtils.getRequired(config, "jdbcDriver");
-        String jdbcURL = ConfigUtils.getRequired(config, "jdbcURL");
-        String username = ConfigUtils.getRequired(config, "username");
-        String password = ConfigUtils.getRequired(config, "password");
+        // validate and store configuration values
+    	Map<String,String> validated = new HashMap<String,String>(config);
+        validated.put("ddlGenerator", ConfigUtils.getRequired(config, "ddlGenerator"));
+        validated.put("jdbcDriver", ConfigUtils.getRequired(config, "jdbcDriver"));
+        validated.put("jdbcURL", ConfigUtils.getRequired(config, "jdbcURL"));
+        validated.put("username", ConfigUtils.getRequired(config, "username"));
+        validated.put("password", ConfigUtils.getRequired(config, "password"));
+        
         int poolInitialSize = ConfigUtils.getRequiredInt(config, "poolInitialSize");
         int poolMaxSize = ConfigUtils.getRequiredInt(config, "poolMaxSize");
         if (poolMaxSize < poolInitialSize) {
             throw new TrippiException("poolMaxSize cannot be less than poolInitialSize");
         }
-        int fetchSize = ConfigUtils.getRequiredInt(config, "fetchSize");
-        boolean backslashIsEscape = ConfigUtils.getRequiredBoolean(config, "backslashIsEscape");
-        int autoFlushDormantSeconds = ConfigUtils.getRequiredNNInt(config, "autoFlushDormantSeconds");
-        int autoFlushBufferSize = ConfigUtils.getRequiredPosInt(config, "autoFlushBufferSize");
-        int bufferSafeCapacity = ConfigUtils.getRequiredInt(config, "bufferSafeCapacity");
-        int bufferFlushBatchSize = ConfigUtils.getRequiredPosInt(config, "bufferFlushBatchSize");
+        validated.put("poolInitialSize", Integer.toString(poolInitialSize));
+        validated.put("poolMaxSize", Integer.toString(poolMaxSize));
+        validated.put("fetchSize", Integer.toString(ConfigUtils.getRequiredInt(config, "fetchSize")));
+        validated.put("backslashIsEscape", Boolean.toString(ConfigUtils.getRequiredBoolean(config, "backslashIsEscape")));
+        validated.put("autoFlushDormantSeconds", Integer.toString(ConfigUtils.getRequiredNNInt(config, "autoFlushDormantSeconds")));
+        validated.put("autoFlushBufferSize", Integer.toString(ConfigUtils.getRequiredPosInt(config, "autoFlushBufferSize")));
+        validated.put("bufferSafeCapacity", Integer.toString(ConfigUtils.getRequiredInt(config, "bufferSafeCapacity")));
+        validated.put("bufferFlushBatchSize",Integer.toString(ConfigUtils.getRequiredPosInt(config, "bufferFlushBatchSize")));
+        
+        m_config = validated;
+    }
+    
+    /**
+     * @see org.trippi.TriplestoreConnector#getConfiguration()
+     */
+    @Override
+    public Map<String,String> getConfiguration(){
+    	return m_config;
+    }
+    
+    /**
+     * @see org.trippi.TriplestoreConnector#open()
+     */
+    @Override
+    public void open() throws TrippiException {
+    	if (m_config == null){
+    		throw new TrippiException("Cannot open " + getClass().getName() + " without valid configuration");
+    	}
 
-        // bring everything together, ultimately constructing our
-        // ConcurrentTriplestoreWriter
+    	String ddlGenerator = m_config.get("ddlGenerator");
+        String jdbcDriver = m_config.get("jdbcDriver");
+        String jdbcURL = m_config.get("jdbcURL");
+        String username = m_config.get("username");
+        String password = m_config.get("password");
+        int poolInitialSize = Integer.parseInt(m_config.get("poolInitialSize"));
+        int poolMaxSize = Integer.parseInt(m_config.get("poolMaxSize"));
+        int fetchSize = Integer.parseInt(m_config.get("fetchSize"));
+        boolean backslashIsEscape = Boolean.valueOf(m_config.get("backslashIsEscape"));
+        int autoFlushDormantSeconds = Integer.parseInt(m_config.get("autoFlushDormantSeconds"));
+        int autoFlushBufferSize = Integer.parseInt(m_config.get("autoFlushBufferSize"));
+        int bufferSafeCapacity = Integer.parseInt(m_config.get("bufferSafeCapacity"));
+        int bufferFlushBatchSize = Integer.parseInt(m_config.get("bufferFlushBatchSize"));
+
         try {
 
             // construct the MPTSessionFactory
@@ -85,7 +143,7 @@ public class MPTConnector extends TriplestoreConnector {
                     new MPTSessionFactory(dbPool, dbAdaptor, fetchSize);
 
             // construct the _updateSession, which is managed outside the pool
-            _updateSession = sessionFactory.newSession();
+            m_updateSession = sessionFactory.newSession();
 
             // construct the TriplestoreSessionPool
             TriplestoreSessionPool sessionPool =
@@ -99,9 +157,9 @@ public class MPTConnector extends TriplestoreConnector {
                                                             bufferFlushBatchSize);
 
             // construct the TriplestoreWriter
-            _writer = new ConcurrentTriplestoreWriter(sessionPool,
+            m_writer = new ConcurrentTriplestoreWriter(sessionPool,
                                                       new AliasManager(new HashMap<String, String>()),
-                                                      _updateSession,
+                                                      m_updateSession,
                                                       updateBuffer,
                                                       autoFlushBufferSize,
                                                       autoFlushDormantSeconds);
@@ -134,36 +192,60 @@ public class MPTConnector extends TriplestoreConnector {
         return pool;
     }
 
-    // Implements TriplestoreConnector.getReader()
+    /**
+     * @see org.trippi.TriplestoreConnector#getReader()
+     */
     @Override
 	public TriplestoreReader getReader() {
-        return _writer;
+    	if (m_writer == null){
+    		try{
+    			open();
+    		}
+    		catch (TrippiException e){
+    			logger.error(e.toString(),e);
+    		}
+    	}
+		return m_writer;
     }
 
-    // Implements TriplestoreConnector.getWriter()
+    /**
+     * @see org.trippi.TriplestoreConnector#getWriter()
+     */
     @Override
 	public TriplestoreWriter getWriter() {
-        return _writer;
+    	if (m_writer == null){
+    		try{
+    			open();
+    		}
+    		catch (TrippiException e){
+    			logger.error(e.toString(),e);
+    		}
+    	}
+        return m_writer;
     }
 
-    // Implements TriplestoreConnector.getElementFactory()
+    /**
+     * @see org.trippi.TriplestoreConnector#getElementFactory()
+     */
     @Override
 	public GraphElementFactory getElementFactory() {
-        return _elementFactory;
+        return m_elementFactory;
     }
 
-    // Implements TriplestoreConnector.close()
+    /**
+     * @see org.trippi.TriplestoreConnector#close()
+     */
     @Override
 	public void close() throws TrippiException {
-        if (_writer != null) {
-            _writer.close(); // flushes and closes update buffer,
+        if (m_writer != null) {
+            m_writer.close(); // flushes and closes update buffer,
                              // then closes session pool,
                              // which closes session factory,
                              // which closes underlying db connections
                              // and db connection pool
-            _updateSession.close(); // ensure the update session is also
+            m_updateSession.close(); // ensure the update session is also
                                     // closed, as it is not part of the session pool
-            _writer = null;
+            m_writer = null;
         }
     }
 

@@ -30,6 +30,7 @@ public abstract class TriplestoreConnectorIntegrationTest extends TestCase {
 	public void setUp() throws Exception {
         TrippiProfile profile = TestConfig.getTestProfile();
         _connector = profile.getConnector();
+        _connector.open();
         _geFactory = _connector.getElementFactory();
         _reader = _connector.getReader();
         _writer = _connector.getWriter();

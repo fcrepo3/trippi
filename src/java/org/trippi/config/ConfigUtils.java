@@ -28,36 +28,31 @@ public class ConfigUtils {
         }
     }
     
+    public static int getRequiredIntGreaterThan(Map<String, String> map, String key, int floor)
+        throws TrippiException {
+    	int i = getRequiredInt(map, key);
+    	if (i > floor){
+    		return i;
+    	}
+    	else {
+    		throw new TrippiException(key + " configuration value must be greater than " + floor);
+    	}
+    }
+    
+    
+    
     /**
      * Get a non-negative integer from the map, or throw an exception.
      */
     public static int getRequiredNNInt(Map<String, String> map, String key) throws TrippiException {
-        try {
-            int i = Integer.parseInt(getRequired(map, key));
-            if (i < 0) {
-            	throw new TrippiException("Value must not be negative.");
-            } else {
-            	return i;
-            }
-        } catch (NumberFormatException e) {
-            throw new TrippiException("Configuration value must be an integer: " + key);
-        }
+        return getRequiredIntGreaterThan(map, key, -1);
     }
     
     /**
      * Get an integer greater than 0 from the map, or throw an exception.
      */
     public static int getRequiredPosInt(Map<String, String> map, String key) throws TrippiException {
-        try {
-            int i = Integer.parseInt(getRequired(map, key));
-            if (i < 1) {
-            	throw new TrippiException("Value must be an integer greater than 0.");
-            } else {
-            	return i;
-            }
-        } catch (NumberFormatException e) {
-            throw new TrippiException("Configuration value must be an integer: " + key);
-        }
+        return getRequiredIntGreaterThan(map, key, 0);
     }
     
     /**

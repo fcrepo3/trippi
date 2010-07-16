@@ -4,7 +4,8 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.mulgara.jrdf.LocalJRDFSession;
 import org.mulgara.query.QueryException;
 import org.mulgara.resolver.LocalJRDFDatabaseSession;
@@ -21,7 +22,7 @@ import org.trippi.impl.base.TriplestoreSession;
 import org.trippi.impl.base.TriplestoreSessionFactory;
 
 public class MulgaraSessionFactory implements TriplestoreSessionFactory {
-	private static final Logger logger = Logger
+	private static final Logger logger = LoggerFactory
 			.getLogger(MulgaraSessionFactory.class.getName());
 
 	/** iTQL */
