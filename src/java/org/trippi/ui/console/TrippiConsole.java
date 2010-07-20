@@ -14,7 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.Triple;
 import org.trippi.ConnectorDescriptor;
 import org.trippi.ConnectorParameter;
@@ -32,7 +33,7 @@ import org.trippi.config.TrippiProfile;
 public class TrippiConsole {
 
     private static final Logger logger =
-        Logger.getLogger(TrippiConsole.class.getName());
+        LoggerFactory.getLogger(TrippiConsole.class.getName());
 
     private TrippiConfig m_config;
 

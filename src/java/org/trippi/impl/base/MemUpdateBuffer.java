@@ -7,7 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
@@ -26,7 +27,7 @@ import org.trippi.TrippiException;
  */
 public class MemUpdateBuffer implements UpdateBuffer {
 
-    private static Logger LOG = Logger.getLogger(MemUpdateBuffer.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(MemUpdateBuffer.class.getName());
 
     private int m_safeCapacity;
     private int m_flushBatchSize;
@@ -71,14 +72,14 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     private static void debugUpdate(String msg, Triple triple) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(msg + "\n" + RDFUtil.toString(triple));
+        if (logger.isDebugEnabled()) {
+            logger.debug(msg + "\n" + RDFUtil.toString(triple));
         }
     }
 
     private static void debugUpdate(String msg, List<Triple> triples) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(msg + "\n" + tripleListToString(triples));
+        if (logger.isDebugEnabled()) {
+            logger.debug(msg + "\n" + tripleListToString(triples));
         }
     }
 
@@ -193,13 +194,13 @@ public class MemUpdateBuffer implements UpdateBuffer {
     private void writeBatch(int type, Set<Triple> triples, TriplestoreSession session)
             throws TrippiException {
         if (type == TripleUpdate.ADD) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Writing batch of " + triples.size() + " ADDs");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Writing batch of " + triples.size() + " ADDs");
             }
             session.add(triples);
         } else if (type == TripleUpdate.DELETE) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Writing batch of " + triples.size() + " DELETEs");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Writing batch of " + triples.size() + " DELETEs");
             }
             session.delete(triples);
         }

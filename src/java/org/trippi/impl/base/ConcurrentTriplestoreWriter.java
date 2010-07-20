@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
@@ -37,7 +38,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
                                                     Runnable {
 
     private static final Logger logger =
-        Logger.getLogger(ConcurrentTriplestoreWriter.class.getName());
+        LoggerFactory.getLogger(ConcurrentTriplestoreWriter.class.getName());
 
     // Initialization variables -- see constructor
     private TriplestoreSessionPool m_pool;

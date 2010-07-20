@@ -5,7 +5,8 @@
   <!-- common -->
   <path id="common.classpath">
     <pathelement path="${lib.jrdf}"/>
-    <pathelement path="${lib.log4j}"/>
+    <pathelement path="${lib.slf4j-api}"/>
+    <pathelement path="${lib.slf4j-jdk14}"/>
   	<pathelement path="${lib.openrdf-sesame-onejar}"/>
   	<pathelement path="${lib.mulgara}"/>
   </path>
@@ -14,8 +15,6 @@
   <!-- core -->
   <path id="core.common.classpath">
     <path refid="common.classpath"/>
-    <pathelement path="${lib.slf4j-api}"/>
-    <pathelement path="${lib.slf4j-jdk14}"/>
     <pathelement path="${lib.trove}"/>
     <pathelement path="${lib.xmlpull}"/>
     <pathelement path="${lib.xpp3}"/>

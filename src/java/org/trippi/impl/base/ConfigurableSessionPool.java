@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trippi.TrippiException;
 
 /**
@@ -15,7 +16,7 @@ public class ConfigurableSessionPool extends Thread
                                      implements TriplestoreSessionPool {
 
     private static final Logger logger =
-        Logger.getLogger(ConfigurableSessionPool.class.getName());
+        LoggerFactory.getLogger(ConfigurableSessionPool.class.getName());
 
     private TriplestoreSessionFactory m_factory;
     private int m_initialSize;

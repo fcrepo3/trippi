@@ -9,7 +9,8 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
@@ -33,7 +34,7 @@ public class RIOTripleIterator extends TripleIterator
                                implements RDFHandler, Runnable {
 
     private static final Logger logger =
-        Logger.getLogger(RIOTripleIterator.class.getName());
+        LoggerFactory.getLogger(RIOTripleIterator.class.getName());
 
     private InputStream m_in;
     private RDFParser m_parser;

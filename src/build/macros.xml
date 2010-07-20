@@ -56,7 +56,7 @@
     <sequential>
       <mkdir dir="${jar.build.dir}"/>
       <jar basedir="@{basedir}"
-           destfile="${jar.build.dir}/${project.name}-${project.version}-@{component}.jar">
+           destfile="${jar.build.dir}/${project.name}-@{component}-${project.version}.jar">
         <manifest>
           <attribute name="Main-Class" value="@{mainclass}"/>
         </manifest>
@@ -69,7 +69,7 @@
     <attribute name="todir"/>
     <sequential>
       <mkdir dir="@{todir}"/>
-      <copy file="${jar.build.dir}/${project.name}-${project.version}-@{component}.jar"
+      <copy file="${jar.build.dir}/${project.name}-@{component}-${project.version}.jar"
             todir="@{todir}"/>
     </sequential>
   </macrodef>

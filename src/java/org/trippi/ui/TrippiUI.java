@@ -3,7 +3,6 @@ package org.trippi.ui;
 import java.io.File;
 import java.io.FileInputStream;
 
-import org.apache.log4j.xml.DOMConfigurator;
 import org.trippi.Trippi;
 import org.trippi.TrippiException;
 import org.trippi.config.TrippiConfig;
@@ -15,8 +14,6 @@ public class TrippiUI {
 
     private final static String CONFIG_PATH = "config" + File.separator 
                                                        + "trippi.config";
-    private final static String LOG_CONFIG_PATH = "config" + File.separator 
-                                                           + "log4j.xml";
 
     public static void printUsageAndExit() {
         System.err.println("Usage: trippi -u");
@@ -56,14 +53,8 @@ public class TrippiUI {
                 throw new TrippiException("Bad trippi.home: " + homePath);
             }
             TrippiConfig config = new TrippiConfig(new File(homeDir, CONFIG_PATH));
-            File logConfigFile = new File(homeDir, LOG_CONFIG_PATH);
-            if (!logConfigFile.exists()) {
-                throw new TrippiException("Can't find logging "
-                        + "config file: " + logConfigFile.toString());
-            }
 
             // init logging from file
-            DOMConfigurator.configure(logConfigFile.toString());
 
             // validate params, then start up
             if (args.length == 0) {

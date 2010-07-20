@@ -47,10 +47,25 @@ public abstract class TriplestoreConnector {
                     + className, e);
         }
     }
-
+    
     /**
      * Initialize this connector with the given configuration.
+     * Implementations should validate and store relevant configuration values.
+     * @param configuration
+     * @throws TrippiException
      */
+    public abstract void setConfiguration(Map<String, String> configuration) throws TrippiException;
+
+    /**
+     * @return current, valid configuration of the connector
+     */
+    public abstract Map<String, String> getConfiguration();
+    
+    /**
+     * @deprecated: use {@link TriplestoreConnector#setConfiguration(Map)}
+     * Initialize this connector with the given configuration.
+     */
+    @Deprecated
     public abstract void init(Map<String, String> configuration) throws TrippiException;
 
     /**
@@ -69,6 +84,11 @@ public abstract class TriplestoreConnector {
 
     public abstract GraphElementFactory getElementFactory();
 
+    /**
+     * Open the relevant connections necessary for use
+     */
+    public abstract void open() throws TrippiException;
+    
     /**
      * Release resources.
      */

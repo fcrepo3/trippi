@@ -9,7 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
@@ -31,7 +32,7 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
                                            implements TriplestoreWriter {
 
     private static final Logger logger =
-        Logger.getLogger(SynchronizedTriplestoreWriter.class.getName());
+        LoggerFactory.getLogger(SynchronizedTriplestoreWriter.class.getName());
 
     private SynchronizedTriplestoreSession m_session;
     private int m_flushSize;
