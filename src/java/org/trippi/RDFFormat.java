@@ -119,6 +119,7 @@ public class RDFFormat {
                                                             SIMPLE,
                                                             SPARQL,
                                                             TSV,
+                                                            JSON,
                                                             COUNT,
                                                             COUNT_JSON,
                                                             COUNT_SPARQL,
