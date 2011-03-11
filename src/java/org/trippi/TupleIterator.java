@@ -13,6 +13,8 @@ import java.util.Map;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.Triple;
 import org.trippi.io.CSVTupleWriter;
+import org.trippi.io.FormatCountTupleWriter;
+import org.trippi.io.JSONTupleWriter;
 import org.trippi.io.SimpleTupleWriter;
 import org.trippi.io.SparqlTupleIterator;
 import org.trippi.io.SparqlTupleWriter;
@@ -48,7 +50,10 @@ public abstract class TupleIterator {
                                                            RDFFormat.SIMPLE,
                                                            RDFFormat.SPARQL,
                                                            RDFFormat.TSV,
-                                                           RDFFormat.COUNT };
+                                                           RDFFormat.JSON,
+                                                           RDFFormat.COUNT,
+                                                           RDFFormat.COUNT_JSON,
+                                                           RDFFormat.COUNT_SPARQL };
 
     private Map<String, String> m_aliases = new HashMap<String, String>();
 
@@ -137,6 +142,12 @@ public abstract class TupleIterator {
             writer = new TSVTupleWriter(out, m_aliases); 
         } else if (format == RDFFormat.COUNT) {
             writer = new CountTupleWriter(out); 
+        } else if (format == RDFFormat.COUNT_JSON) {
+            writer = new FormatCountTupleWriter(new JSONTupleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.COUNT_SPARQL) {
+            writer = new FormatCountTupleWriter(new SparqlTupleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.JSON) {
+            writer = new JSONTupleWriter(out, m_aliases); 
         } else {
             throw new TrippiException("Unsupported output format: " + format.getName());
         }

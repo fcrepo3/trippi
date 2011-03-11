@@ -24,6 +24,8 @@ import org.openrdf.rio.ntriples.NTriplesWriter;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.rio.turtle.TurtleWriter;
 import org.trippi.io.CountTripleWriter;
+import org.trippi.io.FormatCountTripleWriter;
+import org.trippi.io.JSONTripleWriter;
 import org.trippi.io.RIOTripleIterator;
 import org.trippi.io.RIOTripleWriter;
 import org.trippi.io.TripleWriter;
@@ -56,7 +58,9 @@ public abstract class TripleIterator {
                                                            RDFFormat.NOTATION_3, 
                                                            RDFFormat.RDF_XML, 
                                                            RDFFormat.TURTLE,
-                                                           RDFFormat.COUNT };
+                                                           RDFFormat.JSON,
+                                                           RDFFormat.COUNT,
+                                                           RDFFormat.COUNT_JSON };
 
     private Map<String, String> m_aliases = new HashMap<String, String>();
 
@@ -146,6 +150,10 @@ public abstract class TripleIterator {
             writer = new RIOTripleWriter(new N3Writer(out), m_aliases);
         } else if (format == RDFFormat.COUNT) {
             writer = new CountTripleWriter(out);
+        } else if (format == RDFFormat.COUNT_JSON) {
+            writer = new FormatCountTripleWriter(new JSONTripleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.JSON) {
+            writer = new JSONTripleWriter(out, m_aliases); 
         } else {
             throw new TrippiException("Unsupported output format: " + format.getName());
         }

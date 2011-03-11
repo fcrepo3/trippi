@@ -90,6 +90,26 @@ public class RDFFormat {
                                                       "UTF-8",
                                                       "text/plain",
                                                       ".txt");
+    
+    /**
+     * <a href="http://json.org/">JSON</a> format
+     */
+    public static final RDFFormat JSON = new RDFFormat("json",
+            "UTF-8",
+            "application/json",
+            ".js");
+    /**
+     * Formatted counts
+     */
+    public static final RDFFormat COUNT_JSON = new RDFFormat("count/json",
+            "UTF-8",
+            "application/json",
+            ".js");
+    
+    public static final RDFFormat COUNT_SPARQL = new RDFFormat("count/Sparql",
+            "UTF-8",
+            "application/xml",
+            ".xml");   
 
     public static final RDFFormat[] ALL = new RDFFormat[] { N_TRIPLES,
                                                             NOTATION_3,
@@ -99,6 +119,9 @@ public class RDFFormat {
                                                             SIMPLE,
                                                             SPARQL,
                                                             TSV,
+                                                            COUNT,
+                                                            COUNT_JSON,
+                                                            COUNT_SPARQL,
                                                             COUNT };
 
     private String m_name;

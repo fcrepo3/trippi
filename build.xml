@@ -6,7 +6,6 @@
   <loadproperties srcFile="build.properties" /> 
   <loadproperties srcFile="lib/lib.properties" />
   <loadproperties srcFile="${src.dir}/java/org/trippi/Trippi.properties"/>
-
   <import file="${src.dir}/build/definitions.xml"/>
   <import file="${src.dir}/build/dependencies.xml"/>
   <import file="${src.dir}/build/macros.xml"/>
@@ -14,8 +13,10 @@
   <!-- core-classes -->
   <target name="core-classes" 
           description="build core classes">
-    <compile-java classpathref="core.compile.classpath"
+  	<mkdir dir="${core.build.dir}"/>
+    <javac classpathref="core.compile.classpath"
                    destdir="${core.build.dir}"
+    	           srcdir="src/java"
                    includes="${top.packagepath}/*,
                              ${top.packagepath}/config/**,
                              ${top.packagepath}/nodegraph/**,
@@ -80,7 +81,8 @@
           description="build all test classes"
           depends="core-classes,
                    connector-classes">
-    <compile-java classpathref="test.compile.classpath"
+  	<mkdir dir="${test.build.dir}"/>
+    <javac classpathref="test.compile.classpath"
                   destdir="${test.build.dir}"
                   includes="${top.packagepath}/**"
                   srcdir="src/test"/>

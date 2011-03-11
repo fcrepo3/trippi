@@ -1,11 +1,13 @@
 package org.trippi.io;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.json.JSONObject;
 import org.openrdf.rio.RDFParser;
 import org.openrdf.rio.rdfxml.RDFXMLParser;
 import org.trippi.RDFFormat;
@@ -82,5 +84,17 @@ public class RIOTripleIteratorTest extends TestCase {
         System.out.println("\n\n\n***\n");
         iter.toStream(System.out, RDFFormat.RDF_XML);
     }
-
+    
+    public void testFromStreamToJson() throws Exception {
+        InputStream in = new ByteArrayInputStream(rdf.getBytes());
+        TripleIterator iter = TripleIterator.fromStream(in, RDFFormat.RDF_XML);
+        
+        System.out.println("\n\n\n***\n");
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        iter.toStream(bos, RDFFormat.JSON);
+        String jsonString = bos.toString("UTF-8");
+        System.out.println("parsing json");
+        System.out.println(jsonString);
+        JSONObject json = new JSONObject(jsonString);
+    }
 }

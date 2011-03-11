@@ -1,6 +1,7 @@
 package org.trippi;
 
 import org.trippi.impl.ImplUnitTestSuite;
+import org.trippi.io.RIOTripleIteratorTest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -16,6 +17,7 @@ public class TrippiUnitTestSuite extends TestCase {
         suite.addTestSuite(RDFUtilUnitTest.class);
 
         // sub-package suites
+        suite.addTestSuite(RIOTripleIteratorTest.class);
         suite.addTest(ImplUnitTestSuite.suite());
 
         return suite;
