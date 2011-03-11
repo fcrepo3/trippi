@@ -58,6 +58,7 @@ public class JSONTripleWriter extends TripleWriter {
     
     /**
      * http://n2.talis.com/wiki/RDF_JSON_Specification
+     * http://docs.api.talis.com/platform-api/output-types/rdf-json
      * @param triple
      * @return JSON serialization of the triple
      */
