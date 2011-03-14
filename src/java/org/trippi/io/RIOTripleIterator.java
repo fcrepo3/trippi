@@ -8,9 +8,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.jrdf.graph.AbstractTriple;
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
@@ -35,16 +38,14 @@ public class RIOTripleIterator extends TripleIterator
 
     private static final Logger logger =
         LoggerFactory.getLogger(RIOTripleIterator.class.getName());
-
+    private static final Triple FINISHED = new AbstractTriple(){};
+    private static final Executor EXECUTOR = Executors.newCachedThreadPool();
     private InputStream m_in;
     private RDFParser m_parser;
     private String m_baseURI;
 
     private Triple m_bucket; // shared between parser/consumer threads
     private Triple m_next;
-
-    private boolean m_closed = false;
-    private boolean m_finishedParsing = false;
 
     private Exception m_parseException = null;
 
@@ -68,14 +69,14 @@ public class RIOTripleIterator extends TripleIterator
         m_parser.setVerifyData(true);
         m_parser.setStopAtFirstError(false);
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
-        Thread parserThread = new Thread(this);
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
         }
-        parserThread.start();
+        EXECUTOR.execute(this);
         m_next = getNext();
     }
 
+    @Override
     public void handleNamespace(String prefix, String uri) {
         if (prefix == null || prefix.equals("")) {
 
@@ -98,17 +99,17 @@ public class RIOTripleIterator extends TripleIterator
      */
     private synchronized Triple getNext() throws TrippiException { 
         // wait until the bucket has a value or 2) finished parsing is true
-        while (m_bucket == null && !m_finishedParsing) {
-            try {
+    	try{
+            while (m_bucket == null) {
                 // wait for Producer to put value
                 wait(5);
-            } catch (InterruptedException e) {
             }
+        } catch (InterruptedException e) {
         }
-        if (m_finishedParsing && m_parseException != null) {
+        if (m_parseException != null) {
             throw new TrippiException("RDF Parse Error.", m_parseException);
         }
-        if (m_bucket == null) {
+        if (m_bucket == FINISHED) {
         	if (logger.isDebugEnabled()) {
         		logger.debug("Finished parsing " + m_tripleCount + " triples.");
         	}
@@ -142,8 +143,8 @@ public class RIOTripleIterator extends TripleIterator
     
     @Override
     public void close() throws TrippiException {
-        if (!m_closed) {
-            m_closed = true;
+        if (m_bucket != FINISHED) {
+        	put(FINISHED);
         }
     }
 
@@ -161,8 +162,10 @@ public class RIOTripleIterator extends TripleIterator
         } catch (Exception e) {
             m_parseException = e;
         } finally {
-            m_finishedParsing = true;
-            try { m_in.close(); } catch (IOException e) { }
+            try {
+                m_in.close();
+                m_parser = null;
+            } catch (IOException e) { }
         }
     }
 
@@ -183,20 +186,20 @@ public class RIOTripleIterator extends TripleIterator
     }
 
     private synchronized void put(Triple triple) {
-        // wait until the bucket is free or 2) close has been called
-        while (m_bucket != null && !m_closed) {
-            try {
+        try {
+            while (m_bucket != null && m_bucket != FINISHED) {
                 // wait for notification, which will happen if
                 // 1) the bucket is emptied by the consumer, or
                 // 2) close has been called
+            	// 3) RDF is exhausted
                 wait(5);
-            } catch (InterruptedException e) {
             }
+            if (m_bucket == FINISHED) {
+                return; // leave last triple in bucket? No notification?
+            }
+            m_bucket = triple;
+        } catch (InterruptedException e) {
         }
-        if (m_closed) {
-            return;
-        }
-        m_bucket = triple;
         notifyAll();  // notify the consumer that the bucket has a triple
     }
 
@@ -265,8 +268,8 @@ public class RIOTripleIterator extends TripleIterator
     }
 
     public void endRDF() throws RDFHandlerException {
-        // TODO Auto-generated method stub
-        
+        // signal end of parsing
+        put(FINISHED);
     }
 
     public void handleComment(String arg0) throws RDFHandlerException {
