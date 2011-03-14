@@ -143,9 +143,12 @@ public class RIOTripleIterator extends TripleIterator
     
     @Override
     public void close() throws TrippiException {
-        if (m_bucket != FINISHED) {
-        	put(FINISHED);
-        }
+    	// signal the end of reading
+    	// notify the parsing thread if it is still running
+        synchronized(this) {
+        	m_bucket = (FINISHED);
+        	notifyAll();
+    	}
     }
 
     ////////////////// Parser Thread Methods ///////////////////////////
