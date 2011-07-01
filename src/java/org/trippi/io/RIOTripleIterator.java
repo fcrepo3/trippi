@@ -8,8 +8,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +37,6 @@ public class RIOTripleIterator extends TripleIterator
     private static final Logger logger =
         LoggerFactory.getLogger(RIOTripleIterator.class.getName());
     private static final Triple FINISHED = new AbstractTriple(){};
-    private static final Executor EXECUTOR = Executors.newCachedThreadPool();
     private InputStream m_in;
     private RDFParser m_parser;
     private String m_baseURI;
@@ -72,7 +69,7 @@ public class RIOTripleIterator extends TripleIterator
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
         }
-        EXECUTOR.execute(this);
+        new Thread(this).run();
         m_next = getNext();
     }
 
