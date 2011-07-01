@@ -51,29 +51,11 @@
                      packagepath="${mulgara.packagepath}"/>
   </target>
 
-  <!-- oracle-classes -->
-  <target name="oracle-classes" depends="core-classes">
-    <build-connector classpathref="oracle.compile.classpath"
-                     destdir="${oracle.build.dir}"
-                     packagepath="${oracle.packagepath}"/>
-  </target>
-
-  <!-- sesame-classes -->
-  <target name="sesame-classes" depends="core-classes">
-      <!--
-    <build-connector classpathref="sesame.compile.classpath"
-                     destdir="${sesame.build.dir}"
-                     packagepath="${sesame.packagepath}"/>
-                     -->
-  </target>
-
   <!-- connector-classes -->
   <target name="connector-classes"
           description="build all connector classes"
           depends="mptstore-classes,
-  				   mulgara-classes,
-                   oracle-classes,
-                   sesame-classes">
+  				   mulgara-classes">
   </target>
 
   <!-- test-classes -->
@@ -103,10 +85,6 @@
           description="build jars for all connectors">
     <build-jar basedir="${mptstore.build.dir}" component="mptstore"/>
   	<build-jar basedir="${mulgara.build.dir}" component="mulgara"/>
-  	<build-jar basedir="${oracle.build.dir}" component="oracle"/>
-      <!--
-    <build-jar basedir="${sesame.build.dir}" component="sesame"/>
-    -->
   </target>
 
   <target name="test-prep"
@@ -173,13 +151,9 @@
           description="build dist with all connectors">
     <copy-jar component="mptstore" todir="${dist.dir}/lib"/>
   	<copy-jar component="mulgara" todir="${dist.dir}/lib"/>
-    <copy-jar component="oracle" todir="${dist.dir}/lib"/>
-    <!--<copy-jar component="sesame" todir="${dist.dir}/lib"/>-->
     <copy todir="${dist.dir}">
       <fileset dir="." includes="${mptstore.runtime.libs}"/>
 	  <fileset dir="." includes="${mulgara.runtime.libs}"/>
-      <fileset dir="." includes="${oracle.runtime.libs}"/>
-      <fileset dir="." includes="${sesame.runtime.libs}"/>
     </copy>
   </target>
 
@@ -190,7 +164,6 @@
       <fileset dir=".">
         <exclude name="build/**"/>
         <exclude name="dist/**"/>
-        <exclude name="${lib.oracle-jdbc}"/>
       </fileset>
     </copy>
     <replace file="dist/release/trippi-${trippi.version}-src/README.txt"
@@ -211,7 +184,6 @@
     <copy todir="dist/release/trippi-${trippi.version}">
       <fileset dir="dist">
         <exclude name="release/**"/>
-        <exclude name="${lib.oracle-jdbc}"/>
       </fileset>
     </copy>
     <zip zipfile="dist/release/trippi-${trippi.version}.zip" 
@@ -247,8 +219,6 @@
                            org.trippi.impl.base,
                            org.trippi.impl.mpt,
     					   org.trippi.impl.mulgara,
-                           org.trippi.impl.oracle,
-                           org.trippi.impl.sesame,
                            org.trippi.io,
                            org.trippi.nodegraph,
                            org.trippi.server,

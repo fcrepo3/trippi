@@ -12,8 +12,6 @@
   <property name="core.build.dir"       value="${classes.build.dir}/core"/>
   <property name="mptstore.build.dir"   value="${classes.build.dir}/mptstore"/>
   <property name="mulgara.build.dir"     value="${classes.build.dir}/mulgara"/>
-  <property name="oracle.build.dir"     value="${classes.build.dir}/oracle"/>
-  <property name="sesame.build.dir"     value="${classes.build.dir}/sesame"/>
   <property name="test.build.dir"       value="${build.dir}/test"/>
 
   <!-- package paths -->
@@ -21,7 +19,5 @@
   <property name="impl.packagepath"     value="${top.packagepath}/impl"/>
   <property name="mptstore.packagepath" value="${impl.packagepath}/mpt"/>
   <property name="mulgara.packagepath"  value="${impl.packagepath}/mulgara"/>
-  <property name="oracle.packagepath"   value="${impl.packagepath}/oracle"/>
-  <property name="sesame.packagepath"   value="${impl.packagepath}/sesame"/>
 
 </project>

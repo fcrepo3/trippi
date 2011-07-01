@@ -101,55 +101,11 @@
     <map from="${basedir}${file.separator}" to=""/>
   </pathconvert>
 
-  <!-- oracle -->
-  <path id="oracle.common.classpath">
-    <path refid="common.classpath"/>
-    <pathelement path="${lib.oracle-jdbc}"/>
-  </path>
-
-  <path id="oracle.compile.classpath">
-    <path refid="oracle.common.classpath"/>
-    <pathelement path="${core.build.dir}"/>
-  </path>
-
-  <path id="oracle.runtime.classpath">
-    <path refid="oracle.common.classpath"/>
-  </path>
-
-  <pathconvert property="oracle.runtime.libs" 
-               refid="oracle.runtime.classpath"
-               pathsep=",">
-    <map from="${basedir}${file.separator}" to=""/>
-  </pathconvert>
-
-
-  <!-- sesame -->
-  <path id="sesame.common.classpath">
-    <path refid="common.classpath"/>
-  </path>
-
-  <path id="sesame.compile.classpath">
-    <path refid="sesame.common.classpath"/>
-    <pathelement path="${core.build.dir}"/>
-  </path>
-
-  <path id="sesame.runtime.classpath">
-    <path refid="sesame.common.classpath"/>
-  </path>
-
-  <pathconvert property="sesame.runtime.libs" 
-               refid="sesame.runtime.classpath"
-               pathsep=",">
-    <map from="${basedir}${file.separator}" to=""/>
-  </pathconvert>
-
   <!-- test -->
   <path id="test.common.classpath">
     <pathelement path="${core.build.dir}"/>
     <pathelement path="${mptstore.build.dir}"/>
   	<pathelement path="${mulgara.build.dir}"/>
-    <pathelement path="${oracle.build.dir}"/>
-    <pathelement path="${sesame.build.dir}"/>
     <fileset dir="lib">
       <include name="**/*.jar"/>
     </fileset>

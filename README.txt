@@ -36,7 +36,3 @@ To build the documentation, type:
 
 For other useful build targets, type:
   ant -p
-  
-Due to license restrictions on redistribution, the Oracle JDBC driver is not
-included in the source tree. See lib/lib.properties for the latest version 
-that has been tested against Trippi.
