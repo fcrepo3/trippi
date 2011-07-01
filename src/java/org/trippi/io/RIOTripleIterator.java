@@ -69,7 +69,7 @@ public class RIOTripleIterator extends TripleIterator
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
         }
-        new Thread(this).run();
+        new Thread(this).start();
         m_next = getNext();
     }
 
