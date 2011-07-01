@@ -15,6 +15,7 @@ import org.trippi.TripleIterator;
 
 public class RIOTripleIteratorTest extends TestCase {
     private final static String rdf;
+    private TripleIteratorFactory m_factory;
     static {
         StringBuilder sb = new StringBuilder();
         sb.append("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" ");
@@ -30,11 +31,13 @@ public class RIOTripleIteratorTest extends TestCase {
     @Override
 	protected void setUp() throws Exception {
         super.setUp();
+        m_factory = new TripleIteratorFactory();
     }
 
     @Override
 	protected void tearDown() throws Exception {
         super.tearDown();
+        m_factory.shutdown();
     }
     
     public void testNamespaceMapping() throws Exception {
@@ -79,7 +82,7 @@ public class RIOTripleIteratorTest extends TestCase {
     
     public void testFromStream() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = TripleIterator.fromStream(in, RDFFormat.RDF_XML);
+        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
         
         System.out.println("\n\n\n***\n");
         iter.toStream(System.out, RDFFormat.RDF_XML);
@@ -87,7 +90,7 @@ public class RIOTripleIteratorTest extends TestCase {
     
     public void testFromStreamToJson() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = TripleIterator.fromStream(in, RDFFormat.RDF_XML);
+        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
         
         System.out.println("\n\n\n***\n");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
