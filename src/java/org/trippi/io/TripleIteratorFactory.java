@@ -53,6 +53,25 @@ public class TripleIteratorFactory {
         return fromStream(in, null, format);
     }
     
+    private static volatile TripleIteratorFactory DEFAULT = null;
+    
+    /**
+     * For use when static methods are the only management context available.
+     * The instance returned must be shutdown, or there will be a timeout as
+     * the ExecutorService's threadpool expires.
+     * @return TripleIteratorFactory
+     */
+    public static TripleIteratorFactory defaultInstance() {
+        if (DEFAULT == null) {
+            synchronized(TripleIteratorFactory.class){
+                if (DEFAULT == null){
+                    DEFAULT = new TripleIteratorFactory();
+                }
+            }
+        }
+        return DEFAULT;
+    }
+    
 }
 
     
