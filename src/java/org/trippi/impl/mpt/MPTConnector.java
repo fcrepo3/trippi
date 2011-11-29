@@ -26,6 +26,7 @@ import org.trippi.impl.base.MemUpdateBuffer;
 import org.trippi.impl.base.TriplestoreSession;
 import org.trippi.impl.base.TriplestoreSessionPool;
 import org.trippi.impl.base.UpdateBuffer;
+import org.trippi.io.TripleIteratorFactory;
 
 import org.nsdl.mptstore.core.BasicTableManager;
 import org.nsdl.mptstore.core.DatabaseAdaptor;
@@ -39,6 +40,8 @@ public class MPTConnector extends TriplestoreConnector {
 	private Map<String,String> m_config;
 
     private GraphElementFactory m_elementFactory = new RDFUtil();
+    
+    private TripleIteratorFactory m_iteratorFactory;
 
     private TriplestoreSession m_updateSession;
 
@@ -101,6 +104,10 @@ public class MPTConnector extends TriplestoreConnector {
     	return m_config;
     }
     
+    public void setTripleIteratorFactory(TripleIteratorFactory factory) {
+        m_iteratorFactory = factory;
+    }
+    
     /**
      * @see org.trippi.TriplestoreConnector#open()
      */
@@ -108,6 +115,10 @@ public class MPTConnector extends TriplestoreConnector {
     public void open() throws TrippiException {
     	if (m_config == null){
     		throw new TrippiException("Cannot open " + getClass().getName() + " without valid configuration");
+    	}
+    	
+    	if (m_iteratorFactory == null) {
+    	    m_iteratorFactory = TripleIteratorFactory.defaultInstance();
     	}
 
     	String ddlGenerator = m_config.get("ddlGenerator");
@@ -161,6 +172,7 @@ public class MPTConnector extends TriplestoreConnector {
                                                       new AliasManager(new HashMap<String, String>()),
                                                       m_updateSession,
                                                       updateBuffer,
+                                                      m_iteratorFactory,
                                                       autoFlushBufferSize,
                                                       autoFlushDormantSeconds);
 

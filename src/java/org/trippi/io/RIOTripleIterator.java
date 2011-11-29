@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,8 @@ public class RIOTripleIterator extends TripleIterator
      */
     public RIOTripleIterator(InputStream in, 
                              RDFParser parser, 
-                             String baseURI) throws TrippiException {
+                             String baseURI,
+                             ExecutorService executor) throws TrippiException {
         m_in = in;
         m_parser = parser;
         m_aliases = new HashMap<String, String>();
@@ -69,7 +71,7 @@ public class RIOTripleIterator extends TripleIterator
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
         }
-        new Thread(this).start();
+        executor.execute(this);
         m_next = getNext();
     }
 
@@ -247,19 +249,13 @@ public class RIOTripleIterator extends TripleIterator
         File f = new File(args[0]);
         String baseURI = "http://localhost/";
         RDFFormat format = RDFFormat.forName(args[1]);
-        RDFParser parser;
-        if (format == RDFFormat.RDF_XML) {
-            parser = new org.openrdf.rio.rdfxml.RDFXMLParser();
-        } else if (format == RDFFormat.TURTLE) {
-            parser = new org.openrdf.rio.turtle.TurtleParser();
-        } else if (format == RDFFormat.N_TRIPLES) {
-            parser = new org.openrdf.rio.ntriples.NTriplesParser();
-        } else {
+        TripleIteratorFactory factory = TripleIteratorFactory.defaultInstance();
+        if (format != RDFFormat.RDF_XML && format == RDFFormat.TURTLE && format != RDFFormat.N_TRIPLES) {
             throw new TrippiException("Unsupported input format: " + format.getName());
         }
-        TripleIterator iter = new RIOTripleIterator(new FileInputStream(f),
-                                                    parser,
-                                                    baseURI);
+        TripleIterator iter = factory.fromStream(new FileInputStream(f),
+                                                 baseURI,
+                                                 format);
         try {
             iter.toStream(System.out, RDFFormat.forName(args[2]));
         } finally {

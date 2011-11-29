@@ -21,6 +21,7 @@ import org.trippi.TripleIterator;
 import org.trippi.TripleUpdate;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
+import org.trippi.io.TripleIteratorFactory;
 
 /**
  * A SynchronizedTriplestoreReader that also implements TriplestoreWriter
@@ -35,6 +36,7 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
         LoggerFactory.getLogger(SynchronizedTriplestoreWriter.class.getName());
 
     private SynchronizedTriplestoreSession m_session;
+    private TripleIteratorFactory m_iteratorFactory;
     private int m_flushSize;
 
     /**
@@ -42,9 +44,11 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
      */
     public SynchronizedTriplestoreWriter(SynchronizedTriplestoreSession session,
                                          AliasManager aliasManager,
+                                         TripleIteratorFactory iteratorFactory,
                                          int flushSize) {
         super(session, aliasManager);
         m_session = session;
+        m_iteratorFactory = iteratorFactory;
         m_flushSize = flushSize;
     }
 
@@ -131,7 +135,7 @@ public class SynchronizedTriplestoreWriter extends SynchronizedTriplestoreReader
                 try { fout.close(); } catch (Exception e) { }
             }
             iter.close();
-            iter = TripleIterator.fromStream(new FileInputStream(tempFile), 
+            iter = m_iteratorFactory.fromStream(new FileInputStream(tempFile), 
                                              RDFFormat.TURTLE);
             try {
                 HashSet<Triple> set = new HashSet<Triple>();

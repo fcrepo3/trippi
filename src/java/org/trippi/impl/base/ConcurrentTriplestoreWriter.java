@@ -19,6 +19,7 @@ import org.trippi.TripleIterator;
 import org.trippi.TripleUpdate;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
+import org.trippi.io.TripleIteratorFactory;
 
 /**
  * A ConcurrentTriplestoreReader that also implements TriplestoreWriter
@@ -43,6 +44,9 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
     // Initialization variables -- see constructor
     private TriplestoreSessionPool m_pool;
     private UpdateBuffer m_buffer;
+    
+    private TripleIteratorFactory m_iteratorFactory;
+    
     private int m_autoFlushBufferSize;
     private int m_autoFlushDormantSeconds;
 
@@ -67,6 +71,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
                                        AliasManager aliasManager,
                                        TriplestoreSession updateSession,
                                        UpdateBuffer buffer,
+                                       TripleIteratorFactory iteratorFactory,
                                        int autoFlushBufferSize,
                                        int autoFlushDormantSeconds)
                                                   throws IOException,
@@ -77,13 +82,12 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
         m_buffer = buffer;
         m_autoFlushBufferSize = autoFlushBufferSize;
         m_autoFlushDormantSeconds = autoFlushDormantSeconds;
-
         // Flush buffer in case of prior improper shutdown
         flushBuffer();
         m_lastBufferInputTime = System.currentTimeMillis();
         // Start the autoFlush thread
-        Thread t = new Thread(this);
-        t.start();
+        m_iteratorFactory = iteratorFactory;
+        m_iteratorFactory.execute(this);
     }
 
     public void setCacheDeletes(boolean cacheDeletes) {
@@ -211,7 +215,7 @@ public class ConcurrentTriplestoreWriter extends ConcurrentTriplestoreReader
                     try { fout.close(); } catch (Exception e) { }
                 }
                 iter.close();
-                iter = TripleIterator.fromStream(new FileInputStream(tempFile), RDFFormat.TURTLE);
+                iter = m_iteratorFactory.fromStream(new FileInputStream(tempFile), RDFFormat.TURTLE);
             }
             try {
                 int maxListSize = m_autoFlushBufferSize;

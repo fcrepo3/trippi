@@ -57,7 +57,7 @@ public class RIOTripleIteratorTest extends TestCase {
         in = new ByteArrayInputStream(rdfxml);
         
         RDFParser parser = new RDFXMLParser();
-        iter = new RIOTripleIterator(in, parser, "http://localhost/");
+        iter = m_factory.fromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
             System.out.println(key + " -> " + aliasMap.get(key));
@@ -72,7 +72,7 @@ public class RIOTripleIteratorTest extends TestCase {
         rdfxml = sb.toString().getBytes("UTF-8");
         in = new ByteArrayInputStream(rdfxml);
         
-        iter = new RIOTripleIterator(in, parser, "http://localhost/");
+        iter = m_factory.fromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
             System.out.println(key + " -> " + aliasMap.get(key));

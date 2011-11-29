@@ -24,6 +24,7 @@ import org.trippi.impl.base.TriplestoreSession;
 import org.trippi.impl.base.TriplestoreSessionFactory;
 import org.trippi.impl.base.TriplestoreSessionPool;
 import org.trippi.impl.base.UpdateBuffer;
+import org.trippi.io.TripleIteratorFactory;
 
 public class MulgaraConnector extends TriplestoreConnector {
 	private static final Logger logger =
@@ -37,7 +38,9 @@ public class MulgaraConnector extends TriplestoreConnector {
     // where writes will occur, if this connector is writable
     private TriplestoreSession m_updateSession = null;
     
-    private TriplestoreSessionFactory m_factory = null;
+    private TriplestoreSessionFactory m_sessionFactory = null;
+    
+    private TripleIteratorFactory m_iteratorFactory = null;
     
     private boolean m_isClosed = false;
     private boolean m_synch = false;
@@ -57,7 +60,7 @@ public class MulgaraConnector extends TriplestoreConnector {
                 if (m_reader != null) {
                     m_reader.close();  // ensure this closes even if above dies
                 }
-                if (m_synch) m_factory.close();
+                if (m_synch) m_sessionFactory.close();
             }
             m_isClosed = true;
         }
@@ -189,6 +192,11 @@ public class MulgaraConnector extends TriplestoreConnector {
         m_config = validated;
 	}
 	
+	@Override
+	public void setTripleIteratorFactory(TripleIteratorFactory factory) {
+	    this.m_iteratorFactory = factory;
+	}
+	
     /**
      * @see org.trippi.TriplestoreConnector#getConfiguration()
      */
@@ -204,6 +212,10 @@ public class MulgaraConnector extends TriplestoreConnector {
     public void open() throws TrippiException {    
     	if (m_config == null){
     		throw new TrippiException("Cannot open " + getClass().getName() + " without valid configuration");
+    	}
+    	
+    	if (m_iteratorFactory == null) {
+    	    m_iteratorFactory = TripleIteratorFactory.defaultInstance();
     	}
     	
 		AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
@@ -230,7 +242,7 @@ public class MulgaraConnector extends TriplestoreConnector {
         if (remote) {
             String host = m_config.get("host");
             int portNumber = Integer.parseInt(m_config.get("port"));
-            m_factory =  new MulgaraSessionFactory(serverName,
+            m_sessionFactory =  new MulgaraSessionFactory(serverName,
 												modelName,
 												textModelName,
 												aliasManager,
@@ -239,7 +251,7 @@ public class MulgaraConnector extends TriplestoreConnector {
             									portNumber);
         } else {
             String path = m_config.get("path");
-            m_factory =  new MulgaraSessionFactory(serverName,
+            m_sessionFactory =  new MulgaraSessionFactory(serverName,
                                                   modelName,
                                                   textModelName,
                                                   aliasManager,
@@ -249,23 +261,26 @@ public class MulgaraConnector extends TriplestoreConnector {
         
         if (poolInitialSize == 0) {
             m_synch = true;
-            MulgaraSession mSession = (MulgaraSession) m_factory.newSession();
+            MulgaraSession mSession = (MulgaraSession) m_sessionFactory.newSession();
             m_elementFactory = mSession.getElementFactory();
             SynchronizedTriplestoreSession synchSession = new SynchronizedTriplestoreSession(mSession);
             if (readOnly) {
                 m_reader = new SynchronizedTriplestoreReader(synchSession, aliasManager);
             } else {
-                m_writer = new SynchronizedTriplestoreWriter(synchSession, aliasManager, 15000);
+                m_writer = new SynchronizedTriplestoreWriter(synchSession,
+                                                             aliasManager,
+                                                             m_iteratorFactory,
+                                                             15000);
                 m_reader = m_writer;
             }
         } else {
             TriplestoreSessionPool pool = 
-                    new ConfigurableSessionPool(m_factory,
+                    new ConfigurableSessionPool(m_sessionFactory,
                                                 poolInitialSize,
                                                 poolMaxGrowth,
                                                 poolSpareSessions);
             
-            MulgaraSession updateSession = (MulgaraSession) m_factory.newSession();
+            MulgaraSession updateSession = (MulgaraSession) m_sessionFactory.newSession();
             m_elementFactory = updateSession.getElementFactory();
             
             if (readOnly) {
@@ -280,6 +295,7 @@ public class MulgaraConnector extends TriplestoreConnector {
 					                                           aliasManager,
 					                                           m_updateSession,
 					                                           buffer,
+					                                           m_iteratorFactory,
 					                                           autoFlushBufferSize,
 					                                           autoFlushDormantSeconds);
 				} catch (IOException e) {
@@ -291,7 +307,7 @@ public class MulgaraConnector extends TriplestoreConnector {
 	}
 	
 	protected TriplestoreSessionFactory getSessionFactory() {
-	    return m_factory;
+	    return m_sessionFactory;
 	}
 
 }

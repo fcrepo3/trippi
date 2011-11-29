@@ -11,6 +11,7 @@ import org.trippi.TriplestoreConnector;
 import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
+import org.trippi.io.TripleIteratorFactory;
 
 /**
  * A <code>TriplestoreConnector</code> for a local, native Sesame RDF
@@ -25,6 +26,7 @@ public class MultiConnector extends TriplestoreConnector {
     private TriplestoreConnector[] m_connectors;
     private MultiTriplestoreWriter m_multiWriter;
     private GraphElementFactory m_elementFactory;
+    private TripleIteratorFactory m_iteratorFactory;
     private Map<String,String> m_config = new HashMap<String,String>(0);
 
     public MultiConnector() {
@@ -48,6 +50,11 @@ public class MultiConnector extends TriplestoreConnector {
     
     public Map<String,String> getConfiguration(){
     	return m_config;
+    }
+    
+    @Override
+    public void setTripleIteratorFactory(TripleIteratorFactory factory){
+        m_iteratorFactory = factory;
     }
 
     @Override
@@ -87,7 +94,10 @@ public class MultiConnector extends TriplestoreConnector {
         for (int i = 0; i < m_connectors.length; i++) {
             writers[i] = m_connectors[i].getWriter();
         }
-        m_multiWriter = new MultiTriplestoreWriter(m_connectors[0].getReader(), writers);
+        if (m_iteratorFactory == null){
+            m_iteratorFactory = TripleIteratorFactory.defaultInstance();
+        }
+        m_multiWriter = new MultiTriplestoreWriter(m_connectors[0].getReader(), writers, m_iteratorFactory);
     }
 
     @Override

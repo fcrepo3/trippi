@@ -29,6 +29,7 @@ import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 import org.trippi.config.TrippiConfig;
 import org.trippi.config.TrippiProfile;
+import org.trippi.io.TripleIteratorFactory;
 
 public class TrippiConsole {
 
@@ -447,7 +448,7 @@ public class TrippiConsole {
     public void doLoad(String filename) throws Exception {
         System.out.print("Loading triples (in " + m_tripleForm.getName() + " format) from " + filename + "...");
         m_connector.getWriter()
-                   .add(TripleIterator.fromStream(
+                   .add(TripleIteratorFactory.defaultInstance().fromStream(
                                         new FileInputStream(new File(filename)), 
                                         m_tripleForm), false);
         System.out.println("OK");

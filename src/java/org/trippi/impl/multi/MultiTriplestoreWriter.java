@@ -22,6 +22,7 @@ import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
+import org.trippi.io.TripleIteratorFactory;
 
 /**
  * A TriplestoreWriter that dispatches all calls to a set of underlying
@@ -36,15 +37,20 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
 
     private TriplestoreReader m_reader;
     private TriplestoreWriter[] m_writers;
+    private TripleIteratorFactory m_iteratorFactory;
 
     /**
      * Construct.
      */
     public MultiTriplestoreWriter(TriplestoreReader reader, 
-                                  TriplestoreWriter[] writers) {
+                                  TriplestoreWriter[] writers,
+                                  TripleIteratorFactory iteratorFactory) {
         m_reader = reader;
         m_writers = writers;
+        m_iteratorFactory = iteratorFactory;
     }
+    
+    
 
     //////
 
@@ -152,7 +158,7 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
             }
             iter.close();
             for (int i = 0; i < m_writers.length; i++) {
-                iter = TripleIterator.fromStream(new FileInputStream(tempFile), 
+                iter = m_iteratorFactory.fromStream(new FileInputStream(tempFile), 
                                                  RDFFormat.TURTLE);
                 try {
                     m_writers[i].add(iter, flush);
@@ -199,7 +205,7 @@ public class MultiTriplestoreWriter implements TriplestoreWriter {
             }
             iter.close();
             for (int i = 0; i < m_writers.length; i++) {
-                iter = TripleIterator.fromStream(new FileInputStream(tempFile), 
+                iter = m_iteratorFactory.fromStream(new FileInputStream(tempFile), 
                                                  RDFFormat.TURTLE);
                 try {
                     m_writers[i].delete(iter, flush);

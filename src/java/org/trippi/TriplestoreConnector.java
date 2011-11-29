@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.jrdf.graph.GraphElementFactory;
 
+import org.trippi.io.TripleIteratorFactory;
+
 /**
  * Provides a <code>TriplestoreReader</code> and/or
  * <code>TriplestoreWriter</code> for a triplestore.
@@ -61,6 +63,7 @@ public abstract class TriplestoreConnector {
      */
     public abstract Map<String, String> getConfiguration();
     
+    public abstract void setTripleIteratorFactory(TripleIteratorFactory factory);
     /**
      * @deprecated: use {@link TriplestoreConnector#setConfiguration(Map)}
      * Initialize this connector with the given configuration.

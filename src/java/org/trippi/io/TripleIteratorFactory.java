@@ -22,6 +22,16 @@ public class TripleIteratorFactory {
     public void shutdown(){
         m_executor.shutdown();
     }
+    
+    /**
+     * This method is a convenience to make sure all the thread
+     * creation in Trippi runs through the ExecutorService
+            * @param command
+     */
+    public void execute(Runnable command) {
+        m_executor.execute(command);
+    }
+    
     /**
      * Get an iterator over the triples in the given stream.
      *
@@ -42,7 +52,7 @@ public class TripleIteratorFactory {
         } else {
             throw new TrippiException("Unsupported input format: " + format.getName());
         }
-        return new RIOTripleIterator(in, parser, baseURI);
+        return new RIOTripleIterator(in, parser, baseURI, m_executor);
     }
 
     /**
