@@ -9,6 +9,8 @@
     <pathelement path="${lib.slf4j-jdk14}"/>
   	<pathelement path="${lib.openrdf-sesame-onejar}"/>
   	<pathelement path="${lib.mulgara}"/>
+    <!-- mulgara dependency (on upgrade to 2.1.11) -->
+    <pathelement path="${lib.interruptiblermi}"/>
   </path>
 
 

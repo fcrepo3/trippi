@@ -207,6 +207,12 @@ public class CollapsedAnswer implements Answer {
         }
     }
 
+	@Override
+	public boolean isEmpty() throws TuplesException {
+		return this.m_wrappedAnswer.isEmpty();
+	}
+    
+    
     ///////////////////////////////////////////////////////////////////
     /////////////////// from java.lang.Cloneable //////////////////////
     ///////////////////////////////////////////////////////////////////
@@ -215,4 +221,5 @@ public class CollapsedAnswer implements Answer {
 	public Object clone() {
         throw new RuntimeException("CollapsedAnswer.clone() not implemented.");
     }
+
 }
