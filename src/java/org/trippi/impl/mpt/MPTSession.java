@@ -145,6 +145,7 @@ public class MPTSession implements TriplestoreSession {
                         } catch (Exception e2) { }
                     }
                     try {
+                        conn.commit();
                         conn.setAutoCommit(true);
                     } catch (Exception e2) { }
                 }
