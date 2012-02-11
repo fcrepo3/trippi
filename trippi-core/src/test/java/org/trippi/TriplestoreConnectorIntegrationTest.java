@@ -43,15 +43,8 @@ public abstract class TriplestoreConnectorIntegrationTest {
     }
 
     private void deleteAllTriples() throws Exception {
-        File dump = File.createTempFile("all-triples", "txt");
-        FileOutputStream out = null;
-        try {
-            TripleIterator triples = _reader.findTriples(null, null, null, -1);
-            _writer.delete(triples, true);
-        } finally {
-            if (out != null) out.close();
-            dump.delete();
-        }
+        TripleIterator triples = _reader.findTriples(null, null, null, -1);
+        _writer.delete(triples, true);
     }
 
     /**
