@@ -11,6 +11,7 @@ import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.Triple;
 import org.junit.Ignore;
+import org.junit.Test;
 import org.mulgara.jrdf.JRDFGraph;
 import org.mulgara.query.QueryException;
 import org.mulgara.query.rdf.Mulgara;
@@ -23,13 +24,13 @@ import org.mulgara.server.local.LocalSessionFactory;
 public class LuceneModelTest {
     
     private GraphElementFactory geFactory;
-    private String serverPath = System.getProperty("java.io.tmpdir") + "/luceneTest";
+    private String serverPath = System.getProperty("profile.mulgara.config.path");//System.getProperty("java.io.tmpdir") + "/luceneTest";
     private String server = "rmi://localhost/fedora";
     private URI m_serverURI = URI.create(server);
     private URI m_textModelURI = URI.create(server + "#ri-fullText");
     private SessionFactory m_factory;
     
-    @Ignore
+    @Test
     public void testLocalLuceneModel() throws Exception {
         createFactory();
         createModels();
