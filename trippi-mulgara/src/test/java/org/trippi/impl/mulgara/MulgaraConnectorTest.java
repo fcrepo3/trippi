@@ -81,15 +81,10 @@ public class MulgaraConnectorTest {
 	}
 	
 	private Triple getTriple(String s, String p, String o) throws Exception {
-	    System.out.println("getTriple s: " + s);
-	    System.out.println("getTriple p: " + p);
-	    System.out.println("getTriple o: " + o);
 		return _geFactory.createTriple(getResource(s), getResource(p), getResource(o));
 	}
 	
 	private URIReference getResource(String r) throws Exception {
-	    System.out.println("getResource: " + r);
-	    System.out.println("_geFactory == null: " + (_geFactory == null));
 	    return _geFactory.createResource(new URI("urn:test/" + r));
 	}
 
