@@ -1,7 +1,0 @@
-Ben O'Steen - Oxford Research Archive
-    Added option to request a count via the
-    web interface.  Sourceforge feature #1768761
-
-Benjamin Armintor - Columbia University
-    Added support for SPARQL triple queries to Mulgara connector. See 
-    https://fedora-commons.org/jira/browse/FCREPO-478
