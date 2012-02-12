@@ -10,7 +10,6 @@ import java.util.Set;
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.Triple;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mulgara.jrdf.JRDFGraph;
 import org.mulgara.query.QueryException;

@@ -29,11 +29,5 @@ dist/doc/ directory after doing a documentation build. (see below)
 
 BUILDING
 ========
-To compile Trippi, make sure you have Ant installed, and type:
-  ant dist
-
-To build the documentation, type:
-  ant doc
-
-For other useful build targets, type:
-  ant -p
+To compile Trippi, make sure you have Maven installed, and type:
+  mvn install

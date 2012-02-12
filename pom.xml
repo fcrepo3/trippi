@@ -94,7 +94,37 @@
       </roles>
       <timezone>-5</timezone>
     </developer>
+    <developer>
+      <id>barmintor</id>
+      <name>Ben Armintor</name>
+      <email>ba2213 @ (domain of organization url)</email>
+      <organization>Columbia University</organization>
+      <organizationUrl>http://www.columbia.edu/</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>penthes</id>
+      <name>Steve Bayliss</name>
+      <email>stephen.bayliss @ (domain of organization url)</email>
+      <organization>Acuity Unlimited</organization>
+      <organizationUrl>http://acuityunlimited.co.uk/</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
   </developers>
+
+  <contributors>
+    <contributor>
+      <name>Ben O'Steen</name>
+      <organization>Oxford Research Archive</organization>
+      <timezone>+1</timezone>
+    </contributor>
+  </contributors>
 
   <organization>
     <name>DuraSpace</name>
