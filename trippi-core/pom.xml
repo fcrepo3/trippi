@@ -13,6 +13,11 @@
   <description>trippi-core</description>
   <url>http://fcrepo.github.com/${project.parent.artifactId}</url>
   
+  <properties>
+    <!-- workaround for http://jira.codehaus.org/browse/MRESOURCES-99 -->
+    <buildDate>${maven.build.timestamp}</buildDate>
+  </properties>
+  
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -137,6 +142,16 @@
                   <exclude>log4j:log4j:jar:</exclude>
                 </excludes>
               </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>                                       
+                  </excludes>
+                </filter>
+              </filters>
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>with-dependencies</shadedClassifierName>
               <minimizeJar>true</minimizeJar>
@@ -145,5 +160,11 @@
         </executions>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
 </project>
