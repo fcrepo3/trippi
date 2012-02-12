@@ -6,7 +6,7 @@
 
                Copyright (c) 2005-2007, Cornell University
                Copyright (c) 2008-2009, Fedora Commons
-               Copyright (c) 2010-2011, DuraSpace
+               Copyright (c) 2010-2012, DuraSpace
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -21,10 +21,7 @@ thier own license terms.
 DOCUMENTATION
 =============
 Online documentation for the latest version of Trippi can be found at 
-http://trippi.sourceforge.net/
-
-Offline documentation for this version of Trippi can be found in the 
-dist/doc/ directory after doing a documentation build. (see below)
+http://fcrepo.github.com/trippi/
 
 
 BUILDING
