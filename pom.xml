@@ -379,7 +379,7 @@
       <extension>
         <groupId>org.kathrynhuxtable.maven.wagon</groupId>
         <artifactId>wagon-gitsite</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.3.1a</version>
       </extension>
     </extensions>
   </build>
@@ -436,4 +436,17 @@
       </snapshots>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>duraspace-thirdparty</id>
+      <name>Duraspace Thirdparty Maven Repository</name>
+      <url>https://m2.duraspace.org/content/repositories/thirdparty</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
