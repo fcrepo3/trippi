@@ -139,6 +139,10 @@
     <url>http://github.com/fcrepo/${project_name}</url>
   </scm>
 
+  <prerequisites>
+    <maven>2.2.1</maven>
+  </prerequisites>
+
   <issueManagement>
     <system>JIRA</system>
     <url>https://jira.duraspace.org/browse/FCREPO/component/10128</url>
@@ -168,7 +172,7 @@
       <plugins>
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2.2</version>
+          <version>2.3</version>
         </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -184,13 +188,16 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>1.0</version>
+          <version>1.0.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.11</version>
+          <version>2.12</version>
           <executions>
             <execution>
               <id>integration-test</id>
@@ -207,6 +214,10 @@
           </executions>
         </plugin>
         <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>2.4</version>
         </plugin>
@@ -215,8 +226,44 @@
           <version>2.2.2</version>
         </plugin>
         <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
           <artifactId>maven-shade-plugin</artifactId>
           <version>1.5</version>
+          <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <artifactSet>
+                <excludes>
+                  <exclude>classworlds:classworlds</exclude>
+                  <exclude>junit:junit</exclude>
+                  <exclude>*:xml-apis</exclude>
+                  <exclude>org.apache.maven:lib:tests</exclude>
+                  <exclude>log4j:log4j:jar:</exclude>
+                </excludes>
+              </artifactSet>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>                                       
+                  </excludes>
+                </filter>
+              </filters>
+              <shadedArtifactAttached>true</shadedArtifactAttached>
+              <shadedClassifierName>with-dependencies</shadedClassifierName>
+              <minimizeJar>true</minimizeJar>
+            </configuration>
+          </execution>
+        </executions>
         </plugin>
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
@@ -224,7 +271,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.11</version>
+          <version>2.12</version>
         </plugin>
         <!--This plugin's configuration is used to store Eclipse 
                 m2e settings only. It has no influence on the Maven build itself. -->
@@ -320,7 +367,6 @@
           <reportPlugins>
             <plugin>
               <artifactId>maven-failsafe-plugin</artifactId>
-              <version>2.11</version>
             </plugin>
             <plugin>
               <artifactId>maven-javadoc-plugin</artifactId>
@@ -332,7 +378,6 @@
             </plugin>
             <plugin>
               <artifactId>maven-surefire-report-plugin</artifactId>
-              <version>2.11</version>
                 <configuration>
                   <outputName>surefire-report</outputName>
                   <aggregate>true</aggregate>
@@ -360,6 +405,20 @@
               <configuration>
                 <aggregate>true</aggregate>
               </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>versions-maven-plugin</artifactId>
+              <version>1.3.1</version>
+              <reportSets>
+                <reportSet>
+                  <reports>
+                    <report>dependency-updates-report</report>
+                    <report>plugin-updates-report</report>
+                    <report>property-updates-report</report>
+                  </reports>
+                </reportSet>
+              </reportSets>
             </plugin>
           </reportPlugins>
         </configuration>
