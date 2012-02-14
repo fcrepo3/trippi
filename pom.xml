@@ -391,7 +391,7 @@
               <artifactId>maven-changelog-plugin</artifactId>
               <version>2.2</version>
               <configuration>
-                <displayFileDetailUrl>http://github.com/mediashelf/${project_name}/blob/master/%FILE% </displayFileDetailUrl>
+                <displayFileDetailUrl>http://github.com/fcrepo/${project_name}/blob/master/%FILE%</displayFileDetailUrl>
               </configuration>
             </plugin>
             <plugin>
