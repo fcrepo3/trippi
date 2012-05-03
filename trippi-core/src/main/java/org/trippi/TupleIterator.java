@@ -18,6 +18,7 @@ import org.trippi.io.JSONTupleWriter;
 import org.trippi.io.SimpleTupleWriter;
 import org.trippi.io.SparqlTupleIterator;
 import org.trippi.io.SparqlTupleWriter;
+import org.trippi.io.SparqlW3CTupleWriter;
 import org.trippi.io.TSVTupleWriter;
 import org.trippi.io.TupleWriter;
 import org.trippi.io.CountTupleWriter;
@@ -134,6 +135,8 @@ public abstract class TupleIterator {
         TupleWriter writer;
         if (format == RDFFormat.SPARQL) {
             writer = new SparqlTupleWriter(out, m_aliases); 
+        }else if(format == RDFFormat.SPARQL_W3C){
+        	writer = new SparqlW3CTupleWriter(out,m_aliases);
         } else if (format == RDFFormat.SIMPLE) {
             writer = new SimpleTupleWriter(out, m_aliases); 
         } else if (format == RDFFormat.CSV) {
