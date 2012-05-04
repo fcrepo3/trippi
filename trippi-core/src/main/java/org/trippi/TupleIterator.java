@@ -50,6 +50,7 @@ public abstract class TupleIterator {
                                          new RDFFormat[] { RDFFormat.CSV,
                                                            RDFFormat.SIMPLE,
                                                            RDFFormat.SPARQL,
+                                                           RDFFormat.SPARQL_W3C,
                                                            RDFFormat.TSV,
                                                            RDFFormat.JSON,
                                                            RDFFormat.COUNT,
