@@ -31,7 +31,7 @@ public class SparqlW3CTupleWriter extends TupleWriter {
 	@Override
 	public int write(final TupleIterator iter) throws TrippiException {
 		writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		writer.println("<sparql xmlns=\"http://www.w3.org/2005/sparql-results#\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2007/SPARQL/result.xsd\">");
+		writer.println("<sparql xmlns=\"http://www.w3.org/2007/SPARQL/results#\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2007/SPARQL/results# http://www.w3.org/2007/SPARQL/result.xsd\">");
 		writeHeader(iter, writer);
 		writeResults(iter, writer, aliases);
 		writer.println("</sparql>");

@@ -50,6 +50,6 @@ public class SparqlW3CTupleWriterTest extends TestCase {
 		NodeList elements=doc.getElementsByTagName("result");
 		assertTrue(elements.getLength() == 12);
 		
-		assertTrue(doc.getFirstChild().getAttributes().item(0).getNodeValue().equals("http://www.w3.org/2005/sparql-results#"));
+		assertTrue(doc.getFirstChild().getAttributes().item(0).getNodeValue().equals("http://www.w3.org/2007/SPARQL/results#"));
 	}
 }
