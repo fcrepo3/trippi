@@ -32,8 +32,8 @@ public class SparqlW3CTupleWriter extends TupleWriter {
 	public int write(final TupleIterator iter) throws TrippiException {
 		writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		writer.println("<sparql xmlns=\"http://www.w3.org/2007/SPARQL/results#\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.w3.org/2007/SPARQL/results# http://www.w3.org/2007/SPARQL/result.xsd\">");
-		writeHeader(iter, writer);
-		writeResults(iter, writer, aliases);
+		SparqlW3CTupleWriter.writeHeader(iter, writer);
+		SparqlW3CTupleWriter.writeResults(iter, writer, aliases);
 		writer.println("</sparql>");
 		writer.flush();
 		return iter.names().length;
@@ -54,14 +54,12 @@ public class SparqlW3CTupleWriter extends TupleWriter {
 		writer.println("\t\t<result>");
 		Map<String, Node> tuple = iter.next();
 		for (final String variableName : iter.names()) {
-			writer.print("\t\t\t<binding name=\"" + variableName + "\">");
 			final Node node = tuple.get(variableName);
 			if (node == null) {
-				// TODO: What to do here?! I have no idea, in the original
-				// SparqlTupleWriter
-				// "bound = false" is used, but i could not find it in the W3C
-				// spec...
-			} else if (node instanceof URIReference) {
+				continue;
+			}
+			writer.print("\t\t\t<binding name=\"" + variableName + "\">");
+			if (node instanceof URIReference) {
 				writer.print("<uri>" + ((URIReference) node).getURI().toASCIIString() + "</uri>");
 			} else if (node instanceof BlankNode) {
 				writer.print("<bnode>r" + (++bNodeCount) + "</bnode>");
