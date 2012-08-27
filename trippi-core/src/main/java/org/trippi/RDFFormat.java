@@ -110,6 +110,12 @@ public class RDFFormat {
             "UTF-8",
             "application/xml",
             ".xml");   
+    
+    public static final RDFFormat SPARQL_W3C = new RDFFormat("Sparql_W3C",
+            "UTF-8",
+            "application/xml",
+            ".xml");   
+    
 
     public static final RDFFormat[] ALL = new RDFFormat[] { N_TRIPLES,
                                                             NOTATION_3,
@@ -118,6 +124,7 @@ public class RDFFormat {
                                                             CSV,
                                                             SIMPLE,
                                                             SPARQL,
+                                                            SPARQL_W3C,
                                                             TSV,
                                                             JSON,
                                                             COUNT,
