@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.trippi</groupId>
     <artifactId>trippi</artifactId>
-    <version>1.5.8</version>
+    <version>1.5.9-SNAPSHOT</version>
   </parent>
   
   <artifactId>trippi-core</artifactId>
