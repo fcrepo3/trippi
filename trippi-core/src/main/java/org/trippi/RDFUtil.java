@@ -1,5 +1,6 @@
 package org.trippi;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -32,28 +33,67 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
 
     public static String toString(Node node) {
         if (node == null) return "null";
+        StringBuffer out = new StringBuffer(128);
+        try {
+            encode(node, out);
+        } catch (IOException wonthappen) {}
+        return out.toString();
+    }
+    
+    public static void encode(Node node, Appendable buffer)
+            throws IOException {
+        if (node == null) buffer.append("null");
         if (node instanceof URIReference) {
             URIReference n = (URIReference) node;
-            return "<" + n.getURI().toString() + ">";
+            bracket(node.toString(), buffer);
         } else if (node instanceof BlankNode) {
-            return "_node" + node.hashCode();
+            buffer.append("_node").append(Integer.toString(node.hashCode()));
         } else {
             Literal n = (Literal) node;
-            StringBuffer out = new StringBuffer();
-            out.append("\"" + escapeLiteral(n.getLexicalForm()) + "\"");
+            buffer.append('"');
+            escapeLiteral(n.getLexicalForm(), buffer);
+            buffer.append('"');
             if (n.getLanguage() != null && n.getLanguage().length() > 0) {
-                out.append("@" + n.getLanguage());
+                buffer.append('@').append(n.getLanguage());
             } else if (n.getDatatypeURI() != null) {
-                out.append("^^" + n.getDatatypeURI().toString());
+                buffer.append("^^").append(n.getDatatypeURI().toString());
             }
-            return out.toString();
         }
+    }
+    
+    private static void bracket(String in, Appendable buffer)
+           throws IOException {
+        bracket(in, buffer, '<', '>');
+    }
+    
+    private static void quote(String in, Appendable buffer)
+            throws IOException {
+         bracket(in, buffer, '"', '"');
+     }
+    
+    private static void bracket(String in, Appendable buffer,
+            char open, char close)
+            throws IOException {
+        buffer.append(open);
+        buffer.append(in);
+        buffer.append(close);
     }
 
     public static String toString(Triple triple) {
-        return toString(triple.getSubject()) + " "
-             + toString(triple.getPredicate()) + " "
-             + toString(triple.getObject());
+        StringBuffer buffer = new StringBuffer();
+        try {
+            encode(triple, buffer);
+        } catch (IOException wonthappen) {}
+        return buffer.toString();
+    }
+    
+    public static void encode(Triple triple, Appendable buffer)
+        throws IOException {
+        encode(triple.getSubject(), buffer);
+        buffer.append(' ');
+        encode(triple.getPredicate(), buffer);
+        buffer.append(' ');
+        encode(triple.getObject(), buffer);        
     }
 
     ////// parsing methods //////
@@ -95,26 +135,29 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
     }
 
     private static String stripFirstAndLast(String s) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 1; i < s.length() - 1; i++) {
-            out.append(s.charAt(i));
-        }
-        return out.toString();
+        return s.substring(1, s.length()-1);
     }
 
     private static String escapeLiteral(String s) {
         StringBuffer out = new StringBuffer();
+        try {
+            escapeLiteral(s, out);
+        } catch (IOException wonthappen) {}
+        return out.toString();
+    }
+    
+    private static void escapeLiteral(String s, Appendable buffer)
+            throws IOException {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if ( c == '"' ) {
-                out.append("\\\"");
+                buffer.append("\\\"");
             } else if ( c == '\\' ) {
-                out.append("\\\\");
+                buffer.append("\\\\");
             } else {
-                out.append(c);
+                buffer.append(c);
             }
         }
-        return out.toString();
     }
 
     private static String unescapeLiteral(String s) {
