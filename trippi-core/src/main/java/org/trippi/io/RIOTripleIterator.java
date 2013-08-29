@@ -8,7 +8,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,19 +40,23 @@ public class RIOTripleIterator extends TripleIterator
 
     private static final Logger logger =
         LoggerFactory.getLogger(RIOTripleIterator.class.getName());
-    private static final Triple FINISHED = new AbstractTriple(){};
+    private static final Triple FINISHED = new FlagTriple("FINISHED");
+    private static final Triple NEXT = new FlagTriple("NEXT");
     private InputStream m_in;
     private RDFParser m_parser;
     private String m_baseURI;
 
-    private Triple m_bucket; // shared between parser/consumer threads
+    // communicate between parser/consumer threads
+    private Exchanger<Triple> m_bucket =
+            new Exchanger<Triple>();
+    
     private Triple m_next;
 
     private Exception m_parseException = null;
 
     private RDFUtil m_util;
 
-    private int m_tripleCount = 0;
+    protected int m_tripleCount = 0;
 
     private Map<String, String> m_aliases;
 
@@ -71,8 +78,9 @@ public class RIOTripleIterator extends TripleIterator
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
         }
+        m_next = NEXT;
         executor.execute(this);
-        m_next = getNext();
+        setNext(false);
     }
 
     @Override
@@ -96,34 +104,44 @@ public class RIOTripleIterator extends TripleIterator
      *      a) The parser to finish, or
      *      b) Another triple to arrive in the bucket.
      */
-    private synchronized Triple getNext() throws TrippiException { 
+    private void setNext(boolean timeout) throws TrippiException { 
         // wait until the bucket has a value or 2) finished parsing is true
-    	try{
-            while (m_bucket == null) {
-                // wait for Producer to put value
-                wait(5);
-            }
-        } catch (InterruptedException e) {
+        if (m_next == null) return;
+        if (m_next == FINISHED){
+            m_next = null;
+            throw new TrippiException("reading next after finish");
         }
-        if (m_parseException != null) {
+        Triple triple = m_next;
+    	try{
+    	    triple = (timeout) ?
+    	            m_bucket.exchange(triple, 5, TimeUnit.MILLISECONDS):
+    	            m_bucket.exchange(triple, 5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.debug("Interrupted, quitting");
+            triple = FINISHED;
+        } catch (TimeoutException e) {
+            triple = FINISHED;
+            logger.debug("Timed out, quitting");
+        }
+    	// we ignore RDFHandlingInterruptedException, as it is thrown in the
+    	// special case that the iterator was closed before parsing was finished
+        if (m_parseException != null &&
+                ! (m_parseException instanceof RDFHandlingInterruptedException)) {
             throw new TrippiException("RDF Parse Error.", m_parseException);
         }
-        if (m_bucket == FINISHED) {
-        	if (logger.isDebugEnabled()) {
-        		logger.debug("Finished parsing " + m_tripleCount + " triples.");
-        	}
-            return null; // parser finished normally, no more triples
+        if (triple == FINISHED) {
+     		logger.debug("Finished parsing {} triples.", m_tripleCount);
+            m_next = null; // parser finished normally, no more triples
         } else {
-            Triple triple = m_bucket;
-            m_bucket = null;
             m_tripleCount++;
             if (m_tripleCount % 1000 == 0) {
             	if (logger.isDebugEnabled()) {
-            		logger.debug("Iterated " + m_tripleCount + ", mem free = " + Runtime.getRuntime().freeMemory() );
+            		logger.debug("Iterated {}, mem free = ",
+            		        m_tripleCount,
+            		        Runtime.getRuntime().freeMemory() );
             	}
             }
-            notifyAll(); // notify parser that the bucket is ready for another
-            return triple;
+            m_next = triple;
         }
     }
     
@@ -136,18 +154,37 @@ public class RIOTripleIterator extends TripleIterator
     public Triple next() throws TrippiException {
         if (m_next == null) return null;
         Triple last = m_next;
-        m_next = getNext();
+        setNext(true);
+        if (m_next == FINISHED) {
+            logger.debug("Got the {} flag from RIOTripleIterator.setNext", m_next);
+            m_next = null;
+        }
+        logger.debug("got a triple: {} from RIOTripleIterator.setNext", m_next);
         return last;
     }
     
     @Override
     public void close() throws TrippiException {
-    	// signal the end of reading
-    	// notify the parsing thread if it is still running
-        synchronized(this) {
-        	m_bucket = (FINISHED);
-        	notifyAll();
-    	}
+        // if processing was already completed
+        if (m_next == null || m_next == FINISHED) {
+            return;
+        }
+        /** signal the end of reading
+        /* if the parsing thread is waiting, it will
+         * throw a RDFHandlingInterruptedException
+         * to exit parsing early. If the consuming thread
+         * is somehow waiting it will stop and the producing thread
+         * will eventually timeout.
+        **/
+        try {
+            m_next = null;
+            logger.debug("sending {} on RIOTripleIterator.close()", FINISHED);
+            m_bucket.exchange(FINISHED, 1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.debug("closing {} offered but interrupted", FINISHED);
+        } catch (TimeoutException e) {
+            logger.debug("closing {} offered but not accepted", FINISHED);
+        }
     }
 
     ////////////////// Parser Thread Methods ///////////////////////////
@@ -161,6 +198,7 @@ public class RIOTripleIterator extends TripleIterator
     public void run() {
         try {
             m_parser.parse(m_in, m_baseURI);
+        } catch (RDFHandlingInterruptedException e) {
         } catch (Exception e) {
             m_parseException = e;
         } finally {
@@ -178,7 +216,10 @@ public class RIOTripleIterator extends TripleIterator
      */
     public void handleStatement(org.openrdf.model.Resource subject,
                                 org.openrdf.model.URI predicate,
-                                org.openrdf.model.Value object) throws GraphElementFactoryException, URISyntaxException {
+                                org.openrdf.model.Value object) 
+            throws GraphElementFactoryException,
+            URISyntaxException,
+            RDFHandlingInterruptedException {
         // first, convert the rio statement to a jrdf triple
         Triple triple = null;
             triple = m_util.createTriple( subjectNode(subject),
@@ -187,22 +228,26 @@ public class RIOTripleIterator extends TripleIterator
         put(triple); // locks until m_bucket is free or close() has been called
     }
 
-    private synchronized void put(Triple triple) {
+    private void put(Triple triple) throws RDFHandlingInterruptedException {
         try {
-            while (m_bucket != null && m_bucket != FINISHED) {
-                // wait for notification, which will happen if
-                // 1) the bucket is emptied by the consumer, or
-                // 2) close has been called
-            	// 3) RDF is exhausted
-                wait(5);
+            logger.debug("putting {} on Exchanger in RIOTripleIterator.put",
+                    triple);
+            triple = m_bucket.exchange(triple, 5, TimeUnit.SECONDS);
+            logger.debug("got {} from Exchanger in RIOTripleIterator.put",
+                    triple);
+            if (triple == FINISHED) {
+                String msg = "End of processing has been" +
+                        " signalled from the consuming thread.";
+                logger.debug(msg);
+                throw new RDFHandlingInterruptedException(msg);
             }
-            if (m_bucket == FINISHED) {
-                return; // leave last triple in bucket? No notification?
-            }
-            m_bucket = triple;
         } catch (InterruptedException e) {
+            logger.debug("putting {} interrupted", triple);
+            throw new RDFHandlingInterruptedException(e);
+        } catch (TimeoutException e) {
+            logger.debug("putting {} timed out", triple);
+            throw new RDFHandlingInterruptedException(e);
         }
-        notifyAll();  // notify the consumer that the bucket has a triple
     }
 
     private SubjectNode subjectNode(org.openrdf.model.Resource subject) 
@@ -273,7 +318,8 @@ public class RIOTripleIterator extends TripleIterator
         
     }
 
-    public void handleStatement(Statement st) throws RDFHandlerException {
+    public void handleStatement(Statement st)
+            throws RDFHandlerException {
         // first, convert the rio statement to a jrdf triple
         Triple triple = null;
             try {
@@ -290,6 +336,33 @@ public class RIOTripleIterator extends TripleIterator
 
     public void startRDF() throws RDFHandlerException {
         // TODO Auto-generated method stub
+        
+    }
+    
+    static final class FlagTriple extends AbstractTriple {
+        final String flag;
+        FlagTriple(String flag) {
+            this.flag = flag;
+        }
+        public String toString() {
+            return "FlagTriple<" + flag + ">";
+        }
+    }
+    
+    static final class RDFHandlingInterruptedException
+    extends RDFHandlerException {
+
+        public RDFHandlingInterruptedException(String msg) {
+            super(msg);
+        }
+        
+        public RDFHandlingInterruptedException(Throwable cause) {
+            super(cause);
+        }
+        
+        public RDFHandlingInterruptedException(String msg, Throwable cause) {
+            super(msg, cause);
+        }
         
     }
 

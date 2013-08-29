@@ -6,24 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
-import org.jrdf.graph.AbstractTripleFactory;
-import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-import org.jrdf.graph.TripleFactory;
-import org.jrdf.graph.URIReference;
-import org.jrdf.graph.mem.TripleImpl;
-import org.jrdf.graph.mem.URIReferenceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,7 +23,6 @@ import org.trippi.TripleIterator;
 
 public class RIOTripleIteratorTest {
     private static String rdf;
-    private HashSet<Triple> rdfTriples;
     private TripleIteratorFactory m_factory;
     
     @BeforeClass
@@ -46,6 +34,8 @@ public class RIOTripleIteratorTest {
         sb.append("<rdf:Description rdf:about=\"info:fedora/test:pid\">");
         sb.append("<rel:isMemberOf rdf:resource=\"info:fedora/demo:SmileyStuff\"/>");
         sb.append("<fedora-model:hasContentModel rdf:resource=\"info:fedora/demo:CmodelForBMech_DualResImageImpl\"/>");
+        sb.append("<fedora-model:testProperty>test</fedora-model:testProperty>");
+        sb.append("<fedora-model:testReference rdf:resource=\"info:/fedora/test:otherPid\" />");
         sb.append("</rdf:Description>");
         sb.append("</rdf:RDF>");
         rdf = sb.toString();
@@ -78,7 +68,6 @@ public class RIOTripleIteratorTest {
         rdfxml = sb.toString().getBytes("UTF-8");
         in = new ByteArrayInputStream(rdfxml);
         
-        RDFParser parser = new RDFXMLParser();
         iter = m_factory.fromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
@@ -117,20 +106,29 @@ public class RIOTripleIteratorTest {
                 "info:fedora/fedora-system:def/model#hasContentModel";
         String memberOf =
                 "info:fedora/fedora-system:def/relations-external#isMemberOf";
+        String testProp = "info:fedora/fedora-system:def/model#testProperty";
         Triple actual = triples.remove(contentModel);
         assertTriple(actual, subject,"info:fedora/demo:CmodelForBMech_DualResImageImpl");
         actual = triples.remove(memberOf);
         assertTriple(actual, subject,"info:fedora/demo:SmileyStuff");
+        actual = triples.remove(testProp);
+        // this property is a literal
+        assertTriple(actual, subject,"\"test\"");
+        assertEquals("Unexpected remainder in test triples", 1, triples.size());
     }
 
     @Test
     public void testInterruptingStream() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
-        HashMap<String, Triple> triples = new HashMap<String, Triple>();
+        RIOTripleIterator iter =
+                (RIOTripleIterator) m_factory.fromStream(in, RDFFormat.RDF_XML);
+        iter.next();
         iter.next();
         iter.close();
-        assertEquals("Could not cut short iteration", 1, iter.count());
+        // because we look ahead one triple to support hasNext, the tripleCount
+        // is one higher than the number of triples iterated over
+        // but should still be less than the total
+        assertEquals("Could not cut short iteration", 3, iter.m_tripleCount);
     }
 
     private void assertTriple(Triple actual, String subject, String object) {
@@ -139,7 +137,6 @@ public class RIOTripleIteratorTest {
                 actual.getSubject().toString());
         assertEquals(object,
                 actual.getObject().toString());
-        
     }
     
     @Test
@@ -163,6 +160,6 @@ public class RIOTripleIteratorTest {
         System.out.println(jsonString);
         JSONObject json = new JSONObject(jsonString);
         JSONArray tripleMaps = json.getJSONArray("results");
-        assertEquals(2, tripleMaps.length());
+        assertEquals(4, tripleMaps.length());
     }
 }
