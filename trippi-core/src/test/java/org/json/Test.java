@@ -158,16 +158,16 @@ public class Test extends TestCase {
 
         string = "<person created=\"2006-11-11T19:23\" modified=\"2006-12-31T23:59\">\n <firstName>Robert</firstName>\n <lastName>Smith</lastName>\n <address type=\"home\">\n <street>12345 Sixth Ave</street>\n <city>Anytown</city>\n <state>CA</state>\n <postalCode>98765-4321</postalCode>\n </address>\n </person>";
         jsonobject = XML.toJSONObject(string);
-        assertEquals("{\"person\": {\n    \"lastName\": \"Smith\",\n    \"address\": {\n        \"postalCode\": \"98765-4321\",\n        \"street\": \"12345 Sixth Ave\",\n        \"state\": \"CA\",\n        \"type\": \"home\",\n        \"city\": \"Anytown\"\n    },\n    \"created\": \"2006-11-11T19:23\",\n    \"firstName\": \"Robert\",\n    \"modified\": \"2006-12-31T23:59\"\n}}",
+        assertJsonEquals("{\"person\": {\n    \"lastName\": \"Smith\",\n    \"address\": {\n        \"postalCode\": \"98765-4321\",\n        \"street\": \"12345 Sixth Ave\",\n        \"state\": \"CA\",\n        \"type\": \"home\",\n        \"city\": \"Anytown\"\n    },\n    \"created\": \"2006-11-11T19:23\",\n    \"firstName\": \"Robert\",\n    \"modified\": \"2006-12-31T23:59\"\n}}",
                 jsonobject.toString(4));
 
         jsonobject = new JSONObject(beanie);
-        assertEquals("{\"string\":\"A beany object\",\"BENT\":\"All uppercase key\",\"boolean\":true,\"number\":42,\"x\":\"x\"}"
+        assertJsonEquals("{\"string\":\"A beany object\",\"BENT\":\"All uppercase key\",\"boolean\":true,\"number\":42,\"x\":\"x\"}"
                 , jsonobject.toString());
 
         string = "{ \"entity\": { \"imageURL\": \"\", \"name\": \"IXXXXXXXXXXXXX\", \"id\": 12336, \"ratingCount\": null, \"averageRating\": null } }";
         jsonobject = new JSONObject(string);
-        assertEquals("{\"entity\": {\n  \"id\": 12336,\n  \"averageRating\": null,\n  \"ratingCount\": null,\n  \"name\": \"IXXXXXXXXXXXXX\",\n  \"imageURL\": \"\"\n}}",
+        assertJsonEquals("{\"entity\": {\n  \"id\": 12336,\n  \"averageRating\": null,\n  \"ratingCount\": null,\n  \"name\": \"IXXXXXXXXXXXXX\",\n  \"imageURL\": \"\"\n}}",
                 jsonobject.toString(2));
 
         jsonstringer = new JSONStringer();
@@ -190,10 +190,10 @@ public class Test extends TestCase {
                 .value(JSONObject.getNames(beanie))
                 .endObject()
                 .toString();
-        assertEquals("{\"single\":\"MARIE HAA'S\",\"Johnny\":\"MARIE HAA\\\\'S\",\"foo\":\"bar\",\"baz\":[{\"quux\":\"Thanks, Josh!\"}],\"obj keys\":[\"aString\",\"aNumber\",\"aBoolean\"]}"
+        assertJsonEquals("{\"single\":\"MARIE HAA'S\",\"Johnny\":\"MARIE HAA\\\\'S\",\"foo\":\"bar\",\"baz\":[{\"quux\":\"Thanks, Josh!\"}],\"obj keys\":[\"aString\",\"aNumber\",\"aBoolean\"]}"
                 , string);
 
-        assertEquals("{\"a\":[[[\"b\"]]]}"
+        assertJsonEquals("{\"a\":[[[\"b\"]]]}"
                 , new JSONStringer()
                 .object()
                 .key("a")
@@ -862,6 +862,39 @@ public class Test extends TestCase {
             fail("expecting JSONException here.");
         } catch (JSONException jsone) {
             assertEquals("Duplicate key \"bosanda\"", jsone.getMessage());
+        }
+    }
+    
+    static void assertJsonEquals(String eSrc, String aSrc) {
+        try {
+            JSONObject expected = new JSONObject(eSrc);
+            JSONObject actual = new JSONObject(aSrc);
+            assertDeepEquals(expected, actual);
+        } catch (JSONException e) {
+            fail(e.getMessage());
+        }
+    }
+    
+    static void assertDeepEquals(JSONObject expected, JSONObject actual) {
+        assertEquals("Unequal number of keys in compared objects",
+                expected.length(), actual.length());
+        @SuppressWarnings("unchecked")
+        Iterator<String> keys = expected.keys();
+        while(keys.hasNext()) {
+            String key = keys.next();
+            try {
+                Object eProp = expected.get(key);
+                Object aProp = actual.get(key);
+                assertEquals(eProp.getClass().getName(),
+                        aProp.getClass().getName());
+                if (eProp instanceof JSONObject) {
+                    assertDeepEquals((JSONObject) eProp, (JSONObject) aProp);
+                } else {
+                    assertEquals(eProp.toString(), aProp.toString());
+                }
+            } catch (JSONException e) {
+                fail(e.getMessage());
+            }
         }
     }
 
