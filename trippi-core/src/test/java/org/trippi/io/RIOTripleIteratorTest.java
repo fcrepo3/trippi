@@ -1,22 +1,44 @@
 package org.trippi.io;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.jrdf.graph.AbstractTripleFactory;
+import org.jrdf.graph.SubjectNode;
+import org.jrdf.graph.Triple;
+import org.jrdf.graph.TripleFactory;
+import org.jrdf.graph.URIReference;
+import org.jrdf.graph.mem.TripleImpl;
+import org.jrdf.graph.mem.URIReferenceImpl;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openrdf.rio.RDFParser;
 import org.openrdf.rio.rdfxml.RDFXMLParser;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
 
-public class RIOTripleIteratorTest extends TestCase {
-    private final static String rdf;
+public class RIOTripleIteratorTest {
+    private static String rdf;
+    private HashSet<Triple> rdfTriples;
     private TripleIteratorFactory m_factory;
-    static {
+    
+    @BeforeClass
+    public static void bootstrap() {
         StringBuilder sb = new StringBuilder();
         sb.append("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" ");
         sb.append("xmlns:fedora-model=\"info:fedora/fedora-system:def/model#\" ");
@@ -28,18 +50,18 @@ public class RIOTripleIteratorTest extends TestCase {
         sb.append("</rdf:RDF>");
         rdf = sb.toString();
     }
-    @Override
-	protected void setUp() throws Exception {
-        super.setUp();
+    
+    @Before
+	public void setUp() throws Exception {
         m_factory = new TripleIteratorFactory();
     }
 
-    @Override
-	protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+	public void tearDown() throws Exception {
         m_factory.shutdown();
     }
     
+    @Test
     public void testNamespaceMapping() throws Exception {
         StringBuilder sb;
         byte[] rdfxml;
@@ -80,14 +102,55 @@ public class RIOTripleIteratorTest extends TestCase {
         iter.toStream(System.out, RDFFormat.RDF_XML);
     }
     
+    @Test
     public void testFromStream() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
         TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
+        HashMap<String, Triple> triples = new HashMap<String, Triple>();
+        while(iter.hasNext()) {
+            Triple next = iter.next();
+            triples.put(next.getPredicate().toString(), next);
+        }
+        String subject =
+                "info:fedora/test:pid";
+        String contentModel =
+                "info:fedora/fedora-system:def/model#hasContentModel";
+        String memberOf =
+                "info:fedora/fedora-system:def/relations-external#isMemberOf";
+        Triple actual = triples.remove(contentModel);
+        assertTriple(actual, subject,"info:fedora/demo:CmodelForBMech_DualResImageImpl");
+        actual = triples.remove(memberOf);
+        assertTriple(actual, subject,"info:fedora/demo:SmileyStuff");
+    }
+
+    @Test
+    public void testInterruptingStream() throws Exception {
+        InputStream in = new ByteArrayInputStream(rdf.getBytes());
+        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
+        HashMap<String, Triple> triples = new HashMap<String, Triple>();
+        iter.next();
+        iter.close();
+        assertEquals("Could not cut short iteration", 1, iter.count());
+    }
+
+    private void assertTriple(Triple actual, String subject, String object) {
+        assertNotNull("triple was null", actual);
+        assertEquals(subject,
+                actual.getSubject().toString());
+        assertEquals(object,
+                actual.getObject().toString());
         
+    }
+    
+    @Test
+    public void testFromStreamToStream() throws Exception {
+        InputStream in = new ByteArrayInputStream(rdf.getBytes());
+        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
         System.out.println("\n\n\n***\n");
         iter.toStream(System.out, RDFFormat.RDF_XML);
     }
-    
+
+    @Test
     public void testFromStreamToJson() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
         TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
@@ -99,5 +162,7 @@ public class RIOTripleIteratorTest extends TestCase {
         System.out.println("parsing json");
         System.out.println(jsonString);
         JSONObject json = new JSONObject(jsonString);
+        JSONArray tripleMaps = json.getJSONArray("results");
+        assertEquals(2, tripleMaps.length());
     }
 }
