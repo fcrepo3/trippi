@@ -2,6 +2,7 @@ package org.trippi.server.http;
 
 import java.io.FileInputStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.io.StringReader;
 
 import javax.xml.transform.Templates;
@@ -57,6 +58,10 @@ public class Styler {
      * Transform the given xml using the index stylesheet, outputting to out.
      */
     public void sendIndex(String xml, PrintWriter out) throws Exception {
+        send(new StringReader(xml), out, m_indexTemplates);
+    }
+    
+    public void sendIndex(Reader xml, PrintWriter out) throws Exception {
         send(xml, out, m_indexTemplates);
     }
 
@@ -64,6 +69,10 @@ public class Styler {
      * Transform the given xml using the form stylesheet, outputting to out.
      */
     public void sendForm(String xml, PrintWriter out) throws Exception {
+        send(new StringReader(xml), out, m_formTemplates);
+    }
+
+    public void sendForm(Reader xml, PrintWriter out) throws Exception {
         send(xml, out, m_formTemplates);
     }
 
@@ -71,6 +80,10 @@ public class Styler {
      * Transform the given xml using the error stylesheet, outputting to out.
      */
     public void sendError(String xml, PrintWriter out) throws Exception {
+        send(new StringReader(xml), out, m_errorTemplates);
+    }
+
+    public void sendError(Reader xml, PrintWriter out) throws Exception {
         send(xml, out, m_errorTemplates);
     }
 
@@ -89,11 +102,11 @@ public class Styler {
     }
 
     // do a transformation and send it to the stream
-    private static void send(String source,
+    private static void send(Reader source,
                              PrintWriter out, 
                              Templates stylesheet) throws Exception {
         stylesheet.newTransformer()
-                  .transform(new StreamSource(new StringReader(source)), 
+                  .transform(new StreamSource(source), 
                              new StreamResult(out));
     }
                              

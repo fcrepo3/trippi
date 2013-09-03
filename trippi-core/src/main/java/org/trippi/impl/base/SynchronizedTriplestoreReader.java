@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
+import org.trippi.Alias;
 import org.trippi.TripleIterator;
 import org.trippi.TriplePattern;
 import org.trippi.TriplestoreReader;
@@ -78,13 +79,12 @@ public class SynchronizedTriplestoreReader implements TriplestoreReader {
 
     private String doAliasReplacements(String q) {
         String out = q;
-        Map<String, String> m = m_aliasManager.getAliasMap();
+        Map<String, Alias> m = m_aliasManager.getAliases();
         Iterator<String> iter = m.keySet().iterator();
         while (iter.hasNext()) {
-            String alias = iter.next();
-            String fullForm = m.get(alias);
-            out = out.replaceAll("<" + alias + ":", "<" + fullForm)
-                     .replaceAll("\\^\\^" + alias + ":(\\S+)", "^^<" + fullForm + "$1>");
+            String key = iter.next();
+            Alias alias = m.get(key);
+            out = alias.replaceSparqlType(alias.replaceSparqlUri(out));
         }
         if (!q.equals(out)) {
             logger.info("Substituted aliases, query is now: " + out);

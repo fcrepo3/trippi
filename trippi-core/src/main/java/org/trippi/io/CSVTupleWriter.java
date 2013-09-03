@@ -98,15 +98,15 @@ public class CSVTupleWriter extends TupleWriter {
                     Iterator<String> iter = m_aliases.keySet().iterator();
                     while (iter.hasNext()) {
                         String alias = iter.next();
-                        String prefix = m_aliases.get(alias);
-                        if (uri.startsWith(prefix)) {
+                        String expansion = m_aliases.get(alias);
+                        if (uri.startsWith(expansion)) {
                             StringBuffer out = new StringBuffer();
                             out.append('"');
                             out.append(literal.getLexicalForm().replaceAll("\"", "\\\""));
                             out.append("\"^^");
                             out.append(alias);
                             out.append(':');
-                            out.append(uri.substring(prefix.length()));
+                            out.append(uri.substring(expansion.length()));
                             return fix(out.toString());
                         }
                     }
@@ -117,11 +117,11 @@ public class CSVTupleWriter extends TupleWriter {
     }
 
     private String fix(String in) {
-        if (in.startsWith("\"")) {
+        if (in.charAt(0) == '"') {
             // literal
-            String lit = in.substring(1, in.lastIndexOf("\""));
+            String lit = in.substring(1, in.lastIndexOf('"'));
             return lit.replaceAll("\\\\\"", "\"").replaceAll("\n", " ");
-        } else if (in.startsWith("<")) {
+        } else if (in.charAt(0) == '<') {
             // resource
             return in.substring(1, in.length() - 1);
         } else {

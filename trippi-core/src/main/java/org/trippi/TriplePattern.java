@@ -1,5 +1,6 @@
 package org.trippi;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -343,21 +344,26 @@ public class TriplePattern {
     @Override
 	public String toString() {
         StringBuffer out = new StringBuffer();
-        if (m_subject instanceof String) {
-            out.append(m_subject + " ");
-        } else {
-            out.append(RDFUtil.toString((Node) m_subject) + " ");
-        }
-        if (m_predicate instanceof String) {
-            out.append(m_predicate + " ");
-        } else {
-            out.append(RDFUtil.toString((Node) m_predicate) + " ");
-        }
-        if (m_object instanceof String) {
-            out.append(m_object);
-        } else {
-            out.append(RDFUtil.toString((Node) m_object));
-        }
+        try {
+            if (m_subject instanceof String) {
+                out.append(m_subject).append(' ');
+            } else {
+                RDFUtil.encode((Node) m_subject, out);
+                out.append(' ');
+            }
+            if (m_predicate instanceof String) {
+                out.append(m_predicate).append(' ');
+            } else {
+                RDFUtil.encode((Node) m_predicate, out);
+                out.append(' ');
+            }
+            if (m_object instanceof String) {
+                out.append(m_object);
+            } else {
+                RDFUtil.encode((Node) m_object, out);
+                out.append(' ');
+            }
+        } catch (IOException wonthappen) {}
         return out.toString();
     }
 

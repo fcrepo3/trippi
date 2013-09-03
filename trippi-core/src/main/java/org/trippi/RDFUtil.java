@@ -44,7 +44,6 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
             throws IOException {
         if (node == null) buffer.append("null");
         if (node instanceof URIReference) {
-            URIReference n = (URIReference) node;
             bracket(node.toString(), buffer);
         } else if (node instanceof BlankNode) {
             buffer.append("_node").append(Integer.toString(node.hashCode()));
@@ -114,7 +113,7 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
                 } else {
                     String uriString = n.substring(1, i);
                     String qualifier = n.substring(i + 1);
-                    if (qualifier.startsWith("@")) {
+                    if (qualifier.charAt(0) == '@') {
                         return createLiteral(uriString, qualifier.substring(1));
                     } else if (qualifier.startsWith("^^")) {
                         return createLiteral(uriString, new URI(qualifier.substring(2)));

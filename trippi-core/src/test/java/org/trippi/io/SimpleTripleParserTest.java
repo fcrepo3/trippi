@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.jrdf.graph.Triple;
 import org.json.JSONArray;
@@ -16,10 +17,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openrdf.rio.RDFParser;
+import org.openrdf.rio.rdfxml.RDFXMLParser;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
 
-public class RIOTripleIteratorTest {
+public class SimpleTripleParserTest {
     private static String rdf;
     private TripleIteratorFactory m_factory;
     
@@ -66,7 +69,7 @@ public class RIOTripleIteratorTest {
         rdfxml = sb.toString().getBytes("UTF-8");
         in = new ByteArrayInputStream(rdfxml);
         
-        iter = m_factory.fromStream(in, "http://localhost/", RDFFormat.RDF_XML);
+        iter = m_factory.allFromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
             System.out.println(key + " -> " + aliasMap.get(key));
@@ -81,7 +84,7 @@ public class RIOTripleIteratorTest {
         rdfxml = sb.toString().getBytes("UTF-8");
         in = new ByteArrayInputStream(rdfxml);
         
-        iter = m_factory.fromStream(in, "http://localhost/", RDFFormat.RDF_XML);
+        iter = m_factory.allFromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
             System.out.println(key + " -> " + aliasMap.get(key));
@@ -92,10 +95,9 @@ public class RIOTripleIteratorTest {
     @Test
     public void testFromStream() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
+        Set<Triple> parsed = m_factory.allAsSet(in, null, RDFFormat.RDF_XML);
         HashMap<String, Triple> triples = new HashMap<String, Triple>();
-        while(iter.hasNext()) {
-            Triple next = iter.next();
+        for (Triple next: parsed) {
             triples.put(next.getPredicate().toString(), next);
         }
         String subject =
@@ -115,20 +117,6 @@ public class RIOTripleIteratorTest {
         assertEquals("Unexpected remainder in test triples", 1, triples.size());
     }
 
-    @Test
-    public void testInterruptingStream() throws Exception {
-        InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        RIOTripleIterator iter =
-                (RIOTripleIterator) m_factory.fromStream(in, RDFFormat.RDF_XML);
-        iter.next();
-        iter.next();
-        iter.close();
-        // because we look ahead one triple to support hasNext, the tripleCount
-        // is one higher than the number of triples iterated over
-        // but should still be less than the total
-        assertEquals("Could not cut short iteration", 3, iter.m_tripleCount);
-    }
-
     private void assertTriple(Triple actual, String subject, String object) {
         assertNotNull("triple was null", actual);
         assertEquals(subject,
@@ -140,7 +128,7 @@ public class RIOTripleIteratorTest {
     @Test
     public void testFromStreamToStream() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
+        TripleIterator iter = m_factory.allFromStream(in, RDFFormat.RDF_XML);
         System.out.println("\n\n\n***\n");
         iter.toStream(System.out, RDFFormat.RDF_XML);
     }
@@ -148,7 +136,7 @@ public class RIOTripleIteratorTest {
     @Test
     public void testFromStreamToJson() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = m_factory.fromStream(in, RDFFormat.RDF_XML);
+        TripleIterator iter = m_factory.allFromStream(in, RDFFormat.RDF_XML);
         
         System.out.println("\n\n\n***\n");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

@@ -23,12 +23,11 @@ import org.openrdf.rio.n3.N3Writer;
 import org.openrdf.rio.ntriples.NTriplesWriter;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.rio.turtle.TurtleWriter;
+import org.trippi.impl.base.AliasManager;
 import org.trippi.io.CountTripleWriter;
 import org.trippi.io.FormatCountTripleWriter;
 import org.trippi.io.JSONTripleWriter;
-import org.trippi.io.RIOTripleIterator;
 import org.trippi.io.RIOTripleWriter;
-import org.trippi.io.TripleIteratorFactory;
 import org.trippi.io.TripleWriter;
 import org.trippi.io.XMLDeclarationRemover;
 
@@ -37,7 +36,7 @@ import org.trippi.io.XMLDeclarationRemover;
  *
  * @author cwilper@cs.cornell.edu
  */
-public abstract class TripleIterator {
+public abstract class TripleIterator implements TrippiIterator<Triple>{
 
     /** 
      * Formats supported for reading.
@@ -63,7 +62,7 @@ public abstract class TripleIterator {
                                                            RDFFormat.COUNT,
                                                            RDFFormat.COUNT_JSON };
 
-    private Map<String, String> m_aliases = new HashMap<String, String>();
+    private AliasManager m_aliases = new AliasManager();
 
     /**
      * Return true if there are any more triples.
@@ -81,6 +80,10 @@ public abstract class TripleIterator {
     public abstract void close() throws TrippiException;
 
     public void setAliasMap(Map<String, String> aliases) {
+        m_aliases.setAliasMap(aliases);
+    }
+    
+    public void setAliasManager(AliasManager aliases) {
         m_aliases = aliases;
     }
 
@@ -88,7 +91,15 @@ public abstract class TripleIterator {
      * Gets a copy of the alias map used by this iterator.
      */
     public Map<String, String> getAliasMap() {
-        return new HashMap<String, String>(m_aliases);
+        return m_aliases.getAliasMap();
+    }
+    
+    public AliasManager getAliases() {
+        return m_aliases;
+    }
+    
+    protected void addAlias(String prefix, String expansion) {
+        m_aliases.addAlias(prefix, expansion);
     }
 
     /**

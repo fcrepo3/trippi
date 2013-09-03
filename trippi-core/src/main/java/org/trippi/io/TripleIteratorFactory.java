@@ -1,15 +1,18 @@
 package org.trippi.io;
 
 import java.io.InputStream;
-
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.jrdf.graph.Triple;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
+import org.trippi.TrippiIterator;
+import org.trippi.io.transform.Transformer;
 
-        
+
 public class TripleIteratorFactory {
     private final ExecutorService m_executor;
     
@@ -42,19 +45,73 @@ public class TripleIteratorFactory {
                                             String baseURI,
                                             RDFFormat format) throws TrippiException {
         if (baseURI == null) baseURI = "http://localhost/";
-        org.openrdf.rio.RDFParser parser;
-        if (format == RDFFormat.RDF_XML) {
-            parser = new org.openrdf.rio.rdfxml.RDFXMLParser();
-        } else if (format == RDFFormat.TURTLE) {
-            parser = new org.openrdf.rio.turtle.TurtleParser();
-        } else if (format == RDFFormat.N_TRIPLES) {
-            parser = new org.openrdf.rio.ntriples.NTriplesParser();
-        } else {
-            throw new TrippiException("Unsupported input format: " + format.getName());
-        }
+        org.openrdf.rio.RDFParser parser =
+                getParser(format);
         return new RIOTripleIterator(in, parser, baseURI, m_executor);
     }
+    
+    private static SimpleTripleParsingContext getSimpleTriples(
+            InputStream in,
+            String baseURI,
+            RDFFormat format) throws TrippiException {
+        if (baseURI == null) baseURI = "http://localhost/";
+        org.openrdf.rio.RDFParser parser =
+                getParser(format);
+        try {
+            return SimpleTripleParsingContext.parse(in, parser, baseURI);
+        } catch (Exception e) {
+            throw new TrippiException(e.getMessage(), e);
+        }
+    }
+    
+    private static <T> SimpleParsingContext<T> getSimpleTriples(
+            InputStream in,
+            String baseURI,
+            RDFFormat format,
+            Transformer<T> transform) throws TrippiException {
+        if (baseURI == null) baseURI = "http://localhost/";
+        org.openrdf.rio.RDFParser parser =
+                getParser(format);
+        try {
+            return SimpleParsingContext.parse(in, parser, baseURI, transform);
+        } catch (Exception e) {
+            throw new TrippiException(e.getMessage(), e);
+        }
+    }
 
+    public Set<Triple> allAsSet(InputStream in,
+            String baseURI,
+            RDFFormat format) throws TrippiException {
+        SimpleTripleParsingContext src =
+                    getSimpleTriples(in, baseURI, format);
+            return src.getSet();
+    }
+
+    public <T> Set<T> allAsSet(InputStream in,
+            String baseURI,
+            RDFFormat format,
+            Transformer<T> transform) throws TrippiException {
+        SimpleParsingContext<T> src =
+                    getSimpleTriples(in, baseURI, format, transform);
+            return src.getSet();
+    }
+
+    public TripleIterator allFromStream(InputStream in,
+            String baseURI,
+            RDFFormat format) throws TrippiException {
+        SimpleTripleParsingContext src =
+                getSimpleTriples(in, baseURI, format);
+        return src.getIterator();
+    }
+
+    public <T> TrippiIterator<T> allFromStream(InputStream in,
+            String baseURI,
+            RDFFormat format,
+            Transformer<T> transform) throws TrippiException {
+        SimpleParsingContext<T> src =
+                getSimpleTriples(in, baseURI, format, transform);
+        return src.getIterator();
+    }
     /**
      * Get an iterator over the triples in the given stream.
      */
@@ -62,6 +119,20 @@ public class TripleIteratorFactory {
                                             RDFFormat format) throws TrippiException {
         return fromStream(in, null, format);
     }
+    
+    public TripleIterator allFromStream(
+            InputStream in,
+            RDFFormat format) throws TrippiException {
+        return allFromStream(in, null, format);
+    }
+    
+    public <T> TrippiIterator<T> allFromStream(
+            InputStream in,
+            RDFFormat format,
+            Transformer<T> transform) throws TrippiException {
+        return allFromStream(in, null, format, transform);
+    }
+
     
     private static volatile TripleIteratorFactory DEFAULT = null;
     
@@ -80,6 +151,18 @@ public class TripleIteratorFactory {
             }
         }
         return DEFAULT;
+    }
+    
+    private static org.openrdf.rio.RDFParser getParser(RDFFormat format) throws TrippiException {
+        if (format == RDFFormat.RDF_XML) {
+            return new org.openrdf.rio.rdfxml.RDFXMLParser();
+        } else if (format == RDFFormat.TURTLE) {
+            return new org.openrdf.rio.turtle.TurtleParser();
+        } else if (format == RDFFormat.N_TRIPLES) {
+            return new org.openrdf.rio.ntriples.NTriplesParser();
+        } else {
+            throw new TrippiException("Unsupported input format: " + format.getName());
+        }
     }
     
 }

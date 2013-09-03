@@ -1,5 +1,9 @@
 package org.trippi;
 
+import static org.trippi.RDFUtil.encode;
+import static org.trippi.RDFUtil.toString;
+
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -19,11 +23,7 @@ import org.jrdf.graph.URIReference;
 
 public class TripleMaker {
 
-    private static GraphElementFactory m_factory;
-    static {
-        m_factory = new RDFUtil();
-    }
-    private static Map<String, Node> m_blankMap = null;
+    private static RDFUtil m_factory = new RDFUtil();
     
     //private static Map<String, String> m_aliasMap;
 
@@ -174,109 +174,33 @@ public class TripleMaker {
     // the node should start with one following: < " ' _
     public static Node parse(String n) 
             throws TrippiException {
-        if (m_blankMap == null) m_blankMap = new HashMap<String, Node>();  // lazily
-        if (n.length() > 0) {
-            char c = n.charAt(0);
-            if (c == '<' && n.length() > 4) {   // <a:b>
-                try {
-                    return createResource(new URI(stripFirstAndLast(n)));
-                } catch (URISyntaxException e) {
-                    throw new TrippiException(e.getMessage(), e);
-                }
-            } else if ( ( c == '"' || c == '\'' ) && n.length() > 1) { // ''
-                int i = n.lastIndexOf(c);
-                if ( i == n.length() - 1 ) {
-                    return createLiteral(unescapeLiteral(stripFirstAndLast(n)));
-                } else {
-                    String uriString = n.substring(1, i);
-                    String qualifier = n.substring(i + 1);
-                    if (qualifier.startsWith("@")) {
-                        return createLiteral(uriString, qualifier.substring(1));
-                    } else if (qualifier.startsWith("^^")) {
-                        try {
-                            return createLiteral(uriString, new URI(qualifier.substring(2)));
-                        } catch (URISyntaxException e) {
-                            throw new TrippiException(e.getMessage(), e);
-                        }
-                    } else {
-                        throw new TrippiException("Malformed literal: " + n);
-                    }
-                }
-            } else if (c == '_') {
-                Node blankNode = m_blankMap.get(n);
-                if (blankNode == null) {
-                    blankNode = createResource();
-                    m_blankMap.put(n, blankNode);
-                }
-                return blankNode;
-            }
+        try {
+            return m_factory.parse(n);
+        } catch (GraphElementFactoryException e) {
+            throw new TrippiException(e.getMessage(), e);
+        } catch (URISyntaxException e) {
+            throw new TrippiException(e.getMessage(), e);
         }
-        throw new TrippiException("Could not parse as Node: " + n);
     }
 
-    private static String stripFirstAndLast(String s) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 1; i < s.length() - 1; i++) {
-            out.append(s.charAt(i));
-        }
-        return out.toString();
-    }
-
-    private static String escapeLiteral(String s) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if ( c == '"' ) {
-                out.append("\\\"");
-            } else if ( c == '\\' ) {
-                out.append("\\\\");
-            } else {
-                out.append(c);
-            }
-        }
-        return out.toString();
-    }
-
-    private static String unescapeLiteral(String s) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '\\') {
-                char d = s.charAt(++i);
-                out.append(d);
-            } else {
-                out.append(c);
-            }
-        }
-        return out.toString();
-    }
     
     ///// printing methods /////
 
     public static String toString(Node node) {
-        if (node == null) return "null";
-        if (node instanceof URIReference) {
-            URIReference n = (URIReference) node;
-            return "<" + n.getURI().toString() + ">";
-        } else if (node instanceof BlankNode) {
-            return "_node" + node.hashCode();
-        } else {
-            Literal n = (Literal) node;
-            StringBuffer out = new StringBuffer();
-            out.append("\"" + escapeLiteral(n.getLexicalForm()) + "\"");
-            if (n.getLanguage() != null && n.getLanguage().length() > 0) {
-                out.append("@" + n.getLanguage());
-            } else if (n.getDatatypeURI() != null) {
-                out.append("^^" + n.getDatatypeURI().toString());
-            }
-            return out.toString();
-        }
+        return RDFUtil.toString(node);
     }
+    
 
     public static String toString(Triple triple) {
-        return toString(triple.getSubject()) + " "
-             + toString(triple.getPredicate()) + " "
-             + toString(triple.getObject());
+        return RDFUtil.toString(triple);
+    }
+    
+    public static void encode(Node n, Appendable a) throws IOException {
+        RDFUtil.encode(n, a);
+    }
+
+    public static void encode(Triple t, Appendable a) throws IOException {
+        RDFUtil.encode(t, a);
     }
 
     public class FreeBlankNode extends AbstractBlankNode {

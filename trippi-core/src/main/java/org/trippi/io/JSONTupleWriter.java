@@ -10,9 +10,11 @@ import java.util.Map;
 import org.jrdf.graph.Literal;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.URIReference;
+import org.trippi.Alias;
 import org.trippi.RDFUtil;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
+import org.trippi.impl.base.AliasManager;
 
 /**
  * Writes tuples as CSV's (comma-separated values), a format common in
@@ -29,8 +31,17 @@ import org.trippi.TupleIterator;
 public class JSONTupleWriter extends TupleWriter {
 
     private PrintWriter m_out;
-    private Map<String, String> m_aliases;
+    private AliasManager m_aliases;
     public JSONTupleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
+        try {
+            m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
+            m_aliases = new AliasManager(aliases);
+        } catch (IOException e) {
+            throw new TrippiException("Error setting up writer", e);
+        }
+    }
+    
+    public JSONTupleWriter(OutputStream out, AliasManager aliases) throws TrippiException {
         try {
             m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
             m_aliases = aliases;
@@ -87,30 +98,32 @@ public class JSONTupleWriter extends TupleWriter {
         String fullString = RDFUtil.toString(node);
         if (m_aliases != null) {
             if (node instanceof URIReference) {
-                Iterator<String> iter = m_aliases.keySet().iterator();
+                Iterator<Alias> iter = m_aliases.getAliases().values().iterator();
                 while (iter.hasNext()) {
-                    String alias = (String) iter.next();
-                    String prefix = (String) m_aliases.get(alias);
-                    if (fullString.startsWith("<" + prefix)) {
-                        return fix("<" + alias + ":" + fullString.substring(prefix.length() + 1));
+                    Alias a = iter.next();
+                    String alias = a.getKey();
+                    String expansion = a.getExpansion();
+                    if (fullString.startsWith("<" + expansion)) {
+                        return fix("<" + alias + ":" + fullString.substring(expansion.length() + 1));
                     }
                 }
             } else if (node instanceof Literal) {
                 Literal literal = (Literal) node;
                 if (literal.getDatatypeURI() != null) {
                     String uri = literal.getDatatypeURI().toString();
-                    Iterator<String> iter = m_aliases.keySet().iterator();
+                    Iterator<Alias> iter = m_aliases.getAliases().values().iterator();
                     while (iter.hasNext()) {
-                        String alias = iter.next();
-                        String prefix = m_aliases.get(alias);
-                        if (uri.startsWith(prefix)) {
+                        Alias a = iter.next();
+                        String alias = a.getKey();
+                        String expansion = a.getExpansion();
+                        if (uri.startsWith(expansion)) {
                             StringBuffer out = new StringBuffer();
                             out.append('"');
                             out.append(literal.getLexicalForm().replaceAll("\"", "\\\""));
                             out.append("\"^^");
                             out.append(alias);
                             out.append(':');
-                            out.append(uri.substring(prefix.length()));
+                            out.append(uri.substring(expansion.length()));
                             return fix(out.toString());
                         }
                     }

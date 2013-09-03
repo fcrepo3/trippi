@@ -31,7 +31,7 @@ import org.trippi.io.CountTupleWriter;
  *
  * @author cwilper@cs.cornell.edu
  */
-public abstract class TupleIterator {
+public abstract class TupleIterator implements TrippiIterator<Map<String, Node>> {
 
     /** 
      * Formats supported for reading.

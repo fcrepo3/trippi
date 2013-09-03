@@ -13,8 +13,10 @@ import org.jrdf.graph.URIReference;
 import org.openrdf.model.impl.StatementImpl;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFWriter;
+import org.trippi.Alias;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
+import org.trippi.impl.base.AliasManager;
 
 /**
  * Adapter for using Sesame's RIO RdfDocumentWriters for triple serialization.
@@ -33,6 +35,19 @@ public class RIOTripleWriter extends TripleWriter {
                 String prefix = iter.next();
                 String name = aliases.get(prefix);
                 m_writer.handleNamespace(prefix, name);
+            }
+        } catch (RDFHandlerException e) {
+            throw new TrippiException("Error setting up RIOTripleWriter", e);
+        }
+    }
+
+    public RIOTripleWriter(RDFWriter writer, AliasManager aliases) throws TrippiException {
+        try {
+            m_writer = writer;
+            if (aliases != null) {
+                for (Alias alias: aliases.getAliases().values()){
+                    m_writer.handleNamespace(alias.getKey(), alias.getExpansion());
+                }
             }
         } catch (RDFHandlerException e) {
             throw new TrippiException("Error setting up RIOTripleWriter", e);

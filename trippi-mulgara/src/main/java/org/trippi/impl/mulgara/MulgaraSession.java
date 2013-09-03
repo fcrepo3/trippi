@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ import org.mulgara.server.JRDFSession;
 import org.mulgara.server.driver.JRDFGraphFactory;
 import org.mulgara.sparql.SparqlInterpreter;
 
+import org.trippi.Alias;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
@@ -254,20 +256,19 @@ public class MulgaraSession implements TriplestoreSession {
 			}
 		}
 	}
-
+	
 	private String doAliasReplacements(String q) {
 		String out = q;
-		Map<String, String> m = m_aliasManager.getAliasMap();
+		Map<String, Alias> m = m_aliasManager.getAliases();
 		Iterator<String> iter = m.keySet().iterator();
 		while (iter.hasNext()) {
-			String alias = iter.next();
-			String fullForm = m.get(alias);
-			out = out.replaceAll("<" + alias + ":", "<" + fullForm).replaceAll(
-					"\\^\\^" + alias + ":(\\S+)", "^^<" + fullForm + "$1>");
+			String prefix = iter.next();
+			Alias alias = m.get(prefix);
+			out = alias.replaceSparqlType(alias.replaceSparqlUri(out));
 		}
 		// base model URI includes separator
 		// relative URIs introduce a library dependency on Jena, so keeping m_serverURI for now 
-		out = out.replaceAll("<#(.+)>", "<" + m_serverURI + "$1>"); 
+		out = Alias.replaceRelativeUris(out, m_serverURI); 
 		if (!q.equals(out)) {
 			logger.info("Substituted aliases, query is now: " + out);
 		}
