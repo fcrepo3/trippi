@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -42,9 +43,10 @@ public class SimpleTupleWriter extends TupleWriter {
             while (iter.hasNext()) {
                 Map<String, Node> result = iter.next();
                 for (int i = 0; i < names.length; i++) {
-                    m_out.println(names[i] 
-                            + indent(longest - names[i].length()) 
-                            + " : " + getString(result.get(names[i])));
+                    m_out.print(names[i]);
+                    m_out.print(indentChars(longest - names[i].length()));
+                    m_out.print(" : ");
+                    m_out.println(getString(result.get(names[i])));
                 }
                 m_out.println("");
                 m_out.flush();
@@ -92,10 +94,15 @@ public class SimpleTupleWriter extends TupleWriter {
         return fullString;
     }
 
+    @Deprecated
     public static String indent(int num) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 0; i < num; i++) out.append(' ');
-        return out.toString();
+        return new String(indentChars(num));
+    }
+
+    private static char[] indentChars(int num) {
+        char[] indent = new char[num];
+        Arrays.fill(indent, ' ');
+        return indent;
     }
 
 }

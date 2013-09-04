@@ -1,5 +1,6 @@
 package org.trippi;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -88,14 +89,19 @@ public class ConnectorParameter {
 
     public String toString(int i) {
         StringBuffer out = new StringBuffer();
-        out.append(indent(i) + "Parameter      : " + getName() + "\n");
-        out.append(indent(i) + " label         : " + getLabel() + "\n");
-        out.append(indent(i) + " description   : " + getDescription() + "\n");
-        out.append(indent(i) + " is optional   : " + isOptional() + "\n");
+        out.append(indent(i));
+        out.append("Parameter      : " + getName() + "\n");
+        out.append(indent(i));
+        out.append(" label         : " + getLabel() + "\n");
+        out.append(indent(i));
+        out.append(" description   : " + getDescription() + "\n");
+        out.append(indent(i));
+        out.append(" is optional   : " + isOptional() + "\n");
         Iterator<String> iter = getOptions().iterator();
         while ( iter.hasNext() ) {
             String val = iter.next();
-            out.append(indent(i) + " OPTION        : " + val + "\n");
+            out.append(indent(i));
+            out.append(" OPTION        : ").append(val).append('\n');
             List<ConnectorParameter> p = getParameters(val);
             if (p != null) {
                 Iterator<ConnectorParameter> pIter = p.iterator();
@@ -113,10 +119,10 @@ public class ConnectorParameter {
         return toString(0);
     }
 
-    private static String indent(int by) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 0; i < by; i++) out.append(' ');
-        return out.toString();
+    private static char[] indent(int by) {
+        char[] indent = new char[by];
+        Arrays.fill(indent, ' ');
+        return indent;
     }
 
 }
