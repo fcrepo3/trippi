@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -30,22 +31,30 @@ public class JSONTripleWriter extends TripleWriter {
 
     private PrintWriter m_out;
     private AliasManager m_aliases;
-    public JSONTripleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
+
+    private static Writer defaultWriter(OutputStream out) throws TrippiException {
         try {
-            m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
-            m_aliases = new AliasManager(aliases);
+            return new OutputStreamWriter(out, "UTF-8");
         } catch (IOException e) {
             throw new TrippiException("Error setting up writer", e);
         }
     }
+    
+    public JSONTripleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
+        this(out, new AliasManager(aliases));
+    }
 
     public JSONTripleWriter(OutputStream out, AliasManager aliases) throws TrippiException {
-        try {
-            m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
-            m_aliases = aliases;
-        } catch (IOException e) {
-            throw new TrippiException("Error setting up writer", e);
-        }
+        this(defaultWriter(out), aliases);
+    }
+
+    public JSONTripleWriter(Writer out, Map<String, String> aliases) throws TrippiException {
+        this(out, new AliasManager(aliases));
+    }
+
+    public JSONTripleWriter(Writer out, AliasManager aliases) throws TrippiException {
+        m_out = new PrintWriter(out);
+        m_aliases = aliases;
     }
 
     public int write(TripleIterator iter) throws TrippiException {

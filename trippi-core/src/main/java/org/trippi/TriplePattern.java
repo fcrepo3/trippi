@@ -86,7 +86,7 @@ public class TriplePattern {
         try {
         TriplePattern[] patterns = parse(triples);
         HashMap<String, BlankNode> bNodes = new HashMap<String, BlankNode>();
-        ArrayList<Triple> list = new ArrayList<Triple>();
+        ArrayList<Triple> list = new ArrayList<Triple>(patterns.length);
         for (int i = 0; i < patterns.length; i++) {
             Object s = patterns[i].getSubject();
             Object p = patterns[i].getPredicate();

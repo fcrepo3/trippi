@@ -4,6 +4,7 @@ import gnu.trove.TIntObjectHashMap;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +30,8 @@ import org.trippi.io.FormatCountTripleWriter;
 import org.trippi.io.JSONTripleWriter;
 import org.trippi.io.RIOTripleWriter;
 import org.trippi.io.TripleWriter;
-import org.trippi.io.XMLDeclarationRemover;
+import org.trippi.io.XMLDeclarationRemovingOutputStream;
+import org.trippi.io.XMLDeclarationRemovingWriter;
 
 /**
  * An iterator over a series of <code>Triple</code> objects.
@@ -153,7 +155,7 @@ public abstract class TripleIterator implements TrippiIterator<Triple>{
             if (includeXMLDeclaration) {
                 sink = out;
             } else {
-                sink = new XMLDeclarationRemover(out);
+                sink = new XMLDeclarationRemovingOutputStream(out);
             }
             writer = new RIOTripleWriter(new RDFXMLWriter(sink), m_aliases);
         } else if (format == RDFFormat.N_TRIPLES) {
@@ -172,7 +174,38 @@ public abstract class TripleIterator implements TrippiIterator<Triple>{
         return writer.write(this);
     }
 
-    /**
+    public int toStream(Writer out,
+            RDFFormat format,
+            boolean includeXMLDeclaration)
+                    throws TrippiException {
+        TripleWriter writer;
+        if (format == RDFFormat.TURTLE) {
+            writer = new RIOTripleWriter(new TurtleWriter(out), m_aliases);
+        } else if (format == RDFFormat.RDF_XML) {
+            Writer sink;
+            if (includeXMLDeclaration) {
+                sink = out;
+            } else {
+                sink = new XMLDeclarationRemovingWriter(out);
+            }
+            writer = new RIOTripleWriter(new RDFXMLWriter(sink), m_aliases);
+        } else if (format == RDFFormat.N_TRIPLES) {
+            writer = new RIOTripleWriter(new NTriplesWriter(out), m_aliases);
+        } else if (format == RDFFormat.NOTATION_3) {
+            writer = new RIOTripleWriter(new N3Writer(out), m_aliases);
+        } else if (format == RDFFormat.COUNT) {
+            writer = new CountTripleWriter(out);
+        } else if (format == RDFFormat.COUNT_JSON) {
+            writer = new FormatCountTripleWriter(new JSONTripleWriter(out, m_aliases)); 
+        } else if (format == RDFFormat.JSON) {
+            writer = new JSONTripleWriter(out, m_aliases); 
+        } else {
+            throw new TrippiException("Unsupported output format: " + format.getName());
+        }
+        return writer.write(this);
+    }
+
+/**
      * Add all triples in the iterator to the given <code>Graph</code>,
      * then close the iterator.
      */

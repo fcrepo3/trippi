@@ -4,12 +4,12 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class XMLDeclarationRemover extends FilterOutputStream {
+public class XMLDeclarationRemovingOutputStream extends FilterOutputStream {
 
     private boolean m_buffering;
     private int m_ltCount;
 
-    public XMLDeclarationRemover(OutputStream sink) {
+    public XMLDeclarationRemovingOutputStream(OutputStream sink) {
         super(sink);
         m_buffering = true;
     }

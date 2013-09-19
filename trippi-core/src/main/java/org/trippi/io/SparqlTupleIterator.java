@@ -24,6 +24,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  */
 public class SparqlTupleIterator extends TupleIterator {
 
+    private static final String[] STRING_TYPE = new String[0];
     private InputStream m_inputStream;
     private XmlPullParser m_xpp;
     private String[] m_names;
@@ -154,7 +155,7 @@ public class SparqlTupleIterator extends TupleIterator {
                 inVariables = false;
             }
         }
-        return names.toArray(new String[0]);
+        return names.toArray(STRING_TYPE);
     }
 
     @Override

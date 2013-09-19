@@ -12,17 +12,24 @@ public abstract class ArrayUtil {
     private static final Node[]   _EMPTY_NODES   = new Node[0];
     private static final Triple[] _EMPTY_TRIPLES = new Triple[0];
 
-    public static Node[] getNodes(ClosableIterator<?> iter) {
+    @Deprecated
+    public static Node[] getNodes(ClosableIterator<Node> iter) {
         return getList(iter).toArray(_EMPTY_NODES);
     }
 
-    public static Triple[] getTriples(ClosableIterator<?> iter) {
+    @Deprecated
+    public static Triple[] getTriples(ClosableIterator<Triple> iter) {
         return getList(iter).toArray(_EMPTY_TRIPLES);
     }
+    
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(ClosableIterator<T> iter) {
+        return (T[]) getList(iter).toArray();
+    }
 
-    private static List<?> getList(ClosableIterator<?> iter) {
+    private static <T> List<T> getList(ClosableIterator<T> iter) {
         try {
-            ArrayList list = new ArrayList();
+            ArrayList<T> list = new ArrayList<T>();
             while (iter.hasNext()) {
                 list.add(iter.next());
             }
