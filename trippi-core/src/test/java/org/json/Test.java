@@ -2,6 +2,7 @@ package org.json;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -548,7 +549,7 @@ public class Test extends TestCase {
         assertEquals("[\n 2147483647,\n 2147483648,\n 9223372036854775807,\n \"9223372036854775808\"\n]", 
                 jsonarray.toString(1));
 
-        List expectedKeys = new ArrayList(6);
+        List<String> expectedKeys = new ArrayList<String>(6);
         expectedKeys.add("int");
         expectedKeys.add("string");
         expectedKeys.add("longer");
@@ -631,8 +632,8 @@ public class Test extends TestCase {
         assertEquals("<book><chapter>Content of the first chapter</chapter><chapter>Content of the second chapter<chapter>Content of the first subchapter</chapter><chapter>Content of the second subchapter</chapter></chapter><chapter>Third Chapter</chapter></book>",
                 JSONML.toString(jsonarray));
 
-        Collection collection = null;
-        Map map = null;
+        Collection<?> collection = null;
+        Map<?,?> map = null;
 
         jsonobject = new JSONObject(map);
         jsonarray = new JSONArray(collection);

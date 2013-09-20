@@ -233,7 +233,7 @@ public class JSONObject {
      *  the JSONObject.
      * @throws JSONException 
      */
-    public JSONObject(Map map) {
+    public JSONObject(Map<?,?> map) {
         this.map = new HashMap();
         if (map != null) {
             Iterator i = map.entrySet().iterator();
