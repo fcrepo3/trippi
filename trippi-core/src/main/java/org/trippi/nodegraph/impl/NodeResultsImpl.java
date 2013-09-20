@@ -5,10 +5,10 @@ import org.jrdf.util.ClosableIterator;
 
 import org.trippi.nodegraph.NodeResults;
 
-public class NodeResultsImpl extends CountingResultIterator
+public class NodeResultsImpl extends CountingResultIterator<Node>
                              implements NodeResults {
 
-    public NodeResultsImpl(ClosableIterator nodes) {
+    public NodeResultsImpl(ClosableIterator<Node> nodes) {
 
         super(nodes);
     }

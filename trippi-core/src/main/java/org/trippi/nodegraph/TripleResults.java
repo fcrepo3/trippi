@@ -9,7 +9,7 @@ import org.jrdf.util.ClosableIterator;
  *
  * @author cwilper@cs.cornell.edu
  */
-public interface TripleResults extends ClosableIterator {
+public interface TripleResults extends ClosableIterator<Triple> {
 
     /**
      * Get the first triple and automatically close the iterator.

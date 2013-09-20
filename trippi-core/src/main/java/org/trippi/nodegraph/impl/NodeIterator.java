@@ -8,7 +8,7 @@ import org.jrdf.graph.Node;
 import org.jrdf.graph.Triple;
 import org.jrdf.util.ClosableIterator;
 
-public class NodeIterator implements ClosableIterator {
+public class NodeIterator implements ClosableIterator<Node> {
 
     public static final int SUBJECTS = 0;
     public static final int PREDICATES = 1;
@@ -86,7 +86,7 @@ public class NodeIterator implements ClosableIterator {
         return (_nextNode != null);
     }
 
-    public Object next() {
+    public Node next() {
         if (_nextNode == null) {
             throw new NoSuchElementException();
         } else {

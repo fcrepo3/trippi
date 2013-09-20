@@ -5,10 +5,10 @@ import org.jrdf.util.ClosableIterator;
 
 import org.trippi.nodegraph.TripleResults;
 
-public class TripleResultsImpl extends CountingResultIterator
+public class TripleResultsImpl extends CountingResultIterator<Triple>
                                implements TripleResults {
 
-    public TripleResultsImpl(ClosableIterator<?> triples) {
+    public TripleResultsImpl(ClosableIterator<Triple> triples) {
 
         super(triples);
     }

@@ -4,12 +4,12 @@ import java.util.NoSuchElementException;
 
 import org.jrdf.util.ClosableIterator;
 
-public class CountingResultIterator implements ClosableIterator {
+public class CountingResultIterator<T> implements ClosableIterator<T> {
 
-    private ClosableIterator<?> _iter;
+    private ClosableIterator<T> _iter;
     private boolean _closed;
 
-    public CountingResultIterator(ClosableIterator<?> iter) {
+    public CountingResultIterator(ClosableIterator<T> iter) {
         
         _iter = iter;
     }
@@ -34,7 +34,7 @@ public class CountingResultIterator implements ClosableIterator {
     }
 
     // from java.util.Iterator
-    public Object next() throws NoSuchElementException {
+    public T next() throws NoSuchElementException {
         return _iter.next();
     }
 

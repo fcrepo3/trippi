@@ -9,7 +9,7 @@ import org.jrdf.util.ClosableIterator;
  *
  * @author cwilper@cs.cornell.edu
  */
-public interface NodeResults extends ClosableIterator {
+public interface NodeResults extends ClosableIterator<Node> {
 
     /**
      * Get the first node and automatically close the iterator.

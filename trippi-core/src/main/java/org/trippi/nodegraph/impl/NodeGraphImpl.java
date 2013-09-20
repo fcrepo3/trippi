@@ -41,7 +41,7 @@ public class NodeGraphImpl extends NodeGraph {
                                      NodeIterator.SUBJECTS,
                                      ((p != null) && (o != null))));
         } else {
-            return new NodeResultsImpl(EmptyClosableIterator.INSTANCE);
+            return new NodeResultsImpl(EmptyClosableIterator.NODE_INSTANCE);
         }
     }
 
@@ -57,7 +57,7 @@ public class NodeGraphImpl extends NodeGraph {
                                      NodeIterator.PREDICATES,
                                      ((s != null) && (o != null))));
         } else {
-            return new NodeResultsImpl(EmptyClosableIterator.INSTANCE);
+            return new NodeResultsImpl(EmptyClosableIterator.NODE_INSTANCE);
         }
     }
 
@@ -73,7 +73,7 @@ public class NodeGraphImpl extends NodeGraph {
                                      NodeIterator.OBJECTS,
                                      ((s != null) && (p != null))));
         } else {
-            return new NodeResultsImpl(EmptyClosableIterator.INSTANCE);
+            return new NodeResultsImpl(EmptyClosableIterator.NODE_INSTANCE);
         }
     }
 
@@ -87,7 +87,7 @@ public class NodeGraphImpl extends NodeGraph {
             return new TripleResultsImpl(
                     find((SubjectNode) s, (PredicateNode) p, (ObjectNode) o));
         } else {
-            return new TripleResultsImpl(EmptyClosableIterator.INSTANCE);
+            return new TripleResultsImpl(EmptyClosableIterator.TRIPLE_INSTANCE);
         }
     }
 
@@ -110,7 +110,7 @@ public class NodeGraphImpl extends NodeGraph {
     }
 
     // from org.jrdf.graph.Graph
-    public ClosableIterator find(SubjectNode subject, 
+    public ClosableIterator<Triple> find(SubjectNode subject, 
                                  PredicateNode predicate,
                                  ObjectNode object)
             throws GraphException {
@@ -119,7 +119,7 @@ public class NodeGraphImpl extends NodeGraph {
     }
 
     // from org.jrdf.graph.Graph
-    public ClosableIterator find(Triple triple) 
+    public ClosableIterator<Triple> find(Triple triple) 
             throws GraphException {
 
         return _graph.find(triple);
