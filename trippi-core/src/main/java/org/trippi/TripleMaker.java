@@ -1,12 +1,8 @@
 package org.trippi;
 
-import static org.trippi.RDFUtil.encode;
-import static org.trippi.RDFUtil.toString;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jrdf.graph.AbstractBlankNode;

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.trippi.io.SpaceCharacters;
+
 
 /**
  * A parameter to a <code>TriplestoreConnector</code>.
@@ -89,18 +91,18 @@ public class ConnectorParameter {
 
     public String toString(int i) {
         StringBuffer out = new StringBuffer();
-        out.append(indent(i));
+        SpaceCharacters.indent(i,out);
         out.append("Parameter      : " + getName() + "\n");
-        out.append(indent(i));
+        SpaceCharacters.indent(i,out);
         out.append(" label         : " + getLabel() + "\n");
-        out.append(indent(i));
+        SpaceCharacters.indent(i,out);
         out.append(" description   : " + getDescription() + "\n");
-        out.append(indent(i));
+        SpaceCharacters.indent(i,out);
         out.append(" is optional   : " + isOptional() + "\n");
         Iterator<String> iter = getOptions().iterator();
         while ( iter.hasNext() ) {
             String val = iter.next();
-            out.append(indent(i));
+            SpaceCharacters.indent(i,out);
             out.append(" OPTION        : ").append(val).append('\n');
             List<ConnectorParameter> p = getParameters(val);
             if (p != null) {
@@ -117,12 +119,6 @@ public class ConnectorParameter {
     @Override
 	public String toString() {
         return toString(0);
-    }
-
-    private static char[] indent(int by) {
-        char[] indent = new char[by];
-        Arrays.fill(indent, ' ');
-        return indent;
     }
 
 }

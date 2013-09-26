@@ -8,7 +8,14 @@ import org.trippi.RDFFormat;
 import org.trippi.TrippiException;
 import org.trippi.TrippiIterator;
 
-
+/**
+ * A generic implementation of the closeable, countable
+ * iterator interface clone of TrippiIterator that
+ * simply wraps a Set of objects.
+ * @author armintor@gmail.com
+ *
+ * @param <T>
+ */
 public class SimpleTrippiIterator<T> implements TrippiIterator<T> {
 
     private final Iterator<T> m_src;

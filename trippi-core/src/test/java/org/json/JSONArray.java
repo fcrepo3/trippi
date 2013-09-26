@@ -32,6 +32,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.trippi.io.SpaceCharacters;
+
 /**
  * A JSONArray is an ordered sequence of values. Its external text form is a
  * string wrapped in square brackets with commas separating the values. The
@@ -861,16 +863,12 @@ public class JSONArray {
                 if (i > 0) {
                     sb.append(",\n");
                 }
-                for (int j = 0; j < newindent; j += 1) {
-                    sb.append(' ');
-                }
+                SpaceCharacters.indent(newindent, sb);
                 sb.append(JSONObject.valueToString(this.myArrayList.get(i),
                         indentFactor, newindent));
             }
             sb.append('\n');
-            for (i = 0; i < indent; i += 1) {
-                sb.append(' ');
-            }
+            SpaceCharacters.indent(indent, sb);
         }
         sb.append(']');
         return sb.toString();

@@ -27,7 +27,7 @@ import org.trippi.TrippiException;
 import org.trippi.TrippiIterator;
 import org.trippi.impl.base.AliasManager;
 import org.trippi.io.transform.Transformer;
-import org.trippi.io.transform.impl.TripleReflector;
+import org.trippi.io.transform.impl.Identity;
 
 /**
  * An iterator over triples parsed by a RIO rdf parser.
@@ -51,7 +51,7 @@ public class SimpleTripleParsingContext extends SimpleParsingContext<Triple> {
         throws TrippiException, RDFParseException, RDFHandlerException, IOException {
         // though we're shortcutting the Triple creation, this coaches the compiler
         // on the generic types
-        super(in, parser, baseURI, TripleReflector.instance);
+        super(in, parser, baseURI, Identity.instance);
     }
         
     public TripleIterator getIterator() {

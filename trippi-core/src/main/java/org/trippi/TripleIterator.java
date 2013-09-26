@@ -5,7 +5,6 @@ import gnu.trove.TIntObjectHashMap;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.jrdf.graph.BlankNode;

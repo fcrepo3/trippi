@@ -29,6 +29,7 @@ import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 import org.trippi.config.TrippiConfig;
 import org.trippi.config.TrippiProfile;
+import org.trippi.io.SpaceCharacters;
 import org.trippi.io.TripleIteratorFactory;
 
 public class TrippiConsole {
@@ -793,7 +794,8 @@ public class TrippiConsole {
             out.append(token);
             charsLeft -= token.length();
             if (i < tokens.length && tokens[i].length() >= charsLeft) {
-                out.append("\n" + indent(otherIndent));
+                out.append('\n');
+                SpaceCharacters.indent(otherIndent, out);
                 charsLeft = otherMax - otherIndent;
             } else {
                 out.append(' ');
@@ -803,9 +805,8 @@ public class TrippiConsole {
         return out.toString();
     }
 
+    @Deprecated
     public static String indent(int num) {
-        StringBuffer out = new StringBuffer();
-        for (int i = 0; i < num; i++) out.append(' ');
-        return out.toString();
+        return new String(SpaceCharacters.indentChars(num));
     }
 }

@@ -37,6 +37,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.trippi.io.SpaceCharacters;
+
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its
  * external form is a string wrapped in curly braces with colons between the
@@ -1399,9 +1401,7 @@ public class JSONObject {
                 } else {
                     sb.append('\n');
                 }
-                for (i = 0; i < newindent; i += 1) {
-                    sb.append(' ');
-                }
+                SpaceCharacters.indent(newindent, sb);
                 sb.append(quote(object.toString()));
                 sb.append(": ");
                 sb.append(valueToString(this.map.get(object), indentFactor,
@@ -1409,9 +1409,7 @@ public class JSONObject {
             }
             if (sb.length() > 1) {
                 sb.append('\n');
-                for (i = 0; i < indent; i += 1) {
-                    sb.append(' ');
-                }
+                SpaceCharacters.indent(indent, sb);
             }
         }
         sb.append('}');
@@ -1591,7 +1589,7 @@ public class JSONObject {
      public Writer write(Writer writer) throws JSONException {
         try {
             boolean  commanate = false;
-            Iterator keys = this.keys();
+            Iterator<?> keys = this.keys();
             writer.write('{');
 
             while (keys.hasNext()) {

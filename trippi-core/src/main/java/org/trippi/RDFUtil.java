@@ -212,6 +212,7 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
         return new FreeURIReference(uri, validate);
     }
 
+    @Override
     public Triple createTriple(SubjectNode subject, 
                                PredicateNode predicate, 
                                ObjectNode object) 
