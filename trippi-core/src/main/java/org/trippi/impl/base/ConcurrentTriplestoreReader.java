@@ -2,14 +2,12 @@ package org.trippi.impl.base;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trippi.Alias;
 import org.trippi.TripleIterator;
 import org.trippi.TriplePattern;
@@ -45,10 +43,12 @@ public class ConcurrentTriplestoreReader implements TriplestoreReader {
         m_aliasManager = aliasManager;
     }
 
+    @Deprecated
     public Map<String, String> getAliasMap() {
         return m_aliasManager.getAliasMap();
     }
 
+    @Deprecated
     public void setAliasMap(Map<String, String> aliasMap) {
         m_aliasManager.setAliasMap(aliasMap);
     }

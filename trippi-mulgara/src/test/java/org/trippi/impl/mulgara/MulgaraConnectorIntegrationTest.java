@@ -213,9 +213,6 @@ public class MulgaraConnectorIntegrationTest
         
         TriplestoreReader reader = _connector.getReader();
         TriplestoreWriter writer = _connector.getWriter();
-        MulgaraConnector conn = (MulgaraConnector) _connector;
-        MulgaraSessionFactory factory = (MulgaraSessionFactory) conn
-                .getSessionFactory();
 
         Triple triple = getTestTriple();
         writer.add(triple, true);

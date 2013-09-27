@@ -1,12 +1,12 @@
 package org.json;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.io.StringWriter;
+
 import junit.framework.TestCase;
 
 /*
@@ -84,7 +84,7 @@ public class Test extends TestCase {
 
     public void testJSON() throws Exception {
     	double       eps = 2.220446049250313e-16;
-        Iterator     iterator;
+        Iterator<?> iterator;
         JSONArray    jsonarray;
         JSONObject   jsonobject;
         JSONStringer jsonstringer;
@@ -633,7 +633,7 @@ public class Test extends TestCase {
                 JSONML.toString(jsonarray));
 
         Collection<?> collection = null;
-        Map<?,?> map = null;
+        Map<String,?> map = null;
 
         jsonobject = new JSONObject(map);
         jsonarray = new JSONArray(collection);
@@ -879,7 +879,6 @@ public class Test extends TestCase {
     static void assertDeepEquals(JSONObject expected, JSONObject actual) {
         assertEquals("Unequal number of keys in compared objects",
                 expected.length(), actual.length());
-        @SuppressWarnings("unchecked")
         Iterator<String> keys = expected.keys();
         while(keys.hasNext()) {
             String key = keys.next();

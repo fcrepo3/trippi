@@ -80,6 +80,7 @@ public abstract class TripleIterator implements TrippiIterator<Triple>{
      */
     public abstract void close() throws TrippiException;
 
+    @Deprecated
     public void setAliasMap(Map<String, String> aliases) {
         m_aliases.setAliasMap(aliases);
     }
@@ -91,6 +92,7 @@ public abstract class TripleIterator implements TrippiIterator<Triple>{
     /**
      * Gets a copy of the alias map used by this iterator.
      */
+    @Deprecated
     public Map<String, String> getAliasMap() {
         return m_aliases.getAliasMap();
     }

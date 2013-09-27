@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import org.jrdf.graph.GraphElementFactoryException;
 import org.jrdf.graph.ObjectNode;
@@ -15,18 +11,11 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.openrdf.model.Statement;
-import org.openrdf.rio.RDFHandler;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParseException;
 import org.openrdf.rio.RDFParser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
-import org.trippi.TrippiIterator;
-import org.trippi.impl.base.AliasManager;
-import org.trippi.io.transform.Transformer;
 import org.trippi.io.transform.impl.Identity;
 
 /**
@@ -36,9 +25,6 @@ import org.trippi.io.transform.impl.Identity;
  */
 public class SimpleTripleParsingContext extends SimpleParsingContext<Triple> {
 
-    private static final Logger logger =
-        LoggerFactory.getLogger(SimpleTripleParsingContext.class.getName());
-    
     /**
      * Initialize the iterator by starting the parsing thread.
      * @throws IOException 

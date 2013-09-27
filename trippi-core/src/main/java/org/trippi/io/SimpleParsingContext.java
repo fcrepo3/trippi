@@ -94,6 +94,7 @@ public class SimpleParsingContext<T> implements RDFHandler {
         }
     }
     
+    @Deprecated
     public Map<String, String> getAliasMap() {
         return m_aliases.getAliasMap();
     }

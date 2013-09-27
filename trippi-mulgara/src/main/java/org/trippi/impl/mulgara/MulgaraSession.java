@@ -1,18 +1,12 @@
 package org.trippi.impl.mulgara;
 
 import java.io.IOException;
-
 import java.net.URI;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.jrdf.graph.Graph;
 import org.jrdf.graph.GraphElementFactory;
@@ -22,7 +16,6 @@ import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-
 import org.mulgara.itql.TqlInterpreter;
 import org.mulgara.jrdf.JRDFGraph;
 import org.mulgara.parser.MulgaraLexerException;
@@ -33,7 +26,8 @@ import org.mulgara.resolver.LocalJRDFDatabaseSession;
 import org.mulgara.server.JRDFSession;
 import org.mulgara.server.driver.JRDFGraphFactory;
 import org.mulgara.sparql.SparqlInterpreter;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trippi.Alias;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;

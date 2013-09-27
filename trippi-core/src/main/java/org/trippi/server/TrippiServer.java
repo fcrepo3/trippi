@@ -64,7 +64,6 @@ public class TrippiServer {
                                               boolean isTupleQuery,
                                               boolean useDumbType) throws TrippiException {
         RDFFormat format = getResponseFormat(formatName, isTupleQuery);
-        String formatMediaType = format.getMediaType();
         return getMediaType(format.getMediaType(), useDumbType);
     }
 

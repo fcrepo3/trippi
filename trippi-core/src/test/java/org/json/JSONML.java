@@ -306,7 +306,7 @@ public class JSONML {
     	int			 i;
     	JSONObject   jo;
     	String       key;
-	    Iterator     keys;
+	    Iterator<String> keys;
 	    int			 length;
     	Object		 object;
     	StringBuffer sb = new StringBuffer();
@@ -330,7 +330,7 @@ public class JSONML {
 			
 	        keys = jo.keys();
 	        while (keys.hasNext()) {
-	            key = keys.next().toString();
+	            key = keys.next();
             	XML.noSpace(key);
 	            value = jo.optString(key);
 	            if (value != null) {
@@ -386,18 +386,16 @@ public class JSONML {
      */
 	public static String toString(JSONObject jo) throws JSONException {
 	    StringBuffer sb = new StringBuffer();
-	    int          i;
-	    JSONArray    ja;
-	    String       key;
-	    Iterator     keys;
-	    int          length;
-	    Object		 object;
-	    String       tagName;
-	    String       value;
+	    int i;
+	    JSONArray ja;
+	    String key;
+	    int length;
+	    Object object;
+	    String value;
 	
 //Emit <tagName
 	
-		tagName = jo.optString("tagName");
+		String tagName = jo.optString("tagName");
 		if (tagName == null) {
 			return XML.escape(jo.toString());
 		}
@@ -408,7 +406,7 @@ public class JSONML {
 	
 //Emit the attributes
 	
-        keys = jo.keys();
+		Iterator<String> keys = jo.keys();
         while (keys.hasNext()) {
             key = keys.next().toString();
             if (!key.equals("tagName") && !key.equals("childNodes")) {

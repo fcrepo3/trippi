@@ -17,8 +17,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openrdf.rio.RDFParser;
-import org.openrdf.rio.rdfxml.RDFXMLParser;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
 
@@ -52,6 +50,7 @@ public class SimpleTripleParserTest {
         m_factory.shutdown();
     }
     
+    @SuppressWarnings("deprecation")
     @Test
     public void testNamespaceMapping() throws Exception {
         StringBuilder sb;

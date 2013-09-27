@@ -1,10 +1,5 @@
 package org.trippi.io;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
 import org.trippi.impl.count.CountTupleIterator;

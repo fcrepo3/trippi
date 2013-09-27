@@ -339,6 +339,10 @@ public class RIOTripleIterator extends TripleIterator
     }
     
     static final class FlagTriple extends AbstractTriple {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
         final String flag;
         FlagTriple(String flag) {
             this.flag = flag;
@@ -350,6 +354,11 @@ public class RIOTripleIterator extends TripleIterator
     
     static final class RDFHandlingInterruptedException
     extends RDFHandlerException {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1L;
 
         public RDFHandlingInterruptedException(String msg) {
             super(msg);

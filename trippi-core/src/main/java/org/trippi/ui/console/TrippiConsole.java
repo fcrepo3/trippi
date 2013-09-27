@@ -433,6 +433,7 @@ public class TrippiConsole {
             throw new TrippiException("No profile in use.");
     }
 
+    @SuppressWarnings("deprecation")
     public void doDump(String filename) throws Exception {
         System.out.print("Dumping triples (in " + m_tripleForm.getName() + " format) to " + filename + "...");
         TripleIterator iter = m_connector.getReader().findTriples(null, null, null, 0);
@@ -516,6 +517,7 @@ public class TrippiConsole {
 
     }
 
+    @SuppressWarnings("deprecation")
     private void doTriples(TripleIterator iter, boolean count, long startTime) throws Exception {
         int n = 0;
         if (count) {

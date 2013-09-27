@@ -151,6 +151,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
      * The first set consists of the ADDs, and the second
      * set consists of the DELETEs.
      */
+    @SuppressWarnings("unchecked")
     private static Set<Triple>[] normalize(Iterator<TripleUpdate> iter, int size) {
         int initialCapacity = size / 2;
         Set<Triple> adds = new HashSet<Triple>(initialCapacity);
@@ -169,7 +170,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
             }
         }
 
-        return new Set[] { adds, deletes };
+        return (Set<Triple>[]) new Set<?>[] { adds, deletes };
     }
 
     private void writeBatches(Iterator<Triple> iter, int updateType,

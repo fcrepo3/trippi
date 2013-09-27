@@ -2,7 +2,6 @@ package org.trippi.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

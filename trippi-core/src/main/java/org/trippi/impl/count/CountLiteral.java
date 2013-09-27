@@ -6,6 +6,10 @@ import org.openrdf.model.impl.URIImpl;
 
 public class CountLiteral extends AbstractLiteral {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7418940727876450387L;
     public static final java.net.URI JAVA_NET_DATATYPE = XSD.NON_NEGATIVE_INTEGER_URI; 
     public static final org.openrdf.model.URI ORG_OPENRDF_DATATYPE = new URIImpl(JAVA_NET_DATATYPE.toString()); 
 	public CountLiteral(int value) {

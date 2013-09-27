@@ -43,10 +43,12 @@ public class SynchronizedTriplestoreReader implements TriplestoreReader {
         m_aliasManager = aliasManager;
     }
 
+    @Deprecated
     public Map<String, String> getAliasMap() {
         return m_aliasManager.getAliasMap();
     }
 
+    @Deprecated
     public void setAliasMap(Map<String, String> aliasMap) {
         m_aliasManager.setAliasMap(aliasMap);
     }

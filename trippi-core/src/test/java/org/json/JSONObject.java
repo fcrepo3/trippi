@@ -27,15 +27,14 @@ SOFTWARE.
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import org.trippi.io.SpaceCharacters;
@@ -237,7 +236,7 @@ public class JSONObject {
      * @throws JSONException 
      */
     public JSONObject(Map<String,?> map) {
-        this.map = new HashMap<String,Object>();
+        this();
         if (map != null) {
             Iterator<?> i = map.entrySet().iterator();
             while (i.hasNext()) {
@@ -273,7 +272,9 @@ public class JSONObject {
      */
     public JSONObject(Object bean) {
         this();
-        populateMap(bean);
+        if (bean != null) {
+            populateMap(bean);
+        }
     }
 
 

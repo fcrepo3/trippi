@@ -26,6 +26,7 @@ public class TripleResultsImpl extends CountingResultIterator<Triple>
         }
     }
 
+    @SuppressWarnings("deprecation")
     public Triple[] all() {
 
         return ArrayUtil.getTriples(this);

@@ -29,6 +29,7 @@ public class SimpleTripleIterator
      * @throws RDFHandlerException 
      * @throws RDFParseException 
      */
+    @Deprecated
     public SimpleTripleIterator(Set<Triple> triples, Map<String, String> aliases) {
         setAliasMap(aliases);
         m_iter = triples.iterator();

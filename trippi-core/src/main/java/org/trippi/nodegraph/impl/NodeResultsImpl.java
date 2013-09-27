@@ -26,6 +26,7 @@ public class NodeResultsImpl extends CountingResultIterator<Node>
         }
     }
 
+    @SuppressWarnings("deprecation")
     public Node[] all() {
 
         return ArrayUtil.getNodes(this);

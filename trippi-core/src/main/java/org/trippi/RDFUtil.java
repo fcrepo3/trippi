@@ -65,11 +65,6 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
         bracket(in, buffer, '<', '>');
     }
     
-    private static void quote(String in, Appendable buffer)
-            throws IOException {
-         bracket(in, buffer, '"', '"');
-     }
-    
     private static void bracket(String in, Appendable buffer,
             char open, char close)
             throws IOException {
@@ -135,14 +130,6 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
 
     private static String stripFirstAndLast(String s) {
         return s.substring(1, s.length()-1);
-    }
-
-    private static String escapeLiteral(String s) {
-        StringBuffer out = new StringBuffer();
-        try {
-            escapeLiteral(s, out);
-        } catch (IOException wonthappen) {}
-        return out.toString();
     }
     
     private static void escapeLiteral(String s, Appendable buffer)

@@ -49,6 +49,7 @@ public class RIOTripleIteratorTest {
         m_factory.shutdown();
     }
     
+    @SuppressWarnings("deprecation")
     @Test
     public void testNamespaceMapping() throws Exception {
         StringBuilder sb;
