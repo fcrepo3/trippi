@@ -44,28 +44,28 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     public void add(List<Triple> triples) {
-        debugUpdate("Adding " + triples.size() + " triple ADDs to buffer", triples);
+        debugUpdate("Adding {} triple ADDs to buffer", triples);
         synchronized (m_bufferLock) {
             m_buffer.addAll(TripleUpdate.get(TripleUpdate.ADD, triples));
         }
     }
 
     public void add(Triple triple) {
-        debugUpdate("Adding 1 triple ADD to buffer", triple);
+        debugUpdate("Adding 1 triple ADD to buffer\n{}", triple);
         synchronized (m_bufferLock) {
             m_buffer.add(TripleUpdate.get(TripleUpdate.ADD, triple));
         }
     }
 
     public void delete(List<Triple> triples) {
-        debugUpdate("Adding " + triples.size() + " triple DELETEs to buffer", triples);
+        debugUpdate("Adding {} triple DELETEs to buffer", triples);
         synchronized (m_bufferLock) {
             m_buffer.addAll(TripleUpdate.get(TripleUpdate.DELETE, triples));
         }
     }
 
     public void delete(Triple triple) {
-        debugUpdate("Adding 1 triple DELETE to buffer", triple);
+        debugUpdate("Adding 1 triple DELETE to buffer\n{}", triple);
         synchronized (m_bufferLock) {
             m_buffer.add(TripleUpdate.get(TripleUpdate.DELETE, triple));
         }
@@ -73,13 +73,16 @@ public class MemUpdateBuffer implements UpdateBuffer {
 
     private static void debugUpdate(String msg, Triple triple) {
         if (logger.isDebugEnabled()) {
-            logger.debug(msg + "\n" + RDFUtil.toString(triple));
+            logger.debug(msg, RDFUtil.toString(triple));
         }
     }
 
     private static void debugUpdate(String msg, List<Triple> triples) {
         if (logger.isDebugEnabled()) {
-            logger.debug(msg + "\n" + tripleListToString(triples));
+            logger.debug(msg, triples.size());
+            if (logger.isTraceEnabled()) {
+                logger.trace(tripleListToString(triples));
+            }
         }
     }
 

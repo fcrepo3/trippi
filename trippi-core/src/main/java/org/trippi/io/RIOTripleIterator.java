@@ -38,8 +38,13 @@ public class RIOTripleIterator extends TripleIterator
 
     private static final Logger logger =
         LoggerFactory.getLogger(RIOTripleIterator.class.getName());
+
     private static final FlagTriple FINISHED = new FlagTriple("FINISHED");
+
     private static final FlagTriple NEXT = new FlagTriple("NEXT");
+
+    public static final long DEFAULT_TIMEOUT_MS = 5;
+
     private InputStream m_in;
     private RDFParser m_parser;
     private String m_baseURI;
@@ -55,6 +60,9 @@ public class RIOTripleIterator extends TripleIterator
     private RDFUtil m_util;
 
     protected int m_tripleCount = 0;
+    
+    protected final long m_timeoutMs;    
+    
 
     /**
      * Initialize the iterator by starting the parsing thread.
@@ -63,12 +71,21 @@ public class RIOTripleIterator extends TripleIterator
                              RDFParser parser, 
                              String baseURI,
                              ExecutorService executor) throws TrippiException {
+        this(in, parser, baseURI, executor, DEFAULT_TIMEOUT_MS);
+    }
+
+    public RIOTripleIterator(InputStream in, 
+            RDFParser parser, 
+            String baseURI,
+            ExecutorService executor,
+            long timeoutMs) throws TrippiException {
         m_in = in;
         m_parser = parser;
         m_baseURI = baseURI;
         m_parser.setRDFHandler(this);
         m_parser.setVerifyData(true);
         m_parser.setStopAtFirstError(false);
+        m_timeoutMs = timeoutMs;
         try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
@@ -105,14 +122,14 @@ public class RIOTripleIterator extends TripleIterator
         Triple triple = null;
     	try{
     	    triple = (timeout) ?
-    	            m_bucket.exchange(flag, 5, TimeUnit.MILLISECONDS):
+    	            m_bucket.exchange(flag, m_timeoutMs, TimeUnit.MILLISECONDS):
     	            m_bucket.exchange(flag, 5, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             logger.debug("Interrupted, quitting");
             triple = FINISHED;
         } catch (TimeoutException e) {
             triple = FINISHED;
-            logger.debug("Timed out, quitting");
+            logger.warn("Timed out, quitting");
         }
     	// we ignore RDFHandlingInterruptedException, as it is thrown in the
     	// special case that the iterator was closed before parsing was finished
@@ -149,7 +166,7 @@ public class RIOTripleIterator extends TripleIterator
         if (m_next == FINISHED) {
             logger.debug("Got the {} flag from RIOTripleIterator.setNext", m_next);
         } else {
-            logger.debug("got a triple: {} from RIOTripleIterator.setNext", m_next);
+            logger.trace("got a triple: {} from RIOTripleIterator.setNext", m_next);
         }
         return last;
     }
@@ -229,10 +246,10 @@ public class RIOTripleIterator extends TripleIterator
                 logger.debug(msg);
                 throw new RDFHandlingInterruptedException(msg);
             }
-            logger.debug("putting {} on Exchanger in RIOTripleIterator.put",
+            logger.trace("putting {} on Exchanger in RIOTripleIterator.put",
                     triple);
             triple = m_bucket.exchange(triple, 5, TimeUnit.SECONDS);
-            logger.debug("got {} from Exchanger in RIOTripleIterator.put",
+            logger.trace("got {} from Exchanger in RIOTripleIterator.put",
                     triple);
             if (triple == FINISHED) {
                 String msg = "End of processing has been" +
@@ -240,11 +257,16 @@ public class RIOTripleIterator extends TripleIterator
                 logger.debug(msg);
                 throw new RDFHandlingInterruptedException(msg);
             }
+            if (triple != NEXT) {
+                String msg = "Unexpected exchange flag: <" + triple + "> Client timeout?";
+                logger.warn(msg);
+                throw new RDFHandlingInterruptedException(msg);
+            }
         } catch (InterruptedException e) {
             logger.debug("putting {} interrupted", triple);
             throw new RDFHandlingInterruptedException(e);
         } catch (TimeoutException e) {
-            logger.debug("putting {} timed out", triple);
+            logger.info("putting {} timed out", triple);
             throw new RDFHandlingInterruptedException(e);
         }
     }

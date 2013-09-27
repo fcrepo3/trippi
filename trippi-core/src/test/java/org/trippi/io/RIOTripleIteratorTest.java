@@ -1,7 +1,7 @@
 package org.trippi.io;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;
@@ -107,13 +108,51 @@ public class RIOTripleIteratorTest {
                 "info:fedora/fedora-system:def/relations-external#isMemberOf";
         String testProp = "info:fedora/fedora-system:def/model#testProperty";
         Triple actual = triples.remove(contentModel);
-        assertTriple(actual, subject,"info:fedora/demo:CmodelForBMech_DualResImageImpl");
+        assertTriple(actual, subject, contentModel, "info:fedora/demo:CmodelForBMech_DualResImageImpl");
         actual = triples.remove(memberOf);
-        assertTriple(actual, subject,"info:fedora/demo:SmileyStuff");
+        assertTriple(actual, subject, memberOf, "info:fedora/demo:SmileyStuff");
         actual = triples.remove(testProp);
         // this property is a literal
-        assertTriple(actual, subject,"\"test\"");
+        assertTriple(actual, subject, testProp, "\"test\"");
         assertEquals("Unexpected remainder in test triples", 1, triples.size());
+    }
+    
+    @Ignore
+    /**
+     * Enable this test to exercise the parallelized parser a high number of times.
+     * This may elicit timeout errors between the Threads from GC.
+     * @throws Exception
+     */
+    public void testALotOfThings() throws Exception {
+        for (int i=0; i< 1000; i++) {
+            testLargeStream();
+        }
+    }
+    
+    @Test
+    public void testLargeStream() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/org/trippi/io/large_stream.xml");
+        TripleIterator iter = m_factory.fromStream(in, null, RDFFormat.RDF_XML);
+        HashMap<String, Triple> triples = new HashMap<String, Triple>();
+        while(iter.hasNext()) {
+            Triple next = iter.next();
+            triples.put(next.getPredicate().toString(), next);
+        }
+        String subject =
+                "info:fedora/test:pid";
+        String contentModel =
+                "info:fedora/fedora-system:def/model#hasContentModel";
+        String memberOf =
+                "info:fedora/fedora-system:def/relations-external#isMemberOf";
+        String testProp = "info:fedora/fedora-system:def/model#testProperty";
+        Triple actual = triples.remove(contentModel);
+        assertTriple(actual, subject, contentModel, "info:fedora/demo:CmodelForBMech_DualResImageImpl");
+        actual = triples.remove(memberOf);
+        assertTriple(actual, subject, memberOf, "info:fedora/demo:SmileyStuff");
+        actual = triples.remove(testProp);
+        // this property is a literal
+        assertTriple(actual, subject, testProp, "\"test\"");
+        assertEquals("Unexpected remainder in test triples", 5, triples.size());
     }
 
     @Test
@@ -130,8 +169,12 @@ public class RIOTripleIteratorTest {
         assertEquals("Could not cut short iteration", 3, iter.m_tripleCount);
     }
 
-    private void assertTriple(Triple actual, String subject, String object) {
-        assertNotNull("triple was null", actual);
+    private void assertTriple(Triple actual, String subject, String predicate,
+            String object) {
+        if (actual == null) {
+            String msg = "triple was null, expected <" + subject + "> <" + predicate + "> <" + object + ">";
+            fail(msg);
+        }
         assertEquals(subject,
                 actual.getSubject().toString());
         assertEquals(object,

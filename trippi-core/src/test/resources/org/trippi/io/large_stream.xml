@@ -1,0 +1,60 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:fedora-model="info:fedora/fedora-system:def/model#"
+         xmlns:rel="info:fedora/fedora-system:def/relations-external#">
+        <rdf:Description rdf:about="info:fedora/test:pid">
+        <fedora-model:testProperty0>test01</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test02</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test03</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test04</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test05</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test06</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test07</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test08</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test09</fedora-model:testProperty0>
+        <fedora-model:testProperty0>test10</fedora-model:testProperty0>
+        <rel:isMemberOf rdf:resource="info:fedora/demo:SmileyStuff"/>
+        <fedora-model:testProperty1>test01</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test02</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test03</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test04</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test05</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test06</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test07</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test08</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test09</fedora-model:testProperty1>
+        <fedora-model:testProperty1>test10</fedora-model:testProperty1>
+        <fedora-model:hasContentModel rdf:resource="info:fedora/demo:CmodelForBMech_DualResImageImpl"/>
+        <fedora-model:testProperty2>test01</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test02</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test03</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test04</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test05</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test06</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test07</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test08</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test09</fedora-model:testProperty2>
+        <fedora-model:testProperty2>test10</fedora-model:testProperty2>
+        <fedora-model:testReference rdf:resource="info:/fedora/test:otherPid" />
+        <fedora-model:testProperty3>testA</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testB</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testC</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testD</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testE</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testF</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testG</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testH</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testI</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testJ</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testK</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testL</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testM</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testN</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testO</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testP</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testQ</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testR</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testS</fedora-model:testProperty3>
+        <fedora-model:testProperty3>testT</fedora-model:testProperty3>
+        <fedora-model:testProperty>test</fedora-model:testProperty>
+        </rdf:Description>
+</rdf:RDF>

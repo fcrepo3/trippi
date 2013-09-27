@@ -44,12 +44,26 @@ public class TripleIteratorFactory {
     public TripleIterator fromStream(InputStream in,
                                             String baseURI,
                                             RDFFormat format) throws TrippiException {
+        return fromStream(in, baseURI, format, RIOTripleIterator.DEFAULT_TIMEOUT_MS);
+    }
+    
+    /**
+     * Get an iterator over the triples in the given stream.
+     *
+     * The baseURI is used to resolve any relative URI references.
+     * If given as null, http://localhost/ will be used.
+     * The timeout value adjusts how long to wait for the parsing
+     * thread to return the next parsed triple.
+     */
+    public TripleIterator fromStream(InputStream in,
+            String baseURI,
+            RDFFormat format,
+            long timeoutMs) throws TrippiException {
         if (baseURI == null) baseURI = "http://localhost/";
         org.openrdf.rio.RDFParser parser =
                 getParser(format);
-        return new RIOTripleIterator(in, parser, baseURI, m_executor);
+        return new RIOTripleIterator(in, parser, baseURI, m_executor, timeoutMs);
     }
-    
     private static SimpleTripleParsingContext getSimpleTriples(
             InputStream in,
             String baseURI,
