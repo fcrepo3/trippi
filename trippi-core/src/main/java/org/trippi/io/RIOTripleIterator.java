@@ -4,29 +4,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jrdf.graph.AbstractTriple;
 import org.jrdf.graph.GraphElementFactoryException;
-import org.jrdf.graph.ObjectNode;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.openrdf.model.Statement;
 import org.openrdf.rio.RDFHandler;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.trippi.RDFFormat;
-import org.trippi.RDFUtil;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
+import org.trippi.impl.RDFFactories;
 
 /**
  * An iterator over triples parsed by a RIO rdf parser.
@@ -57,8 +53,6 @@ public class RIOTripleIterator extends TripleIterator
 
     private Exception m_parseException = null;
 
-    private RDFUtil m_util;
-
     protected int m_tripleCount = 0;
     
     protected final long m_timeoutMs;    
@@ -86,7 +80,6 @@ public class RIOTripleIterator extends TripleIterator
         m_parser.setVerifyData(true);
         m_parser.setStopAtFirstError(false);
         m_timeoutMs = timeoutMs;
-        try { m_util = new RDFUtil(); } catch (Exception e) { } // won't happen
         if (logger.isDebugEnabled()) {
         	logger.debug("Starting parse thread");
         }
@@ -233,9 +226,7 @@ public class RIOTripleIterator extends TripleIterator
             RDFHandlingInterruptedException {
         // first, convert the rio statement to a jrdf triple
         Triple triple = null;
-            triple = m_util.createTriple( subjectNode(subject),
-                                          predicateNode(predicate),
-                                          objectNode(object));
+            triple = RDFFactories.createTriple( subject, predicate, object);
         put(triple); // locks until m_bucket is free or close() has been called
     }
 
@@ -271,45 +262,6 @@ public class RIOTripleIterator extends TripleIterator
         }
     }
 
-    private SubjectNode subjectNode(org.openrdf.model.Resource subject) 
-            throws GraphElementFactoryException,
-                   URISyntaxException {
-        if (subject instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) subject).stringValue()) );
-        } else {
-            return m_util.createResource(((org.openrdf.model.BNode) subject).getID().hashCode());
-        }
-    }
-
-    private PredicateNode predicateNode(org.openrdf.model.URI predicate)
-            throws GraphElementFactoryException,
-                   URISyntaxException {
-        return m_util.createResource( new URI((predicate).stringValue()) );
-    }
-
-    private ObjectNode objectNode(org.openrdf.model.Value object)
-            throws GraphElementFactoryException,
-                   URISyntaxException {
-        if (object instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) object).stringValue()) );
-        } else if (object instanceof  org.openrdf.model.Literal) {
-            org.openrdf.model.Literal lit = (org.openrdf.model.Literal) object;
-            org.openrdf.model.URI uri = lit.getDatatype();
-            String lang = lit.getLanguage();
-            if (uri != null) {
-                // typed 
-                return m_util.createLiteral(lit.getLabel(), new URI(uri.toString()));
-            } else if (lang != null && !lang.equals("")) {
-                // local
-                return m_util.createLiteral(lit.getLabel(), lang);
-            } else {
-                // plain
-                return m_util.createLiteral(lit.getLabel());
-            }
-        } else {
-            return m_util.createResource(((org.openrdf.model.BNode) object).getID().hashCode());
-        }
-    }
 
     public static void main(String[] args) throws Exception {
         File f = new File(args[0]);
@@ -329,24 +281,27 @@ public class RIOTripleIterator extends TripleIterator
         }
     }
 
+    @Override
     public void endRDF() throws RDFHandlerException {
         // signal end of parsing
         put(FINISHED);
     }
 
+    @Override
     public void handleComment(String arg0) throws RDFHandlerException {
         // TODO Auto-generated method stub
         
     }
 
+    @Override
     public void handleStatement(Statement st)
             throws RDFHandlerException {
         // first, convert the rio statement to a jrdf triple
         Triple triple = null;
             try {
-                triple = m_util.createTriple( subjectNode(st.getSubject()),
-                                              predicateNode(st.getPredicate()),
-                                              objectNode(st.getObject()));
+                triple = RDFFactories.createTriple( st.getSubject(),
+                                              st.getPredicate(),
+                                              st.getObject());
             } catch (GraphElementFactoryException e) {
                 throw new RDFHandlerException(e.getMessage(), e);
             } catch (URISyntaxException e) {
@@ -355,6 +310,7 @@ public class RIOTripleIterator extends TripleIterator
         put(triple); // locks until m_bucket is free or close() has been called
     }
 
+    @Override
     public void startRDF() throws RDFHandlerException {
         // TODO Auto-generated method stub
         

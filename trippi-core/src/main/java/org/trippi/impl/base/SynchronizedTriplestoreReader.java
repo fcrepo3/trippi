@@ -9,6 +9,7 @@ import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.trippi.Alias;
+import org.trippi.AliasManager;
 import org.trippi.TripleIterator;
 import org.trippi.TriplePattern;
 import org.trippi.TriplestoreReader;

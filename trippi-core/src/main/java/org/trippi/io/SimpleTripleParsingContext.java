@@ -2,29 +2,29 @@ package org.trippi.io;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 
-import org.jrdf.graph.GraphElementFactoryException;
-import org.jrdf.graph.ObjectNode;
-import org.jrdf.graph.PredicateNode;
-import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
-import org.openrdf.model.Statement;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParseException;
 import org.openrdf.rio.RDFParser;
+import org.trippi.AliasManager;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
+import org.trippi.impl.base.DefaultAliasManager;
 import org.trippi.io.transform.impl.Identity;
 
 /**
  * An iterator over triples parsed by a RIO rdf parser.
+ * Unlike the SimpleParser, this implementation will return
+ * an iterator capable of serializing its triples to a
+ * stream with source-defined prefixes
  *
  * @author armintor@gmail.com
  */
 public class SimpleTripleParsingContext extends SimpleParsingContext<Triple> {
 
+    private AliasManager m_aliases;
+    
     /**
      * Initialize the iterator by starting the parsing thread.
      * @throws IOException 
@@ -40,95 +40,19 @@ public class SimpleTripleParsingContext extends SimpleParsingContext<Triple> {
         super(in, parser, baseURI, Identity.instance);
     }
         
+    @Override
     public TripleIterator getIterator() {
         return new SimpleTripleIterator(m_triples, m_aliases);
     }
-    
-    /**
-     * Handle a statement from the parser.
-     * @throws URISyntaxException 
-     * @throws GraphElementFactoryException 
-     */
-    public void handleStatement(org.openrdf.model.Resource subject,
-                                org.openrdf.model.URI predicate,
-                                org.openrdf.model.Value object) 
-            throws GraphElementFactoryException,
-            URISyntaxException {
-        // first, convert the rio statement to a jrdf triple
-        Triple triple = null;
-            triple = m_util.createTriple( subjectNode(subject),
-                                          predicateNode(predicate),
-                                          objectNode(object));
-        m_triples.add(triple);
-    }
 
-
-    private SubjectNode subjectNode(org.openrdf.model.Resource subject) 
-            throws GraphElementFactoryException,
-                   URISyntaxException {
-        if (subject instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) subject).stringValue()) );
-        } else {
-            return m_util.createResource(((org.openrdf.model.BNode) subject).getID().hashCode());
-        }
-    }
-
-    private PredicateNode predicateNode(org.openrdf.model.URI predicate)
-            throws GraphElementFactoryException,
-                   URISyntaxException {
-        return m_util.createResource( new URI((predicate).stringValue()) );
-    }
-
-    private ObjectNode objectNode(org.openrdf.model.Value object)
-            throws GraphElementFactoryException,
-                   URISyntaxException {
-        if (object instanceof org.openrdf.model.URI) {
-            return m_util.createResource( new URI(((org.openrdf.model.URI) object).stringValue()) );
-        } else if (object instanceof  org.openrdf.model.Literal) {
-            org.openrdf.model.Literal lit = (org.openrdf.model.Literal) object;
-            org.openrdf.model.URI uri = lit.getDatatype();
-            String lang = lit.getLanguage();
-            if (uri != null) {
-                // typed 
-                return m_util.createLiteral(lit.getLabel(), new URI(uri.toString()));
-            } else if (lang != null && !lang.equals("")) {
-                // local
-                return m_util.createLiteral(lit.getLabel(), lang);
-            } else {
-                // plain
-                return m_util.createLiteral(lit.getLabel());
+    @Override
+    public void handleNamespace(String prefix, String uri) {
+        if (prefix != null && !prefix.isEmpty()) {
+            if (m_aliases == null) {
+                m_aliases = new DefaultAliasManager();
             }
-        } else {
-            return m_util.createResource(((org.openrdf.model.BNode) object).getID().hashCode());
+            m_aliases.addAlias(prefix, uri);
         }
-    }
-
-    public void endRDF() throws RDFHandlerException {
-        // no-op    
-    }
-
-    public void handleComment(String arg0) throws RDFHandlerException {
-        // no-op    
-    }
-
-    public void handleStatement(Statement st)
-            throws RDFHandlerException {
-        // first, convert the rio statement to a jrdf triple
-        Triple triple = null;
-        try {
-            triple = m_util.createTriple( subjectNode(st.getSubject()),
-                    predicateNode(st.getPredicate()),
-                    objectNode(st.getObject()));
-            m_triples.add(triple);
-        } catch (GraphElementFactoryException e) {
-            throw new RDFHandlerException(e.getMessage(), e);
-        } catch (URISyntaxException e) {
-            throw new RDFHandlerException(e.getMessage(), e);
-        }
-    }
-
-    public void startRDF() throws RDFHandlerException {
-        // no-op    
     }
 
     public static SimpleTripleParsingContext

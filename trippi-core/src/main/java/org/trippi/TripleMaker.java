@@ -16,13 +16,12 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
+import org.trippi.impl.RDFFactories;
 
 public class TripleMaker {
 
-    private static RDFUtil m_factory = new RDFUtil();
+    private static final RDFUtil s_factory = new RDFUtil();
     
-    //private static Map<String, String> m_aliasMap;
-
     public TripleMaker() throws TrippiException {
         
     }
@@ -39,7 +38,7 @@ public class TripleMaker {
     public static Literal createLiteral(String lexicalValue) 
             throws TrippiException {
         try {
-            return m_factory.createLiteral(lexicalValue);
+            return RDFFactories.createLiteral(lexicalValue);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -48,7 +47,7 @@ public class TripleMaker {
     public static Literal createLiteral(String lexicalValue, String languageType) 
             throws TrippiException {
         try {
-            return m_factory.createLiteral(lexicalValue, languageType);
+            return RDFFactories.createLiteral(lexicalValue, languageType);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -57,7 +56,7 @@ public class TripleMaker {
     public static Literal createLiteral(String lexicalValue, URI datatypeURI) 
             throws TrippiException {
         try {
-            return m_factory.createLiteral(lexicalValue, datatypeURI);
+            return RDFFactories.createLiteral(lexicalValue, datatypeURI);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -66,7 +65,7 @@ public class TripleMaker {
     public static BlankNode createResource()
             throws TrippiException {
         try {
-            return m_factory.createResource();
+            return RDFFactories.createResource();
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -90,7 +89,7 @@ public class TripleMaker {
     public static URIReference createResource(URI uri) 
             throws TrippiException {
         try {
-            return m_factory.createResource(uri);
+            return RDFFactories.createResource(uri);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -99,7 +98,7 @@ public class TripleMaker {
     public static URIReference createResource(URI uri, boolean validate) 
             throws TrippiException {
         try {
-            return m_factory.createResource(uri, validate);
+            return RDFFactories.createResource(uri, validate);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -110,7 +109,7 @@ public class TripleMaker {
                                 ObjectNode object) 
             throws TrippiException {
         try {
-            return m_factory.createTriple(subject, predicate, object);
+            return RDFFactories.createTriple(subject, predicate, object);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         }
@@ -158,7 +157,7 @@ public class TripleMaker {
     }
     
     public static GraphElementFactory getGraphElementFactory() {
-        return m_factory;
+        return s_factory;
     }
     
     public static void setAliasMap(Map<String, String> aliasMap) {
@@ -171,7 +170,7 @@ public class TripleMaker {
     public static Node parse(String n) 
             throws TrippiException {
         try {
-            return m_factory.parse(n);
+            return s_factory.parse(n);
         } catch (GraphElementFactoryException e) {
             throw new TrippiException(e.getMessage(), e);
         } catch (URISyntaxException e) {

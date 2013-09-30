@@ -13,6 +13,7 @@ import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
+import org.trippi.AliasManager;
 import org.trippi.FlushErrorHandler;
 import org.trippi.RDFFormat;
 import org.trippi.TripleIterator;

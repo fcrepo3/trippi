@@ -51,7 +51,7 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     public void add(Triple triple) {
-        debugUpdate("Adding 1 triple ADD to buffer\n{}", triple);
+        traceUpdate("Adding 1 triple ADD to buffer\n{}", triple);
         synchronized (m_bufferLock) {
             m_buffer.add(TripleUpdate.get(TripleUpdate.ADD, triple));
         }
@@ -65,15 +65,15 @@ public class MemUpdateBuffer implements UpdateBuffer {
     }
 
     public void delete(Triple triple) {
-        debugUpdate("Adding 1 triple DELETE to buffer\n{}", triple);
+        traceUpdate("Adding 1 triple DELETE to buffer\n{}", triple);
         synchronized (m_bufferLock) {
             m_buffer.add(TripleUpdate.get(TripleUpdate.DELETE, triple));
         }
     }
 
-    private static void debugUpdate(String msg, Triple triple) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(msg, RDFUtil.toString(triple));
+    private static void traceUpdate(String msg, Triple triple) {
+        if (logger.isTraceEnabled()) {
+            logger.trace(msg, RDFUtil.toString(triple));
         }
     }
 

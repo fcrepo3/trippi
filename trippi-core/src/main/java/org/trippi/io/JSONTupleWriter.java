@@ -11,10 +11,11 @@ import org.jrdf.graph.Literal;
 import org.jrdf.graph.Node;
 import org.jrdf.graph.URIReference;
 import org.trippi.Alias;
+import org.trippi.AliasManager;
 import org.trippi.RDFUtil;
 import org.trippi.TrippiException;
 import org.trippi.TupleIterator;
-import org.trippi.impl.base.AliasManager;
+import org.trippi.impl.base.DefaultAliasManager;
 
 /**
  * Writes tuples as CSV's (comma-separated values), a format common in
@@ -35,7 +36,7 @@ public class JSONTupleWriter extends TupleWriter {
     public JSONTupleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
         try {
             m_out = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
-            m_aliases = new AliasManager(aliases);
+            m_aliases = new DefaultAliasManager(aliases);
         } catch (IOException e) {
             throw new TrippiException("Error setting up writer", e);
         }

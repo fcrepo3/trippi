@@ -68,7 +68,7 @@ public class SimpleTripleParserTest {
         rdfxml = sb.toString().getBytes("UTF-8");
         in = new ByteArrayInputStream(rdfxml);
         
-        iter = m_factory.allFromStream(in, "http://localhost/", RDFFormat.RDF_XML);
+        iter = (TripleIterator) m_factory.allFromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
             System.out.println(key + " -> " + aliasMap.get(key));
@@ -83,7 +83,7 @@ public class SimpleTripleParserTest {
         rdfxml = sb.toString().getBytes("UTF-8");
         in = new ByteArrayInputStream(rdfxml);
         
-        iter = m_factory.allFromStream(in, "http://localhost/", RDFFormat.RDF_XML);
+        iter = (TripleIterator) m_factory.allFromStream(in, "http://localhost/", RDFFormat.RDF_XML);
         aliasMap = iter.getAliasMap();
         for (String key : aliasMap.keySet()) {
             System.out.println(key + " -> " + aliasMap.get(key));
@@ -127,7 +127,7 @@ public class SimpleTripleParserTest {
     @Test
     public void testFromStreamToStream() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = m_factory.allFromStream(in, RDFFormat.RDF_XML);
+        TripleIterator iter = (TripleIterator) m_factory.allFromStream(in, RDFFormat.RDF_XML);
         System.out.println("\n\n\n***\n");
         iter.toStream(System.out, RDFFormat.RDF_XML);
     }
@@ -135,7 +135,7 @@ public class SimpleTripleParserTest {
     @Test
     public void testFromStreamToJson() throws Exception {
         InputStream in = new ByteArrayInputStream(rdf.getBytes());
-        TripleIterator iter = m_factory.allFromStream(in, RDFFormat.RDF_XML);
+        TripleIterator iter = (TripleIterator) m_factory.allFromStream(in, RDFFormat.RDF_XML);
         
         System.out.println("\n\n\n***\n");
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

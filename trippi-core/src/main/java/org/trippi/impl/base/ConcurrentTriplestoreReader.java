@@ -9,6 +9,7 @@ import org.jrdf.graph.SubjectNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.trippi.Alias;
+import org.trippi.AliasManager;
 import org.trippi.TripleIterator;
 import org.trippi.TriplePattern;
 import org.trippi.TriplestoreReader;

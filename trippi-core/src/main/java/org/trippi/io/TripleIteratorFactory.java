@@ -11,6 +11,7 @@ import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
 import org.trippi.TrippiIterator;
 import org.trippi.io.transform.Transformer;
+import org.trippi.io.transform.impl.Identity;
 
 
 public class TripleIteratorFactory {
@@ -64,19 +65,6 @@ public class TripleIteratorFactory {
                 getParser(format);
         return new RIOTripleIterator(in, parser, baseURI, m_executor, timeoutMs);
     }
-    private static SimpleTripleParsingContext getSimpleTriples(
-            InputStream in,
-            String baseURI,
-            RDFFormat format) throws TrippiException {
-        if (baseURI == null) baseURI = "http://localhost/";
-        org.openrdf.rio.RDFParser parser =
-                getParser(format);
-        try {
-            return SimpleTripleParsingContext.parse(in, parser, baseURI);
-        } catch (Exception e) {
-            throw new TrippiException(e.getMessage(), e);
-        }
-    }
     
     private static <T> SimpleParsingContext<T> getSimpleTriples(
             InputStream in,
@@ -93,14 +81,45 @@ public class TripleIteratorFactory {
         }
     }
 
+    private static SimpleTripleParsingContext getSimpleTriples(
+            InputStream in,
+            String baseURI,
+            RDFFormat format) throws TrippiException {
+        if (baseURI == null) baseURI = "http://localhost/";
+        org.openrdf.rio.RDFParser parser =
+                getParser(format);
+        try {
+            return SimpleTripleParsingContext.parse(in, parser, baseURI);
+        } catch (Exception e) {
+            throw new TrippiException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Return a set of resolved, unprefixed triples
+     * @param in
+     * @param baseURI
+     * @param format
+     * @return
+     * @throws TrippiException
+     */
     public Set<Triple> allAsSet(InputStream in,
             String baseURI,
             RDFFormat format) throws TrippiException {
-        SimpleTripleParsingContext src =
-                    getSimpleTriples(in, baseURI, format);
+        SimpleParsingContext<Triple> src =
+                    getSimpleTriples(in, baseURI, format, Identity.instance);
             return src.getSet();
     }
 
+    /**
+     * Return a set of trnasformation results from the 
+     * resolved, unprefixed triples
+     * @param in
+     * @param baseURI
+     * @param format
+     * @return
+     * @throws TrippiException
+     */
     public <T> Set<T> allAsSet(InputStream in,
             String baseURI,
             RDFFormat format,
@@ -110,6 +129,15 @@ public class TripleIteratorFactory {
             return src.getSet();
     }
 
+    /**
+     * Return a iterator of the triples in the stream. This iterator
+     * is able to be streamed as prefixed triples.
+     * @param in
+     * @param baseURI
+     * @param format
+     * @return
+     * @throws TrippiException
+     */
     public TripleIterator allFromStream(InputStream in,
             String baseURI,
             RDFFormat format) throws TrippiException {
@@ -118,6 +146,16 @@ public class TripleIteratorFactory {
         return src.getIterator();
     }
 
+    /**
+     * Return an iterator over transformations of fully-resolved
+     * triples parsed from the input stream.
+     * @param in
+     * @param baseURI
+     * @param format
+     * @param transform
+     * @return
+     * @throws TrippiException
+     */
     public <T> TrippiIterator<T> allFromStream(InputStream in,
             String baseURI,
             RDFFormat format,
@@ -134,7 +172,7 @@ public class TripleIteratorFactory {
         return fromStream(in, null, format);
     }
     
-    public TripleIterator allFromStream(
+    public TrippiIterator<Triple> allFromStream(
             InputStream in,
             RDFFormat format) throws TrippiException {
         return allFromStream(in, null, format);

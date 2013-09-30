@@ -14,9 +14,9 @@ import org.openrdf.model.impl.StatementImpl;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFWriter;
 import org.trippi.Alias;
+import org.trippi.AliasManager;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
-import org.trippi.impl.base.AliasManager;
 
 /**
  * Adapter for using Sesame's RIO RdfDocumentWriters for triple serialization.

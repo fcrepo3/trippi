@@ -6,18 +6,22 @@ import java.util.Map.Entry;
 
 import org.trippi.Alias;
 
-public class AliasManager {
+public class DefaultAliasManager implements org.trippi.AliasManager {
 
     private Map<String, Alias> m_aliasMap;
 
-    public AliasManager(Map<String, String> m) { 
+    public DefaultAliasManager(Map<String, String> m) { 
         m_aliasMap = stringsToAliases(m, m_aliasMap);
     }
     
-    public AliasManager() {
+    public DefaultAliasManager() {
         
     }
 
+    /* (non-Javadoc)
+     * @see org.trippi.impl.base.AliasManagerI#getAliasMap()
+     */
+    @Override
     @Deprecated
     public synchronized Map<String, String> getAliasMap() {
         if (m_aliasMap == null) {
@@ -31,6 +35,10 @@ public class AliasManager {
         return result;
     }
     
+    /* (non-Javadoc)
+     * @see org.trippi.impl.base.AliasManagerI#addAlias(java.lang.String, java.lang.String)
+     */
+    @Override
     public synchronized void addAlias(String alias, String fullForm) {
         if (m_aliasMap == null) {
             m_aliasMap = new HashMap<String, Alias>();
@@ -38,15 +46,27 @@ public class AliasManager {
         m_aliasMap.put(alias, new Alias(alias, fullForm));
     }
 
+    /* (non-Javadoc)
+     * @see org.trippi.impl.base.AliasManagerI#setAliasMap(java.util.Map)
+     */
+    @Override
     @Deprecated
     public synchronized void setAliasMap(Map<String, String> m) {
         m_aliasMap = stringsToAliases(m, m_aliasMap);
     }
     
+    /* (non-Javadoc)
+     * @see org.trippi.impl.base.AliasManagerI#setAliases(java.util.Map)
+     */
+    @Override
     public synchronized void setAliases(Map<String, Alias> aliasMap) {
         m_aliasMap = aliasMap;
     }
     
+    /* (non-Javadoc)
+     * @see org.trippi.impl.base.AliasManagerI#getAliases()
+     */
+    @Override
     public synchronized Map<String, Alias> getAliases() {
         if (m_aliasMap == null){
             m_aliasMap = new HashMap<String, Alias>(0);

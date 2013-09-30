@@ -14,10 +14,11 @@ import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
 import org.trippi.Alias;
+import org.trippi.AliasManager;
 import org.trippi.RDFUtil;
 import org.trippi.TrippiException;
 import org.trippi.TripleIterator;
-import org.trippi.impl.base.AliasManager;
+import org.trippi.impl.base.DefaultAliasManager;
 
 /**
  * Writes triples as JSON.
@@ -41,7 +42,7 @@ public class JSONTripleWriter extends TripleWriter {
     }
     
     public JSONTripleWriter(OutputStream out, Map<String, String> aliases) throws TrippiException {
-        this(out, new AliasManager(aliases));
+        this(out, new DefaultAliasManager(aliases));
     }
 
     public JSONTripleWriter(OutputStream out, AliasManager aliases) throws TrippiException {
@@ -49,7 +50,7 @@ public class JSONTripleWriter extends TripleWriter {
     }
 
     public JSONTripleWriter(Writer out, Map<String, String> aliases) throws TrippiException {
-        this(out, new AliasManager(aliases));
+        this(out, new DefaultAliasManager(aliases));
     }
 
     public JSONTripleWriter(Writer out, AliasManager aliases) throws TrippiException {

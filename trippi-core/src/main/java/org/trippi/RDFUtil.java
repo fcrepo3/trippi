@@ -6,10 +6,6 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jrdf.graph.AbstractBlankNode;
-import org.jrdf.graph.AbstractLiteral;
-import org.jrdf.graph.AbstractTriple;
-import org.jrdf.graph.AbstractURIReference;
 import org.jrdf.graph.BlankNode;
 import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.GraphElementFactoryException;
@@ -20,6 +16,7 @@ import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
 import org.jrdf.graph.URIReference;
+import org.trippi.impl.RDFFactories;
 
 public class RDFUtil implements GraphElementFactory, java.io.Serializable {
 
@@ -164,39 +161,45 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
      * Create a BlankNode given a unique id.
      */
     public BlankNode createResource(int hashCode) {
-        return new FreeBlankNode(hashCode);
+        return RDFFactories.createResource(hashCode);
     }
 
     /////// org.jrdf.graph.GraphElementFactory ///////
 
+    @Override
     public Literal createLiteral(String lexicalValue) 
             throws GraphElementFactoryException {
-        return new FreeLiteral(lexicalValue);
+        return RDFFactories.createLiteral(lexicalValue);
     }
 
+    @Override
     public Literal createLiteral(String lexicalValue, String languageType) 
             throws GraphElementFactoryException {
-        return new FreeLiteral(lexicalValue, languageType);
+        return RDFFactories.createLiteral(lexicalValue, languageType);
     }
 
+    @Override
     public Literal createLiteral(String lexicalValue, URI datatypeURI) 
             throws GraphElementFactoryException {
-        return new FreeLiteral(lexicalValue, datatypeURI);
+        return RDFFactories.createLiteral(lexicalValue, datatypeURI);
     }
 
+    @Override
     public BlankNode createResource()
             throws GraphElementFactoryException {
-        return new FreeBlankNode(new Object());
+        return RDFFactories.createResource();
     }
 
+    @Override
     public URIReference createResource(URI uri) 
             throws GraphElementFactoryException {
-        return new FreeURIReference(uri);
+        return RDFFactories.createResource(uri);
     }
 
+    @Override
     public URIReference createResource(URI uri, boolean validate) 
             throws GraphElementFactoryException {
-        return new FreeURIReference(uri, validate);
+        return RDFFactories.createResource(uri, validate);
     }
 
     @Override
@@ -204,60 +207,9 @@ public class RDFUtil implements GraphElementFactory, java.io.Serializable {
                                PredicateNode predicate, 
                                ObjectNode object) 
             throws GraphElementFactoryException {
-        return new FreeTriple(subject, predicate, object);
+        return RDFFactories.createTriple(subject, predicate, object);
     }
-
-    public class FreeBlankNode extends AbstractBlankNode {
-		private static final long serialVersionUID = 1L;
-		private int m_hashCode;
-        public FreeBlankNode(int hashCode) { 
-            m_hashCode = hashCode;
-        }
-        public FreeBlankNode(Object object) {
-            m_hashCode = object.hashCode();
-        }
-        @Override
-		public int hashCode() { 
-            return m_hashCode; 
-        }
-        public String getID() {
-            return "node" + Integer.toString(m_hashCode);
-        }
-    }
-
-    public class FreeLiteral extends AbstractLiteral {
-		private static final long serialVersionUID = 1L;
-		public FreeLiteral(String lexicalForm) {
-            super(lexicalForm);
-        }
-        public FreeLiteral(String lexicalForm, String language) {
-            super(lexicalForm, language);
-        }
-        public FreeLiteral(String lexicalForm, URI datatypeURI) {
-            super(lexicalForm, datatypeURI);
-        }
-    }
-
-    public class FreeURIReference extends AbstractURIReference {
-		private static final long serialVersionUID = 1L;
-		public FreeURIReference(URI uri) {
-            super(uri);
-        }
-        public FreeURIReference(URI uri, boolean validate) {
-            super(uri, validate);
-        }
-    }
-
-    public class FreeTriple extends AbstractTriple {
-		private static final long serialVersionUID = 1L;
-
-		public FreeTriple(SubjectNode subjectNode,
-                          PredicateNode predicateNode,
-                          ObjectNode objectNode) {
-            this.subjectNode = subjectNode;
-            this.predicateNode = predicateNode;
-            this.objectNode = objectNode;
-        }
-    }
+    
+    
 
 }

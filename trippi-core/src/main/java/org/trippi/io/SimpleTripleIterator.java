@@ -8,9 +8,9 @@ import java.util.Set;
 import org.jrdf.graph.Triple;
 import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParseException;
+import org.trippi.AliasManager;
 import org.trippi.TripleIterator;
 import org.trippi.TrippiException;
-import org.trippi.impl.base.AliasManager;
 
 /**
  * An iterator over triples parsed by a RIO rdf parser.

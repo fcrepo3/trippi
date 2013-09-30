@@ -19,9 +19,9 @@ import org.trippi.TrippiException;
 
 import org.trippi.config.ConfigUtils;
 
-import org.trippi.impl.base.AliasManager;
 import org.trippi.impl.base.ConcurrentTriplestoreWriter;
 import org.trippi.impl.base.ConfigurableSessionPool;
+import org.trippi.impl.base.DefaultAliasManager;
 import org.trippi.impl.base.MemUpdateBuffer;
 import org.trippi.impl.base.TriplestoreSession;
 import org.trippi.impl.base.TriplestoreSessionPool;
@@ -169,7 +169,7 @@ public class MPTConnector extends TriplestoreConnector {
 
             // construct the TriplestoreWriter
             m_writer = new ConcurrentTriplestoreWriter(sessionPool,
-                                                      new AliasManager(new HashMap<String, String>()),
+                                                      new DefaultAliasManager(new HashMap<String, String>()),
                                                       m_updateSession,
                                                       updateBuffer,
                                                       m_iteratorFactory,

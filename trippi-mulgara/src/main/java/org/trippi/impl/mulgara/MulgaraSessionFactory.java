@@ -16,8 +16,8 @@ import org.mulgara.server.SessionFactory;
 import org.mulgara.server.driver.SessionFactoryFinder;
 import org.mulgara.server.driver.SessionFactoryFinderException;
 import org.mulgara.server.local.LocalSessionFactory;
+import org.trippi.AliasManager;
 import org.trippi.TrippiException;
-import org.trippi.impl.base.AliasManager;
 import org.trippi.impl.base.TriplestoreSession;
 import org.trippi.impl.base.TriplestoreSessionFactory;
 

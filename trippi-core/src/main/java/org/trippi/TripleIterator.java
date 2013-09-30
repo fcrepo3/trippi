@@ -23,7 +23,7 @@ import org.openrdf.rio.n3.N3Writer;
 import org.openrdf.rio.ntriples.NTriplesWriter;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.rio.turtle.TurtleWriter;
-import org.trippi.impl.base.AliasManager;
+import org.trippi.impl.base.DefaultAliasManager;
 import org.trippi.io.CountTripleWriter;
 import org.trippi.io.FormatCountTripleWriter;
 import org.trippi.io.JSONTripleWriter;
@@ -63,7 +63,7 @@ public abstract class TripleIterator implements TrippiIterator<Triple>{
                                                            RDFFormat.COUNT,
                                                            RDFFormat.COUNT_JSON };
 
-    private AliasManager m_aliases = new AliasManager();
+    private AliasManager m_aliases = new DefaultAliasManager();
 
     /**
      * Return true if there are any more triples.

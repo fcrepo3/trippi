@@ -16,6 +16,7 @@ import org.jrdf.graph.ObjectNode;
 import org.jrdf.graph.PredicateNode;
 import org.jrdf.graph.SubjectNode;
 import org.jrdf.graph.Triple;
+import org.trippi.impl.RDFFactories;
 
 /**
  * A pattern that can be used to derive a Triple from a Map of Node objects.
@@ -263,7 +264,6 @@ public class TriplePattern {
         ObjectNode object;
 
         try {
-            RDFUtil factory = new RDFUtil();
 
             if (m_subject instanceof String) {
                 Node n = getMatchingNode((String) m_subject, tuple, 0);
@@ -274,7 +274,7 @@ public class TriplePattern {
                     // Get a bNode that is unique to the tuple, but may be
                     // the same as that for other TriplePatterns being evaluated 
                     // against the same map
-                    subject = factory.createResource(
+                    subject = RDFFactories.createResource(
                                tuple.hashCode() + m_subject.hashCode());
                 } else {
                     subject = (SubjectNode) m_subject;
@@ -298,14 +298,14 @@ public class TriplePattern {
                     // Get a bNode that is unique to the tuple, but may be
                     // the same as that for other TriplePatterns being evaluated 
                     // against the same map
-                    object = factory.createResource(
+                    object = RDFFactories.createResource(
                                  tuple.hashCode() + m_object.hashCode());
                 } else {
                     object = (ObjectNode) m_object;
                 }
             }
 
-            return factory.createTriple(subject, predicate, object);
+            return RDFFactories.createTriple(subject, predicate, object);
 
         } catch (Exception e) {
             String msg = e.getClass().getName();

@@ -7,12 +7,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jrdf.graph.GraphElementFactory;
+import org.trippi.AliasManager;
 import org.trippi.TriplestoreConnector;
 import org.trippi.TriplestoreReader;
 import org.trippi.TriplestoreWriter;
 import org.trippi.TrippiException;
 import org.trippi.config.ConfigUtils;
-import org.trippi.impl.base.AliasManager;
+import org.trippi.impl.base.DefaultAliasManager;
 import org.trippi.impl.base.ConcurrentTriplestoreReader;
 import org.trippi.impl.base.ConcurrentTriplestoreWriter;
 import org.trippi.impl.base.ConfigurableSessionPool;
@@ -218,7 +219,7 @@ public class MulgaraConnector extends TriplestoreConnector {
     	    m_iteratorFactory = TripleIteratorFactory.defaultInstance();
     	}
     	
-		AliasManager aliasManager = new AliasManager(new HashMap<String, String>());
+		AliasManager aliasManager = new DefaultAliasManager(new HashMap<String, String>());
 
 		boolean readOnly = Boolean.valueOf(m_config.get("readOnly"));
         //Mulgara location properties
