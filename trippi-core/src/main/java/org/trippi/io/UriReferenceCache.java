@@ -2,8 +2,6 @@ package org.trippi.io;
 
 import java.net.URI;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.jrdf.graph.GraphElementFactory;
 import org.jrdf.graph.GraphElementFactoryException;

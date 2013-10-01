@@ -38,6 +38,7 @@ public class TripleIteratorFactory {
     
     /**
      * Get an iterator over the triples in the given stream.
+     * This iterator will not timeout. 
      *
      * The baseURI is used to resolve any relative URI references.
      * If given as null, http://localhost/ will be used.
@@ -45,7 +46,7 @@ public class TripleIteratorFactory {
     public TripleIterator fromStream(InputStream in,
                                             String baseURI,
                                             RDFFormat format) throws TrippiException {
-        return fromStream(in, baseURI, format, RIOTripleIterator.DEFAULT_TIMEOUT_MS);
+        return fromStream(in, baseURI, format, RIOTripleIterator.NO_TIMEOUT_MS);
     }
     
     /**

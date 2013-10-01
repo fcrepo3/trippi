@@ -41,6 +41,8 @@ public class RIOTripleIterator extends TripleIterator
 
     public static final long DEFAULT_TIMEOUT_MS = 5;
 
+    public static final long NO_TIMEOUT_MS = -1;
+
     private InputStream m_in;
     private RDFParser m_parser;
     private String m_baseURI;
@@ -60,12 +62,15 @@ public class RIOTripleIterator extends TripleIterator
 
     /**
      * Initialize the iterator by starting the parsing thread.
+     * Requests for a triple from parallel process will 
+     * not timeout.
+     * 
      */
     public RIOTripleIterator(InputStream in, 
                              RDFParser parser, 
                              String baseURI,
                              ExecutorService executor) throws TrippiException {
-        this(in, parser, baseURI, executor, DEFAULT_TIMEOUT_MS);
+        this(in, parser, baseURI, executor, NO_TIMEOUT_MS);
     }
 
     public RIOTripleIterator(InputStream in, 
@@ -114,9 +119,17 @@ public class RIOTripleIterator extends TripleIterator
         if (m_next == FINISHED) return;
         Triple triple = null;
     	try{
-    	    triple = (timeout) ?
-    	            m_bucket.exchange(flag, m_timeoutMs, TimeUnit.MILLISECONDS):
-    	            m_bucket.exchange(flag, 5, TimeUnit.SECONDS);
+    	    if (timeout) {
+    	        triple = m_bucket.exchange(flag, m_timeoutMs, TimeUnit.MILLISECONDS);
+    	    } else {
+    	        while(triple == null) {
+    	            try{
+                        triple = m_bucket.exchange(flag, DEFAULT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+    	            } catch (TimeoutException e) {
+    	                logger.warn("Timed out, trying again");
+    	            }
+    	        }
+    	    }
         } catch (InterruptedException e) {
             logger.debug("Interrupted, quitting");
             triple = FINISHED;
@@ -155,7 +168,7 @@ public class RIOTripleIterator extends TripleIterator
     public Triple next() throws TrippiException {
         if (m_next == FINISHED) return null;
         Triple last = m_next;
-        setNext(NEXT, true);
+        setNext(NEXT, m_timeoutMs != NO_TIMEOUT_MS);
         if (m_next == FINISHED) {
             logger.debug("Got the {} flag from RIOTripleIterator.setNext", m_next);
         } else {
