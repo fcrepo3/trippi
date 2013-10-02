@@ -14,12 +14,12 @@
 <a class="jxr_linenumber" name="4" href="#4">4</a>   
 <a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> org.jrdf.util.ClosableIterator;
 <a class="jxr_linenumber" name="6" href="#6">6</a>   
-<a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/trippi/nodegraph/impl/CountingResultIterator.html">CountingResultIterator</a> <strong class="jxr_keyword">implements</strong> ClosableIterator {
+<a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> CountingResultIterator&lt;T&gt; <strong class="jxr_keyword">implements</strong> ClosableIterator&lt;T&gt; {
 <a class="jxr_linenumber" name="8" href="#8">8</a>   
-<a class="jxr_linenumber" name="9" href="#9">9</a>       <strong class="jxr_keyword">private</strong> ClosableIterator&lt;?&gt; _iter;
+<a class="jxr_linenumber" name="9" href="#9">9</a>       <strong class="jxr_keyword">private</strong> ClosableIterator&lt;T&gt; _iter;
 <a class="jxr_linenumber" name="10" href="#10">10</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> _closed;
 <a class="jxr_linenumber" name="11" href="#11">11</a>  
-<a class="jxr_linenumber" name="12" href="#12">12</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/trippi/nodegraph/impl/CountingResultIterator.html">CountingResultIterator</a>(ClosableIterator&lt;?&gt; iter) {
+<a class="jxr_linenumber" name="12" href="#12">12</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/trippi/nodegraph/impl/CountingResultIterator.html">CountingResultIterator</a>(ClosableIterator&lt;T&gt; iter) {
 <a class="jxr_linenumber" name="13" href="#13">13</a>          
 <a class="jxr_linenumber" name="14" href="#14">14</a>          _iter = iter;
 <a class="jxr_linenumber" name="15" href="#15">15</a>      }
@@ -44,7 +44,7 @@
 <a class="jxr_linenumber" name="34" href="#34">34</a>      }
 <a class="jxr_linenumber" name="35" href="#35">35</a>  
 <a class="jxr_linenumber" name="36" href="#36">36</a>      <em class="jxr_comment">// from java.util.Iterator</em>
-<a class="jxr_linenumber" name="37" href="#37">37</a>      <strong class="jxr_keyword">public</strong> Object next() <strong class="jxr_keyword">throws</strong> NoSuchElementException {
+<a class="jxr_linenumber" name="37" href="#37">37</a>      <strong class="jxr_keyword">public</strong> T next() <strong class="jxr_keyword">throws</strong> NoSuchElementException {
 <a class="jxr_linenumber" name="38" href="#38">38</a>          <strong class="jxr_keyword">return</strong> _iter.next();
 <a class="jxr_linenumber" name="39" href="#39">39</a>      }
 <a class="jxr_linenumber" name="40" href="#40">40</a>  

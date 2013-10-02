@@ -316,7 +316,7 @@
 <a class="jxr_linenumber" name="306" href="#306">306</a>     	<strong class="jxr_keyword">int</strong>			 i;
 <a class="jxr_linenumber" name="307" href="#307">307</a>     	JSONObject   jo;
 <a class="jxr_linenumber" name="308" href="#308">308</a>     	String       key;
-<a class="jxr_linenumber" name="309" href="#309">309</a> 	    Iterator     keys;
+<a class="jxr_linenumber" name="309" href="#309">309</a> 	    Iterator&lt;String&gt; keys;
 <a class="jxr_linenumber" name="310" href="#310">310</a> 	    <strong class="jxr_keyword">int</strong>			 length;
 <a class="jxr_linenumber" name="311" href="#311">311</a>     	Object		 object;
 <a class="jxr_linenumber" name="312" href="#312">312</a>     	StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
@@ -340,7 +340,7 @@
 <a class="jxr_linenumber" name="330" href="#330">330</a> 			
 <a class="jxr_linenumber" name="331" href="#331">331</a> 	        keys = jo.keys();
 <a class="jxr_linenumber" name="332" href="#332">332</a> 	        <strong class="jxr_keyword">while</strong> (keys.hasNext()) {
-<a class="jxr_linenumber" name="333" href="#333">333</a> 	            key = keys.next().toString();
+<a class="jxr_linenumber" name="333" href="#333">333</a> 	            key = keys.next();
 <a class="jxr_linenumber" name="334" href="#334">334</a>             	XML.noSpace(key);
 <a class="jxr_linenumber" name="335" href="#335">335</a> 	            value = jo.optString(key);
 <a class="jxr_linenumber" name="336" href="#336">336</a> 	            <strong class="jxr_keyword">if</strong> (value != <strong class="jxr_keyword">null</strong>) {
@@ -396,74 +396,72 @@
 <a class="jxr_linenumber" name="386" href="#386">386</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="387" href="#387">387</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString(<a href="../../org/json/JSONObject.html">JSONObject</a> jo) <strong class="jxr_keyword">throws</strong> JSONException {
 <a class="jxr_linenumber" name="388" href="#388">388</a> 	    StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
-<a class="jxr_linenumber" name="389" href="#389">389</a> 	    <strong class="jxr_keyword">int</strong>          i;
-<a class="jxr_linenumber" name="390" href="#390">390</a> 	    JSONArray    ja;
-<a class="jxr_linenumber" name="391" href="#391">391</a> 	    String       key;
-<a class="jxr_linenumber" name="392" href="#392">392</a> 	    Iterator     keys;
-<a class="jxr_linenumber" name="393" href="#393">393</a> 	    <strong class="jxr_keyword">int</strong>          length;
-<a class="jxr_linenumber" name="394" href="#394">394</a> 	    Object		 object;
-<a class="jxr_linenumber" name="395" href="#395">395</a> 	    String       tagName;
-<a class="jxr_linenumber" name="396" href="#396">396</a> 	    String       value;
+<a class="jxr_linenumber" name="389" href="#389">389</a> 	    <strong class="jxr_keyword">int</strong> i;
+<a class="jxr_linenumber" name="390" href="#390">390</a> 	    JSONArray ja;
+<a class="jxr_linenumber" name="391" href="#391">391</a> 	    String key;
+<a class="jxr_linenumber" name="392" href="#392">392</a> 	    <strong class="jxr_keyword">int</strong> length;
+<a class="jxr_linenumber" name="393" href="#393">393</a> 	    Object object;
+<a class="jxr_linenumber" name="394" href="#394">394</a> 	    String value;
+<a class="jxr_linenumber" name="395" href="#395">395</a> 	
+<a class="jxr_linenumber" name="396" href="#396">396</a> <em class="jxr_comment">//Emit &lt;tagName</em>
 <a class="jxr_linenumber" name="397" href="#397">397</a> 	
-<a class="jxr_linenumber" name="398" href="#398">398</a> <em class="jxr_comment">//Emit &lt;tagName</em>
-<a class="jxr_linenumber" name="399" href="#399">399</a> 	
-<a class="jxr_linenumber" name="400" href="#400">400</a> 		tagName = jo.optString(<span class="jxr_string">"tagName"</span>);
-<a class="jxr_linenumber" name="401" href="#401">401</a> 		<strong class="jxr_keyword">if</strong> (tagName == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="402" href="#402">402</a> 			<strong class="jxr_keyword">return</strong> XML.escape(jo.toString());
-<a class="jxr_linenumber" name="403" href="#403">403</a> 		}
-<a class="jxr_linenumber" name="404" href="#404">404</a> 		XML.noSpace(tagName);
-<a class="jxr_linenumber" name="405" href="#405">405</a> 		tagName = XML.escape(tagName);
-<a class="jxr_linenumber" name="406" href="#406">406</a> 		sb.append('&lt;');
-<a class="jxr_linenumber" name="407" href="#407">407</a> 		sb.append(tagName);
+<a class="jxr_linenumber" name="398" href="#398">398</a> 		String tagName = jo.optString(<span class="jxr_string">"tagName"</span>);
+<a class="jxr_linenumber" name="399" href="#399">399</a> 		<strong class="jxr_keyword">if</strong> (tagName == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="400" href="#400">400</a> 			<strong class="jxr_keyword">return</strong> XML.escape(jo.toString());
+<a class="jxr_linenumber" name="401" href="#401">401</a> 		}
+<a class="jxr_linenumber" name="402" href="#402">402</a> 		XML.noSpace(tagName);
+<a class="jxr_linenumber" name="403" href="#403">403</a> 		tagName = XML.escape(tagName);
+<a class="jxr_linenumber" name="404" href="#404">404</a> 		sb.append('&lt;');
+<a class="jxr_linenumber" name="405" href="#405">405</a> 		sb.append(tagName);
+<a class="jxr_linenumber" name="406" href="#406">406</a> 	
+<a class="jxr_linenumber" name="407" href="#407">407</a> <em class="jxr_comment">//Emit the attributes</em>
 <a class="jxr_linenumber" name="408" href="#408">408</a> 	
-<a class="jxr_linenumber" name="409" href="#409">409</a> <em class="jxr_comment">//Emit the attributes</em>
-<a class="jxr_linenumber" name="410" href="#410">410</a> 	
-<a class="jxr_linenumber" name="411" href="#411">411</a>         keys = jo.keys();
-<a class="jxr_linenumber" name="412" href="#412">412</a>         <strong class="jxr_keyword">while</strong> (keys.hasNext()) {
-<a class="jxr_linenumber" name="413" href="#413">413</a>             key = keys.next().toString();
-<a class="jxr_linenumber" name="414" href="#414">414</a>             <strong class="jxr_keyword">if</strong> (!key.equals(<span class="jxr_string">"tagName"</span>) &amp;&amp; !key.equals(<span class="jxr_string">"childNodes"</span>)) {
-<a class="jxr_linenumber" name="415" href="#415">415</a>             	XML.noSpace(key);
-<a class="jxr_linenumber" name="416" href="#416">416</a> 	            value = jo.optString(key);
-<a class="jxr_linenumber" name="417" href="#417">417</a> 	            <strong class="jxr_keyword">if</strong> (value != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="418" href="#418">418</a> 		            sb.append(' ');
-<a class="jxr_linenumber" name="419" href="#419">419</a> 		            sb.append(XML.escape(key));
-<a class="jxr_linenumber" name="420" href="#420">420</a> 		            sb.append('=');
+<a class="jxr_linenumber" name="409" href="#409">409</a> 		Iterator&lt;String&gt; keys = jo.keys();
+<a class="jxr_linenumber" name="410" href="#410">410</a>         <strong class="jxr_keyword">while</strong> (keys.hasNext()) {
+<a class="jxr_linenumber" name="411" href="#411">411</a>             key = keys.next().toString();
+<a class="jxr_linenumber" name="412" href="#412">412</a>             <strong class="jxr_keyword">if</strong> (!key.equals(<span class="jxr_string">"tagName"</span>) &amp;&amp; !key.equals(<span class="jxr_string">"childNodes"</span>)) {
+<a class="jxr_linenumber" name="413" href="#413">413</a>             	XML.noSpace(key);
+<a class="jxr_linenumber" name="414" href="#414">414</a> 	            value = jo.optString(key);
+<a class="jxr_linenumber" name="415" href="#415">415</a> 	            <strong class="jxr_keyword">if</strong> (value != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="416" href="#416">416</a> 		            sb.append(' ');
+<a class="jxr_linenumber" name="417" href="#417">417</a> 		            sb.append(XML.escape(key));
+<a class="jxr_linenumber" name="418" href="#418">418</a> 		            sb.append('=');
+<a class="jxr_linenumber" name="419" href="#419">419</a> 		            sb.append('&quot;');
+<a class="jxr_linenumber" name="420" href="#420">420</a> 		            sb.append(XML.escape(value));
 <a class="jxr_linenumber" name="421" href="#421">421</a> 		            sb.append('&quot;');
-<a class="jxr_linenumber" name="422" href="#422">422</a> 		            sb.append(XML.escape(value));
-<a class="jxr_linenumber" name="423" href="#423">423</a> 		            sb.append('&quot;');
-<a class="jxr_linenumber" name="424" href="#424">424</a> 	            }
-<a class="jxr_linenumber" name="425" href="#425">425</a>             }
-<a class="jxr_linenumber" name="426" href="#426">426</a>         }    
-<a class="jxr_linenumber" name="427" href="#427">427</a> 		     	
-<a class="jxr_linenumber" name="428" href="#428">428</a> <em class="jxr_comment">//Emit content in body</em>
-<a class="jxr_linenumber" name="429" href="#429">429</a> 	
-<a class="jxr_linenumber" name="430" href="#430">430</a> 		ja = jo.optJSONArray(<span class="jxr_string">"childNodes"</span>);
-<a class="jxr_linenumber" name="431" href="#431">431</a> 		<strong class="jxr_keyword">if</strong> (ja == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="432" href="#432">432</a> 	        sb.append('/');
+<a class="jxr_linenumber" name="422" href="#422">422</a> 	            }
+<a class="jxr_linenumber" name="423" href="#423">423</a>             }
+<a class="jxr_linenumber" name="424" href="#424">424</a>         }    
+<a class="jxr_linenumber" name="425" href="#425">425</a> 		     	
+<a class="jxr_linenumber" name="426" href="#426">426</a> <em class="jxr_comment">//Emit content in body</em>
+<a class="jxr_linenumber" name="427" href="#427">427</a> 	
+<a class="jxr_linenumber" name="428" href="#428">428</a> 		ja = jo.optJSONArray(<span class="jxr_string">"childNodes"</span>);
+<a class="jxr_linenumber" name="429" href="#429">429</a> 		<strong class="jxr_keyword">if</strong> (ja == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="430" href="#430">430</a> 	        sb.append('/');
+<a class="jxr_linenumber" name="431" href="#431">431</a> 	        sb.append('&gt;');
+<a class="jxr_linenumber" name="432" href="#432">432</a> 		} <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="433" href="#433">433</a> 	        sb.append('&gt;');
-<a class="jxr_linenumber" name="434" href="#434">434</a> 		} <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="435" href="#435">435</a> 	        sb.append('&gt;');
-<a class="jxr_linenumber" name="436" href="#436">436</a> 			length = ja.length();
-<a class="jxr_linenumber" name="437" href="#437">437</a> 			<strong class="jxr_keyword">for</strong> (i = 0; i &lt; length; i += 1) {
-<a class="jxr_linenumber" name="438" href="#438">438</a> 			    object = ja.get(i);
-<a class="jxr_linenumber" name="439" href="#439">439</a> 			    <strong class="jxr_keyword">if</strong> (object != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="440" href="#440">440</a> 			    	<strong class="jxr_keyword">if</strong> (object instanceof String) {
-<a class="jxr_linenumber" name="441" href="#441">441</a> 			    		sb.append(XML.escape(object.toString()));
-<a class="jxr_linenumber" name="442" href="#442">442</a> 					} <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (object instanceof JSONObject) {
-<a class="jxr_linenumber" name="443" href="#443">443</a> 						sb.append(toString((JSONObject)object));
-<a class="jxr_linenumber" name="444" href="#444">444</a> 					} <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (object instanceof JSONArray) {
-<a class="jxr_linenumber" name="445" href="#445">445</a> 						sb.append(toString((JSONArray)object));
-<a class="jxr_linenumber" name="446" href="#446">446</a> 					}
-<a class="jxr_linenumber" name="447" href="#447">447</a> 			    }
-<a class="jxr_linenumber" name="448" href="#448">448</a> 			}
-<a class="jxr_linenumber" name="449" href="#449">449</a> 			sb.append('&lt;');
-<a class="jxr_linenumber" name="450" href="#450">450</a> 	        sb.append('/');
-<a class="jxr_linenumber" name="451" href="#451">451</a> 			sb.append(tagName);
-<a class="jxr_linenumber" name="452" href="#452">452</a> 	        sb.append('&gt;');
-<a class="jxr_linenumber" name="453" href="#453">453</a> 	    }
-<a class="jxr_linenumber" name="454" href="#454">454</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="455" href="#455">455</a>     }
-<a class="jxr_linenumber" name="456" href="#456">456</a> }
+<a class="jxr_linenumber" name="434" href="#434">434</a> 			length = ja.length();
+<a class="jxr_linenumber" name="435" href="#435">435</a> 			<strong class="jxr_keyword">for</strong> (i = 0; i &lt; length; i += 1) {
+<a class="jxr_linenumber" name="436" href="#436">436</a> 			    object = ja.get(i);
+<a class="jxr_linenumber" name="437" href="#437">437</a> 			    <strong class="jxr_keyword">if</strong> (object != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="438" href="#438">438</a> 			    	<strong class="jxr_keyword">if</strong> (object instanceof String) {
+<a class="jxr_linenumber" name="439" href="#439">439</a> 			    		sb.append(XML.escape(object.toString()));
+<a class="jxr_linenumber" name="440" href="#440">440</a> 					} <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (object instanceof JSONObject) {
+<a class="jxr_linenumber" name="441" href="#441">441</a> 						sb.append(toString((JSONObject)object));
+<a class="jxr_linenumber" name="442" href="#442">442</a> 					} <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (object instanceof JSONArray) {
+<a class="jxr_linenumber" name="443" href="#443">443</a> 						sb.append(toString((JSONArray)object));
+<a class="jxr_linenumber" name="444" href="#444">444</a> 					}
+<a class="jxr_linenumber" name="445" href="#445">445</a> 			    }
+<a class="jxr_linenumber" name="446" href="#446">446</a> 			}
+<a class="jxr_linenumber" name="447" href="#447">447</a> 			sb.append('&lt;');
+<a class="jxr_linenumber" name="448" href="#448">448</a> 	        sb.append('/');
+<a class="jxr_linenumber" name="449" href="#449">449</a> 			sb.append(tagName);
+<a class="jxr_linenumber" name="450" href="#450">450</a> 	        sb.append('&gt;');
+<a class="jxr_linenumber" name="451" href="#451">451</a> 	    }
+<a class="jxr_linenumber" name="452" href="#452">452</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="453" href="#453">453</a>     }
+<a class="jxr_linenumber" name="454" href="#454">454</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -135,8 +135,8 @@
 <a class="jxr_linenumber" name="125" href="#125">125</a> <em class="jxr_javadoccomment">     *  information.</em>
 <a class="jxr_linenumber" name="126" href="#126">126</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="127" href="#127">127</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String toString(<a href="../../org/json/JSONObject.html">JSONObject</a> jo) <strong class="jxr_keyword">throws</strong> JSONException {
-<a class="jxr_linenumber" name="128" href="#128">128</a>         Iterator     keys = jo.keys();
-<a class="jxr_linenumber" name="129" href="#129">129</a>         String       string;
+<a class="jxr_linenumber" name="128" href="#128">128</a>         Iterator&lt;String&gt; keys = jo.keys();
+<a class="jxr_linenumber" name="129" href="#129">129</a>         String string;
 <a class="jxr_linenumber" name="130" href="#130">130</a>         StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
 <a class="jxr_linenumber" name="131" href="#131">131</a>         <strong class="jxr_keyword">if</strong> (jo.has(<span class="jxr_string">"Status-Code"</span>) &amp;&amp; jo.has(<span class="jxr_string">"Reason-Phrase"</span>)) {
 <a class="jxr_linenumber" name="132" href="#132">132</a>             sb.append(jo.getString(<span class="jxr_string">"HTTP-Version"</span>));
@@ -157,7 +157,7 @@
 <a class="jxr_linenumber" name="147" href="#147">147</a>         }
 <a class="jxr_linenumber" name="148" href="#148">148</a>         sb.append(CRLF);
 <a class="jxr_linenumber" name="149" href="#149">149</a>         <strong class="jxr_keyword">while</strong> (keys.hasNext()) {
-<a class="jxr_linenumber" name="150" href="#150">150</a>             string = keys.next().toString();
+<a class="jxr_linenumber" name="150" href="#150">150</a>             string = keys.next();
 <a class="jxr_linenumber" name="151" href="#151">151</a>             <strong class="jxr_keyword">if</strong> (!string.equals(<span class="jxr_string">"HTTP-Version"</span>)      &amp;&amp; !string.equals(<span class="jxr_string">"Status-Code"</span>) &amp;&amp;
 <a class="jxr_linenumber" name="152" href="#152">152</a>                     !string.equals(<span class="jxr_string">"Reason-Phrase"</span>) &amp;&amp; !string.equals(<span class="jxr_string">"Method"</span>) &amp;&amp;
 <a class="jxr_linenumber" name="153" href="#153">153</a>                     !string.equals(<span class="jxr_string">"Request-URI"</span>)   &amp;&amp; !jo.isNull(string)) {

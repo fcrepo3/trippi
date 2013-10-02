@@ -18,7 +18,7 @@
 <a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> org.jrdf.graph.Triple;
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> org.jrdf.util.ClosableIterator;
 <a class="jxr_linenumber" name="10" href="#10">10</a>  
-<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/trippi/nodegraph/impl/NodeIterator.html">NodeIterator</a> <strong class="jxr_keyword">implements</strong> ClosableIterator {
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/trippi/nodegraph/impl/NodeIterator.html">NodeIterator</a> <strong class="jxr_keyword">implements</strong> ClosableIterator&lt;Node&gt; {
 <a class="jxr_linenumber" name="12" href="#12">12</a>  
 <a class="jxr_linenumber" name="13" href="#13">13</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> SUBJECTS = 0;
 <a class="jxr_linenumber" name="14" href="#14">14</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> PREDICATES = 1;
@@ -96,7 +96,7 @@
 <a class="jxr_linenumber" name="86" href="#86">86</a>          <strong class="jxr_keyword">return</strong> (_nextNode != <strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="87" href="#87">87</a>      }
 <a class="jxr_linenumber" name="88" href="#88">88</a>  
-<a class="jxr_linenumber" name="89" href="#89">89</a>      <strong class="jxr_keyword">public</strong> Object next() {
+<a class="jxr_linenumber" name="89" href="#89">89</a>      <strong class="jxr_keyword">public</strong> Node next() {
 <a class="jxr_linenumber" name="90" href="#90">90</a>          <strong class="jxr_keyword">if</strong> (_nextNode == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="91" href="#91">91</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> NoSuchElementException();
 <a class="jxr_linenumber" name="92" href="#92">92</a>          } <strong class="jxr_keyword">else</strong> {

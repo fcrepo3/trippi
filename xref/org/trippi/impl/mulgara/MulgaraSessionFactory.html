@@ -26,8 +26,8 @@
 <a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">import</strong> org.mulgara.server.driver.SessionFactoryFinder;
 <a class="jxr_linenumber" name="17" href="#17">17</a>  <strong class="jxr_keyword">import</strong> org.mulgara.server.driver.SessionFactoryFinderException;
 <a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> org.mulgara.server.local.LocalSessionFactory;
-<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> org.trippi.TrippiException;
-<a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> org.trippi.impl.base.AliasManager;
+<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> org.trippi.AliasManager;
+<a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> org.trippi.TrippiException;
 <a class="jxr_linenumber" name="21" href="#21">21</a>  <strong class="jxr_keyword">import</strong> org.trippi.impl.base.TriplestoreSession;
 <a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> org.trippi.impl.base.TriplestoreSessionFactory;
 <a class="jxr_linenumber" name="23" href="#23">23</a>  
@@ -44,7 +44,7 @@
 <a class="jxr_linenumber" name="34" href="#34">34</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String LOCALHOST = <span class="jxr_string">"localhost"</span>;
 <a class="jxr_linenumber" name="35" href="#35">35</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String RMI = <span class="jxr_string">"rmi"</span>;
 <a class="jxr_linenumber" name="36" href="#36">36</a>  
-<a class="jxr_linenumber" name="37" href="#37">37</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../org/trippi/impl/base/AliasManager.html">AliasManager</a> m_aliasManager;
+<a class="jxr_linenumber" name="37" href="#37">37</a>  	<strong class="jxr_keyword">private</strong> <a href="../../../../org/trippi/AliasManager.html">AliasManager</a> m_aliasManager;
 <a class="jxr_linenumber" name="38" href="#38">38</a>  	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> m_isRemote;
 <a class="jxr_linenumber" name="39" href="#39">39</a>  	<strong class="jxr_keyword">private</strong> URI m_serverURI;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  	<strong class="jxr_keyword">private</strong> URI m_modelURI;
@@ -64,7 +64,7 @@
 <a class="jxr_linenumber" name="54" href="#54">54</a>  <em class="jxr_javadoccomment">	 * @throws TrippiException</em>
 <a class="jxr_linenumber" name="55" href="#55">55</a>  <em class="jxr_javadoccomment">	 */</em>
 <a class="jxr_linenumber" name="56" href="#56">56</a>  	<strong class="jxr_keyword">public</strong> <a href="../../../../org/trippi/impl/mulgara/MulgaraSessionFactory.html">MulgaraSessionFactory</a>(String serverName,
-<a class="jxr_linenumber" name="57" href="#57">57</a>  			String modelName, String textModelName, <a href="../../../../org/trippi/impl/base/AliasManager.html">AliasManager</a> aliasManager, <strong class="jxr_keyword">boolean</strong> autoCreate, String serverPath)
+<a class="jxr_linenumber" name="57" href="#57">57</a>  			String modelName, String textModelName, <a href="../../../../org/trippi/AliasManager.html">AliasManager</a> aliasManager, <strong class="jxr_keyword">boolean</strong> autoCreate, String serverPath)
 <a class="jxr_linenumber" name="58" href="#58">58</a>  			<strong class="jxr_keyword">throws</strong> <a href="../../../../org/trippi/TrippiException.html">TrippiException</a> {
 <a class="jxr_linenumber" name="59" href="#59">59</a>  		m_isRemote = false;
 <a class="jxr_linenumber" name="60" href="#60">60</a>  		m_aliasManager = aliasManager;
@@ -109,7 +109,7 @@
 <a class="jxr_linenumber" name="99" href="#99">99</a>  <em class="jxr_javadoccomment">	 * @throws TrippiException</em>
 <a class="jxr_linenumber" name="100" href="#100">100</a> <em class="jxr_javadoccomment">	 */</em>
 <a class="jxr_linenumber" name="101" href="#101">101</a> 	<strong class="jxr_keyword">public</strong> <a href="../../../../org/trippi/impl/mulgara/MulgaraSessionFactory.html">MulgaraSessionFactory</a>(String serverName,
-<a class="jxr_linenumber" name="102" href="#102">102</a> 			String modelName, String textModelName, <a href="../../../../org/trippi/impl/base/AliasManager.html">AliasManager</a> aliasManager, <strong class="jxr_keyword">boolean</strong> autoCreate, String hostname, <strong class="jxr_keyword">int</strong> port) <strong class="jxr_keyword">throws</strong> TrippiException {
+<a class="jxr_linenumber" name="102" href="#102">102</a> 			String modelName, String textModelName, <a href="../../../../org/trippi/AliasManager.html">AliasManager</a> aliasManager, <strong class="jxr_keyword">boolean</strong> autoCreate, String hostname, <strong class="jxr_keyword">int</strong> port) <strong class="jxr_keyword">throws</strong> TrippiException {
 <a class="jxr_linenumber" name="103" href="#103">103</a> 		m_isRemote = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="104" href="#104">104</a> 		m_aliasManager = aliasManager;
 <a class="jxr_linenumber" name="105" href="#105">105</a> 		setModelURIs(serverName, modelName, textModelName, hostname, port);
