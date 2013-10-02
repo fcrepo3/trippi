@@ -9,7 +9,7 @@
   
   <groupId>org.trippi</groupId>
   <artifactId>trippi</artifactId>
-  <version>1.5.9-SNAPSHOT</version>
+  <version>1.5.9</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Trippi Triplestore API</description>
@@ -137,7 +137,7 @@
     <developerConnection>scm:git:git@github.com:fcrepo/${project_name}.git
     </developerConnection>
     <url>http://github.com/fcrepo/${project_name}</url>
-    <tag>HEAD</tag>
+    <tag>v1.5.9</tag>
   </scm>
 
   <prerequisites>
