@@ -3,8 +3,6 @@ org.trippi.config
 org.trippi.impl
 org.trippi.impl.base
 org.trippi.impl.count
-org.trippi.impl.mpt
-org.trippi.impl.mulgara
 org.trippi.impl.multi
 org.trippi.io
 org.trippi.io.transform

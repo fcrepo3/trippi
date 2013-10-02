@@ -14,5 +14,3 @@ org.trippi.server
 org.trippi.ui.console
 org.trippi.ui.swing
 org.trippi.ui
-org.trippi.impl.mpt
-org.trippi.impl.mulgara
