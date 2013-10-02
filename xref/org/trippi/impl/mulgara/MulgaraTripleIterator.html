@@ -21,7 +21,7 @@
 <a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> org.trippi.TripleIterator;
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <strong class="jxr_keyword">import</strong> org.trippi.TrippiException;
 <a class="jxr_linenumber" name="13" href="#13">13</a>  
-<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/trippi/impl/mulgara/MulgaraTripleIterator.html">MulgaraTripleIterator</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../org/trippi/TripleIterator.html">TripleIterator</a> {
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/trippi/impl/mulgara/MulgaraTripleIterator.html">MulgaraTripleIterator</a> <strong class="jxr_keyword">extends</strong> TripleIterator {
 <a class="jxr_linenumber" name="15" href="#15">15</a>  	
 <a class="jxr_linenumber" name="16" href="#16">16</a>  	<strong class="jxr_keyword">private</strong> Answer m_answer;
 <a class="jxr_linenumber" name="17" href="#17">17</a>  	<strong class="jxr_keyword">private</strong> GraphElementFactory m_geFactory;
@@ -36,7 +36,7 @@
 <a class="jxr_linenumber" name="26" href="#26">26</a>  		<strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="27" href="#27">27</a>  			m_answer.beforeFirst();
 <a class="jxr_linenumber" name="28" href="#28">28</a>  		} <strong class="jxr_keyword">catch</strong> (TuplesException e) {
-<a class="jxr_linenumber" name="29" href="#29">29</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/trippi/TrippiException.html">TrippiException</a>(e.getMessage(), e);
+<a class="jxr_linenumber" name="29" href="#29">29</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> TrippiException(e.getMessage(), e);
 <a class="jxr_linenumber" name="30" href="#30">30</a>  		}
 <a class="jxr_linenumber" name="31" href="#31">31</a>  		checkNext();
 <a class="jxr_linenumber" name="32" href="#32">32</a>      }
@@ -48,7 +48,7 @@
 <a class="jxr_linenumber" name="38" href="#38">38</a>  				m_answer.close();
 <a class="jxr_linenumber" name="39" href="#39">39</a>  				m_isClosed = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="40" href="#40">40</a>  			} <strong class="jxr_keyword">catch</strong> (TuplesException e) {
-<a class="jxr_linenumber" name="41" href="#41">41</a>  				<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/trippi/TrippiException.html">TrippiException</a>(e.getMessage(), e);
+<a class="jxr_linenumber" name="41" href="#41">41</a>  				<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> TrippiException(e.getMessage(), e);
 <a class="jxr_linenumber" name="42" href="#42">42</a>  			}
 <a class="jxr_linenumber" name="43" href="#43">43</a>  		}
 <a class="jxr_linenumber" name="44" href="#44">44</a>  	}
@@ -68,9 +68,9 @@
 <a class="jxr_linenumber" name="58" href="#58">58</a>  			checkNext();
 <a class="jxr_linenumber" name="59" href="#59">59</a>  			<strong class="jxr_keyword">return</strong> m_geFactory.createTriple(s, p, o);
 <a class="jxr_linenumber" name="60" href="#60">60</a>  		} <strong class="jxr_keyword">catch</strong> (TuplesException e) {
-<a class="jxr_linenumber" name="61" href="#61">61</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/trippi/TrippiException.html">TrippiException</a>(e.getMessage(), e);
+<a class="jxr_linenumber" name="61" href="#61">61</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> TrippiException(e.getMessage(), e);
 <a class="jxr_linenumber" name="62" href="#62">62</a>  		} <strong class="jxr_keyword">catch</strong> (GraphElementFactoryException e) {
-<a class="jxr_linenumber" name="63" href="#63">63</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/trippi/TrippiException.html">TrippiException</a>(e.getMessage(), e);
+<a class="jxr_linenumber" name="63" href="#63">63</a>  			<strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> TrippiException(e.getMessage(), e);
 <a class="jxr_linenumber" name="64" href="#64">64</a>  		}
 <a class="jxr_linenumber" name="65" href="#65">65</a>  	}
 <a class="jxr_linenumber" name="66" href="#66">66</a>  	
@@ -78,7 +78,7 @@
 <a class="jxr_linenumber" name="68" href="#68">68</a>          <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="69" href="#69">69</a>              m_hasNext = m_answer.next();
 <a class="jxr_linenumber" name="70" href="#70">70</a>          } <strong class="jxr_keyword">catch</strong> (TuplesException e) {
-<a class="jxr_linenumber" name="71" href="#71">71</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/trippi/TrippiException.html">TrippiException</a>(<span class="jxr_string">"Error getting next result from Mulgara Answer."</span>, e);
+<a class="jxr_linenumber" name="71" href="#71">71</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> TrippiException(<span class="jxr_string">"Error getting next result from Mulgara Answer."</span>, e);
 <a class="jxr_linenumber" name="72" href="#72">72</a>          }
 <a class="jxr_linenumber" name="73" href="#73">73</a>          <strong class="jxr_keyword">if</strong> (m_hasNext == false) {
 <a class="jxr_linenumber" name="74" href="#74">74</a>              <strong class="jxr_keyword">try</strong> {
