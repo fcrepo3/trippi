@@ -1,9 +1,10 @@
 package org.trippi.server.http;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
+import java.net.URL;
 
 import javax.xml.transform.Templates;
 import javax.xml.transform.TransformerFactory;
@@ -18,13 +19,13 @@ import javax.xml.transform.stream.StreamSource;
 public class Styler {
 
     /** the file path of the stylesheet to use for index transformations. */
-    private final String m_indexStyle;
+    private final URL m_indexStyle;
 
     /** the file path of the stylesheet to use for form transformations. */
-    private final String m_formStyle;
+    private final URL m_formStyle;
 
     /** the file path of the stylesheet to use for error transformations. */
-    private final String m_errorStyle;
+    private final URL m_errorStyle;
 
     /** the loaded index stylesheet. */
     private Templates m_indexTemplates;
@@ -44,12 +45,21 @@ public class Styler {
      * Each parameter is optional (may be given as null), but the caller is 
      * responsible for not calling the corresponding send() method.
      */
-    public Styler(String indexStyle,
-                  String formStyle,
-                  String errorStyle) throws Exception {
-        m_indexStyle = indexStyle;
-        m_formStyle = formStyle;
-        m_errorStyle = errorStyle;
+    public Styler(String indexPath,
+                  String formPath,
+                  String errorPath) throws Exception {
+        this(
+            new File(indexPath).toURI().toURL(),
+            new File(formPath).toURI().toURL(),
+            new File(errorPath).toURI().toURL());
+    }
+
+    public Styler(URL indexStylesheetUrl,
+            URL formStylesheetUrl,
+            URL errorStylesheetUrl) throws Exception {
+        m_indexStyle = indexStylesheetUrl;
+        m_formStyle =  formStylesheetUrl;
+        m_errorStyle =  errorStylesheetUrl;
         m_factory = TransformerFactory.newInstance();
         reload();
     }
@@ -97,8 +107,8 @@ public class Styler {
     }
 
     // load the referenced stylesheet into a Templates object and return it.
-    private Templates load(String filePath) throws Exception {
-        return m_factory.newTemplates(new StreamSource(new FileInputStream(filePath)));
+    private Templates load(URL fileSource) throws Exception {
+        return m_factory.newTemplates(new StreamSource(fileSource.openStream()));
     }
 
     // do a transformation and send it to the stream
