@@ -134,6 +134,7 @@ public class MulgaraSession implements TriplestoreSession {
 
 	public TupleIterator query(String queryText, String language)
 			throws TrippiException {
+	    language = language.trim();
 		if (language.equalsIgnoreCase("itql")) {
 			queryText = doAliasReplacements(queryText);
 			Answer ans = null;
