@@ -37,41 +37,17 @@
       <version>1.6.4</version>
       <scope>runtime</scope>
     </dependency>
-    <!-- 
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.6.4</version>
-      <scope>test</scope>
-    </dependency>
-     -->
   </dependencies>
 
+  <distributionManagement>
+    <site>
+      <id>gh-pages</id>
+      <name>Deployment through GitHub's site deployment plugin</name>
+      <url>site/${project.version}/${project.name}</url>
+    </site>
+  </distributionManagement>
   <build>
     <plugins>
-      <!-- 
-      <plugin>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <bannedDependencies>
-                  <searchTransitive>true</searchTransitive>
-                  <includes>
-                    <include>log4j:log4j</include>
-                    <include>org.slf4j:slf4j-log4j12</include>
-                  </includes>
-                </bannedDependencies>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      -->
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
