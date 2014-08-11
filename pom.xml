@@ -27,6 +27,8 @@
     <!-- Use ${project_name} instead of ${project.artifactId} to avoid incorrect 
     replacements of "trippi" in child modules -->
     <project_name>trippi</project_name>
+    <project.copyrightYear>2014</project.copyrightYear>
+    <github.global.server>github</github.global.server>
   </properties>
 
   <dependencyManagement>
@@ -132,11 +134,11 @@
   </organization>
   <inceptionYear>2005</inceptionYear>
   <scm>
-    <connection>scm:git:git://github.com/fcrepo/${project_name}.git
+    <connection>scm:git:git://github.com/fcrepo3/${project_name}.git
     </connection>
-    <developerConnection>scm:git:git@github.com:fcrepo/${project_name}.git
+    <developerConnection>scm:git:git@github.com:fcrepo3/${project_name}.git
     </developerConnection>
-    <url>http://github.com/fcrepo/${project_name}</url>
+    <url>http://github.com/fcrepo3/${project_name}</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -165,7 +167,8 @@
   <distributionManagement>
     <site>
       <id>gh-pages</id>
-      <url>gitsite:git@github.com/fcrepo/${project_name}.git</url>
+      <name>Deployment through GitHub's site deployment plugin</name>
+      <url>site/${project.version}</url>
     </site>
   </distributionManagement>
   <build>
@@ -299,6 +302,35 @@
               </pluginExecutions>
             </lifecycleMappingMetadata>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>site-maven-plugin</artifactId>
+          <version>0.9</version>
+          <configuration>
+            <message>Creating site for ${project.artifactId},
+              ${project.version}</message>
+            <!-- this does the trick to place every module in the correct 
+              subfolder -->
+            <path>${project.distributionManagement.site.url}</path>
+            <merge>true</merge>
+            <excludes>
+            <!-- Excluding test-related javadocs in order to keep the site 
+              deployment smaller than 30M.
+              see: https://github.com/github/maven-plugins/issues/54 -->
+              <exclude>xref-test/**</exclude>
+              <exclude>testapidocs/**</exclude>
+            </excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <id>github</id>
+              <goals>
+                <goal>site</goal>
+              </goals>
+              <phase>site-deploy</phase>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -435,11 +467,6 @@
         <groupId>org.apache.maven.scm</groupId>
         <artifactId>maven-scm-manager-plexus</artifactId>
         <version>1.6</version>
-      </extension>
-      <extension>
-        <groupId>org.kathrynhuxtable.maven.wagon</groupId>
-        <artifactId>wagon-gitsite</artifactId>
-        <version>0.3.1a</version>
       </extension>
     </extensions>
   </build>
