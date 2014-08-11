@@ -9,7 +9,7 @@
   
   <groupId>org.trippi</groupId>
   <artifactId>trippi</artifactId>
-  <version>1.5.11-SNAPSHOT</version>
+  <version>1.5.10-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Trippi Triplestore API</description>
