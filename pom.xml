@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
   <name>${project.artifactId}</name>
   <description>Trippi Triplestore API</description>
-  <url>http://fcrepo.github.com/${project.artifactId}</url>
+  <url>http://fcrepo3.github.com/${project.artifactId}/</url>
   
   <modules>
     <module>trippi-core</module>
@@ -168,7 +168,7 @@
     <site>
       <id>gh-pages</id>
       <name>Deployment through GitHub's site deployment plugin</name>
-      <url>site/${project.version}</url>
+      <url>site/${project.version}/</url>
     </site>
   </distributionManagement>
   <build>
@@ -272,6 +272,9 @@
         <plugin>
           <artifactId>maven-site-plugin</artifactId>
           <version>3.3</version>
+          <configuration>
+            <topSiteURL>ttp://fcrepo3.github.com/${project.name}/</topSiteURL>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>

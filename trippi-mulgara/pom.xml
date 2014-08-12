@@ -11,6 +11,7 @@
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
   <description>trippi-mulgara</description>
+  <url>http://fcrepo3.github.com/${project.parent.artifactId}/</url>
 
   <dependencies>
     <dependency>
@@ -43,7 +44,7 @@
     <site>
       <id>gh-pages</id>
       <name>Deployment through GitHub's site deployment plugin</name>
-      <url>site/${project.version}/${project.name}</url>
+      <url>site/${project.version}/${project.name}/</url>
     </site>
   </distributionManagement>
   <build>
