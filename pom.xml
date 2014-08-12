@@ -274,6 +274,7 @@
           <version>3.3</version>
           <configuration>
             <topSiteURL>ttp://fcrepo3.github.com/${project.name}/</topSiteURL>
+            <skipDeploy>true</skipDeploy>
           </configuration>
         </plugin>
         <plugin>

@@ -94,13 +94,6 @@
       </dependency>
   </dependencies>
 
-  <distributionManagement>
-    <site>
-      <id>gh-pages</id>
-      <name>Deployment through GitHub's site deployment plugin</name>
-      <url>site/${project.version}/${project.name}/</url>
-    </site>
-  </distributionManagement>
   <build>
     <plugins>
       <!-- See http://maven.apache.org/guides/mini/guide-attached-tests.html -->
