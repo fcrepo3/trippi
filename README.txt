@@ -10,6 +10,10 @@
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+----
+# This project is no longer maintained
+----
+
 LICENSE
 =======
 Trippi is distributed under the Apache License, v2.0.
